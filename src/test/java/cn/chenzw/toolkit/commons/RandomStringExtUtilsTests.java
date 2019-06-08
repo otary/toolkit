@@ -20,7 +20,7 @@ public class RandomStringExtUtilsTests {
     @Test
     public void testRandomFrequentlyUsedChinese2() {
         String chineseCharacters = RandomStringExtUtils.randomFrequentlyUsedChinese(3, 5);
-        Assert.assertTrue(chineseCharacters.length() > 3 && chineseCharacters.length() < 5);
+        Assert.assertTrue(chineseCharacters.length() >= 3 && chineseCharacters.length() < 5);
 
         System.out.println("随机生成3~5个常用中文字符:" + chineseCharacters);
     }
@@ -36,7 +36,7 @@ public class RandomStringExtUtilsTests {
     @Test
     public void testRandomChinese2() {
         String chineseCharacters = RandomStringExtUtils.randomChinese(3, 5);
-        Assert.assertTrue(chineseCharacters.length() > 3 && chineseCharacters.length() < 5);
+        Assert.assertTrue(chineseCharacters.length() >= 3 && chineseCharacters.length() < 5);
 
         System.out.println("随机生成3~5个中文字符:" + chineseCharacters);
     }

@@ -35,3 +35,18 @@ endDate.set(2019, 10, 10);
 Date randomDate = DateExtUtils.random(startDate.getTime(), endDate.getTime());
 ```
 
+---
+
+### DozerUtils
+
+- ****
+```
+ // 将List<User>转换成List<UserDto>
+List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
+```
+
+
+---
+## 运行单元测试
+
+$ mvn test
