@@ -58,7 +58,15 @@ List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
 
 ```
 
-### HttpHolder
+### BinaryConvertUtils
+
+- **bytes数组<=>十六进制字符串**
+```
+BinaryConvertUtils.bytesToHexString("hello".getBytes());  // => 68656c6c6f
+byte[] bytes = BinaryConvertUtils.hexStringToBytes("68656c6c6f"); // => hello
+```
+
+### JoinPointWrapper
 
 ```
 
