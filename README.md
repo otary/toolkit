@@ -16,6 +16,11 @@ RandomStringExtUtils.randomChinese(5); // => 已很结同总
 RandomStringExtUtils.randomFrequentlyUsedChinese(3,5); // => 耆牮俤畸蹬
 ```
 
+- **随机生成姓名**
+```
+RandomStringExtUtils.randomName();  // => 虞任
+```
+
 ---
 ### DateExtUtils
 

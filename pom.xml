@@ -26,6 +26,7 @@
     </properties>
 
 
+    <!-- 依赖配置 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -37,6 +38,20 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!-- 发布配置 -->
+    <distributionManagement>
+        <repository>
+            <id>releasesId</id>
+            <name>Releases name</name>
+            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots id</id>
+            <name>snapshots name</name>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
 

@@ -54,4 +54,17 @@ public class RandomStringExtUtils {
         return randomChinese(RandomUtils.nextInt(minLengthInclusive, maxLengthExclusive));
     }
 
+    /**
+     * 随机生成姓名
+     * @return
+     */
+    public static String randomName() {
+        // 随机姓氏
+        String surName = CharacterConstatns.SURNAME[RandomUtils.nextInt(0, CharacterConstatns.SURNAME.length)];
+
+        // 随机名
+        String name = randomFrequentlyUsedChinese(RandomUtils.nextInt(1, 3));
+        return surName + name;
+    }
+
 }
