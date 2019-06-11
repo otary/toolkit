@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 /**
  * 切点封装类
@@ -21,6 +22,18 @@ public class JoinPointWrapper {
         this.requestWrapper = new HttpRequestWrapper(HttpHolder.getRequest());
     }
 
+    public Annotation getAnnotation(Class<? extends Annotation> annotationClass) {
+        Object target = this.joinPoint.getTarget();
+        if (target.getClass().isAnnotationPresent(annotationClass)) {
+            return target.getClass().getAnnotation(annotationClass);
+        }
+        return null;
+    }
+
+    /**
+     * 获取请求链接（含参数）
+     * @return
+     */
     public String getURI() {
         return this.requestWrapper.getURI();
     }
@@ -103,11 +116,14 @@ public class JoinPointWrapper {
         return paramMetas;
     }
 
-
+    /**
+     * 获取HTTP BODY内容
+     * @return
+     * @throws IOException
+     */
     public String getBodyString() throws IOException {
         return this.requestWrapper.getBodyString();
     }
-
 
     public static class ParamMeta {
 
@@ -144,5 +160,6 @@ public class JoinPointWrapper {
             return "ParamMeta{" + "name='" + name + '\'' + ", type=" + type + ", value='" + value + '\'' + '}';
         }
     }
+
 
 }

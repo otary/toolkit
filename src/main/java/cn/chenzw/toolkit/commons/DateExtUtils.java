@@ -1,16 +1,12 @@
 package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
-import java.sql.SQLOutput;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- * DateUtils扩展类
+ * org.apache.commons.lang3.time.DateUtils扩展类
  * @author chenzw
  */
 public class DateExtUtils {

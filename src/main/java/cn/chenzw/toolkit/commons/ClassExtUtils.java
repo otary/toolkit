@@ -2,11 +2,16 @@ package cn.chenzw.toolkit.commons;
 
 
 /**
+ * org.apache.commons.lang3.ClassUtils扩展类
  * @author chenzw
  */
 public abstract class ClassExtUtils {
 
-
+    /**
+     * 判断指定的类是否存在
+     * @param className
+     * @return
+     */
     public static boolean isPresent(String className) {
         return isPresent(className, null);
     }
@@ -20,6 +25,12 @@ public abstract class ClassExtUtils {
         }
     }
 
+    /**
+     * 反射类
+     * @param name
+     * @return
+     * @throws ClassNotFoundException
+     */
     public static Class<?> forName(String name) throws ClassNotFoundException {
         return forName(name, null);
     }
@@ -55,6 +66,10 @@ public abstract class ClassExtUtils {
             }
         }
         return cl;
-
     }
+
+
+    // @TODO 判断某个类加载自哪个jar包中
+
+
 }

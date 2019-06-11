@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
 /**
- * RandomStringUtils 扩展类
+ * org.apache.commons.lang3.RandomStringUtils 扩展类
  * @author chenzw
  */
 public class RandomStringExtUtils {
@@ -61,7 +61,6 @@ public class RandomStringExtUtils {
     public static String randomName() {
         // 随机姓氏
         String surName = CharacterConstatns.SURNAME[RandomUtils.nextInt(0, CharacterConstatns.SURNAME.length)];
-
         // 随机名
         String name = randomFrequentlyUsedChinese(RandomUtils.nextInt(1, 3));
         return surName + name;
