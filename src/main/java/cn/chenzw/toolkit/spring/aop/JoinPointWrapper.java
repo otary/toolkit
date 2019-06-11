@@ -3,10 +3,14 @@ package cn.chenzw.toolkit.spring.aop;
 import cn.chenzw.toolkit.http.HttpHolder;
 import cn.chenzw.toolkit.http.HttpRequestWrapper;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import java.io.IOException;
 
+/**
+ * 切点封装类
+ * @author chenzw
+ */
 public class JoinPointWrapper {
 
     private JoinPoint joinPoint;
@@ -42,7 +46,6 @@ public class JoinPointWrapper {
     public String getClientIp() {
         return this.requestWrapper.getClientIp();
     }
-
 
     public long getThreadId() {
         return this.requestWrapper.getThreadId();
@@ -101,6 +104,11 @@ public class JoinPointWrapper {
     }
 
 
+    public String getBodyString() throws IOException {
+        return this.requestWrapper.getBodyString();
+    }
+
+
     public static class ParamMeta {
 
         private String name;
@@ -133,11 +141,7 @@ public class JoinPointWrapper {
 
         @Override
         public String toString() {
-            return "ParamMeta{" +
-                    "name='" + name + '\'' +
-                    ", type=" + type +
-                    ", value='" + value + '\'' +
-                    '}';
+            return "ParamMeta{" + "name='" + name + '\'' + ", type=" + type + ", value='" + value + '\'' + '}';
         }
     }
 

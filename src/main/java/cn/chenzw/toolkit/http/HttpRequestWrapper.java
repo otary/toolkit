@@ -1,14 +1,20 @@
 package cn.chenzw.toolkit.http;
 
+import cn.chenzw.toolkit.constants.CharsetConstatns;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Locale;
 
 public class HttpRequestWrapper {
 
+    private final static String POST_METHOD = "POST";
+    private static final String MULTIPART = "multipart/";
+    private static final String[] CLIENT_IP_HEADERS = {"x-forwarded-for", "Proxy-Client-IP", "WL-Proxy-Client-IP",
+            "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "X-Real-IP"};
     private HttpServletRequest request;
-
-    private static final String[] CLIENT_IP_HEADERS = {"x-forwarded-for", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "X-Real-IP"};
 
     public HttpRequestWrapper() {
         this.request = HttpHolder.getRequest();
@@ -59,7 +65,7 @@ public class HttpRequestWrapper {
      */
     public String getClientIp() {
         for (String clientIpHeader : CLIENT_IP_HEADERS) {
-            String ip = request.getHeader("x-forwarded-for");
+            String ip = request.getHeader(clientIpHeader);
             if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
                 return ip;
             }
@@ -74,6 +80,39 @@ public class HttpRequestWrapper {
 
     public String getThreadName() {
         return Thread.currentThread().getName();
+    }
+
+    /**
+     * 获取HTTP Body内容
+     * @return
+     * @throws IOException
+     */
+    public String getBodyString() throws IOException {
+        if (isMultipart(request)) {
+            return "";
+        }
+        return IOUtils.toString(this.request.getInputStream(), CharsetConstatns.DEFAULT_CHARSET);
+    }
+
+    /**
+     * 是否上传文件
+     * @param request
+     * @return
+     */
+    private boolean isMultipart(HttpServletRequest request) {
+        if (!POST_METHOD.equalsIgnoreCase(request.getMethod())) {
+            return false;
+        }
+
+        String contentType = request.getContentType();
+        if (StringUtils.isBlank(contentType)) {
+            return false;
+        }
+
+        if (contentType.toLowerCase(Locale.ENGLISH).startsWith(MULTIPART)) {
+            return true;
+        }
+        return false;
     }
 
 }
