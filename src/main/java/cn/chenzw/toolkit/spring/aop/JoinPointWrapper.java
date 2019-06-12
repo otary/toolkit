@@ -7,6 +7,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 /**
  * 切点封装类
@@ -22,10 +23,17 @@ public class JoinPointWrapper {
         this.requestWrapper = new HttpRequestWrapper(HttpHolder.getRequest());
     }
 
-    public Annotation getAnnotation(Class<? extends Annotation> annotationClass) {
-        Object target = this.joinPoint.getTarget();
-        if (target.getClass().isAnnotationPresent(annotationClass)) {
-            return target.getClass().getAnnotation(annotationClass);
+
+    /**
+     * 获取切点方法上的注解
+     * @param annotationClass
+     * @return
+     */
+    public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+        MethodSignature methodSignature = (MethodSignature) this.joinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        if (method.isAnnotationPresent(annotationClass)) {
+            return method.getAnnotation(annotationClass);
         }
         return null;
     }
@@ -123,6 +131,15 @@ public class JoinPointWrapper {
      */
     public String getBodyString() throws IOException {
         return this.requestWrapper.getBodyString();
+    }
+
+    /**
+     * 获取模块名称
+     * @return
+     */
+    public String getArtifactId() {
+        Package aPackage = this.joinPoint.getTarget().getClass().getPackage();
+        return aPackage.getImplementationTitle();
     }
 
     public static class ParamMeta {
