@@ -66,4 +66,18 @@ public class RandomStringExtUtils {
         return surName + name;
     }
 
+    /**
+     * 从给定的列表项中随机取值
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static <T> T randomFromList(T... list) {
+        if (list.length == 0) {
+            throw new IllegalArgumentException("Parameter list is empty!");
+        }
+        int i = RandomUtils.nextInt(0, list.length);
+        return list[i];
+    }
+
 }

@@ -53,10 +53,17 @@ public class RandomStringExtUtilsTests {
         for (int i = 0; i < 3; i++) {
             String name = RandomStringExtUtils.randomName();
             Assert.assertNotNull(name);
-
             System.out.println("随机生成姓名:" + name);
         }
 
     }
 
+    @Test
+    public void testRandomFromList() {
+        System.out.println("列表值: 张三, 李四, 王五, 赵六");
+        for (int i = 0; i < 3; i++) {
+            String name = RandomStringExtUtils.randomFromList("张三", "李四", "王五", "赵六");
+            System.out.println("随机从列表中取值:" + name);
+        }
+    }
 }
