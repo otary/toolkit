@@ -17,6 +17,7 @@ public abstract class BinaryConvertUtils {
      * @param bytes
      * @return
      */
+    @Deprecated
     public static final String bytesToHexString(byte[] bytes) {
         StringBuilder buf = new StringBuilder();
         if (ArrayUtils.isEmpty(bytes)) {
@@ -38,6 +39,7 @@ public abstract class BinaryConvertUtils {
      *
      * @return
      */
+    @Deprecated
     public static final byte[] hexStringToBytes(String hexString) {
         if (StringUtils.isEmpty(hexString)) {
             return null;
