@@ -6,6 +6,7 @@ import cn.chenzw.toolkit.codec.support.aes.AESMode;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -23,7 +24,6 @@ import java.security.SecureRandom;
 public abstract class AESUtils {
 
     private static final String AES_ALGORITHM = "AES";
-
 
     /**
      * AES加解密
@@ -44,6 +44,22 @@ public abstract class AESUtils {
     public static byte[] deigest(int mode, byte[] data, String key, AESMode aesMode, AESKeyMeta aesKeyMeta, byte[] iv)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException,
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
+        if (data == null) {
+            throw new IllegalArgumentException("Parameter \"data\" must not be null");
+        }
+
+        if (StringUtils.isBlank(key)) {
+            throw new IllegalArgumentException("Parameter \"key\" must not be null");
+        }
+
+        if (aesMode == null) {
+            throw new IllegalArgumentException("Parameter \"aesMod\" must not be null");
+        }
+
+        if (aesKeyMeta == null) {
+            throw new IllegalArgumentException("Parameter \"aesKeyMeta\" must not be null");
+        }
 
         // 解决Liux、Mac系统异常
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");

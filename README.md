@@ -48,6 +48,52 @@ Date randomDate = DateExtUtils.random(startDate.getTime(), endDate.getTime());
 ```
 
 ---
+### RegexUtils
+
+正则匹配工具类
+
+- **是否IP地址**
+  - 是否IPv4
+  - 是否IPv6
+```
+
+```
+
+- **是否邮箱地址**
+```
+
+```
+
+- **是否QQ号码**
+```
+
+```
+
+- **是否身份证号码**
+```
+
+```
+
+- **是否手机号码**
+```
+
+```
+
+- **中文字符匹配**
+  - 是否包含中文
+  - 是否全是中文
+```
+
+```
+
+- **数值**
+  - 是否整数
+  - 是否数字（整数和小数）
+```
+
+```
+
+---
 
 ### DozerUtils
 
@@ -105,6 +151,8 @@ String base64String = AESUtils.encryptAsBase64String(plainText, key); // => "W20
 // AES默认解密（ECB-256位-PKCS5Padding）
 byte[] bytes = AESUtils.decryptBase64String(base64String, key); // => hello
 ```
+
+
 
 ---
 ## 运行单元测试
