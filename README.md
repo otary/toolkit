@@ -2,6 +2,29 @@
 
 Java扩展工具库
 
+### StringExtUtils
+
+- **驼峰转下划线**
+```
+StringExtUtils.toUnderscore("HelloWorld");  // => "hello_world"
+StringExtUtils.toUnderscore("helloWorld");   // =>  "hello_world"
+StringExtUtils.toUnderscore("Hello2World");  // =>  "hello2_world"
+StringExtUtils.toUnderscore("HElloWOrld");   // => "h_ello_w_orld"
+```
+
+- **下划线转驼峰**
+```
+StringExtUtils.toCamel("hello_world");  // => "helloWorld"
+StringExtUtils.toCamel("HELLO_WORLD");  // => "helloWorld"
+StringExtUtils.toCamel("Hello_WoRld");  // => "helloWorld"
+```
+
+- **分隔大写字符**
+```
+StringExtUtils.uppercaseSeparate("HelloWorld", "-");  // => "hello-world"
+StringExtUtils.uppercaseSeparate("helloWorld", "@");  // => "hello@world"
+```
+
 
 ### RandomStringExtUtils
 
