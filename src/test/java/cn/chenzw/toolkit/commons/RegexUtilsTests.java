@@ -14,7 +14,7 @@ public class RegexUtilsTests {
         Assert.assertTrue(RegexUtils.isEmail("656469722@qq.com"));
         Assert.assertTrue(RegexUtils.isEmail("chenzw_123@16.com"));
 
-        // 非法字符串"#"
+        // 非法字符串"#@"
         Assert.assertFalse(RegexUtils.isEmail("chenzw#123@163.com"));
         Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
 

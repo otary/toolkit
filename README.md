@@ -55,13 +55,25 @@ Date randomDate = DateExtUtils.random(startDate.getTime(), endDate.getTime());
 - **是否IP地址**
   - 是否IPv4
   - 是否IPv6
+
 ```
+Assert.assertTrue(RegexUtils.isIPv4("10.2.2.4"));
+Assert.assertTrue(RegexUtils.isIPv4("192.168.255.255"));
+
+Assert.assertFalse(RegexUtils.isIPv4("1.1.1.1/12"));
+Assert.assertFalse(RegexUtils.isIPv4("1.1.1"));
 
 ```
 
 - **是否邮箱地址**
-```
 
+```
+Assert.assertTrue(RegexUtils.isEmail("656469722@qq.com"));
+Assert.assertTrue(RegexUtils.isEmail("chenzw_123@16.com"));
+
+// 非法字符串"#@"
+Assert.assertFalse(RegexUtils.isEmail("chenzw#123@163.com"));
+Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
 ```
 
 - **是否QQ号码**
@@ -108,6 +120,19 @@ List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
 
 - **判断某个类是否存在**
 ```
+ boolean present = ClassExtUtils.isPresent("cn.chenzw.toolkit.commons.DateExtUtils");  // => true
+```
+
+- **实例化对象**
+
+```
+ Class<?> aClass = ClassExtUtils.forName("cn.chenzw.toolkit.commons.DateExtUtils"); // => Class对象
+```
+
+- **查找类所在Jar包**
+
+```
+ URL sourceJar = ClassExtUtils.findSourceJar(DateUtils.class);  // => file:/C:/Users/yunli/.m2/repository/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar
 
 ```
 

@@ -1,11 +1,16 @@
 package cn.chenzw.toolkit.commons;
 
 
+import java.net.URL;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+
 /**
  * org.apache.commons.lang3.ClassUtils扩展类
  * @author chenzw
  */
 public abstract class ClassExtUtils {
+
 
     /**
      * 判断指定的类是否存在
@@ -46,7 +51,6 @@ public abstract class ClassExtUtils {
         }
     }
 
-
     private static ClassLoader getDefaultClassLoader() {
         ClassLoader cl = null;
         try {
@@ -68,8 +72,23 @@ public abstract class ClassExtUtils {
         return cl;
     }
 
+    /**
+     * 查找指定的类的来源Jar包
+     *
+     * @param cls
+     * @return
+     */
+    public static URL findSourceJar(Class cls) {
+        ProtectionDomain protectionDomain = cls.getProtectionDomain();
+        if (protectionDomain == null) {
+            return null;
+        }
 
-    // @TODO 判断某个类加载自哪个jar包中
-
+        CodeSource codeSource = protectionDomain.getCodeSource();
+        if (codeSource == null) {
+            return null;
+        }
+        return codeSource.getLocation();
+    }
 
 }
