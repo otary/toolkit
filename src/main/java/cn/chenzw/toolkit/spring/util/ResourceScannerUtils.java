@@ -30,11 +30,12 @@ import java.util.Set;
  *
  * @author chenzw
  */
-public class ResourceScannerUtils {
+public abstract class ResourceScannerUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceScannerUtils.class);
     private static final String RESOURCE_PATTERN = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "**/%s/**/*.%s";
 
+    private ResourceScannerUtils() {}
 
     /**
      * 扫描类对象

@@ -238,6 +238,32 @@ Set<Class<?>> annoClasses = ResourceScannerUtils.scanClassFromAnnotation("cn.che
 Assert.assertTrue(annoClasses.contains(BookDto.class));       
 ```
 
+### SpringUtils
+
+- 注册Bean
+
+```
+// 注册bean
+User userBean = SpringUtils.registerBean(User.class);
+
+// 指定bean名称注册
+Book bookBean = SpringUtils.registerBean("book2", Book.class);
+```
+
+- 获取Bean
+
+```
+// 获取指定bean名称的bean
+Object user = SpringUtils.getBean("cn.chenzw.toolkit.domain.entity.User#0");
+
+// 获取指定类的bean
+User userBean3 = SpringUtils.getBean(User.class);
+
+Object book = SpringUtils.getBean("book2");
+
+Book bookBean2 = SpringUtils.getBean(Book.class);
+```
+
 ---
 ## 运行单元测试
 
