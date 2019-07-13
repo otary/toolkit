@@ -142,6 +142,7 @@ List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
 ### ClassExtUtils
 
 - **判断某个类是否存在**
+
 ```
  boolean present = ClassExtUtils.isPresent("cn.chenzw.toolkit.commons.DateExtUtils");  // => true
 ```
@@ -156,12 +157,12 @@ List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
 
 ```
  URL sourceJar = ClassExtUtils.findSourceJar(DateUtils.class);  // => file:/C:/Users/yunli/.m2/repository/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar
-
 ```
 
 ### BinaryConvertUtils
 
 - **bytes数组<=>十六进制字符串**
+
 ```
 BinaryConvertUtils.bytesToHexString("hello".getBytes());  // => 68656c6c6f
 byte[] bytes = BinaryConvertUtils.hexStringToBytes("68656c6c6f"); // => hello
@@ -176,6 +177,7 @@ byte[] bytes = BinaryConvertUtils.hexStringToBytes("68656c6c6f"); // => hello
 AES加解密工具
 
 - **加解密生成十六进制字符串**
+
 ```
 String plainText = "hello";
 String key = "123";
@@ -200,7 +202,41 @@ String base64String = AESUtils.encryptAsBase64String(plainText, key); // => "W20
 byte[] bytes = AESUtils.decryptBase64String(base64String, key); // => hello
 ```
 
+### ResourceScannerUtils
 
+- 扫描指定后缀的资源文件
+```
+// 扫描xml文件
+Set<Resource> xmlResources = ResourceScannerUtils.scan("cn.chenzw.toolkit", ResourceScannerUtils.SUFFIX.XML);
+
+// 扫描所有文件
+Set<Resource> allResources = ResourceScannerUtils.scan("cn.chenzw.toolkit", ResourceScannerUtils.SUFFIX.ALL);
+```
+
+- 扫描包下的所有类
+
+```
+Set<Class<?>> classes = ResourceScannerUtils.scanClass("cn.chenzw.toolkit");
+Assert.assertTrue(classes.contains(ResourceScannerUtils.class));
+Assert.assertTrue(classes.contains(JoinPointWrapper.class));
+```
+
+- 扫描指定超类及其后裔的类
+
+```
+// 扫描Writeable接口的实现类/继承类
+Set<Class<?>> superClasses = ResourceScannerUtils.scanClassFromSuper("cn.chenzw.toolkit", new Class[]{Writeable.class});
+Assert.assertTrue(superClasses.contains(Writeable.class));
+Assert.assertTrue(superClasses.contains(BookDto.class));
+```
+
+- 扫描指定注解标注的类
+
+```
+// 扫描@SSO注解的类
+Set<Class<?>> annoClasses = ResourceScannerUtils.scanClassFromAnnotation("cn.chenzw.toolkit", new Class[]{SSO.class});
+Assert.assertTrue(annoClasses.contains(BookDto.class));       
+```
 
 ---
 ## 运行单元测试
