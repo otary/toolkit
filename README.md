@@ -55,11 +55,13 @@ int i = RandomStringExtUtils.randomFromList(1,7,9,10);  // =>
 ### DateExtUtils
 
 - **随机生成日期**
+
 ```
  Date randomDate = DateExtUtils.random();
 ```
 
 - **随机生成指定范围内的日期**
+
 ```
 Calendar startDate = Calendar.getInstance();
 startDate.set(2009, 10, 10);
@@ -68,6 +70,43 @@ Calendar endDate = Calendar.getInstance();
 endDate.set(2019, 10, 10);
         
 Date randomDate = DateExtUtils.random(startDate.getTime(), endDate.getTime());
+```
+- 获取指定月份的第一天
+
+
+```
+Calendar calendar = Calendar.getInstance();
+calendar.set(2019, 2, 1, 0, 0, 0); // 月份值要减1
+calendar.set(Calendar.MILLISECOND, 0);
+
+Date firstDayOfMonth = DateExtUtils.getFirstDayOfMonth("2019-03", "yyyy-MM");
+Assert.assertEquals(calendar.getTime().getTime(), firstDayOfMonth.getTime());
+```
+
+- 获取指定月份的最后一天
+
+```
+Calendar calendar = Calendar.getInstance();
+calendar.set(2019, 2, 31, 0, 0, 0); // 月份值要减1
+calendar.set(Calendar.MILLISECOND, 0);
+
+Date lastDayOfMonth = DateExtUtils.getLastDayOfMonth("2019-03", "yyyy-MM");
+Assert.assertEquals(calendar.getTime().getTime(), lastDayOfMonth.getTime());
+```
+
+- 判断指定日期是否在某个区间范围内
+
+```
+Calendar calendar = Calendar.getInstance();
+calendar.set(2019, 3, 20);
+
+Calendar startDateCalendar = Calendar.getInstance();
+startDateCalendar.set(2019, 3, 1);
+
+Calendar endDateCalendar = Calendar.getInstance();
+endDateCalendar.set(2019, 3, 31);
+boolean dayBetween = DateExtUtils
+                .isDayBetween(calendar.getTime(), startDateCalendar.getTime(), endDateCalendar.getTime());
 ```
 
 ---

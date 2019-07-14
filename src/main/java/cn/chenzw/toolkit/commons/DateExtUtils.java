@@ -1,7 +1,9 @@
 package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,8 +12,6 @@ import java.util.Date;
  * @author chenzw
  */
 public class DateExtUtils {
-
-    private static final int MILLISECOND_PER_DAY = 24 * 60 * 60 * 1000;
 
 
     /**
@@ -40,5 +40,83 @@ public class DateExtUtils {
         return instance.getTime();
     }
 
+    /**
+     * 获取当月的第一天
+     * @param date
+     * @return
+     */
+    public static Date getFirstDayOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+
+    /**
+     * 获取当月的第一天
+     * @param month
+     * @param format 日期格式
+     * @return
+     * @throws ParseException
+     */
+    public static Date getFirstDayOfMonth(String month, String format) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(DateUtils.parseDate(month, format));
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
+
+
+    /**
+     * 获取指定日期当月的最后一天
+     * @param date
+     * @return
+     * @throws ParseException
+     */
+    public static Date getLastDayOfMonth(Date date) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取指定月份的最后一天
+     * @param month
+     * @param format 日期格式
+     * @return
+     * @throws ParseException
+     */
+    public static Date getLastDayOfMonth(String month, String format) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(org.apache.commons.lang3.time.DateUtils.parseDate(month, format));
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return calendar.getTime();
+    }
+
+    /**
+     * 判断指定日期是否在某个时间区间内
+     *
+     * @param date
+     * @param startDateInclusive
+     * @param endDateInclusive
+     * @return
+     */
+    public static boolean isDayBetween(Date date, Date startDateInclusive, Date endDateInclusive) {
+        if (date == null) {
+            return false;
+        }
+        return ((date.after(startDateInclusive) && date.before(endDateInclusive)) || date.equals(startDateInclusive)
+                || date.equals(endDateInclusive));
+    }
 
 }
