@@ -55,11 +55,13 @@ int i = RandomStringExtUtils.randomFromList(1,7,9,10);  // =>
 ### DateExtUtils
 
 - **随机生成日期**
+
 ```
  Date randomDate = DateExtUtils.random();
 ```
 
 - **随机生成指定范围内的日期**
+
 ```
 Calendar startDate = Calendar.getInstance();
 startDate.set(2009, 10, 10);
@@ -68,6 +70,79 @@ Calendar endDate = Calendar.getInstance();
 endDate.set(2019, 10, 10);
         
 Date randomDate = DateExtUtils.random(startDate.getTime(), endDate.getTime());
+```
+- 获取指定月份的第一天
+
+
+```
+Calendar calendar = Calendar.getInstance();
+calendar.set(2019, 2, 1, 0, 0, 0); // 月份值要减1
+calendar.set(Calendar.MILLISECOND, 0);
+
+Date firstDayOfMonth = DateExtUtils.getFirstDayOfMonth("2019-03", "yyyy-MM");
+Assert.assertEquals(calendar.getTime().getTime(), firstDayOfMonth.getTime());
+```
+
+- 获取指定月份的最后一天
+
+```
+Calendar calendar = Calendar.getInstance();
+calendar.set(2019, 2, 31, 0, 0, 0); // 月份值要减1
+calendar.set(Calendar.MILLISECOND, 0);
+
+Date lastDayOfMonth = DateExtUtils.getLastDayOfMonth("2019-03", "yyyy-MM");
+Assert.assertEquals(calendar.getTime().getTime(), lastDayOfMonth.getTime());
+```
+
+- 判断指定日期是否在某个区间范围内
+
+```
+Calendar calendar = Calendar.getInstance();
+calendar.set(2019, 3, 20);
+
+Calendar startDateCalendar = Calendar.getInstance();
+startDateCalendar.set(2019, 3, 1);
+
+Calendar endDateCalendar = Calendar.getInstance();
+endDateCalendar.set(2019, 3, 31);
+boolean dayBetween = DateExtUtils
+                .isDayBetween(calendar.getTime(), startDateCalendar.getTime(), endDateCalendar.getTime());
+```
+
+### ListExtUtils
+
+- 提取列表对象中某个字段的值，并拼接成字符串
+
+```
+List<User> users = new ArrayList<>();
+for (int i = 0; i < 10; i++) {
+    User user = new User();
+    user.setId(i);
+    user.setName("zhangsan" + i);
+    users.add(user);
+}
+String ids = ListExtUtils.joinFieldValue(users, "id", "#");  // => 0#1#2#3#4#5#6#7#8#9
+
+
+String ids2 = ListExtUtils.joinFieldValue(users, "id");  // => 0,1,2,3,4,5,6,7,8,9
+
+```
+
+---
+
+### ColorUtils
+
+- 将十六进制颜色转RGB格式
+
+```
+
+Color color = ColorUtils.hexToRgb("70AD47");
+// Color color = ColorUtils.hexToRgb("#70AD47");
+
+Assert.assertEquals(color.getRed(), 112);
+Assert.assertEquals(color.getGreen(), 173);
+Assert.assertEquals(color.getBlue(), 71);
+
 ```
 
 ---
