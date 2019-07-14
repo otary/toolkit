@@ -23,6 +23,8 @@
         <servlet.version>3.1.0</servlet.version>
         <junit.version>4.12</junit.version>
         <aspectjweaver.version>1.9.4</aspectjweaver.version>
+
+        <pagehelper.version>5.1.10</pagehelper.version>
     </properties>
 
 
@@ -119,6 +121,15 @@
             <scope>test</scope>
         </dependency>
         <!-- /spring -->
+
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 
