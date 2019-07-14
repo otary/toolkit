@@ -129,6 +129,23 @@ String ids2 = ListExtUtils.joinFieldValue(users, "id");  // => 0,1,2,3,4,5,6,7,8
 ```
 
 ---
+
+### ColorUtils
+
+- 将十六进制颜色转RGB格式
+
+```
+
+Color color = ColorUtils.hexToRgb("70AD47");
+// Color color = ColorUtils.hexToRgb("#70AD47");
+
+Assert.assertEquals(color.getRed(), 112);
+Assert.assertEquals(color.getGreen(), 173);
+Assert.assertEquals(color.getBlue(), 71);
+
+```
+
+---
 ### RegexUtils
 
 正则匹配工具类
