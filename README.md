@@ -109,6 +109,25 @@ boolean dayBetween = DateExtUtils
                 .isDayBetween(calendar.getTime(), startDateCalendar.getTime(), endDateCalendar.getTime());
 ```
 
+### ListExtUtils
+
+- 提取列表对象中某个字段的值，并拼接成字符串
+
+```
+List<User> users = new ArrayList<>();
+for (int i = 0; i < 10; i++) {
+    User user = new User();
+    user.setId(i);
+    user.setName("zhangsan" + i);
+    users.add(user);
+}
+String ids = ListExtUtils.joinFieldValue(users, "id", "#");  // => 0#1#2#3#4#5#6#7#8#9
+
+
+String ids2 = ListExtUtils.joinFieldValue(users, "id");  // => 0,1,2,3,4,5,6,7,8,9
+
+```
+
 ---
 ### RegexUtils
 
