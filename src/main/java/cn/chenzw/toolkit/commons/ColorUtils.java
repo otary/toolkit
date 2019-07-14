@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.awt.*;
 
 /**
- *
  * 颜色工具类
  *
  * @author
@@ -16,6 +15,7 @@ public final class ColorUtils {
 
     /**
      * 将十六进制颜色转RGB格式
+     *
      * @param hexColor
      * @return
      */
@@ -25,8 +25,8 @@ public final class ColorUtils {
             throw new IllegalArgumentException("hex color is null!");
         }
 
-        if (StringUtils.contains(hexColor, "#")) {
-            hexColor = StringUtils.split(hexColor, "#")[1];
+        if (StringUtils.startsWith(hexColor, "#")) {
+            hexColor = StringUtils.removeStart(hexColor, "#");
         }
         return new Color(Integer.parseInt(hexColor, 16));
     }
