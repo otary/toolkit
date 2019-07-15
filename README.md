@@ -2,6 +2,8 @@
 
 Java扩展工具库
 
+## commons
+
 ### StringExtUtils
 
 - **驼峰转下划线**
@@ -24,7 +26,6 @@ StringExtUtils.toCamel("Hello_WoRld");  // => "helloWorld"
 StringExtUtils.uppercaseSeparate("HelloWorld", "-");  // => "hello-world"
 StringExtUtils.uppercaseSeparate("helloWorld", "@");  // => "hello@world"
 ```
-
 
 ### RandomStringExtUtils
 
@@ -51,7 +52,6 @@ int i = RandomStringExtUtils.randomFromList(1,7,9,10);  // =>
 
 ```
 
----
 ### DateExtUtils
 
 - **随机生成日期**
@@ -72,7 +72,6 @@ endDate.set(2019, 10, 10);
 Date randomDate = DateExtUtils.random(startDate.getTime(), endDate.getTime());
 ```
 - 获取指定月份的第一天
-
 
 ```
 Calendar calendar = Calendar.getInstance();
@@ -122,30 +121,22 @@ for (int i = 0; i < 10; i++) {
     users.add(user);
 }
 String ids = ListExtUtils.joinFieldValue(users, "id", "#");  // => 0#1#2#3#4#5#6#7#8#9
-
-
 String ids2 = ListExtUtils.joinFieldValue(users, "id");  // => 0,1,2,3,4,5,6,7,8,9
-
 ```
-
----
 
 ### ColorUtils
 
 - 将十六进制颜色转RGB格式
 
 ```
-
 Color color = ColorUtils.hexToRgb("70AD47");
 // Color color = ColorUtils.hexToRgb("#70AD47");
 
 Assert.assertEquals(color.getRed(), 112);
 Assert.assertEquals(color.getGreen(), 173);
 Assert.assertEquals(color.getBlue(), 71);
-
 ```
 
----
 ### RegexUtils
 
 正则匹配工具类
@@ -160,7 +151,6 @@ Assert.assertTrue(RegexUtils.isIPv4("192.168.255.255"));
 
 Assert.assertFalse(RegexUtils.isIPv4("1.1.1.1/12"));
 Assert.assertFalse(RegexUtils.isIPv4("1.1.1"));
-
 ```
 
 - **是否邮箱地址**
@@ -173,7 +163,6 @@ Assert.assertTrue(RegexUtils.isEmail("chenzw_123@16.com"));
 Assert.assertFalse(RegexUtils.isEmail("chenzw#123@163.com"));
 Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
 ```
-
 - **是否QQ号码**
 ```
 
@@ -200,35 +189,6 @@ Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
   - 是否整数
   - 是否数字（整数和小数）
 ```
-
-```
-
----
-
-### DozerUtils
-
-- **拷贝对象属性**
-```
- // 将List<User>转换成List<UserDto>
-List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
-```
-
-### DozerPageUtils
-
-- 兼容com.github.pagehelper.Page的对象转换工具
-
-```
-Page<User> users = new Page<>(0, 5);
-users.setTotal(5);
-users.setPages(2);
-
-for (int i = 0; i < 5; i++) {
-    User user = new User();
-    user.setId(i);
-    users.add(user);
-}
-
-List<UserDto> userDtos = DozerPageUtils.mapList(new DozerBeanMapper(), users, UserDto.class);  // => Page{count=true, pageNum=0, pageSize=5, startRow=0, endRow=0, total=5, pages=2, reasonable=null, pageSizeZero=null}[User{id=0, name='null', sex='null', age=null, birthDate=null}, User{id=1, name='null', sex='null', age=null, birthDate=null}, User{id=2, name='null', sex='null', age=null, birthDate=null}, User{id=3, name='null', sex='null', age=null, birthDate=null}, User{id=4, name='null', sex='null', age=null, birthDate=null}, UserDto{id=0, name='null', birthDate=null}, UserDto{id=1, name='null', birthDate=null}, UserDto{id=2, name='null', birthDate=null}, UserDto{id=3, name='null', birthDate=null}, UserDto{id=4, name='null', birthDate=null}]
 
 ```
 
@@ -260,10 +220,37 @@ List<UserDto> userDtos = DozerPageUtils.mapList(new DozerBeanMapper(), users, Us
 BinaryConvertUtils.bytesToHexString("hello".getBytes());  // => 68656c6c6f
 byte[] bytes = BinaryConvertUtils.hexStringToBytes("68656c6c6f"); // => hello
 ```
+---
 
-### JoinPointWrapper
+## dozer
 
+### DozerUtils
 
+- **拷贝对象属性**
+```
+ // 将List<User>转换成List<UserDto>
+List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
+```
+
+### DozerPageUtils
+
+- 兼容com.github.pagehelper.Page的对象转换工具
+
+```
+Page<User> users = new Page<>(0, 5);
+users.setTotal(5);
+users.setPages(2);
+
+for (int i = 0; i < 5; i++) {
+    User user = new User();
+    user.setId(i);
+    users.add(user);
+}
+
+List<UserDto> userDtos = DozerPageUtils.mapList(new DozerBeanMapper(), users, UserDto.class);  // => Page{count=true, pageNum=0, pageSize=5, startRow=0, endRow=0, total=5, pages=2, reasonable=null, pageSizeZero=null}[User{id=0, name='null', sex='null', age=null, birthDate=null}, User{id=1, name='null', sex='null', age=null, birthDate=null}, User{id=2, name='null', sex='null', age=null, birthDate=null}, User{id=3, name='null', sex='null', age=null, birthDate=null}, User{id=4, name='null', sex='null', age=null, birthDate=null}, UserDto{id=0, name='null', birthDate=null}, UserDto{id=1, name='null', birthDate=null}, UserDto{id=2, name='null', birthDate=null}, UserDto{id=3, name='null', birthDate=null}, UserDto{id=4, name='null', birthDate=null}]
+```
+---
+## codec
 
 ### AESUtils
 
@@ -293,6 +280,60 @@ String base64String = AESUtils.encryptAsBase64String(plainText, key); // => "W20
 
 // AES默认解密（ECB-256位-PKCS5Padding）
 byte[] bytes = AESUtils.decryptBase64String(base64String, key); // => hello
+```
+---
+
+## http
+
+### HttpRequestWrapper
+
+HttpRequest包装类
+
+```
+// Servlet环境
+HttpRequestWrapper httpRequestWrapper = new HttpRequestWrapper(request);
+
+// Spring环境
+HttpRequestWrapper httpRequestWrapper = new HttpRequestWrapper();
+
+httpRequestWrapper.getMethod();  // HTTP方法
+httpRequestWrapper.getURI();   // URI链接
+httpRequestWrapper.getQueryString();  // 请求参数
+httpRequestWrapper.getClientIp();  // 请求的客户端IP
+httpRequestWrapper.getThreadId();   // 请求线程ID
+httpRequestWrapper.getThreadName();  // 请求线程名称
+httpRequestWrapper.getBodyString();  // HTTP Body内容
+httpRequestWrapper.isMultipart();  // 是否上传文件
+```
+
+### HttpHolder
+
+```
+// Spring环境
+HttpServletRequest httpRequest = HttpHolder.getRequest();  // 获取HttpServletRequest
+HttpServletResponse httpResponse = HttpHolder.getResponse();  // 获取HttpServletResponse
+```
+
+### ContentCachingRequestWrapperFilter
+
+缓存HTTP请求内容（可多次获取HTTP请求内容）
+
+```
+@Bean
+public ContentCachingRequestWrapperFilter contentCachingRequestWrapperFilter(){
+	return new ContentCachingRequestWrapperFilter();
+}
+
+```
+
+## spring
+
+### JoinPointWrapper
+
+Spring切面包装类
+
+```
+
 ```
 
 ### ResourceScannerUtils

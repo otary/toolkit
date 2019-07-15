@@ -1,5 +1,6 @@
-package cn.chenzw.toolkit.http;
+package cn.chenzw.toolkit.http.filter;
 
+import cn.chenzw.toolkit.http.ContentCachingRequestWrapper;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;

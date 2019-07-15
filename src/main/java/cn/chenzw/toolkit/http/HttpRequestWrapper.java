@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Locale;
 
+/**
+ * HttpRequest包装类
+ *
+ * @author chenzw
+ */
 public class HttpRequestWrapper {
 
     private final static String POST_METHOD = "POST";
@@ -73,17 +78,27 @@ public class HttpRequestWrapper {
         return this.request.getRemoteAddr();
     }
 
-
+    /**
+     * 获取请求线程ID
+     *
+     * @return
+     */
     public long getThreadId() {
         return Thread.currentThread().getId();
     }
 
+    /**
+     * 获取请求线程名称
+     *
+     * @return
+     */
     public String getThreadName() {
         return Thread.currentThread().getName();
     }
 
     /**
      * 获取HTTP Body内容
+     *
      * @return
      * @throws IOException
      */
@@ -96,6 +111,7 @@ public class HttpRequestWrapper {
 
     /**
      * 是否上传文件
+     *
      * @param request
      * @return
      */
