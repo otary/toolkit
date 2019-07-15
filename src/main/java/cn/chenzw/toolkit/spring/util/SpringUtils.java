@@ -62,6 +62,25 @@ public class SpringUtils implements ApplicationContextAware {
         return registerBean(null, clazz, args);
     }
 
+
+    /**
+     * 获取ContextPath
+     *
+     * @return
+     */
+    public static String getContextPath() {
+        return appContext.getEnvironment().getProperty("server.context-path");
+    }
+
+    /**
+     * 获取服务端口
+     *
+     * @return
+     */
+    public static String getPort() {
+        return appContext.getEnvironment().getProperty("server.port");
+    }
+
     private static <T> T doRegisterBean(String name, Class<T> clazz, Object... args) {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
         if (ArrayUtils.isNotEmpty(args)) {

@@ -320,11 +320,37 @@ HttpServletResponse httpResponse = HttpHolder.getResponse();  // 获取HttpServl
 
 ```
 @Bean
-public ContentCachingRequestWrapperFilter contentCachingRequestWrapperFilter(){
-	return new ContentCachingRequestWrapperFilter();
+public FilterRegistrationBean contentCachingRequestWrapperFilterRegistration() {
+    FilterRegistrationBean registration = new FilterRegistrationBean();
+    registration.setDispatcherTypes(DispatcherType.REQUEST);
+    registration.setFilter(new ContentCachingRequestWrapperFilter());
+    registration.addUrlPatterns("/*");
+    registration.setName("contentCachingRequestWrapperFilter");
+    registration.setOrder(Integer.MAX_VALUE);
+    return registration;
 }
 
 ```
+
+### XssFilter
+
+Xss过滤器
+
+```
+@Bean
+public FilterRegistrationBean xssFilterRegistration() {
+    FilterRegistrationBean registration = new FilterRegistrationBean();
+    registration.setDispatcherTypes(DispatcherType.REQUEST);
+    registration.setFilter(new XssFilter("/sys/"));
+    registration.addUrlPatterns("/*");
+    registration.setName("xssFilter");
+    registration.setOrder(Integer.MAX_VALUE);
+    return registration;
+}
+
+```
+
+
 
 ## spring
 
