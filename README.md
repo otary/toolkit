@@ -350,6 +350,16 @@ public FilterRegistrationBean xssFilterRegistration() {
 
 ```
 
+--
+## cache
+
+#### EhCacheUtils
+
+EhCache2.x工具类
+
+```
+
+```
 
 
 ## spring

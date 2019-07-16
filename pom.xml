@@ -25,7 +25,8 @@
         <aspectjweaver.version>1.9.4</aspectjweaver.version>
 
         <pagehelper.version>5.1.10</pagehelper.version>
-        <ehcache.version>3.7.1</ehcache.version>
+        <ehcache3.version>3.7.1</ehcache3.version>
+        <ehcache2.version>2.10.6</ehcache2.version>
     </properties>
 
 
@@ -138,18 +139,23 @@
         </dependency>
 
         <!-- ehcache -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>${ehcache.version}</version>
-        </dependency>
+        </dependency>-->
 
-       <!--<dependency>
+        <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>2.10.6</version>
-        </dependency>-->
-        <!-- /ehcache -->
+            <version>${ehcache2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 
     </dependencies>
 

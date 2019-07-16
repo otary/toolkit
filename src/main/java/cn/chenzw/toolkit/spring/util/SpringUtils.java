@@ -20,9 +20,8 @@ public class SpringUtils implements ApplicationContextAware {
 
     private static ApplicationContext appContext;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        appContext = applicationContext;
+    public static ApplicationContext getAppContext() {
+        return appContext;
     }
 
     public static Object getBean(String name) {
@@ -62,7 +61,6 @@ public class SpringUtils implements ApplicationContextAware {
         return registerBean(null, clazz, args);
     }
 
-
     /**
      * 获取ContextPath
      *
@@ -96,5 +94,10 @@ public class SpringUtils implements ApplicationContextAware {
         }
         beanFactory.registerBeanDefinition(name, beanDefinition);
         return appContext.getBean(name, clazz);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        appContext = applicationContext;
     }
 }
