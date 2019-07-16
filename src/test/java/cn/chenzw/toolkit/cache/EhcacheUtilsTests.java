@@ -3,6 +3,8 @@ package cn.chenzw.toolkit.cache;
 import cn.chenzw.toolkit.spring.config.AppConfig;
 import cn.chenzw.toolkit.spring.config.CacheConfig;
 import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
+import net.sf.ehcache.hibernate.EhCache;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,15 +30,14 @@ public class EhcacheUtilsTests {
 
         for (Cache cache : caches) {
             List keys = EhCacheUtils.getKeys(cache.getName());
-
-            for (Object key : keys) {
-                System.out.println(key);
-            }
-
-
-            System.out.println(cache);
-
         }
+
+        List<Element> userCacheElements = EhCacheUtils.getElements("userCache");
+        Assert.assertTrue(userCacheElements.size() > 0);
+
+        Object value = EhCacheUtils.getValue("userCache", "key#0");
+        Assert.assertEquals(value, "hello world");
+
     }
 
 }

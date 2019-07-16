@@ -27,6 +27,9 @@
         <pagehelper.version>5.1.10</pagehelper.version>
         <ehcache3.version>3.7.1</ehcache3.version>
         <ehcache2.version>2.10.6</ehcache2.version>
+
+        <log4j.version>2.12.0</log4j.version>
+        <logback.version>1.2.3</logback.version>
     </properties>
 
 
@@ -99,11 +102,43 @@
             <version>${dozer.version}</version>
         </dependency>
 
+        <!-- logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+
+        <!-- /logging -->
 
         <!-- spring -->
         <dependency>
@@ -139,12 +174,6 @@
         </dependency>
 
         <!-- ehcache -->
-        <!--<dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>${ehcache.version}</version>
-        </dependency>-->
-
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
@@ -156,6 +185,9 @@
             <artifactId>cache-api</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <!--/ ehcache -->
+
+
 
     </dependencies>
 
