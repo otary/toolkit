@@ -350,7 +350,7 @@ public FilterRegistrationBean xssFilterRegistration() {
 
 ```
 
---
+---
 ## cache
 
 #### EhCacheUtils
@@ -360,7 +360,27 @@ EhCache2.x工具类
 ```
 
 ```
+---
 
+## logging
+
+### Log4j2Utils
+
+log4j2工具类
+
+```
+
+```
+
+### LogbackUtils
+
+logback工具类
+
+```
+
+```
+
+---
 
 ## spring
 

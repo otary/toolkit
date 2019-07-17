@@ -34,6 +34,8 @@ public class Log4j2Utils {
     }
 
     /**
+     * 获取所有Logger
+     *
      * @return
      */
     public static List<LoggerConfig> getLoggers() {
@@ -46,6 +48,17 @@ public class Log4j2Utils {
     }
 
     /**
+     * 获取根Logger
+     *
+     * @return
+     */
+    public static LoggerConfig getRootLogger() {
+        return getLogger(ROOT_LOGGER_NAME);
+    }
+
+    /**
+     * 获取指定名称的Logger
+     *
      * @param loggerName
      * @return
      */
@@ -57,6 +70,8 @@ public class Log4j2Utils {
     }
 
     /**
+     * 设置Logger的级别
+     *
      * @param loggerName
      * @param level
      */

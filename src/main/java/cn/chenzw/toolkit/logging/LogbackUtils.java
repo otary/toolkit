@@ -46,14 +46,24 @@ public class LogbackUtils {
             if (codeSource != null) {
                 return codeSource.getLocation();
             }
-        }
-        catch (SecurityException ex) {
+        } catch (SecurityException ex) {
             // Unable to determine location
         }
         return "unknown location";
     }
 
     /**
+     * 获取根Logger
+     *
+     * @return
+     */
+    public static Logger getRootLogger() {
+        return getLogger(ROOT_LOGGER_NAME);
+    }
+
+    /**
+     * 获取所有Logger
+     *
      * @return
      */
     public static List<Logger> getLoggers() {
@@ -61,6 +71,8 @@ public class LogbackUtils {
     }
 
     /**
+     * 获取指定名称的Logger
+     *
      * @param loggerName
      * @return
      */
@@ -73,6 +85,8 @@ public class LogbackUtils {
     }
 
     /**
+     * 设置Logger的级别
+     *
      * @param loggerName
      * @param level
      */
