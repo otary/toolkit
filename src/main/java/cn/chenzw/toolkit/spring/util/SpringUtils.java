@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.spring.util;
 
+import cn.chenzw.toolkit.spring.domain.ContextBeans;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
@@ -34,6 +35,16 @@ public class SpringUtils implements ApplicationContextAware {
 
     public static <T> T getBean(String name, Class<T> clazz) {
         return appContext.getBean(name, clazz);
+    }
+
+
+    /**
+     * 获取所有Bean
+     *
+     * @return
+     */
+    public static ContextBeans getBeans() {
+        return ContextBeans.describing((ConfigurableApplicationContext) appContext);
     }
 
     /**

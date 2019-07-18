@@ -3,11 +3,13 @@ package cn.chenzw.toolkit.spring.util;
 import cn.chenzw.toolkit.domain.entity.Book;
 import cn.chenzw.toolkit.domain.entity.User;
 import cn.chenzw.toolkit.spring.config.AppConfig;
+import cn.chenzw.toolkit.spring.domain.ContextBeans;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -47,5 +49,11 @@ public class SpringUtilsTests {
 
     }
 
-
+    @Test
+    public void testGetBeans() {
+        ContextBeans beans = SpringUtils.getBeans();
+        Assert.assertNotNull(beans);
+    }
 }
+
+
