@@ -220,6 +220,32 @@ Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
 BinaryConvertUtils.bytesToHexString("hello".getBytes());  // => 68656c6c6f
 byte[] bytes = BinaryConvertUtils.hexStringToBytes("68656c6c6f"); // => hello
 ```
+
+### UriExtUtils
+
+uri操作工具类
+
+- 添加参数
+
+```
+Map<String, String> params = new HashMap<>();
+params.put("a", "111");
+params.put("b", "222");
+
+String uri = UriExtUtils.buildParams("http://www.baidu.com", params);  // => http://www.baidu.com?a=111&b=222
+
+String uri2 = UriExtUtils.buildParams("http://www.baidu.com?k=1", params);  // => http://www.baidu.com?k=1&a=111&b=222
+
+```
+
+- 解析并获取uri参数
+
+```
+Map<String, String> uriParams = UriExtUtils.getUriParams(
+                "http://192.168.17.231:8680/login?client_id=1&redirect_uri=http%3A%2F%2Fwww.baidu.com&authentication_type=oauth");  // => {redirect_uri=http%3A%2F%2Fwww.baidu.com, authentication_type=oauth, client_id=1}
+
+```
+
 ---
 
 ## dozer
@@ -452,6 +478,13 @@ User userBean3 = SpringUtils.getBean(User.class);
 Object book = SpringUtils.getBean("book2");
 
 Book bookBean2 = SpringUtils.getBean(Book.class);
+```
+
+- 获取所有的Bean（详细信息）
+
+```
+ContextBeans beans = SpringUtils.getBeans();  // => ContextBeans{beans=[BeanDescriptor{name='appConfig', aliases=[], scope='singleton', type=class cn.chenzw.toolkit.spring.config.AppConfig$$EnhancerBySpringCGLIB$$6d190be5, resource='null', dependencies=[]}, BeanDescriptor{name='springUtils', aliases=[], scope='singleton', type=class cn.chenzw.toolkit.spring.util.SpringUtils, resource='cn.chenzw.toolkit.spring.config.AppConfig', dependencies=[]}], parentId='null'}
+
 ```
 
 ---
