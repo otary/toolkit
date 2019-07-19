@@ -90,7 +90,11 @@ public class UriExtUtils {
         Map<String, String> retParamMap = new HashMap<>();
         for (String paramPair : paramPairs) {
             String[] param = paramPair.split("=");
-            retParamMap.put(param[0], param[1]);
+            if (param.length > 1) {
+                retParamMap.put(param[0], param[1]);
+            } else {
+                retParamMap.put(param[0], "");
+            }
         }
         return retParamMap;
     }

@@ -36,6 +36,19 @@ public class UriExtUtilsTests {
         Assert.assertEquals(MapUtils.getString(uriParams, "client_id"), "1");
         Assert.assertEquals(MapUtils.getString(uriParams, "redirect_uri"), "http%3A%2F%2Fwww.baidu.com");
         Assert.assertEquals(MapUtils.getString(uriParams, "authentication_type"), "oauth");
+
+        Map<String, String> uriParams2 = UriExtUtils.getUriParams("http://192.168.17.231:8680/login");
+        Assert.assertTrue(MapUtils.isEmpty(uriParams2));
+
+        Map<String, String> uriParams3 = UriExtUtils.getUriParams("http://192.168.17.231:8680/login?");
+        Assert.assertTrue(MapUtils.isEmpty(uriParams3));
+
+        Map<String, String> uriParams4 = UriExtUtils
+                .getUriParams("http://192.168.17.231:8680/login?client_id=1&redirect_uri=&authentication_type");
+        Assert.assertEquals(MapUtils.getString(uriParams4, "client_id"), "1");
+        Assert.assertEquals(MapUtils.getString(uriParams4, "redirect_uri"), "");
+        Assert.assertEquals(MapUtils.getString(uriParams4, "authentication_type"), "");
+
     }
 
 }
