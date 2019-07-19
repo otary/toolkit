@@ -3,6 +3,7 @@ package cn.chenzw.toolkit.spring.util;
 import cn.chenzw.toolkit.domain.entity.Book;
 import cn.chenzw.toolkit.domain.entity.User;
 import cn.chenzw.toolkit.spring.config.AppConfig;
+import cn.chenzw.toolkit.spring.config.WebConfig;
 import cn.chenzw.toolkit.spring.domain.ContextBeans;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,10 +14,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.servlet.DispatcherServlet;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
 public class SpringUtilsTests {
 
     @Autowired
@@ -53,6 +58,11 @@ public class SpringUtilsTests {
     public void testGetBeans() {
         ContextBeans beans = SpringUtils.getBeans();
         Assert.assertNotNull(beans);
+    }
+
+    @Test
+    public void testGetHandlerMappings() {
+        SpringUtils.getHandlerMappings();
     }
 }
 

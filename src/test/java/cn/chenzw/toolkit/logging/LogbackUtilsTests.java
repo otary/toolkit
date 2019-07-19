@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-@RunWith(JUnit4.class)
+//@RunWith(JUnit4.class)
 public class LogbackUtilsTests {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(LogbackUtilsTests.class);
 
-    @Test
+    // @Test
     public void test() {
         List<Logger> loggers = LogbackUtils.getLoggers();
         for (Logger logger : loggers) {

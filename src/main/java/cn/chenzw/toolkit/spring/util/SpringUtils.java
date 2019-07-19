@@ -11,6 +11,19 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import javax.servlet.Servlet;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Spring工具类
@@ -107,8 +120,40 @@ public class SpringUtils implements ApplicationContextAware {
         return appContext.getBean(name, clazz);
     }
 
+
+    public static void getHandlerMappings() {
+        Map<String, HandlerMapping> handerMappings = appContext.getBeansOfType(HandlerMapping.class);
+
+        for (Map.Entry<String, HandlerMapping> handlerMappingEntity : handerMappings.entrySet()) {
+            System.out.println("----------------" + handlerMappingEntity.getKey() + "::" + handlerMappingEntity.getValue());
+
+            HandlerMapping handlerMapping2 = handlerMappingEntity.getValue();
+
+            if(handlerMapping2 instanceof RequestMappingHandlerMapping){
+                RequestMappingHandlerMapping handlerMapping21 = (RequestMappingHandlerMapping) handlerMapping2;
+                Map<RequestMappingInfo, HandlerMethod> handlerMethods = handlerMapping21.getHandlerMethods();
+                for (Map.Entry<RequestMappingInfo, HandlerMethod> handlerMethodEntry : handlerMethods.entrySet()) {
+
+                    System.out.println(handlerMethodEntry.getKey());
+                    System.out.println(handlerMethodEntry.getValue());
+
+                }
+            } else if(handlerMapping2 instanceof BeanNameUrlHandlerMapping) {
+                BeanNameUrlHandlerMapping handlerMapping21 = (BeanNameUrlHandlerMapping) handlerMapping2;
+                Map<String, Object> handlerMap = handlerMapping21.getHandlerMap();
+                System.out.println(handlerMap);
+            } else {
+                System.out.println("-------------instanceof:" + handlerMapping2.getClass());
+            }
+
+        }
+
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         appContext = applicationContext;
     }
+
+
 }
