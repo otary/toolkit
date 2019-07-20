@@ -28,7 +28,7 @@ public class ContextServletMappings {
         private ServletRegistration registration;
 
         public ServletRegistrationMappingDescription(ServletRegistration servletRegistration) {
-            this.registration = registration;
+            this.registration = servletRegistration;
         }
 
         public String getName() {

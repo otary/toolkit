@@ -2,10 +2,12 @@ package cn.chenzw.toolkit.spring.util;
 
 import cn.chenzw.toolkit.spring.domain.ContextBeans;
 import cn.chenzw.toolkit.spring.domain.ContextFilterMappings;
-import cn.chenzw.toolkit.spring.domain.ContextMappings;
+import cn.chenzw.toolkit.spring.domain.ContextHandlerMappings;
 import cn.chenzw.toolkit.spring.domain.ContextServletMappings;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -17,21 +19,16 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import javax.servlet.FilterRegistration;
-import javax.servlet.Servlet;
 import javax.servlet.ServletRegistration;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Spring工具类
@@ -39,6 +36,8 @@ import java.util.stream.Collectors;
  * @author chenzw
  */
 public class SpringUtils implements ApplicationContextAware {
+
+    private static final Logger logger = LoggerFactory.getLogger(SpringUtils.class);
 
     private static ApplicationContext appContext;
 
@@ -132,10 +131,9 @@ public class SpringUtils implements ApplicationContextAware {
     /**
      * @return
      */
-    public static ContextMappings getHandlerMappings() {
+    public static ContextHandlerMappings getHandlerMappings() {
 
         // Map<String, DispatcherServlet> dispatcherServlets = new LinkedHashMap<>();
-
        /* context.getBeansOfType(ServletRegistrationBean.class).values().forEach((registration) -> {
             Servlet servlet = registration.getServlet();
             if (servlet instanceof DispatcherServlet && !dispatcherServlets.containsValue(servlet)) {
@@ -143,84 +141,40 @@ public class SpringUtils implements ApplicationContextAware {
             }
         });*/
 
-
-        List<ContextMappings.HandlerMappingDescription> handlerMappingDescriptions = new ArrayList<>();
-
-        // RequestMappingInfoHandlerMapping
-        /*Map<String, RequestMappingInfoHandlerMapping> requestMappingInfoHandlerMappingMap = appContext.getBeansOfType(RequestMappingInfoHandlerMapping.class);
-        for (Map.Entry<String, RequestMappingInfoHandlerMapping> requestMappingInfoHandlerMappingEntry : requestMappingInfoHandlerMappingMap.entrySet()) {
-            Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingInfoHandlerMappingEntry.getValue().getHandlerMethods();
-            for (Map.Entry<RequestMappingInfo, HandlerMethod> handlerMethodEntry : handlerMethods.entrySet()) {
-                handlerMappingDescriptions.add(new ContextMappings.HandlerMappingDescription(handlerMethodEntry.getKey().toString(), new ContextMappings.HandlerMethodDescription(handlerMethodEntry.getValue()), new ContextMappings.RequestMappingConditionsDescription(handlerMethodEntry.getKey())));
-            }
-        }*/
-
-        // AbstractUrlHandlerMapping
-       /* Map<String, AbstractUrlHandlerMapping> urlHandlerMappingMap = appContext.getBeansOfType(AbstractUrlHandlerMapping.class);
-        for (Map.Entry<String, AbstractUrlHandlerMapping> urlHandlerMappingEntry : urlHandlerMappingMap.entrySet()) {
-            AbstractUrlHandlerMapping urlHandlerMapping = urlHandlerMappingEntry.getValue();
-
-            Map<String, Object> handlerMap = urlHandlerMapping.getHandlerMap();
-            for (Map.Entry<String, Object> handlerEntry : handlerMap.entrySet()) {
-                ContextMappings.HandlerMappingDescription handlerMappingDescription = new ContextMappings.HandlerMappingDescription(handlerEntry.getValue().toString(), null, null);
-                handlerMappingDescriptionMap.put(handlerEntry.getKey(), handlerMappingDescription);
-            }
-        }*/
-
-        // DelegatingHandlerMapping
-
+        List<ContextHandlerMappings.HandlerMappingDescription> handlerMappingDescriptions = new ArrayList<>();
 
         Map<String, HandlerMapping> handerMappings = appContext.getBeansOfType(HandlerMapping.class);
-
         for (Map.Entry<String, HandlerMapping> handlerMappingEntity : handerMappings.entrySet()) {
-            // System.out.println(handlerMappingEntity.getKey() + "::" + handlerMappingEntity.getValue());
-
             HandlerMapping handlerMapping = handlerMappingEntity.getValue();
-
             if (handlerMapping instanceof RequestMappingHandlerMapping) {
-               /* RequestMappingHandlerMapping handlerMapping21 = (RequestMappingHandlerMapping) handlerMapping2;
-                Map<RequestMappingInfo, HandlerMethod> handlerMethods = handlerMapping21.getHandlerMethods();
-                for (Map.Entry<RequestMappingInfo, HandlerMethod> handlerMethodEntry : handlerMethods.entrySet()) {
-                    System.out.println(handlerMethodEntry.getKey());
-                    System.out.println(handlerMethodEntry.getValue());
-                }*/
-
                 RequestMappingHandlerMapping requestMappingHandlerMapping = (RequestMappingHandlerMapping) handlerMapping;
                 Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
                 for (Map.Entry<RequestMappingInfo, HandlerMethod> handlerMethodEntry : handlerMethods.entrySet()) {
-                    handlerMappingDescriptions.add(new ContextMappings.HandlerMappingDescription(handlerMethodEntry.getValue().toString(), handlerMethodEntry.getKey().toString(), new ContextMappings.HandlerMethodDescription(handlerMethodEntry.getValue()), new ContextMappings.RequestMappingConditionsDescription(handlerMethodEntry.getKey())));
+                    handlerMappingDescriptions.add(new ContextHandlerMappings.HandlerMappingDescription(handlerMethodEntry.getValue().toString(), handlerMethodEntry.getKey().toString(), new ContextHandlerMappings.HandlerMethodDescription(handlerMethodEntry.getValue()), new ContextHandlerMappings.RequestMappingConditionsDescription(handlerMethodEntry.getKey())));
                 }
 
             } else if (handlerMapping instanceof BeanNameUrlHandlerMapping) {
                 BeanNameUrlHandlerMapping beanNameUrlHandlerMapping = (BeanNameUrlHandlerMapping) handlerMapping;
                 Map<String, Object> handlerMap = beanNameUrlHandlerMapping.getHandlerMap();
 
-
-                for (Map.Entry<String, Object> handlerMappingEntry : handlerMap.entrySet()) {
-                    if (handlerMappingEntity.getValue() instanceof ResourceHttpRequestHandler) {
-                        ResourceHttpRequestHandler resourceHttpRequestHandler = (ResourceHttpRequestHandler) handlerMappingEntity.getValue();
-                        handlerMappingDescriptions.add(new ContextMappings.HandlerMappingDescription(handlerMappingEntity.getValue().toString(), handlerMappingEntry.getKey(), new ContextMappings.HandlerMethodDescription(resourceHttpRequestHandler.getClass().toString(), resourceHttpRequestHandler.getClass().getName(), null),
-                                new ContextMappings.RequestMappingConditionsDescription(null, null, Collections.singleton(RequestMethod.GET), null, Collections.singleton(handlerMappingEntity.getValue().toString()), null)));
-                    } else {
-                        System.out.println("--------------BeanNameUrlHandlerMapping:-----------" + handlerMap);
-
-
-                    }
-                }
-
-
+                logger.info("BeanNameUrlHandlerMapping: {}", handlerMap);
             } else if (handlerMapping instanceof SimpleUrlHandlerMapping) {
                 SimpleUrlHandlerMapping simpleUrlHandlerMapping = (SimpleUrlHandlerMapping) handlerMapping;
                 Map<String, ?> urlMap = simpleUrlHandlerMapping.getUrlMap();
-                System.out.println("--------------SimpleUrlHandlerMapping:-------" + urlMap);
-
+                for (Map.Entry<String, ?> urlMappingEntry : urlMap.entrySet()) {
+                    if (urlMappingEntry.getValue() instanceof ResourceHttpRequestHandler) {
+                        ResourceHttpRequestHandler resourceHttpRequestHandler = (ResourceHttpRequestHandler) urlMappingEntry.getValue();
+                        handlerMappingDescriptions.add(new ContextHandlerMappings.HandlerMappingDescription(urlMappingEntry.getValue().toString(), urlMappingEntry.getKey(), new ContextHandlerMappings.HandlerMethodDescription(resourceHttpRequestHandler.getClass().getName(), resourceHttpRequestHandler.getClass().getSimpleName(), null),
+                                new ContextHandlerMappings.RequestMappingConditionsDescription(null, null, Collections.singleton(RequestMethod.GET), null, Collections.singleton(urlMappingEntry.getKey()), null)));
+                    } else {
+                        logger.info("Extended HttpRequestHandler: {}", urlMappingEntry);
+                    }
+                }
             } else {
-                System.out.println("-------------instanceof:---------------" + handlerMapping.getClass());
+                logger.info("Extended HandlerMapping: {}", handlerMapping);
             }
-
         }
-
-        return new ContextMappings(handlerMappingDescriptions, appContext.getId());
+        return new ContextHandlerMappings(handlerMappingDescriptions, appContext.getId());
 
     }
 
@@ -252,9 +206,7 @@ public class SpringUtils implements ApplicationContextAware {
                 mappings.add(new ContextServletMappings.ServletRegistrationMappingDescription(servletRegistration));
             }
         }
-
         return new ContextServletMappings(mappings, appContext.getId());
-
     }
 
     @Override

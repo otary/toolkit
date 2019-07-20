@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class ContextMappings {
+public final class ContextHandlerMappings {
 
     private final List<HandlerMappingDescription> mappings;
 
     private final String parentId;
 
-    public ContextMappings(List<HandlerMappingDescription> mappings, String parentId) {
+    public ContextHandlerMappings(List<HandlerMappingDescription> mappings, String parentId) {
         this.mappings = mappings;
         this.parentId = parentId;
     }
