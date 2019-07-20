@@ -4,6 +4,9 @@ import javax.servlet.ServletRegistration;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author chenzw
+ */
 public class ContextServletMappings {
 
     private List<ServletRegistrationMappingDescription> servlets;

@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.spring.util;
 
+import cn.chenzw.toolkit.spring.core.SpringContextHolder;
 import cn.chenzw.toolkit.spring.domain.ContextBeans;
 import cn.chenzw.toolkit.spring.domain.ContextFilterMappings;
 import cn.chenzw.toolkit.spring.domain.ContextHandlerMappings;
@@ -8,13 +9,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
@@ -35,26 +34,24 @@ import java.util.*;
  *
  * @author chenzw
  */
-public class SpringUtils implements ApplicationContextAware {
+public class SpringUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringUtils.class);
 
-    private static ApplicationContext appContext;
-
     public static ApplicationContext getAppContext() {
-        return appContext;
+        return SpringContextHolder.getAppContext();
     }
 
     public static Object getBean(String name) {
-        return appContext.getBean(name);
+        return getAppContext().getBean(name);
     }
 
     public static <T> T getBean(Class<T> clazz) {
-        return appContext.getBean(clazz);
+        return getAppContext().getBean(clazz);
     }
 
     public static <T> T getBean(String name, Class<T> clazz) {
-        return appContext.getBean(name, clazz);
+        return getAppContext().getBean(name, clazz);
     }
 
 
@@ -64,7 +61,7 @@ public class SpringUtils implements ApplicationContextAware {
      * @return
      */
     public static ContextBeans getBeans() {
-        return ContextBeans.describing((ConfigurableApplicationContext) appContext);
+        return ContextBeans.describing((ConfigurableApplicationContext) getAppContext());
     }
 
     /**
@@ -98,7 +95,7 @@ public class SpringUtils implements ApplicationContextAware {
      * @return
      */
     public static String getContextPath() {
-        return appContext.getEnvironment().getProperty("server.context-path");
+        return getAppContext().getEnvironment().getProperty("server.context-path");
     }
 
     /**
@@ -107,7 +104,7 @@ public class SpringUtils implements ApplicationContextAware {
      * @return
      */
     public static String getPort() {
-        return appContext.getEnvironment().getProperty("server.port");
+        return getAppContext().getEnvironment().getProperty("server.port");
     }
 
     private static <T> T doRegisterBean(String name, Class<T> clazz, Object... args) {
@@ -117,6 +114,7 @@ public class SpringUtils implements ApplicationContextAware {
                 beanDefinitionBuilder.addConstructorArgValue(arg);
             }
         }
+        ApplicationContext appContext = getAppContext();
         BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
         BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) ((ConfigurableApplicationContext) appContext)
                 .getBeanFactory();
@@ -141,8 +139,8 @@ public class SpringUtils implements ApplicationContextAware {
             }
         });*/
 
+        ApplicationContext appContext = getAppContext();
         List<ContextHandlerMappings.HandlerMappingDescription> handlerMappingDescriptions = new ArrayList<>();
-
         Map<String, HandlerMapping> handerMappings = appContext.getBeansOfType(HandlerMapping.class);
         for (Map.Entry<String, HandlerMapping> handlerMappingEntity : handerMappings.entrySet()) {
             HandlerMapping handlerMapping = handlerMappingEntity.getValue();
@@ -184,6 +182,7 @@ public class SpringUtils implements ApplicationContextAware {
      * @return
      */
     public static ContextFilterMappings getFilterMappings() {
+        ApplicationContext appContext = getAppContext();
         List<ContextFilterMappings.FilterRegistrationMappingDescription> mappings = new ArrayList<>();
         if (appContext instanceof WebApplicationContext) {
             Collection<? extends FilterRegistration> filterRegistrations = ((WebApplicationContext) appContext).getServletContext().getFilterRegistrations().values();
@@ -199,7 +198,7 @@ public class SpringUtils implements ApplicationContextAware {
      */
     public static ContextServletMappings getServletMappings() {
         List<ContextServletMappings.ServletRegistrationMappingDescription> mappings = new ArrayList<>();
-
+        ApplicationContext appContext = getAppContext();
         if (appContext instanceof WebApplicationContext) {
             Collection<? extends ServletRegistration> servletRegistrations = ((WebApplicationContext) appContext).getServletContext().getServletRegistrations().values();
             for (ServletRegistration servletRegistration : servletRegistrations) {
@@ -207,11 +206,6 @@ public class SpringUtils implements ApplicationContextAware {
             }
         }
         return new ContextServletMappings(mappings, appContext.getId());
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        appContext = applicationContext;
     }
 
 

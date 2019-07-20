@@ -7,10 +7,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author chenzw
+ */
 public class ContextBeans {
 
     private final Set<BeanDescriptor> beans;
@@ -114,25 +116,6 @@ public class ContextBeans {
         public String getName() {
             return name;
         }
-
-        @Override
-        public String toString() {
-            return "BeanDescriptor{" +
-                    "name='" + name + '\'' +
-                    ", aliases=" + Arrays.toString(aliases) +
-                    ", scope='" + scope + '\'' +
-                    ", type=" + type +
-                    ", resource='" + resource + '\'' +
-                    ", dependencies=" + Arrays.toString(dependencies) +
-                    '}';
-        }
     }
 
-    @Override
-    public String toString() {
-        return "ContextBeans{" +
-                "beans=" + beans +
-                ", parentId='" + parentId + '\'' +
-                '}';
-    }
 }
