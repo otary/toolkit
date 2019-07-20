@@ -5,6 +5,10 @@ import cn.chenzw.toolkit.domain.entity.User;
 import cn.chenzw.toolkit.spring.config.AppConfig;
 import cn.chenzw.toolkit.spring.config.WebConfig;
 import cn.chenzw.toolkit.spring.domain.ContextBeans;
+import cn.chenzw.toolkit.spring.domain.ContextFilterMappings;
+import cn.chenzw.toolkit.spring.domain.ContextMappings;
+import cn.chenzw.toolkit.spring.domain.ContextServletMappings;
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,7 +66,31 @@ public class SpringUtilsTests {
 
     @Test
     public void testGetHandlerMappings() {
-        SpringUtils.getHandlerMappings();
+        ContextMappings handlerMappings = SpringUtils.getHandlerMappings();
+
+
+        Gson gson = new Gson();
+        String s = gson.toJson(handlerMappings);
+        System.out.println(s);
+    }
+
+    @Test
+    public void testGetFilterMappings(){
+        ContextFilterMappings filterMappings = SpringUtils.getFilterMappings();
+
+        Gson gson = new Gson();
+        String s = gson.toJson(filterMappings);
+        System.out.println(s);
+    }
+
+    @Test
+    public void testGetServletMappings(){
+        ContextServletMappings servletMappings = SpringUtils.getServletMappings();
+
+        Gson gson = new Gson();
+        String s = gson.toJson(servletMappings);
+        System.out.println(s);
+
     }
 }
 
