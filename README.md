@@ -212,6 +212,16 @@ Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
  URL sourceJar = ClassExtUtils.findSourceJar(DateUtils.class);  // => file:/C:/Users/yunli/.m2/repository/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar
 ```
 
+### GenericUtils
+
+泛型类工具
+
+- 获取泛型参数
+
+```
+
+```
+
 ### BinaryConvertUtils
 
 - **bytes数组<=>十六进制字符串**
@@ -256,6 +266,30 @@ Map<String, String> uriParams = UriExtUtils.getUriParams(
 ```
  // 将List<User>转换成List<UserDto>
 List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
+```
+
+- 支持自定义字段转换
+
+```
+List<User> users = new ArrayList<>();
+for (int i = 0; i < 5; i++) {
+   User user = new User();
+   user.setId(i);
+   user.setName("张三");
+
+   users.add(user);
+}
+
+DozerBeanMapper mapper = new DozerBeanMapper();
+List<DozerFieldMapping> dozerFieldMappings = new ArrayList<>();
+dozerFieldMappings.add(new DozerFieldMapping("id", new CustomConverter() {
+     @Override
+     public Object convert(Object existingDestinationFieldValue, Object sourceFieldValue, Class<?> destinationClass, Class<?> sourceClass) {
+        return 100 + (Integer) sourceFieldValue;  // id值都加100
+     }
+}));
+
+List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class, dozerFieldMappings); // 所有的id值都大于100
 ```
 
 ### DozerPageUtils
