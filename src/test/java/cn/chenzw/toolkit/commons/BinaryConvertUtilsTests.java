@@ -12,12 +12,12 @@ public class BinaryConvertUtilsTests {
     @Test
     public void testBytesToHexString() {
         String sHex = BinaryConvertUtils.bytesToHexString("hello".getBytes());
-        Assert.assertEquals(sHex, "68656c6c6f");
+        Assert.assertEquals("68656c6c6f", sHex);
     }
 
     @Test
     public void testHexStringToBytes() {
         byte[] bytes = BinaryConvertUtils.hexStringToBytes("68656c6c6f");
-        Assert.assertEquals(new String(bytes), "hello");
+        Assert.assertEquals("hello", new String(bytes));
     }
 }

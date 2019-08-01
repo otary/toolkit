@@ -13,17 +13,17 @@ public class ColorUtilsTests {
     @Test
     public void testHexToRgb() {
         Color color = ColorUtils.hexToRgb("70AD47");
-        Assert.assertEquals(color.getRed(), 112);
-        Assert.assertEquals(color.getGreen(), 173);
-        Assert.assertEquals(color.getBlue(), 71);
+        Assert.assertEquals(112, color.getRed());
+        Assert.assertEquals(173, color.getGreen());
+        Assert.assertEquals(71, color.getBlue());
     }
 
     @Test
     public void testHexToRgb2() {
         Color color = ColorUtils.hexToRgb("#70AD47");
 
-        Assert.assertEquals(color.getRed(), 112);
-        Assert.assertEquals(color.getGreen(), 173);
-        Assert.assertEquals(color.getBlue(), 71);
+        Assert.assertEquals(112, color.getRed());
+        Assert.assertEquals(173, color.getGreen());
+        Assert.assertEquals(71, color.getBlue());
     }
 }

@@ -13,6 +13,9 @@ import java.util.List;
  */
 public abstract class DozerPageUtils {
 
+    private DozerPageUtils() {
+    }
+
     /**
      * List对象互转
      *

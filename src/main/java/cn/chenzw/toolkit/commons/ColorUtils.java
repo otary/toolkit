@@ -19,7 +19,7 @@ public final class ColorUtils {
      * @param hexColor
      * @return
      */
-    public final static Color hexToRgb(String hexColor) {
+    public static final Color hexToRgb(String hexColor) {
 
         if (StringUtils.isBlank(hexColor)) {
             throw new IllegalArgumentException("hex color is null!");
