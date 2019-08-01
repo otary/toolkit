@@ -25,6 +25,9 @@ public abstract class AESUtils {
 
     private static final String AES_ALGORITHM = "AES";
 
+    private AESUtils() {
+    }
+
     /**
      * AES加解密
      * @param mode {@link javax.crypto.Cipher#ENCRYPT_MODE}、{@link javax.crypto.Cipher#DECRYPT_MODE}

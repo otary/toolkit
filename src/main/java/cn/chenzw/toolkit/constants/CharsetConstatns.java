@@ -6,4 +6,7 @@ package cn.chenzw.toolkit.constants;
 public abstract class CharsetConstatns {
 
     public static final String DEFAULT_CHARSET = "UTF-8";
+
+    private CharsetConstatns() {
+    }
 }

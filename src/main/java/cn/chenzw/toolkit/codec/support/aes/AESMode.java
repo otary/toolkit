@@ -106,6 +106,5 @@ public enum AESMode {AES_DEFAULT("AES"), AES_CBC_NoPadding("AES/CBC/NoPadding"),
         return modeAndPadding;
     }
 
-    public void setModeAndPadding(String modeAndPadding) {
-        this.modeAndPadding = modeAndPadding;
-    }}
+
+}

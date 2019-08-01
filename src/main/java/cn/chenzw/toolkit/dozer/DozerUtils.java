@@ -24,8 +24,11 @@ import java.util.Map;
  */
 public abstract class DozerUtils {
 
-
     private static final Logger logger = LoggerFactory.getLogger(DozerUtils.class);
+
+
+    private DozerUtils() {
+    }
 
     /**
      * List对象互转
@@ -62,8 +65,9 @@ public abstract class DozerUtils {
      * @param <S>
      * @return
      */
-    public static <T, S> List<T> mapList(final Mapper mapper, List<S> sourceList, Class<T> destClass, List<DozerFieldMapping> dozerFieldMappings) {
-        logger.debug("Dozer [{}] start mapList, source:{}, dest: {}", sourceList, destClass);
+    public static <T, S> List<T> mapList(final Mapper mapper, List<S> sourceList, Class<T> destClass,
+            List<DozerFieldMapping> dozerFieldMappings) {
+        logger.debug("Dozer [{}] start mapList, source:{}, dest: {}", dozerFieldMappings, sourceList, destClass);
         long t1 = System.currentTimeMillis();
 
         if (sourceList == null || sourceList.isEmpty()) {

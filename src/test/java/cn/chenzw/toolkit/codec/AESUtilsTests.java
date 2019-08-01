@@ -35,7 +35,7 @@ public class AESUtilsTests {
         String key = "123";
 
         String base64String = AESUtils.encryptAsBase64String(plainText, key);
-        Assert.assertEquals(base64String, "W20Afwqie8Oo6CX08vL4aQ==");
+        Assert.assertEquals("W20Afwqie8Oo6CX08vL4aQ==", base64String);
 
         byte[] bytes = AESUtils.decryptBase64String(base64String, key);
         Assert.assertEquals(new String(bytes), plainText);
@@ -59,7 +59,7 @@ public class AESUtilsTests {
         String plainText = "hello";
         String key = "123";
         String hexString = AESUtils.encryptAsHexString(plainText, key);
-        Assert.assertEquals(hexString, "5b6d007f0aa27bc3a8e825f4f2f2f869");
+        Assert.assertEquals("5b6d007f0aa27bc3a8e825f4f2f2f869", hexString);
 
         byte[] bytes = AESUtils.decryptHexString(hexString, key);
         Assert.assertEquals(new String(bytes), plainText);

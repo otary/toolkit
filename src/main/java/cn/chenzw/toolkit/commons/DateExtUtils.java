@@ -13,6 +13,9 @@ import java.util.Date;
  */
 public class DateExtUtils {
 
+    private DateExtUtils() {
+    }
+
 
     /**
      * 随机生成日期（startDateInclusive至endDateExclusive）

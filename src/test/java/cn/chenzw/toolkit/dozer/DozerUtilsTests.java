@@ -38,11 +38,11 @@ public class DozerUtilsTests {
         // 将List<User>转换成List<UserDto>
         List<UserDto> userDtos = DozerUtils.mapList(mapper, users, UserDto.class);
 
-        Assert.assertEquals(userDtos.size(), 5);
+        Assert.assertEquals(5, userDtos.size());
         for (int i = 0; i < 5; i++) {
             UserDto userDto = userDtos.get(i);
             Assert.assertTrue(userDto.getId().equals(i));
-            Assert.assertEquals(userDto.getName(), "张三");
+            Assert.assertEquals("张三", userDto.getName());
             Assert.assertNotNull(userDto.getBirthDate());
         }
     }
@@ -65,7 +65,8 @@ public class DozerUtilsTests {
         List<DozerFieldMapping> dozerFieldMappings = new ArrayList<>();
         dozerFieldMappings.add(new DozerFieldMapping("id", new CustomConverter() {
             @Override
-            public Object convert(Object existingDestinationFieldValue, Object sourceFieldValue, Class<?> destinationClass, Class<?> sourceClass) {
+            public Object convert(Object existingDestinationFieldValue, Object sourceFieldValue,
+                    Class<?> destinationClass, Class<?> sourceClass) {
                 return 100 + (Integer) sourceFieldValue;
             }
         }));

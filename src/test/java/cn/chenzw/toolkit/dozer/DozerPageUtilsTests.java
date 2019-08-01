@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(JUnit4.class)
@@ -30,6 +29,6 @@ public class DozerPageUtilsTests {
         List<UserDto> userDtos = DozerPageUtils.mapList(new DozerBeanMapper(), users, UserDto.class);
 
         Assert.assertTrue(userDtos instanceof Page);
-        Assert.assertEquals(((Page) userDtos).getTotal(), 5);
+        Assert.assertEquals(5, ((Page) userDtos).getTotal());
     }
 }

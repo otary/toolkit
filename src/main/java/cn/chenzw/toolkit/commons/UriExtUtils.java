@@ -40,7 +40,7 @@ public class UriExtUtils {
         }
         String sParam = StringUtils.join(list, "&");
 
-        int index = uri.indexOf("?");
+        int index = uri.indexOf('?');
         if (index > -1) {
             // 最后一个字符为"?"
             if (index == (uri.length() - 1)) {

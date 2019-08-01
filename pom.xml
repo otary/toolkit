@@ -49,15 +49,10 @@
     <!-- 发布配置 -->
     <distributionManagement>
         <repository>
-            <id>releasesId</id>
-            <name>Releases name</name>
-            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+            <id>itm-release</id>
+            <url>http://192.168.17.223:8085/repository/maven-3rd/</url>
         </repository>
-        <snapshotRepository>
-            <id>snapshots id</id>
-            <name>snapshots name</name>
-            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
+
     </distributionManagement>
 
     <dependencies>

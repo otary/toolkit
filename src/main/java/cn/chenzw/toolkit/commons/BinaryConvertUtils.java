@@ -10,12 +10,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class BinaryConvertUtils {
 
+    private BinaryConvertUtils() {
+    }
 
     /**
      * byte数组 => 十六进制字符串
      *
      * @param bytes
      * @return
+     * @deprecated use {@link org.apache.commons.codec.binary.Hex#encodeHexString(byte[])}
      */
     @Deprecated
     public static final String bytesToHexString(byte[] bytes) {
@@ -38,11 +41,13 @@ public abstract class BinaryConvertUtils {
      * 十六进制字符串 => byte数组
      *
      * @return
+     *
+     * @deprecated use {@link org.apache.commons.codec.binary.Hex#decodeHex(java.lang.String)}
      */
     @Deprecated
     public static final byte[] hexStringToBytes(String hexString) {
         if (StringUtils.isEmpty(hexString)) {
-            return null;
+            return new byte[0];
         }
         hexString = hexString.toUpperCase();
         int length = hexString.length() / 2;

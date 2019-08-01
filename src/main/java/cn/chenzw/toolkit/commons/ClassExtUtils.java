@@ -11,6 +11,8 @@ import java.security.ProtectionDomain;
  */
 public abstract class ClassExtUtils {
 
+    private ClassExtUtils() {
+    }
 
     /**
      * 判断指定的类是否存在
@@ -25,7 +27,7 @@ public abstract class ClassExtUtils {
         try {
             forName(className, classLoader);
             return true;
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             return false;
         }
     }
@@ -55,8 +57,8 @@ public abstract class ClassExtUtils {
         ClassLoader cl = null;
         try {
             cl = Thread.currentThread().getContextClassLoader();
-        } catch (Throwable e) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         if (cl == null) {
@@ -64,8 +66,8 @@ public abstract class ClassExtUtils {
             if (cl == null) {
                 try {
                     cl = ClassLoader.getSystemClassLoader();
-                } catch (Throwable ex) {
-
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         }

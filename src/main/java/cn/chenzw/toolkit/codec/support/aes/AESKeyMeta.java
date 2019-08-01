@@ -13,8 +13,4 @@ public enum AESKeyMeta {
     public int getBitLen() {
         return bitLen;
     }
-
-    public void setBitLen(int bitLen) {
-        this.bitLen = bitLen;
-    }
 }
