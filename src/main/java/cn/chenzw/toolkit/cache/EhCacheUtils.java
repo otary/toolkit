@@ -36,7 +36,7 @@ public class EhCacheUtils {
 
     /**
      * 获取Cache对象
-     * @param cacheName
+     * @param cacheName 缓存名称
      * @return
      */
     public static Cache getCache(String cacheName) {
@@ -46,7 +46,7 @@ public class EhCacheUtils {
 
     /**
      * 获取所有Cache对象
-     * @return
+     * @return 缓存列表
      */
     public static List<Cache> getCaches() {
         List<Cache> caches = new ArrayList<>();
@@ -60,8 +60,8 @@ public class EhCacheUtils {
 
     /**
      * 获取所有Key
-     * @param cacheName
-     * @return
+     * @param cacheName 缓存名称
+     * @return key列表
      */
     public static List getKeys(String cacheName) {
         return getCache(cacheName).getKeys();
