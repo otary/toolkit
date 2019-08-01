@@ -36,7 +36,7 @@ public class EhcacheUtilsTests {
         Assert.assertTrue(userCacheElements.size() > 0);
 
         Object value = EhCacheUtils.getValue("userCache", "key#0");
-        Assert.assertEquals(value, "hello world");
+        Assert.assertEquals("hello world", value);
 
     }
 

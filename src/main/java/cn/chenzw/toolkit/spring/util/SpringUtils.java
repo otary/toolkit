@@ -36,6 +36,9 @@ import java.util.*;
  */
 public class SpringUtils {
 
+    private SpringUtils() {
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(SpringUtils.class);
 
     public static ApplicationContext getAppContext() {
@@ -127,30 +130,23 @@ public class SpringUtils {
 
 
     /**
+     * 获取所有的HandlerMapping
+     *
      * @return
      */
     public static ContextHandlerMappings getHandlerMappings() {
-
-        // Map<String, DispatcherServlet> dispatcherServlets = new LinkedHashMap<>();
-       /* context.getBeansOfType(ServletRegistrationBean.class).values().forEach((registration) -> {
-            Servlet servlet = registration.getServlet();
-            if (servlet instanceof DispatcherServlet && !dispatcherServlets.containsValue(servlet)) {
-                dispatcherServlets.put(registration.getServletName(), (DispatcherServlet) servlet);
-            }
-        });*/
-
         ApplicationContext appContext = getAppContext();
         List<ContextHandlerMappings.HandlerMappingDescription> handlerMappingDescriptions = new ArrayList<>();
         Map<String, HandlerMapping> handerMappings = appContext.getBeansOfType(HandlerMapping.class);
         for (Map.Entry<String, HandlerMapping> handlerMappingEntity : handerMappings.entrySet()) {
             HandlerMapping handlerMapping = handlerMappingEntity.getValue();
+
             if (handlerMapping instanceof RequestMappingHandlerMapping) {
                 RequestMappingHandlerMapping requestMappingHandlerMapping = (RequestMappingHandlerMapping) handlerMapping;
                 Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
                 for (Map.Entry<RequestMappingInfo, HandlerMethod> handlerMethodEntry : handlerMethods.entrySet()) {
                     handlerMappingDescriptions.add(new ContextHandlerMappings.HandlerMappingDescription(handlerMethodEntry.getValue().toString(), handlerMethodEntry.getKey().toString(), new ContextHandlerMappings.HandlerMethodDescription(handlerMethodEntry.getValue()), new ContextHandlerMappings.RequestMappingConditionsDescription(handlerMethodEntry.getKey())));
                 }
-
             } else if (handlerMapping instanceof BeanNameUrlHandlerMapping) {
                 BeanNameUrlHandlerMapping beanNameUrlHandlerMapping = (BeanNameUrlHandlerMapping) handlerMapping;
                 Map<String, Object> handlerMap = beanNameUrlHandlerMapping.getHandlerMap();

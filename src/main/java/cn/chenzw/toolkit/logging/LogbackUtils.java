@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;

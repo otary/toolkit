@@ -10,22 +10,22 @@ public class StringExtUtilsTests {
 
     @Test
     public void testToUnderscore() {
-        Assert.assertEquals(StringExtUtils.toUnderscore("HelloWorld"), "hello_world");
-        Assert.assertEquals(StringExtUtils.toUnderscore("helloWorld"), "hello_world");
-        Assert.assertEquals(StringExtUtils.toUnderscore("Hello2World"), "hello2_world");
-        Assert.assertEquals(StringExtUtils.toUnderscore("HElloWOrld"), "h_ello_w_orld");
+        Assert.assertEquals("hello_world", StringExtUtils.toUnderscore("HelloWorld"));
+        Assert.assertEquals("hello_world", StringExtUtils.toUnderscore("helloWorld"));
+        Assert.assertEquals("hello2_world", StringExtUtils.toUnderscore("Hello2World"));
+        Assert.assertEquals("h_ello_w_orld", StringExtUtils.toUnderscore("HElloWOrld"));
     }
 
     @Test
     public void testToCamel() {
-        Assert.assertEquals(StringExtUtils.toCamel("hello_world"), "helloWorld");
-        Assert.assertEquals(StringExtUtils.toCamel("HELLO_WORLD"), "helloWorld");
-        Assert.assertEquals(StringExtUtils.toCamel("Hello_WoRld"), "helloWorld");
+        Assert.assertEquals("helloWorld", StringExtUtils.toCamel("hello_world"));
+        Assert.assertEquals("helloWorld", StringExtUtils.toCamel("HELLO_WORLD"));
+        Assert.assertEquals("helloWorld", StringExtUtils.toCamel("Hello_WoRld"));
     }
 
     @Test
     public void testUppercaseSeparate() {
-        Assert.assertEquals(StringExtUtils.uppercaseSeparate("HelloWorld", "-"), "hello-world");
-        Assert.assertEquals(StringExtUtils.uppercaseSeparate("helloWorld", "@"), "hello@world");
+        Assert.assertEquals("hello-world", StringExtUtils.uppercaseSeparate("HelloWorld", "-"));
+        Assert.assertEquals("hello@world", StringExtUtils.uppercaseSeparate("helloWorld", "@"));
     }
 }

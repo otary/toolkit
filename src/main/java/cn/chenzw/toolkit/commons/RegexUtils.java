@@ -7,15 +7,20 @@ import java.util.regex.Pattern;
 
 /**
  * 正则匹配工具
+ *
  * @author chenzw
  */
 public abstract class RegexUtils {
+
+    private RegexUtils() {
+    }
 
 
     private static final Pattern CHINESE_PATTERN = Pattern.compile("[\\u4e00-\\u9fa5]");
 
     /**
      * 是否IPv4地址
+     *
      * @param ipv4
      * @return
      */
@@ -27,6 +32,7 @@ public abstract class RegexUtils {
 
     /**
      * 是否IPv6地址
+     *
      * @param ipv6
      * @return
      */
@@ -38,6 +44,7 @@ public abstract class RegexUtils {
 
     /**
      * 是否IP地址(包含IPv4和IPv6)
+     *
      * @param ip
      * @return
      */
@@ -50,6 +57,7 @@ public abstract class RegexUtils {
 
     /**
      * 是否邮箱地址（宽松模式）
+     *
      * @param email
      * @return
      */
@@ -59,6 +67,7 @@ public abstract class RegexUtils {
 
     /**
      * 是否QQ号码
+     *
      * @param qq
      * @return
      */
@@ -69,6 +78,7 @@ public abstract class RegexUtils {
 
     /**
      * 是否身份证号（宽松模式）
+     *
      * @param idCard
      * @return
      */
@@ -89,18 +99,16 @@ public abstract class RegexUtils {
 
     /**
      * 是否包含中文字符
+     *
      * @return
      */
     public static boolean containsChinese(String chinese) {
-        Matcher matcher = CHINESE_PATTERN.matcher(chinese);
-        if (matcher.find()) {
-            return true;
-        }
-        return false;
+        return CHINESE_PATTERN.matcher(chinese).find();
     }
 
     /**
      * 是否中文字符
+     *
      * @param chinese
      * @return
      */
@@ -112,6 +120,7 @@ public abstract class RegexUtils {
      * 是否手机号
      * <br>
      * <b>支持13、14、15、16、17、18、19号段</b>
+     *
      * @param phoneNo
      * @return
      */
@@ -122,6 +131,7 @@ public abstract class RegexUtils {
 
     /**
      * 是否整数（正整数 + 负整数）
+     *
      * @return
      */
     public static boolean isInteger(String str) {
@@ -136,6 +146,7 @@ public abstract class RegexUtils {
 
     /**
      * 是否数值（包括小数）
+     *
      * @param number
      * @return
      */

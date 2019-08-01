@@ -25,7 +25,7 @@ public class Log4j2UtilsTests {
 
         Log4j2Utils.setLogLevel("cn.chenzw.toolkit.logging.Log4j2Utils", Level.WARN);
         LoggerConfig logger = Log4j2Utils.getLogger("cn.chenzw.toolkit.logging.Log4j2Utils");
-        Assert.assertEquals(logger.getLevel(), Level.WARN);
+        Assert.assertEquals(Level.WARN, logger.getLevel());
 
     }
 }

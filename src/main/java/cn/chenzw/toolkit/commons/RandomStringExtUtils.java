@@ -6,13 +6,17 @@ import org.apache.commons.lang3.RandomUtils;
 
 /**
  * org.apache.commons.lang3.RandomStringUtils 扩展类
+ *
  * @author chenzw
  */
 public class RandomStringExtUtils {
 
+    private RandomStringExtUtils() {
+    }
 
     /**
      * 随机生成count个常用中文字符
+     *
      * @param count
      * @return
      */
@@ -26,7 +30,8 @@ public class RandomStringExtUtils {
     }
 
     /**
-     *  随机生成minLengthInclusive至maxLengthExclusive个常用中文字符
+     * 随机生成minLengthInclusive至maxLengthExclusive个常用中文字符
+     *
      * @param minLengthInclusive
      * @param maxLengthExclusive
      * @return
@@ -37,6 +42,7 @@ public class RandomStringExtUtils {
 
     /**
      * 随机生成count个中文字符
+     *
      * @param count
      * @return
      */
@@ -46,6 +52,7 @@ public class RandomStringExtUtils {
 
     /**
      * 随机生成minLengthInclusive至maxLengthExclusive个中文字符
+     *
      * @param minLengthInclusive
      * @param maxLengthExclusive
      * @return
@@ -56,6 +63,7 @@ public class RandomStringExtUtils {
 
     /**
      * 随机生成姓名
+     *
      * @return
      */
     public static String randomName() {
@@ -68,6 +76,7 @@ public class RandomStringExtUtils {
 
     /**
      * 从给定的列表项中随机取值
+     *
      * @param list
      * @param <T>
      * @return

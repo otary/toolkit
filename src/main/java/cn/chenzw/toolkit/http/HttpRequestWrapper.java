@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public class HttpRequestWrapper {
 
-    private final static String POST_METHOD = "POST";
+    private static final String POST_METHOD = "POST";
     private static final String MULTIPART = "multipart/";
     private static final String[] CLIENT_IP_HEADERS = {"x-forwarded-for", "Proxy-Client-IP", "WL-Proxy-Client-IP",
             "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "X-Real-IP"};

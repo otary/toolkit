@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class EhCacheUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(EhCacheUtils.class);
     private static CacheManager cacheManager;
 
     private EhCacheUtils() {

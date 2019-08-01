@@ -19,8 +19,6 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
  */
 public class Log4j2Utils {
 
-    private static final Logger logger = LoggerFactory.getLogger(Log4j2Utils.class);
-
     private Log4j2Utils() {
     }
 

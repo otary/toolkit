@@ -24,7 +24,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     HttpServletRequest orginalRequest;
 
-    //html过滤
+    // html过滤
     private final static HTMLFilter htmlFilter = new HTMLFilter();
 
     public XssHttpServletRequestWrapper(HttpServletRequest request) {
@@ -62,7 +62,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
             @Override
             public void setReadListener(ReadListener readListener) {
-
+                // Nothing to do
             }
 
             @Override
@@ -85,7 +85,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     public String[] getParameterValues(String name) {
         String[] parameters = super.getParameterValues(name);
         if (parameters == null || parameters.length == 0) {
-            return null;
+            return new String[0];
         }
 
         for (int i = 0; i < parameters.length; i++) {

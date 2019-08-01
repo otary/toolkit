@@ -24,6 +24,7 @@ public class XssFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
+        // Nothing to do
     }
 
     @Override
@@ -31,7 +32,7 @@ public class XssFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI();
-        if (uri.indexOf(".") == -1 && !uri.contains(exclude)) {
+        if (uri.indexOf('.') == -1 && !uri.contains(exclude)) {
             XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request);
             chain.doFilter(xssRequest, response);
         } else {
@@ -41,6 +42,7 @@ public class XssFilter implements Filter {
 
     @Override
     public void destroy() {
+        // Nothing to do
     }
 
 }

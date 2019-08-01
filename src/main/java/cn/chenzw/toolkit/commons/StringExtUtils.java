@@ -1,10 +1,13 @@
 package cn.chenzw.toolkit.commons;
 
 /**
- * @see {@link org.apache.commons.lang3.StringUtils}
  * @author chenzw
+ * @see {@link org.apache.commons.lang3.StringUtils}
  */
 public abstract class StringExtUtils {
+
+    private StringExtUtils() {
+    }
 
     /**
      * 分隔大写字符
@@ -66,7 +69,7 @@ public abstract class StringExtUtils {
 
         StringBuilder result = new StringBuilder();
         // 用下划线将原始字符串分割
-        String camels[] = name.split(separator);
+        String[] camels = name.split(separator);
         for (String camel : camels) {
             // 跳过原始字符串中开头、结尾的下换线或双重下划线
             if (camel.isEmpty()) {
@@ -86,7 +89,6 @@ public abstract class StringExtUtils {
     }
 
     /**
-     *
      * @param name
      * @return
      */

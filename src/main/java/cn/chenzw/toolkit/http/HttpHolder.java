@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HttpHolder {
 
+    private HttpHolder() {
+    }
+
     private static final ThreadLocal<HttpServletRequest> REQUEST = new ThreadLocal<>();
     private static final ThreadLocal<HttpServletResponse> RESPONSE = new ThreadLocal<>();
 
-    private static final boolean springframePresent = ClassExtUtils.isPresent("org.springframework.web.context.request.RequestContextHolder");
+    private static final boolean SPRING_FREMAE_PRESENT = ClassExtUtils.isPresent("org.springframework.web.context.request.RequestContextHolder");
 
     public static void init(HttpServletRequest request, HttpServletResponse response) {
         REQUEST.set(request);
@@ -36,7 +39,7 @@ public class HttpHolder {
     }
 
     private static HttpServletRequest getRequestInternal() {
-        if (springframePresent) {
+        if (SPRING_FREMAE_PRESENT) {
             return ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder
                     .getRequestAttributes()).getRequest();
         }
@@ -44,12 +47,11 @@ public class HttpHolder {
     }
 
     private static HttpServletResponse getResponseInternal() {
-        if (springframePresent) {
+        if (SPRING_FREMAE_PRESENT) {
             return new org.springframework.web.context.request.ServletWebRequest(getRequestInternal()).getResponse();
         }
         return null;
     }
-
 
 
 }

@@ -71,7 +71,7 @@ public abstract class DozerUtils {
         long t1 = System.currentTimeMillis();
 
         if (sourceList == null || sourceList.isEmpty()) {
-            return new ArrayList<T>();
+            return new ArrayList<>();
         }
 
         Map<String, CustomConverter> customConverterMap = new HashMap<>();

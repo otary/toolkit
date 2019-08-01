@@ -24,10 +24,10 @@ public class LogbackUtilsTests {
 
         LogbackUtils.setLogLevel("cn.chenzw.toolkit.logging.LogbackUtilsTests", Level.WARN);
         Logger logger = LogbackUtils.getLogger("cn.chenzw.toolkit.logging.LogbackUtilsTests");
-        Assert.assertEquals(logger.getLevel(), Level.WARN);
+        Assert.assertEquals(Level.WARN, logger.getLevel());
 
         Logger rootLogger = LogbackUtils.getRootLogger();
-        Assert.assertEquals(rootLogger.getLevel(), Level.DEBUG);
-        Assert.assertEquals(rootLogger.getName(), "ROOT");
+        Assert.assertEquals(Level.DEBUG, rootLogger.getLevel());
+        Assert.assertEquals("ROOT", rootLogger.getName());
     }
 }

@@ -23,10 +23,10 @@ public class ListExtUtilsTests {
             users.add(user);
         }
         String ids = ListExtUtils.joinFieldValue(users, "id", "#");
-        Assert.assertEquals(ids, "0#1#2#3#4#5#6#7#8#9");
+        Assert.assertEquals("0#1#2#3#4#5#6#7#8#9", ids);
 
         String ids2 = ListExtUtils.joinFieldValue(users, "id");
-        Assert.assertEquals(ids2, "0,1,2,3,4,5,6,7,8,9");
+        Assert.assertEquals("0,1,2,3,4,5,6,7,8,9", ids2);
 
     }
 
