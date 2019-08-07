@@ -103,7 +103,7 @@ public abstract class StringExtUtils {
     }
 
     /**
-     * 获取第一个分离点之后的文本
+     * 获取第一个分离点之后的文本（不存在分离点时返回整个字符串）
      *
      * <pre>
      *     StringExtUtils.subStringFirstAfter("abcdef", "c") = def
@@ -128,5 +128,33 @@ public abstract class StringExtUtils {
             return str;
         }
         return str.substring(pos + separator.length());
+    }
+
+    /**
+     * 获取第一个分离点之前的文本（不存在分离点时返回空）
+     *
+     * <pre>
+     *    StringExtUtils.subStringFirstBefore("abcdef", "c") = ab
+     *    StringExtUtils.subStringFirstBefore("abcdef", "g") = ""
+     *    StringExtUtils.subStringFirstBefore("abcdefabcdef", "c") = ab
+     * </pre>
+     *
+     * @param str
+     * @param separator
+     * @return
+     */
+    public static String subStringFirstBefore(final String str, final String separator) {
+        if (StringUtils.isEmpty(str)) {
+            return str;
+        }
+        if (separator == null) {
+            return "";
+        }
+
+        final int pos = str.indexOf(separator);
+        if (pos == INDEX_NOT_FOUND) {
+            return "";
+        }
+        return str.substring(0, pos);
     }
 }

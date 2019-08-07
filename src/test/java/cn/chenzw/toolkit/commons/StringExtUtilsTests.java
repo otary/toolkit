@@ -35,4 +35,11 @@ public class StringExtUtilsTests {
         Assert.assertEquals("abcdef", StringExtUtils.subStringFirstAfter("abcdef", "g"));
         Assert.assertEquals("defabcdef", StringExtUtils.subStringFirstAfter("abcdefabcdef", "c"));
     }
+
+    @Test
+    public void testSubStringFirstBefore(){
+        Assert.assertEquals("ab", StringExtUtils.subStringFirstBefore("abcdef", "c"));
+        Assert.assertEquals("", StringExtUtils.subStringFirstBefore("abcdef", "g"));
+        Assert.assertEquals("ab", StringExtUtils.subStringFirstBefore("abcdefabcdef", "c"));
+    }
 }
