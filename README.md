@@ -27,6 +27,14 @@ StringExtUtils.uppercaseSeparate("HelloWorld", "-");  // => "hello-world"
 StringExtUtils.uppercaseSeparate("helloWorld", "@");  // => "hello@world"
 ```
 
+- 获取第一个分离点之后的文本
+
+```
+StringExtUtils.subStringFirstAfter("abcdef", "c");  // => def
+StringExtUtils.subStringFirstAfter("abcdef", "g");  // => abcdef
+StringExtUtils.subStringFirstAfter("abcdefabcdef", "c");  // => defabcdef
+```
+
 ### RandomStringExtUtils
 
 - **随机生成中文字符**

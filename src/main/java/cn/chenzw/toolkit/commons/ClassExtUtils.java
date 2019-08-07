@@ -7,6 +7,7 @@ import java.security.ProtectionDomain;
 
 /**
  * org.apache.commons.lang3.ClassUtils扩展类
+ *
  * @author chenzw
  */
 public abstract class ClassExtUtils {
@@ -16,6 +17,7 @@ public abstract class ClassExtUtils {
 
     /**
      * 判断指定的类是否存在
+     *
      * @param className
      * @return
      */
@@ -34,6 +36,7 @@ public abstract class ClassExtUtils {
 
     /**
      * 反射类
+     *
      * @param name
      * @return
      * @throws ClassNotFoundException
@@ -91,6 +94,23 @@ public abstract class ClassExtUtils {
             return null;
         }
         return codeSource.getLocation();
+    }
+
+
+    /**
+     * 生成唯一的Class名称
+     *
+     * @param className
+     * @return
+     */
+    public static String generateUniqueClassName(String className) {
+        String originalName = className;
+        int i = 1;
+        while (isPresent(className)) {
+            className = originalName + "$" + (i++);
+        }
+        return className;
+
     }
 
 }

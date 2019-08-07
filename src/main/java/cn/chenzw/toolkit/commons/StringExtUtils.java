@@ -1,10 +1,14 @@
 package cn.chenzw.toolkit.commons;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author chenzw
  * @see {@link org.apache.commons.lang3.StringUtils}
  */
 public abstract class StringExtUtils {
+
+    public static final int INDEX_NOT_FOUND = -1;
 
     private StringExtUtils() {
     }
@@ -89,10 +93,40 @@ public abstract class StringExtUtils {
     }
 
     /**
+     * 将下划线命名的字符串转换为驼峰格式
+     *
      * @param name
      * @return
      */
     public static String toCamel(String name) {
         return toCamel(name, "_", false);
+    }
+
+    /**
+     * 获取第一个分离点之后的文本
+     *
+     * <pre>
+     *     StringExtUtils.subStringFirstAfter("abcdef", "c") = def
+     *     StringExtUtils.subStringFirstAfter("abcdef", "g") = abcdef
+     *     StringExtUtils.subStringFirstAfter("abcdefabcdef", "c") = defabcdef
+     * </pre>
+     *
+     * @param str
+     * @param separator
+     * @return
+     */
+    public static String subStringFirstAfter(final String str, final String separator) {
+        if (StringUtils.isEmpty(str)) {
+            return str;
+        }
+        if (separator == null) {
+            return "";
+        }
+
+        final int pos = str.indexOf(separator);
+        if (pos == INDEX_NOT_FOUND) {
+            return str;
+        }
+        return str.substring(pos + separator.length());
     }
 }

@@ -28,4 +28,11 @@ public class StringExtUtilsTests {
         Assert.assertEquals("hello-world", StringExtUtils.uppercaseSeparate("HelloWorld", "-"));
         Assert.assertEquals("hello@world", StringExtUtils.uppercaseSeparate("helloWorld", "@"));
     }
+
+    @Test
+    public void testSubStringFirstAfter() {
+        Assert.assertEquals("def", StringExtUtils.subStringFirstAfter("abcdef", "c"));
+        Assert.assertEquals("abcdef", StringExtUtils.subStringFirstAfter("abcdef", "g"));
+        Assert.assertEquals("defabcdef", StringExtUtils.subStringFirstAfter("abcdefabcdef", "c"));
+    }
 }
