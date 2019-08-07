@@ -48,6 +48,8 @@ public class HttpRequestWrapper {
     /**
      * 获取URI链接
      *
+     * eg. /users/list
+     *
      * @return
      */
     public String getURI() {
@@ -57,10 +59,24 @@ public class HttpRequestWrapper {
     /**
      * 获取请求参数
      *
+     * eg. id=1&name=zhansan
+     *
      * @return
      */
     public String getQueryString() {
         return this.request.getQueryString();
+    }
+
+
+    /**
+     * 获取URL连接
+     *
+     *  eg.http://localhost:8080/users/list?id=1&name=zhansan
+     *
+     * @return
+     */
+    public String getURL() {
+        return this.request.getRequestURL().toString();
     }
 
     /**
