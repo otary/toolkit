@@ -1,10 +1,14 @@
 package cn.chenzw.toolkit.domain.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class UserDto {
 
+    @NotNull
     private Integer id;
+    @NotEmpty
     private String name;
     private Date birthDate;
 

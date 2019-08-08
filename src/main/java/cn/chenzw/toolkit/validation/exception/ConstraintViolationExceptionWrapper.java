@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.validation;
+package cn.chenzw.toolkit.validation.exception;
 
 import cn.chenzw.toolkit.http.HttpRequestWrapper;
 
@@ -10,6 +10,7 @@ import java.util.List;
  * @author chenzw
  */
 public interface ConstraintViolationExceptionWrapper {
+
 
     /**
      * 获取所有无效的字段
@@ -38,6 +39,8 @@ public interface ConstraintViolationExceptionWrapper {
      * @return
      */
     HttpRequestWrapper getHttpRequestWrapper();
+
+    String toHumanString();
 
     class InvalidField {
         /**
@@ -101,12 +104,8 @@ public interface ConstraintViolationExceptionWrapper {
 
         @Override
         public String toString() {
-            return "InvalidField{" +
-                    "fieldName='" + fieldName + '\'' +
-                    ", message='" + message + '\'' +
-                    ", invalidValue=" + invalidValue +
-                    ", messageTemplate='" + messageTemplate + '\'' +
-                    '}';
+            return "InvalidField{" + "fieldName='" + fieldName + '\'' + ", message='" + message + '\''
+                    + ", invalidValue=" + invalidValue + ", messageTemplate='" + messageTemplate + '\'' + '}';
         }
     }
 }

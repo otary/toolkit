@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.validation;
+package cn.chenzw.toolkit.validation.exception;
 
 import cn.chenzw.toolkit.commons.StringExtUtils;
 import cn.chenzw.toolkit.http.HttpRequestWrapper;
@@ -11,6 +11,11 @@ import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 默认的违约异常处理器
+ *
+ * @author chenzw
+ */
 public class DefaultConstraintViolationExceptionWrapper implements ConstraintViolationExceptionWrapper {
 
     private List<InvalidField> invalidFields = new ArrayList<>();
@@ -26,7 +31,8 @@ public class DefaultConstraintViolationExceptionWrapper implements ConstraintVio
     public DefaultConstraintViolationExceptionWrapper(ConstraintViolationException constraintViolationException) {
         for (ConstraintViolation<?> cv : constraintViolationException.getConstraintViolations()) {
             String fieldName = StringExtUtils.subStringFirstAfter(cv.getPropertyPath().toString(), ".");
-            this.invalidFields.add(new InvalidField(fieldName, cv.getMessage(), cv.getInvalidValue(), cv.getMessageTemplate()));
+            this.invalidFields
+                    .add(new InvalidField(fieldName, cv.getMessage(), cv.getInvalidValue(), cv.getMessageTemplate()));
 
             this.beanClass = cv.getRootBeanClass();
             this.methodName = StringExtUtils.subStringFirstBefore(cv.getPropertyPath().toString(), ".");
@@ -41,10 +47,8 @@ public class DefaultConstraintViolationExceptionWrapper implements ConstraintVio
     public DefaultConstraintViolationExceptionWrapper(MethodArgumentNotValidException methodArgumentNotValidException) {
         List<FieldError> fieldErrors = methodArgumentNotValidException.getBindingResult().getFieldErrors();
         for (FieldError fieldError : fieldErrors) {
-            this.invalidFields.add(new InvalidField(fieldError.getField(),
-                    fieldError.getDefaultMessage(),
-                    fieldError.getRejectedValue(),
-                    fieldError.getDefaultMessage()));
+            this.invalidFields.add(new InvalidField(fieldError.getField(), fieldError.getDefaultMessage(),
+                    fieldError.getRejectedValue(), fieldError.getDefaultMessage()));
         }
         this.beanClass = methodArgumentNotValidException.getParameter().getContainingClass();
         this.methodName = methodArgumentNotValidException.getParameter().getMethod().getName();
@@ -58,10 +62,8 @@ public class DefaultConstraintViolationExceptionWrapper implements ConstraintVio
     public DefaultConstraintViolationExceptionWrapper(BindException bindException) {
         List<FieldError> fieldErrors = bindException.getBindingResult().getFieldErrors();
         for (FieldError fieldError : fieldErrors) {
-            this.invalidFields.add(new InvalidField(fieldError.getField(),
-                    fieldError.getDefaultMessage(),
-                    fieldError.getRejectedValue(),
-                    fieldError.getDefaultMessage()));
+            this.invalidFields.add(new InvalidField(fieldError.getField(), fieldError.getDefaultMessage(),
+                    fieldError.getRejectedValue(), fieldError.getDefaultMessage()));
         }
     }
 
@@ -86,12 +88,19 @@ public class DefaultConstraintViolationExceptionWrapper implements ConstraintVio
     }
 
     @Override
+    public String toHumanString() {
+        StringBuilder msgBuilder = new StringBuilder();
+        for (InvalidField invalidField : invalidFields) {
+            msgBuilder.append(String
+                    .format("参数[%s = %s]校验不通过:[%s]; ", invalidField.getFieldName(), invalidField.getInvalidValue(),
+                            invalidField.getMessage()));
+        }
+        return msgBuilder.toString();
+    }
+
+    @Override
     public String toString() {
-        return "DefaultConstraintViolationExceptionWrapper{" +
-                "invalidFields=" + invalidFields +
-                ", methodName='" + methodName + '\'' +
-                ", beanClass=" + beanClass +
-                ", httpRequestWrapper=" + httpRequestWrapper +
-                '}';
+        return "DefaultConstraintViolationExceptionWrapper{" + "invalidFields=" + invalidFields + ", methodName='"
+                + methodName + '\'' + ", beanClass=" + beanClass + ", httpRequestWrapper=" + httpRequestWrapper + '}';
     }
 }
