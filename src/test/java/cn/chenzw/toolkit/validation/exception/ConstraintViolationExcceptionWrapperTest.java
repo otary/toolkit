@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -46,4 +47,24 @@ public class ConstraintViolationExcceptionWrapperTest {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/validation/throw-bind-exception").content(body))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest()).andDo(print());
     }
+
+    @Test  // (expected = MethodArgumentNotValidException.class)
+    public void testThrowMethodArgumentNotValidException() throws Exception {
+        UserDto userDto = new UserDto();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String body = objectMapper.writeValueAsString(userDto);
+
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.post("/validation/throw-method-argument-not-valid-exception").content(body)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest()).andDo(print());
+    }
+
+    @Test
+    public void testThrowConstraintViolationException() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/validation/throw-constraint-violation-exception"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
 }
