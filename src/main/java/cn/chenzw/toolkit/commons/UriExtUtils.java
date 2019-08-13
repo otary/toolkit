@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
 /**
- *  扩展UriUtils
+ * 扩展UriUtils
  *
  * @author chenzw
  */
@@ -19,6 +19,7 @@ public class UriExtUtils {
 
     /**
      * 构建url链接
+     *
      * @param uri
      * @param params
      * @return
@@ -30,7 +31,7 @@ public class UriExtUtils {
             uri = uri.trim();
         }
 
-        if (MapUtils.isEmpty(params)) {
+        if (params == null || params.size() == 0) {
             return uri.trim();
         }
 
@@ -56,6 +57,7 @@ public class UriExtUtils {
 
     /**
      * 获取Uri参数
+     *
      * @param uri
      * @return
      */
@@ -77,6 +79,7 @@ public class UriExtUtils {
 
     /**
      * 解析Uri参数
+     *
      * @param paramString
      * @return
      */
