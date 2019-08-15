@@ -132,6 +132,29 @@ String ids = ListExtUtils.joinFieldValue(users, "id", "#");  // => 0#1#2#3#4#5#6
 String ids2 = ListExtUtils.joinFieldValue(users, "id");  // => 0,1,2,3,4,5,6,7,8,9
 ```
 
+### SerializationExtUtils
+
+- 序列化对象（Object -> 十六进制字符串）
+
+```
+User user = new User();
+user.setName("张三");
+user.setId(1);
+user.setBirthDate(new Date(2019, 10, 10));
+user.setAge(20);
+
+// 序列化
+String serializedHexString = SerializationExtUtils.serialize(user);  // => aced000573720024636e2e6368656e7a772e746f6f6c6b69742e646f6d61696e2e656e746974792e55736572983a612a7abc9f590200054c00036167657400134c6a6176612f6c616e672f496e74656765723b4c00096269727468446174657400104c6a6176612f7574696c2f446174653b4c0002696471007e00014c00046e616d657400124c6a6176612f6c616e672f537472696e673b4c000373657871007e00037870737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b0200007870000000147372000e6a6176612e7574696c2e44617465686a81014b59741903000078707708000037f668c4a400787371007e000500000001740006e5bca0e4b88970
+
+```
+
+- 反序列化对象（十六进制字符串 -> Object）
+
+```
+User deserializeUser = SerializationExtUtils.deserialize(serializedHexString); // => User{id=1, name='张三', sex='null', age=20, birthDate=Mon Nov 10 00:00:00 CST 3919}
+
+```
+
 ### ColorUtils
 
 - 将十六进制颜色转RGB格式

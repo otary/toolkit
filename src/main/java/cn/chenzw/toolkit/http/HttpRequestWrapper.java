@@ -19,7 +19,12 @@ public class HttpRequestWrapper {
     private static final String MULTIPART = "multipart/";
     private static final String[] CLIENT_IP_HEADERS = {"x-forwarded-for", "Proxy-Client-IP", "WL-Proxy-Client-IP",
             "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "X-Real-IP"};
+
+    private static final String X_REQUESTED_WIDTH_HEADER = "X-Requested-With";
+    private static final String AJAX_HEADER = "XMLHttpRequest";
+
     private HttpServletRequest request;
+
 
     public HttpRequestWrapper() {
         this.request = HttpHolder.getRequest();
@@ -147,4 +152,11 @@ public class HttpRequestWrapper {
         return false;
     }
 
+    /**
+     * 是否Ajax请求
+     * @return
+     */
+    public boolean isAjax() {
+        return AJAX_HEADER.equalsIgnoreCase(request.getHeader(X_REQUESTED_WIDTH_HEADER));
+    }
 }
