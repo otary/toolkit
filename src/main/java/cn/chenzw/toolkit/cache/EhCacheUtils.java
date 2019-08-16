@@ -3,8 +3,6 @@ package cn.chenzw.toolkit.cache;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,9 +132,22 @@ public class EhCacheUtils {
      * @param cacheName
      * @param key
      */
-    public static void removeKey(String cacheName, Object key) {
-        getCache(cacheName).remove(key);
+    public static boolean removeKey(String cacheName, Object key) {
+        Cache cache = getCache(cacheName);
+        if (cache != null) {
+            return cache.remove(key);
+        }
+        return false;
     }
 
-
+    /**
+     * 移除所有的key
+     * @param cacheName
+     */
+    public static void removeAllKeys(String cacheName) {
+        Cache cache = getCache(cacheName);
+        if (cache != null) {
+            cache.removeAll();
+        }
+    }
 }
