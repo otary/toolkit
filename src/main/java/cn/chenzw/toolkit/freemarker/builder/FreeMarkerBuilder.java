@@ -10,6 +10,15 @@ import java.util.Locale;
 
 public class FreeMarkerBuilder {
 
+    private Configuration configuration;
+
+    private FreeMarkerBuilder() {
+    }
+
+    private FreeMarkerBuilder(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
     /**
      * freemarker版本
      *
@@ -35,6 +44,10 @@ public class FreeMarkerBuilder {
 
     public static FreeMarkerBuilder create() {
         return new FreeMarkerBuilder();
+    }
+
+    public static FreeMarkerBuilder createByConfiguration(Configuration configuration) {
+        return new FreeMarkerBuilder(configuration);
     }
 
     public FreeMarkerBuilder version(Version version) {
@@ -68,29 +81,29 @@ public class FreeMarkerBuilder {
     }
 
     public Template build() throws IOException {
-        this.version = ObjectUtils.defaultIfNull(version,
-                Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+        if (configuration == null) {
+            configuration = new Configuration(ObjectUtils.defaultIfNull(version,
+                    Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
+        }
 
-        Configuration config = new Configuration(version);
-
-        config.setDirectoryForTemplateLoading(new File(templatePath));
-
-        // 设置包装器，并将对象包装为数据模型
-        config.setObjectWrapper(new DefaultObjectWrapperBuilder(version).build());
+        if (!StringUtils.isEmpty(templatePath)) {
+            configuration.setDirectoryForTemplateLoading(new File(templatePath));
+        }
 
         // 设置异常处理策略
         if (templateExceptionHanler != null) {
-            config.setTemplateExceptionHandler(templateExceptionHanler);
+            configuration.setTemplateExceptionHandler(templateExceptionHanler);
         }
 
         if (locale != null) {
-            config.setLocale(locale);
+            configuration.setLocale(locale);
         }
 
         if (!StringUtils.isEmpty(encoding)) {
-            config.setEncoding(config.getLocale(), encoding);
+            configuration.setEncoding(configuration.getLocale(), encoding);
         }
-        return config.getTemplate(templateName);
+
+        return configuration.getTemplate(templateName);
     }
 
 }

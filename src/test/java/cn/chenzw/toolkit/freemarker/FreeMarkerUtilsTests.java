@@ -3,7 +3,9 @@ package cn.chenzw.toolkit.freemarker;
 import cn.chenzw.toolkit.domain.entity.User;
 import cn.chenzw.toolkit.freemarker.builder.FreeMarkerBuilder;
 import freemarker.template.TemplateException;
+import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -30,17 +32,19 @@ public class FreeMarkerUtilsTests {
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("users", users);
 
-       /* FreeMarkerBuilder freeMarkerBuilder = FreeMarkerBuilder.create().setTemplatePath(Thread.currentThread().getContextClassLoader().getResource("freemarker").getPath());
-        freeMarkerBuilder.setTemplateName("template.ftl");
-        String s = FreeMarkerUtils.processToString(userMap, freeMarkerBuilder);*/
+        URL templateFile = Thread.currentThread().getContextClassLoader().getResource("freemarker/template.ftl");
+        String result = FreeMarkerUtils.processToString(new File(templateFile.toURI()), userMap);
 
+        Assert.assertEquals("0: 张三_0,1: 张三_1,2: 张三_2,3: 张三_3,4: 张三_4,5: 张三_5,6: 张三_6,7: 张三_7,8: 张三_8,9: 张三_9,", result.replaceAll("\r\n", ","));
+    }
 
-        URL resource = Thread.currentThread().getContextClassLoader().getResource("freemarker/template.ftl");
+    @Test
+    public void testProcessToFile() throws URISyntaxException, IOException, TemplateException {
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("users", users);
 
-        File file = new File(resource.toURI());
-
-        String s = FreeMarkerUtils.processToString(file, userMap, null);
-
-        System.out.println(s);
+        URL templateFile = Thread.currentThread().getContextClassLoader().getResource("freemarker/template.ftl");
+        File outFile = new File("target/result.txt");
+        FreeMarkerUtils.processToFile(new File(templateFile.toURI()), userMap, outFile);
     }
 }

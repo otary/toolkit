@@ -5,10 +5,11 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.apache.commons.lang3.Validate;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 
+/**
+ * @author
+ */
 public abstract class FreeMarkerUtils {
 
     private FreeMarkerUtils() {
@@ -18,7 +19,58 @@ public abstract class FreeMarkerUtils {
         return processToString(templateFile, dataModel, null);
     }
 
+    /**
+     * 根据模版生成字符串
+     *
+     * @param templateFile
+     * @param dataModel
+     * @param freeMarkerBuilder
+     * @return
+     * @throws IOException
+     * @throws TemplateException
+     */
     public static String processToString(File templateFile, Object dataModel, FreeMarkerBuilder freeMarkerBuilder) throws IOException, TemplateException {
+        return processToString(toTemplate(templateFile, freeMarkerBuilder), dataModel);
+    }
+
+    public static String processToString(Template template, Object dataModel) throws IOException, TemplateException {
+        StringWriter writer = new StringWriter();
+        template.process(dataModel, writer);
+        return writer.toString();
+    }
+
+
+    public static void processToFile(File templateFile, Object dataModel, File outFile) throws IOException, TemplateException {
+        processToFile(templateFile, dataModel, outFile, null);
+    }
+
+    /**
+     * 根据模版生成文件
+     *
+     * @param templateFile
+     * @param dataModel
+     * @param outFile
+     * @param freeMarkerBuilder
+     * @throws IOException
+     * @throws TemplateException
+     */
+    public static void processToFile(File templateFile, Object dataModel, File outFile, FreeMarkerBuilder freeMarkerBuilder) throws IOException, TemplateException {
+        processToFile(toTemplate(templateFile, freeMarkerBuilder), dataModel, outFile);
+    }
+
+    public static void processToFile(Template template, Object dataModel, File outFile) throws IOException, TemplateException {
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)));
+            template.process(dataModel, bufferedWriter);
+        } finally {
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
+            }
+        }
+    }
+
+    private static Template toTemplate(File templateFile, FreeMarkerBuilder freeMarkerBuilder) throws IOException {
         Validate.notNull(templateFile, "Freemarker template file is null !");
         Validate.isTrue(templateFile.exists(), "Freemarker template file [ " + templateFile.getAbsolutePath() + "] is not exists!");
 
@@ -31,12 +83,6 @@ public abstract class FreeMarkerUtils {
         } else {
             template = freeMarkerBuilder.templatePath(templatePath).templateName(templateName).build();
         }
-        return processToString(template, dataModel);
-    }
-
-    public static String processToString(Template template, Object dataModel) throws IOException, TemplateException {
-        StringWriter writer = new StringWriter();
-        template.process(dataModel, writer);
-        return writer.toString();
+        return template;
     }
 }
