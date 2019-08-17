@@ -28,6 +28,7 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletRegistration;
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Spring工具类

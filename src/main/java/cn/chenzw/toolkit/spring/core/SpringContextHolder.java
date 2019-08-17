@@ -7,6 +7,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 /**
  * @author chenzw
  */
@@ -14,6 +18,25 @@ import org.springframework.web.context.ContextLoader;
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
 
     private static ApplicationContext appContext;
+
+    private static Map<String, ApplicationContext> appContexts = new ConcurrentHashMap<>();
+
+    public static void addContext(ApplicationContext applicationContext) {
+        appContexts.putIfAbsent(applicationContext.getId(), applicationContext);
+    }
+
+    public static void removeContext(ApplicationContext applicationContext) {
+        appContexts.remove(applicationContext.getId());
+    }
+
+    /**
+     * 获取所有容器
+     *
+     * @return
+     */
+    public static Map<String, ApplicationContext> getAllAppContexts() {
+        return appContexts;
+    }
 
     public static ApplicationContext getAppContext() {
         if (appContext == null) {

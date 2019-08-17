@@ -4,6 +4,7 @@ import cn.chenzw.toolkit.domain.entity.Book;
 import cn.chenzw.toolkit.domain.entity.User;
 import cn.chenzw.toolkit.spring.config.AppConfig;
 import cn.chenzw.toolkit.spring.config.WebConfig;
+import cn.chenzw.toolkit.spring.core.SpringContextHolder;
 import cn.chenzw.toolkit.spring.domain.ContextBeans;
 import cn.chenzw.toolkit.spring.domain.ContextFilterMappings;
 import cn.chenzw.toolkit.spring.domain.ContextHandlerMappings;
@@ -17,6 +18,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -166,6 +170,15 @@ public class SpringUtilsTests {
     @Test
     public void testGetServletMappings() {
         ContextServletMappings servletMappings = SpringUtils.getServletMappings();
+    }
+
+
+    @Test
+    public void testGetAllAppContext() {
+        Map<String, ApplicationContext> appContexts =
+                SpringContextHolder.getAllAppContexts();
+
+        Assert.assertTrue(!appContexts.isEmpty());
     }
 }
 
