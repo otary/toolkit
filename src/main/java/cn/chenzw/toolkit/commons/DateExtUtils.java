@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * org.apache.commons.lang3.time.DateUtils扩展类
+ *
  * @author chenzw
  */
 public class DateExtUtils {
@@ -19,6 +20,7 @@ public class DateExtUtils {
 
     /**
      * 随机生成日期（startDateInclusive至endDateExclusive）
+     *
      * @param startDateInclusive
      * @param endDateExclusive
      * @return
@@ -34,6 +36,7 @@ public class DateExtUtils {
 
     /**
      * 随机生成日期
+     *
      * @return
      */
     public static final Date random() {
@@ -45,6 +48,7 @@ public class DateExtUtils {
 
     /**
      * 获取当月的第一天
+     *
      * @param date
      * @return
      */
@@ -62,6 +66,7 @@ public class DateExtUtils {
 
     /**
      * 获取当月的第一天
+     *
      * @param month
      * @param format 日期格式
      * @return
@@ -77,11 +82,12 @@ public class DateExtUtils {
 
     /**
      * 获取指定日期当月的最后一天
+     *
      * @param date
      * @return
      * @throws ParseException
      */
-    public static Date getLastDayOfMonth(Date date) throws ParseException {
+    public static Date getLastDayOfMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -94,6 +100,7 @@ public class DateExtUtils {
 
     /**
      * 获取指定月份的最后一天
+     *
      * @param month
      * @param format 日期格式
      * @return

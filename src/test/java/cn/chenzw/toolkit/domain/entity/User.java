@@ -10,6 +10,17 @@ public class User implements Serializable {
     private Integer age;
     private Date birthDate;
 
+    public User() {
+    }
+
+    public User(Integer id, String name, String sex, Integer age, Date birthDate) {
+        this.id = id;
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+        this.birthDate = birthDate;
+    }
+
     public Integer getId() {
         return id;
     }

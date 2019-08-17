@@ -2,6 +2,7 @@ package cn.chenzw.toolkit.freemarker.builder;
 
 import freemarker.template.*;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,14 +12,19 @@ public class FreeMarkerBuilder {
 
     /**
      * freemarker版本
+     *
      * @see {@link freemarker.template.Configuration#VERSION_2_3_28}
      */
     private Version version;
 
     private String templatePath;
 
+    private String templateName;
+
+
     /**
      * 异常处理策略
+     *
      * @see {@link freemarker.template.TemplateExceptionHandler}
      */
     private TemplateExceptionHandler templateExceptionHanler;
@@ -31,34 +37,40 @@ public class FreeMarkerBuilder {
         return new FreeMarkerBuilder();
     }
 
-    public FreeMarkerBuilder setVersion(Version version) {
+    public FreeMarkerBuilder version(Version version) {
         this.version = version;
         return this;
     }
 
-    public FreeMarkerBuilder setTemplatePath(String templatePath) {
+    public FreeMarkerBuilder templatePath(String templatePath) {
         this.templatePath = templatePath;
         return this;
     }
 
-    public FreeMarkerBuilder setTemplateExceptionHanler(TemplateExceptionHandler templateExceptionHanler) {
+    public FreeMarkerBuilder templateExceptionHanler(TemplateExceptionHandler templateExceptionHanler) {
         this.templateExceptionHanler = templateExceptionHanler;
         return this;
     }
 
-    public FreeMarkerBuilder setLocale(Locale locale) {
+    public FreeMarkerBuilder locale(Locale locale) {
         this.locale = locale;
         return this;
     }
 
-    public FreeMarkerBuilder setEncoding(String encoding) {
+    public FreeMarkerBuilder encoding(String encoding) {
         this.encoding = encoding;
         return this;
     }
 
-    public Template build() throws IOException {
+    public FreeMarkerBuilder templateName(String templateName) {
+        this.templateName = templateName;
+        return this;
+    }
 
-        version = ObjectUtils.defaultIfNull(version, Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+    public Template build() throws IOException {
+        this.version = ObjectUtils.defaultIfNull(version,
+                Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+
         Configuration config = new Configuration(version);
 
         config.setDirectoryForTemplateLoading(new File(templatePath));
@@ -71,8 +83,14 @@ public class FreeMarkerBuilder {
             config.setTemplateExceptionHandler(templateExceptionHanler);
         }
 
+        if (locale != null) {
+            config.setLocale(locale);
+        }
 
-        return config.getTemplate();
+        if (!StringUtils.isEmpty(encoding)) {
+            config.setEncoding(config.getLocale(), encoding);
+        }
+        return config.getTemplate(templateName);
     }
 
 }

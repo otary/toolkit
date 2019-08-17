@@ -2,6 +2,8 @@ package cn.chenzw.toolkit.http;
 
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -18,6 +20,7 @@ import java.io.IOException;
  */
 public class ContentCachingRequestWrapper extends HttpServletRequestWrapper {
 
+    private static final Logger logger = LoggerFactory.getLogger(ContentCachingRequestWrapper.class);
 
     private ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -27,7 +30,7 @@ public class ContentCachingRequestWrapper extends HttpServletRequestWrapper {
         try {
             IOUtils.copy(request.getInputStream(), baos);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("HttpRequest caching with error!", e);
         }
     }
 
