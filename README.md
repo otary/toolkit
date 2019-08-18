@@ -341,6 +341,17 @@ for (int i = 0; i < 5; i++) {
 List<UserDto> userDtos = DozerPageUtils.mapList(new DozerBeanMapper(), users, UserDto.class);  // => Page{count=true, pageNum=0, pageSize=5, startRow=0, endRow=0, total=5, pages=2, reasonable=null, pageSizeZero=null}[User{id=0, name='null', sex='null', age=null, birthDate=null}, User{id=1, name='null', sex='null', age=null, birthDate=null}, User{id=2, name='null', sex='null', age=null, birthDate=null}, User{id=3, name='null', sex='null', age=null, birthDate=null}, User{id=4, name='null', sex='null', age=null, birthDate=null}, UserDto{id=0, name='null', birthDate=null}, UserDto{id=1, name='null', birthDate=null}, UserDto{id=2, name='null', birthDate=null}, UserDto{id=3, name='null', birthDate=null}, UserDto{id=4, name='null', birthDate=null}]
 ```
 ---
+## freemarker
+
+### FreeMarkerUtils
+
+FreeMarker工具类
+
+```
+
+```
+
+---
 ## codec
 
 ### AESUtils
