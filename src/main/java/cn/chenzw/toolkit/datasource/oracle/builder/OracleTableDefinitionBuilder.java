@@ -22,6 +22,9 @@ public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder
         this.tableName = tableName;
 
 
+
+        org.apache.commons.dbcp2.DelegatingConnection del = new org.apache.commons.dbcp2.DelegatingConnection(connection);
+        connection = del.getInnermostDelegate();
         //if (connection instanceof OracleConnection) {
         System.out.println(connection.getClass());
         ((OracleConnection) connection).setRemarksReporting(true);
