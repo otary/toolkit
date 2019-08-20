@@ -12,14 +12,9 @@ import java.sql.SQLException;
  */
 public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder {
 
-    private Connection connection;
-    private String tableName;
-
     public OracleTableDefinitionBuilder(Connection connection, String tableName) throws SQLException {
         super(connection, tableName);
 
-        this.connection = connection;
-        this.tableName = tableName;
 
 
 
@@ -39,7 +34,8 @@ public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder
     }
 
     @Override
-    protected AbstractColumnDefinitionBuilder getColumnDefinitionBuilder() {
+    protected AbstractColumnDefinitionBuilder getColumnDefinitionBuilder(Connection connection, String tableName) {
         return new OracleColumnDefinitionBuilder(connection, tableName);
     }
+
 }

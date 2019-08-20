@@ -22,6 +22,7 @@ public abstract class AbstractColumnDefinitionBuilder {
         this.tableName = tableName;
     }
 
+
     protected String getColumnName(ResultSet rs) throws SQLException {
         return rs.getString(DbConstants.RS_COLUMN_NAME);
     }

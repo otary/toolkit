@@ -1,8 +1,7 @@
-package cn.chenzw.toolkit.datasource.oracle;
+package cn.chenzw.toolkit.datasource.mysql;
 
-import cn.chenzw.toolkit.datasource.entity.ColumnDefinition;
 import cn.chenzw.toolkit.datasource.entity.TableDefinition;
-import cn.chenzw.toolkit.datasource.oracle.builder.OracleColumnDefinitionBuilder;
+import cn.chenzw.toolkit.datasource.mysql.builder.MySqlTableDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.oracle.builder.OracleTableDefinitionBuilder;
 import cn.chenzw.toolkit.spring.config.DataSourceConfig;
 import org.junit.Assert;
@@ -17,13 +16,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DataSourceConfig.class})
 @WebAppConfiguration
-@ActiveProfiles(value = "oracle")
-public class OracleDefinitionTests {
+@ActiveProfiles(value = "mysql")
+public class MySqlDefinitionTests {
 
     @Autowired
     DataSource dataSource;
@@ -31,7 +29,7 @@ public class OracleDefinitionTests {
     @Test
     public void testTableDefinition() throws SQLException {
         Connection connection = dataSource.getConnection();
-        TableDefinition tableDefinition = new OracleTableDefinitionBuilder(connection, "STAFF").build();
+        TableDefinition tableDefinition = new MySqlTableDefinitionBuilder(connection, "sys_user").build();
 
         Assert.assertNotNull(tableDefinition);
         Assert.assertTrue(tableDefinition.getColumnDefinitions().size() > 0);

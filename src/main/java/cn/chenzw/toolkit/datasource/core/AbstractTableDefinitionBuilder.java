@@ -28,14 +28,14 @@ public abstract class AbstractTableDefinitionBuilder {
         return rs.getString(DbConstants.RS_TABLE_NAME);
     }
 
-    protected abstract AbstractColumnDefinitionBuilder getColumnDefinitionBuilder();
+    protected abstract AbstractColumnDefinitionBuilder getColumnDefinitionBuilder(Connection connection, String tableName);
 
     public TableDefinition build() throws SQLException {
         ResultSet tableRs = connection.getMetaData().getTables(null, null, tableName, new String[]{"TABLE"});
 
         while (tableRs.next()) {
             return new TableDefinition(getTableName(tableRs), getRemarks(tableRs),
-                    getColumnDefinitionBuilder().build());
+                    getColumnDefinitionBuilder(connection, tableName).build());
         }
         return null;
     }
