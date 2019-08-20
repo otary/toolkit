@@ -9,9 +9,16 @@ import java.util.List;
  */
 public class TableDefinition {
 
-    List<ColumnDefinition> columnDefinitions = Collections.emptyList();
     private String tableName;
     private String remarks;
+
+    private List<ColumnDefinition> columnDefinitions = Collections.emptyList();
+
+    public TableDefinition(String tableName, String remarks, List<ColumnDefinition> columnDefinitions) {
+        this.columnDefinitions = columnDefinitions;
+        this.tableName = tableName;
+        this.remarks = remarks;
+    }
 
     public String getTableName() {
         return tableName;
@@ -35,5 +42,11 @@ public class TableDefinition {
 
     public void setColumnDefinitions(List<ColumnDefinition> columnDefinitions) {
         this.columnDefinitions = columnDefinitions;
+    }
+
+    @Override
+    public String toString() {
+        return "TableDefinition{" + "tableName='" + tableName + '\'' + ", remarks='" + remarks + '\''
+                + ", columnDefinitions=" + columnDefinitions + '}';
     }
 }

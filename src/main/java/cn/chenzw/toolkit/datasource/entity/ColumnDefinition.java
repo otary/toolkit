@@ -19,7 +19,7 @@ public class ColumnDefinition {
     /**
      *字段大小
      */
-    private String columnSize;
+    private Integer columnSize;
 
     /**
      *字段备注
@@ -29,7 +29,7 @@ public class ColumnDefinition {
     /**
      *是否为主键
      */
-    private Boolean parmaryKey = false;
+    private Boolean primaryKey = false;
 
     /**
      * 是否为外键
@@ -49,7 +49,28 @@ public class ColumnDefinition {
     /**
      *小数部分的位数
      */
-    private String decimalDigits;
+    private Integer decimalDigits;
+
+    public ColumnDefinition(String columnName, String typeName, Integer columnSize, Integer decimalDigits,
+            String remarks, Boolean primaryKey, Boolean foreignKey, Boolean nullable, String columnDef) {
+        this.columnName = columnName;
+        this.typeName = typeName;
+        this.columnSize = columnSize;
+        this.remarks = remarks;
+        this.primaryKey = primaryKey;
+        this.foreignKey = foreignKey;
+        this.nullable = nullable;
+        this.columnDef = columnDef;
+        this.decimalDigits = decimalDigits;
+    }
+
+    public Boolean getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(Boolean primaryKey) {
+        this.primaryKey = primaryKey;
+    }
 
     public String getColumnName() {
         return columnName;
@@ -67,11 +88,11 @@ public class ColumnDefinition {
         this.typeName = typeName;
     }
 
-    public String getColumnSize() {
+    public Integer getColumnSize() {
         return columnSize;
     }
 
-    public void setColumnSize(String columnSize) {
+    public void setColumnSize(Integer columnSize) {
         this.columnSize = columnSize;
     }
 
@@ -83,13 +104,6 @@ public class ColumnDefinition {
         this.remarks = remarks;
     }
 
-    public Boolean getParmaryKey() {
-        return parmaryKey;
-    }
-
-    public void setParmaryKey(Boolean parmaryKey) {
-        this.parmaryKey = parmaryKey;
-    }
 
     public Boolean getForeignKey() {
         return foreignKey;
@@ -115,11 +129,19 @@ public class ColumnDefinition {
         this.columnDef = columnDef;
     }
 
-    public String getDecimalDigits() {
+    public Integer getDecimalDigits() {
         return decimalDigits;
     }
 
-    public void setDecimalDigits(String decimalDigits) {
+    public void setDecimalDigits(Integer decimalDigits) {
         this.decimalDigits = decimalDigits;
+    }
+
+    @Override
+    public String toString() {
+        return "ColumnDefinition{" + "columnName='" + columnName + '\'' + ", typeName='" + typeName + '\''
+                + ", columnSize='" + columnSize + '\'' + ", remarks='" + remarks + '\'' + ", primaryKey=" + primaryKey
+                + ", foreignKey=" + foreignKey + ", nullable=" + nullable + ", columnDef='" + columnDef + '\''
+                + ", decimalDigits='" + decimalDigits + '\'' + '}';
     }
 }
