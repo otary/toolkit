@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.datasource.core.builder;
 
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
+import cn.chenzw.toolkit.datasource.core.converter.TypeConverter;
 import cn.chenzw.toolkit.datasource.entity.ColumnDefinition;
 
 import java.sql.Connection;
@@ -60,15 +61,20 @@ public abstract class AbstractColumnDefinitionBuilder {
         return rs.getInt(DbConstants.RS_DECIMAL_DIGITS);
     }
 
+
+    protected abstract TypeConverter getTypeConverter();
+
     public List<ColumnDefinition> build() throws SQLException {
         ResultSet columnRs = connection.getMetaData().getColumns(null, null, tableName, null);
+        TypeConverter typeConverter = getTypeConverter();
 
         List<ColumnDefinition> columnDefinitions = new ArrayList<>();
         while (columnRs.next()) {
+            String typeName = getTypeName(columnRs);
             columnDefinitions
-                    .add(new ColumnDefinition(getColumnName(columnRs), getTypeName(columnRs), getColumnSize(columnRs),
+                    .add(new ColumnDefinition(getColumnName(columnRs), typeName, getColumnSize(columnRs),
                             getDecimalDigits(columnRs), getRemarks(columnRs), null, null, isNullable(columnRs),
-                            getColumnDef(columnRs)));
+                            getColumnDef(columnRs), typeConverter.toJavaType(typeName)));
         }
 
         ResultSet primaryKeyRs = connection.getMetaData().getPrimaryKeys(null, null, tableName);

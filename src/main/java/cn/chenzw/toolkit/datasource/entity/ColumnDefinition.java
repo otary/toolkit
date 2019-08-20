@@ -58,7 +58,7 @@ public class ColumnDefinition {
     private Class<?> javaType;
 
     public ColumnDefinition(String columnName, String typeName, Integer columnSize, Integer decimalDigits,
-                            String remarks, Boolean primaryKey, Boolean foreignKey, Boolean nullable, String columnDef) {
+                            String remarks, Boolean primaryKey, Boolean foreignKey, Boolean nullable, String columnDef, Class<?> javaType) {
         this.columnName = columnName;
         this.typeName = typeName;
         this.columnSize = columnSize;
@@ -68,6 +68,7 @@ public class ColumnDefinition {
         this.nullable = nullable;
         this.columnDef = columnDef;
         this.decimalDigits = decimalDigits;
+        this.javaType = javaType;
     }
 
     public Boolean getPrimaryKey() {
@@ -143,11 +144,27 @@ public class ColumnDefinition {
         this.decimalDigits = decimalDigits;
     }
 
+    public Class<?> getJavaType() {
+        return javaType;
+    }
+
+    public void setJavaType(Class<?> javaType) {
+        this.javaType = javaType;
+    }
+
     @Override
     public String toString() {
-        return "ColumnDefinition{" + "columnName='" + columnName + '\'' + ", typeName='" + typeName + '\''
-                + ", columnSize='" + columnSize + '\'' + ", remarks='" + remarks + '\'' + ", primaryKey=" + primaryKey
-                + ", foreignKey=" + foreignKey + ", nullable=" + nullable + ", columnDef='" + columnDef + '\''
-                + ", decimalDigits='" + decimalDigits + '\'' + '}';
+        return "ColumnDefinition{" +
+                "columnName='" + columnName + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", columnSize=" + columnSize +
+                ", remarks='" + remarks + '\'' +
+                ", primaryKey=" + primaryKey +
+                ", foreignKey=" + foreignKey +
+                ", nullable=" + nullable +
+                ", columnDef='" + columnDef + '\'' +
+                ", decimalDigits=" + decimalDigits +
+                ", javaType=" + javaType +
+                '}';
     }
 }

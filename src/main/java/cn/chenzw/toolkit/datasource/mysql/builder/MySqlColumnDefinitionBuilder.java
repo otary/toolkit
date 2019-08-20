@@ -1,6 +1,8 @@
 package cn.chenzw.toolkit.datasource.mysql.builder;
 
 import cn.chenzw.toolkit.datasource.core.builder.AbstractColumnDefinitionBuilder;
+import cn.chenzw.toolkit.datasource.core.converter.TypeConverter;
+import cn.chenzw.toolkit.datasource.mysql.converter.MySqlTypeConverter;
 
 import java.sql.Connection;
 
@@ -11,5 +13,10 @@ public class MySqlColumnDefinitionBuilder extends AbstractColumnDefinitionBuilde
 
     public MySqlColumnDefinitionBuilder(Connection connection, String tableName) {
         super(connection, tableName);
+    }
+
+    @Override
+    protected TypeConverter getTypeConverter() {
+        return MySqlTypeConverter.getInstance();
     }
 }
