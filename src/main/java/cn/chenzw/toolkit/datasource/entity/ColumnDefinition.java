@@ -2,32 +2,33 @@ package cn.chenzw.toolkit.datasource.entity;
 
 /**
  * 列信息封装
+ *
  * @author chenzw
  */
 public class ColumnDefinition {
 
     /**
-     *字段名称
+     * 字段名称
      */
     private String columnName;
 
     /**
-     *字段类型名称
+     * 字段类型名称
      */
     private String typeName;
 
     /**
-     *字段大小
+     * 字段大小
      */
     private Integer columnSize;
 
     /**
-     *字段备注
+     * 字段备注
      */
     private String remarks;
 
     /**
-     *是否为主键
+     * 是否为主键
      */
     private Boolean primaryKey = false;
 
@@ -47,12 +48,17 @@ public class ColumnDefinition {
     private String columnDef;
 
     /**
-     *小数部分的位数
+     * 小数部分的位数
      */
     private Integer decimalDigits;
 
+    /**
+     * 对应的Java类
+     */
+    private Class<?> javaType;
+
     public ColumnDefinition(String columnName, String typeName, Integer columnSize, Integer decimalDigits,
-            String remarks, Boolean primaryKey, Boolean foreignKey, Boolean nullable, String columnDef) {
+                            String remarks, Boolean primaryKey, Boolean foreignKey, Boolean nullable, String columnDef) {
         this.columnName = columnName;
         this.typeName = typeName;
         this.columnSize = columnSize;

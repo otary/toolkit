@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.datasource.core;
+package cn.chenzw.toolkit.datasource.core.builder;
 
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
 import cn.chenzw.toolkit.datasource.entity.ColumnDefinition;

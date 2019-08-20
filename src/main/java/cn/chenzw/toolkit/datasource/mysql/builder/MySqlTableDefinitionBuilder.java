@@ -1,7 +1,7 @@
 package cn.chenzw.toolkit.datasource.mysql.builder;
 
-import cn.chenzw.toolkit.datasource.core.AbstractColumnDefinitionBuilder;
-import cn.chenzw.toolkit.datasource.core.AbstractTableDefinitionBuilder;
+import cn.chenzw.toolkit.datasource.core.builder.AbstractColumnDefinitionBuilder;
+import cn.chenzw.toolkit.datasource.core.builder.AbstractTableDefinitionBuilder;
 
 import java.sql.Connection;
 

@@ -1,7 +1,7 @@
 package cn.chenzw.toolkit.datasource.oracle.builder;
 
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
-import cn.chenzw.toolkit.datasource.core.AbstractColumnDefinitionBuilder;
+import cn.chenzw.toolkit.datasource.core.builder.AbstractColumnDefinitionBuilder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
