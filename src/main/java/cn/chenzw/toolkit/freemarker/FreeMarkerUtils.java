@@ -59,14 +59,10 @@ public abstract class FreeMarkerUtils {
     }
 
     public static void processToFile(Template template, Object dataModel, File outFile) throws IOException, TemplateException {
-        BufferedWriter bufferedWriter = null;
-        try {
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)));
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)))) {
             template.process(dataModel, bufferedWriter);
-        } finally {
-            if (bufferedWriter != null) {
-                bufferedWriter.close();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

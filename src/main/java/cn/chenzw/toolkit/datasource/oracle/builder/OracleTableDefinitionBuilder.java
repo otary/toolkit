@@ -20,11 +20,10 @@ public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder
     public OracleTableDefinitionBuilder(Connection connection, String tableName) throws SQLException {
         super(connection, tableName);
 
-        if (isCommonsDbcp2Present) {
-            if (connection.isWrapperFor(DelegatingConnection.class)) {
-                ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate()))
-                        .setRemarksReporting(true);
-            }
+        if (isCommonsDbcp2Present && connection.isWrapperFor(DelegatingConnection.class)) {
+            ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate()))
+                    .setRemarksReporting(true);
+
         }
     }
 

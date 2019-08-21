@@ -5,6 +5,9 @@ package cn.chenzw.toolkit.datasource.constants;
  */
 public class DbConstants {
 
+    private DbConstants() {
+    }
+
     public static final String RS_COLUMN_NAME = "COLUMN_NAME";
 
     public static final String RS_TYPE_NAME = "TYPE_NAME";

@@ -11,8 +11,7 @@ public abstract class AbstractTypeConverter implements TypeConverter {
 
     @Override
     public Class<?> toJavaType(String jdbcType, Integer size, Integer digits) {
-        List<TypeMapping> typeMappings = getTypeMappings();
-        Optional<TypeMapping> typeMappingOptional = typeMappings.stream().filter((typeMapping) -> {
+        Optional<TypeMapping> typeMappingOptional = getTypeMappings().stream().filter((typeMapping) -> {
             if (typeMapping.getJdbcType().equals(jdbcType)) {
                 if (typeMapping.getTypeFilter() == null) {
                     return true;
@@ -24,6 +23,7 @@ public abstract class AbstractTypeConverter implements TypeConverter {
             }
             return false;
         }).findFirst();
+
         return typeMappingOptional.get().getJavaType();
     }
 

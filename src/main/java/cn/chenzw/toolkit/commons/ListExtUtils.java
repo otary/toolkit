@@ -30,7 +30,7 @@ public class ListExtUtils {
     public static final <T> String joinFieldValue(List<T> list, String fieldName, String separatorChars)
             throws NoSuchFieldException, IllegalAccessException {
         List<String> fieldValues = new ArrayList<>();
-        if (list != null && list.size() > 0) {
+        if (list != null && !list.isEmpty()) {
             Field field = list.get(0).getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             for (T item : list) {

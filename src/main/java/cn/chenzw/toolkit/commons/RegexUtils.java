@@ -2,7 +2,6 @@ package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -49,10 +48,7 @@ public abstract class RegexUtils {
      * @return
      */
     public static boolean isIp(String ip) {
-        if (!isIPv4(ip) && !isIPv6(ip)) {
-            return false;
-        }
-        return true;
+        return (isIPv4(ip) || isIPv6(ip));
     }
 
     /**
