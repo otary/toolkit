@@ -11,10 +11,13 @@ public abstract class AbstractTypeConverter implements TypeConverter {
 
     @Override
     public Class<?> toJavaType(String jdbcType, Integer size, Integer digits) {
-        List<TypeMapping> types = getTypes();
-        Optional<TypeMapping> typeMappingOptional = types.stream().filter((typeMapping) -> {
+        List<TypeMapping> typeMappings = getTypeMappings();
+        Optional<TypeMapping> typeMappingOptional = typeMappings.stream().filter((typeMapping) -> {
             if (typeMapping.getJdbcType().equals(jdbcType)) {
-                if (typeMapping.getTypeFilter() != null && typeMapping.getTypeFilter()
+                if (typeMapping.getTypeFilter() == null) {
+                    return true;
+                }
+                if (typeMapping.getTypeFilter()
                         .isMatch(jdbcType, size, digits)) {
                     return true;
                 }

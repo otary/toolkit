@@ -6,6 +6,17 @@ public class TypeMapping {
     private Class<?> javaType;
     private TypeFilter typeFilter;
 
+    public TypeMapping(String jdbcType, Class<?> javaType) {
+        this.jdbcType = jdbcType;
+        this.javaType = javaType;
+    }
+
+    public TypeMapping(String jdbcType, Class<?> javaType, TypeFilter typeFilter) {
+        this.jdbcType = jdbcType;
+        this.javaType = javaType;
+        this.typeFilter = typeFilter;
+    }
+
     public String getJdbcType() {
         return jdbcType;
     }

@@ -1,10 +1,9 @@
 package cn.chenzw.toolkit.datasource.oracle.converter;
 
 import cn.chenzw.toolkit.datasource.core.converter.AbstractTypeConverter;
+import cn.chenzw.toolkit.datasource.core.converter.TypeMapping;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author chenzw
@@ -12,21 +11,23 @@ import java.util.Map;
 public class OracleTypeConverter extends AbstractTypeConverter {
 
     private static OracleTypeConverter oracleTypeConverter = new OracleTypeConverter();
-    private static Map<String, Class<?>> types = new HashMap<>();
+    private static List<TypeMapping> typeMappings = new ArrayList<>();
 
     static {
-        types.put("CHAR", String.class);
-        types.put("VARCHAR", String.class);
-        types.put("VARCHAR2", String.class);
-        types.put("LONG", String.class);
 
-        types.put("NUMBER", Long.class);
-        types.put("LONGRAW", Byte[].class);
+        typeMappings.add(new TypeMapping("CHAR", String.class));
+        typeMappings.add(new TypeMapping("VARCHAR", String.class));
+        typeMappings.add(new TypeMapping("VARCHAR2", String.class));
+        typeMappings.add(new TypeMapping("LONG", String.class));
+        
+        typeMappings.add(new TypeMapping("NUMBER", Long.class));
+        typeMappings.add(new TypeMapping("LONGRAW", Byte[].class));
 
-        types.put("DATE", Date.class);
-        types.put("TIMESTAMP", Date.class);
-        types.put("TIMESTAMP WITH LOCAL TIME ZONE", Date.class);
-        types.put("TIMESTAMP WITH TIME ZONE", Date.class);
+        typeMappings.add(new TypeMapping("DATE", Date.class));
+        typeMappings.add(new TypeMapping("TIMESTAMP", Date.class));
+        typeMappings.add(new TypeMapping("TIMESTAMP WITH LOCAL TIME ZONE", Date.class));
+        typeMappings.add(new TypeMapping("TIMESTAMP WITH TIME ZONE", Date.class));
+
     }
 
     private OracleTypeConverter() {
@@ -36,8 +37,9 @@ public class OracleTypeConverter extends AbstractTypeConverter {
         return oracleTypeConverter;
     }
 
+
     @Override
-    public Map<String, Class<?>> getTypes() {
-        return types;
+    public List<TypeMapping> getTypeMappings() {
+        return typeMappings;
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface TypeConverter {
 
-    List<TypeMapping> getTypes();
+    List<TypeMapping> getTypeMappings();
 
     Class<?> toJavaType(String jdbcType, Integer size, Integer digits);
 

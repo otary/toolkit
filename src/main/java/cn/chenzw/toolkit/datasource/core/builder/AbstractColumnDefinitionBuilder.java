@@ -23,7 +23,6 @@ public abstract class AbstractColumnDefinitionBuilder {
         this.tableName = tableName;
     }
 
-
     protected String getColumnName(ResultSet rs) throws SQLException {
         return rs.getString(DbConstants.RS_COLUMN_NAME);
     }
@@ -61,7 +60,6 @@ public abstract class AbstractColumnDefinitionBuilder {
         return rs.getInt(DbConstants.RS_DECIMAL_DIGITS);
     }
 
-
     protected abstract TypeConverter getTypeConverter();
 
     public List<ColumnDefinition> build() throws SQLException {
@@ -70,9 +68,11 @@ public abstract class AbstractColumnDefinitionBuilder {
         List<ColumnDefinition> columnDefinitions = new ArrayList<>();
         while (columnRs.next()) {
             String typeName = getTypeName(columnRs);
-            columnDefinitions.add(new ColumnDefinition(getColumnName(columnRs), typeName, getColumnSize(columnRs),
-                    getDecimalDigits(columnRs), getRemarks(columnRs), null, null, isNullable(columnRs),
-                    getColumnDef(columnRs), getTypeConverter().toJavaType(typeName)));
+            Integer columnSize = getColumnSize(columnRs);
+            Integer columnDigits = getDecimalDigits(columnRs);
+            columnDefinitions.add(new ColumnDefinition(getColumnName(columnRs), typeName, columnSize,
+                    columnDigits, getRemarks(columnRs), null, null, isNullable(columnRs),
+                    getColumnDef(columnRs), getTypeConverter().toJavaType(typeName, columnSize, columnDigits)));
         }
 
         ResultSet primaryKeyRs = connection.getMetaData().getPrimaryKeys(null, null, tableName);
