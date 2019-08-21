@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.datasource.core.builder;
 
+import cn.chenzw.toolkit.commons.StringExtUtils;
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
 import cn.chenzw.toolkit.datasource.core.converter.TypeConverter;
 import cn.chenzw.toolkit.datasource.entity.ColumnDefinition;
@@ -70,7 +71,8 @@ public abstract class AbstractColumnDefinitionBuilder {
             String typeName = getTypeName(columnRs);
             Integer columnSize = getColumnSize(columnRs);
             Integer columnDigits = getDecimalDigits(columnRs);
-            columnDefinitions.add(new ColumnDefinition(getColumnName(columnRs), typeName, columnSize,
+            String columnName = getColumnName(columnRs);
+            columnDefinitions.add(new ColumnDefinition(columnName, StringExtUtils.toCamel(columnName), typeName, columnSize,
                     columnDigits, getRemarks(columnRs), null, null, isNullable(columnRs),
                     getColumnDef(columnRs), getTypeConverter().toJavaType(typeName, columnSize, columnDigits)));
         }

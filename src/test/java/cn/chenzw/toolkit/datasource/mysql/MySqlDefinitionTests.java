@@ -29,7 +29,7 @@ public class MySqlDefinitionTests {
     @Test
     public void testTableDefinition() throws SQLException {
         Connection connection = dataSource.getConnection();
-        TableDefinition tableDefinition = new MySqlTableDefinitionBuilder(connection, "sys_user").build();
+        TableDefinition tableDefinition = new MySqlTableDefinitionBuilder(connection, "sys_permission").build();
 
         Assert.assertNotNull(tableDefinition);
         Assert.assertTrue(tableDefinition.getColumnDefinitions().size() > 0);

@@ -13,6 +13,11 @@ public class ColumnDefinition {
     private String columnName;
 
     /**
+     * 驼峰命名
+     */
+    private String camelCaseName;
+
+    /**
      * 字段类型名称
      */
     private String typeName;
@@ -57,9 +62,10 @@ public class ColumnDefinition {
      */
     private Class<?> javaType;
 
-    public ColumnDefinition(String columnName, String typeName, Integer columnSize, Integer decimalDigits,
+    public ColumnDefinition(String columnName, String camelCaseName, String typeName, Integer columnSize, Integer decimalDigits,
                             String remarks, Boolean primaryKey, Boolean foreignKey, Boolean nullable, String columnDef, Class<?> javaType) {
         this.columnName = columnName;
+        this.camelCaseName = camelCaseName;
         this.typeName = typeName;
         this.columnSize = columnSize;
         this.remarks = remarks;
@@ -152,10 +158,19 @@ public class ColumnDefinition {
         this.javaType = javaType;
     }
 
+    public String getCamelCaseName() {
+        return camelCaseName;
+    }
+
+    public void setCamelCaseName(String camelCaseName) {
+        this.camelCaseName = camelCaseName;
+    }
+
     @Override
     public String toString() {
         return "ColumnDefinition{" +
                 "columnName='" + columnName + '\'' +
+                ", camelCaseName='" + camelCaseName + '\'' +
                 ", typeName='" + typeName + '\'' +
                 ", columnSize=" + columnSize +
                 ", remarks='" + remarks + '\'' +
