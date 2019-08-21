@@ -1,12 +1,12 @@
 package cn.chenzw.toolkit.datasource.core.converter;
 
-import java.util.Map;
+import java.util.List;
 
 public interface TypeConverter {
 
-    Map<String, Class<?>> getTypes();
+    List<TypeMapping> getTypes();
 
-    Class<?> toJavaType(String jdbcType);
+    Class<?> toJavaType(String jdbcType, Integer size, Integer digits);
 
     String toJdbcType(Class<?> clazz);
 
