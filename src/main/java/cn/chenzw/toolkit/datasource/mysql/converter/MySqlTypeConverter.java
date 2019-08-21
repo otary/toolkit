@@ -12,15 +12,7 @@ import java.util.Map;
 public class MySqlTypeConverter extends AbstractTypeConverter {
 
     private static MySqlTypeConverter mySqlTypeConverter = new MySqlTypeConverter();
-
-    private MySqlTypeConverter() {
-    }
-
-    public static MySqlTypeConverter getInstance() {
-        return mySqlTypeConverter;
-    }
-
-    public static Map<String, Class<?>> types = new HashMap<>();
+    private static Map<String, Class<?>> types = new HashMap<>();
 
     static {
         types.put("CHAR", String.class);
@@ -44,6 +36,12 @@ public class MySqlTypeConverter extends AbstractTypeConverter {
 
     }
 
+    private MySqlTypeConverter() {
+    }
+
+    public static MySqlTypeConverter getInstance() {
+        return mySqlTypeConverter;
+    }
 
     @Override
     public Map<String, Class<?>> getTypes() {

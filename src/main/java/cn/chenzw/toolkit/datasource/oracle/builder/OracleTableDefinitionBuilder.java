@@ -1,8 +1,10 @@
 package cn.chenzw.toolkit.datasource.oracle.builder;
 
+import cn.chenzw.toolkit.commons.ClassExtUtils;
 import cn.chenzw.toolkit.datasource.core.builder.AbstractColumnDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.core.builder.AbstractTableDefinitionBuilder;
 import oracle.jdbc.driver.OracleConnection;
+import org.apache.commons.dbcp2.DelegatingConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,25 +14,18 @@ import java.sql.SQLException;
  */
 public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder {
 
+    private static boolean isCommonsDbcp2Present = ClassExtUtils
+            .isPresent("org.apache.commons.dbcp2.DelegatingConnection");
+
     public OracleTableDefinitionBuilder(Connection connection, String tableName) throws SQLException {
         super(connection, tableName);
 
-
-
-
-        org.apache.commons.dbcp2.DelegatingConnection del = new org.apache.commons.dbcp2.DelegatingConnection(connection);
-        connection = del.getInnermostDelegate();
-        //if (connection instanceof OracleConnection) {
-        System.out.println(connection.getClass());
-        ((OracleConnection) connection).setRemarksReporting(true);
-        //  }
-       /* if (connection.isWrapperFor(OracleConnection.class)) {
-            System.out.println(connection);
-            this.connection = connection.unwrap(OracleConnection.class);
-            System.out.println(connection);
-
-            ((OracleConnection) connection).setRemarksReporting(true);
-        }*/
+        if (isCommonsDbcp2Present) {
+            if (connection.isWrapperFor(DelegatingConnection.class)) {
+                ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate()))
+                        .setRemarksReporting(true);
+            }
+        }
     }
 
     @Override

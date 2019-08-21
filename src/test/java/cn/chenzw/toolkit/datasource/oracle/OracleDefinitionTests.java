@@ -1,8 +1,6 @@
 package cn.chenzw.toolkit.datasource.oracle;
 
-import cn.chenzw.toolkit.datasource.entity.ColumnDefinition;
 import cn.chenzw.toolkit.datasource.entity.TableDefinition;
-import cn.chenzw.toolkit.datasource.oracle.builder.OracleColumnDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.oracle.builder.OracleTableDefinitionBuilder;
 import cn.chenzw.toolkit.spring.config.DataSourceConfig;
 import org.junit.Assert;
@@ -17,7 +15,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DataSourceConfig.class})
@@ -35,6 +32,8 @@ public class OracleDefinitionTests {
 
         Assert.assertNotNull(tableDefinition);
         Assert.assertTrue(tableDefinition.getColumnDefinitions().size() > 0);
+
+        System.out.println(tableDefinition);
 
         connection.close();
     }
