@@ -231,6 +231,22 @@ Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
 
 ```
 
+### ProjectUtils
+
+项目相关
+
+- 获取项目根地址
+
+```
+ProjectUtils.getRootPath(); // => C:\Users\chenzw\IdeaProjects\toolkit
+```
+
+- 获取项目classpath地址
+
+```
+ProjectUtils.getClassPath(); // => /C:/Users/chenzw/IdeaProjects/toolkit/target/test-classes/
+```
+
 ### ClassExtUtils
 
 - **判断某个类是否存在**
