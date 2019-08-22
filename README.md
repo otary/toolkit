@@ -21,6 +21,14 @@ StringExtUtils.toCamel("HELLO_WORLD");  // => "helloWorld"
 StringExtUtils.toCamel("Hello_WoRld");  // => "helloWorld"
 ```
 
+- **下划线转帕斯卡**
+
+```
+StringExtUtils.toPascal("hello_world");  // => HelloWorld
+StringExtUtils.toPascal("HELLO_WORLD");  // => HelloWorld
+StringExtUtils.toPascal("Hello_WoRld");  // => HelloWorld
+```
+
 - **分隔大写字符**
 ```
 StringExtUtils.uppercaseSeparate("HelloWorld", "-");  // => "hello-world"

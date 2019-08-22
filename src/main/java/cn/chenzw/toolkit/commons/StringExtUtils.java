@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class StringExtUtils {
 
-    public static final int INDEX_NOT_FOUND = -1;
+    private static final int INDEX_NOT_FOUND = -1;
 
     private StringExtUtils() {
     }
@@ -17,7 +17,7 @@ public abstract class StringExtUtils {
      * 分隔大写字符
      *
      * @param name
-     * @param separator
+     * @param separator 分隔符
      * @return
      */
     public static String uppercaseSeparate(String name, String separator) {
@@ -57,7 +57,9 @@ public abstract class StringExtUtils {
      * 将下划线命名的字符串转换为驼峰格式 - 如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。</br>
      * <pre>eg. HELLO_WORLD->HelloWorld</pre>
      *
-     * @param name 转换前的下划线命名的字符串
+     * @param name                   转换前的下划线命名的字符串
+     * @param separator              分隔符
+     * @param firstLetterCapitalized 首字母是否大写
      * @return 转换后的驼峰式命名的字符串
      */
     public static String toCamel(String name, String separator, boolean firstLetterCapitalized) {
@@ -65,7 +67,7 @@ public abstract class StringExtUtils {
             return name;
         } else if (!name.contains(separator)) {
             if (firstLetterCapitalized) {
-                // 不含下划线，则仅将首字母小写
+                // 不含下划线，则仅将首字母大写
                 return name.substring(0, 1).toUpperCase() + name.substring(1);
             }
             return name;
@@ -101,6 +103,23 @@ public abstract class StringExtUtils {
     public static String toCamel(String name) {
         return toCamel(name, "_", false);
     }
+
+
+    public static String toPascal(String name, String separator) {
+        String camelName = toCamel(name, separator, true);
+        return camelName.substring(0, 1).toUpperCase() + camelName.substring(1);
+    }
+
+    /**
+     * 将下划线命名的字符串转换为帕斯卡格式
+     *
+     * @param name
+     * @return
+     */
+    public static String toPascal(String name) {
+        return toPascal(name, "_");
+    }
+
 
     /**
      * 获取第一个分离点之后的文本（不存在分离点时返回整个字符串）

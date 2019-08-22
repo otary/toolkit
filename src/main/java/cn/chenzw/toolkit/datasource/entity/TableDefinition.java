@@ -5,18 +5,21 @@ import java.util.List;
 
 /**
  * 表信息封装
+ *
  * @author chenzw
  */
 public class TableDefinition {
 
     private String tableName;
     private String remarks;
+    private String pascalName;
 
     private List<ColumnDefinition> columnDefinitions = Collections.emptyList();
 
-    public TableDefinition(String tableName, String remarks, List<ColumnDefinition> columnDefinitions) {
+    public TableDefinition(String tableName, String pascalName, String remarks, List<ColumnDefinition> columnDefinitions) {
         this.columnDefinitions = columnDefinitions;
         this.tableName = tableName;
+        this.pascalName = pascalName;
         this.remarks = remarks;
     }
 
@@ -46,7 +49,11 @@ public class TableDefinition {
 
     @Override
     public String toString() {
-        return "TableDefinition{" + "tableName='" + tableName + '\'' + ", remarks='" + remarks + '\''
-                + ", columnDefinitions=" + columnDefinitions + '}';
+        return "TableDefinition{" +
+                "tableName='" + tableName + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", pascalName='" + pascalName + '\'' +
+                ", columnDefinitions=" + columnDefinitions +
+                '}';
     }
 }

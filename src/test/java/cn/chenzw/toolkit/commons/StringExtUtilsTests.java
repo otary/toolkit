@@ -24,6 +24,13 @@ public class StringExtUtilsTests {
     }
 
     @Test
+    public void testToPascal() {
+        Assert.assertEquals("HelloWorld", StringExtUtils.toPascal("hello_world"));
+        Assert.assertEquals("HelloWorld", StringExtUtils.toPascal("HELLO_WORLD"));
+        Assert.assertEquals("HelloWorld", StringExtUtils.toPascal("Hello_WoRld"));
+    }
+
+    @Test
     public void testUppercaseSeparate() {
         Assert.assertEquals("hello-world", StringExtUtils.uppercaseSeparate("HelloWorld", "-"));
         Assert.assertEquals("hello@world", StringExtUtils.uppercaseSeparate("helloWorld", "@"));
@@ -37,9 +44,11 @@ public class StringExtUtilsTests {
     }
 
     @Test
-    public void testSubStringFirstBefore(){
+    public void testSubStringFirstBefore() {
         Assert.assertEquals("ab", StringExtUtils.subStringFirstBefore("abcdef", "c"));
         Assert.assertEquals("", StringExtUtils.subStringFirstBefore("abcdef", "g"));
         Assert.assertEquals("ab", StringExtUtils.subStringFirstBefore("abcdefabcdef", "c"));
     }
+
+
 }

@@ -33,8 +33,6 @@ public class OracleDefinitionTests {
         Assert.assertNotNull(tableDefinition);
         Assert.assertTrue(tableDefinition.getColumnDefinitions().size() > 0);
 
-        System.out.println(tableDefinition);
-
         connection.close();
     }
 }
