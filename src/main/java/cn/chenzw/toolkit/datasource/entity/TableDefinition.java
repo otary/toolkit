@@ -47,6 +47,14 @@ public class TableDefinition {
         this.columnDefinitions = columnDefinitions;
     }
 
+    public String getPascalName() {
+        return pascalName;
+    }
+
+    public void setPascalName(String pascalName) {
+        this.pascalName = pascalName;
+    }
+
     @Override
     public String toString() {
         return "TableDefinition{" +
