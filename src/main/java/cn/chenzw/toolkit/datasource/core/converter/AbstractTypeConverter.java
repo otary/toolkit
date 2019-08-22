@@ -1,7 +1,5 @@
 package cn.chenzw.toolkit.datasource.core.converter;
 
-
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,6 +21,10 @@ public abstract class AbstractTypeConverter implements TypeConverter {
             }
             return false;
         }).findFirst();
+
+        if (!typeMappingOptional.isPresent()) {
+            throw new IllegalArgumentException("JdbcType [" + jdbcType + "] not supported!");
+        }
 
         return typeMappingOptional.get().getJavaType();
     }

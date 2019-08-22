@@ -3,7 +3,9 @@ package cn.chenzw.toolkit.datasource.oracle.converter;
 import cn.chenzw.toolkit.datasource.core.converter.AbstractTypeConverter;
 import cn.chenzw.toolkit.datasource.core.converter.TypeMapping;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author chenzw
@@ -19,7 +21,8 @@ public class OracleTypeConverter extends AbstractTypeConverter {
         typeMappings.add(new TypeMapping("VARCHAR", String.class));
         typeMappings.add(new TypeMapping("VARCHAR2", String.class));
         typeMappings.add(new TypeMapping("LONG", String.class));
-        
+        typeMappings.add(new TypeMapping("RAW", String.class));
+
         typeMappings.add(new TypeMapping("NUMBER", Long.class));
         typeMappings.add(new TypeMapping("LONGRAW", Byte[].class));
 
