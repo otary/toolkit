@@ -387,6 +387,20 @@ List<UserDto> userDtos = DozerPageUtils.mapList(new DozerBeanMapper(), users, Us
 
 FreeMarker工具类
 
+- 将模版文件渲染成字符串输出
+
+```
+
+```
+
+- 将模版文件渲染生成文件
+
+```
+
+```
+
+- 将字符串模版渲染生成字符串输出
+
 ```
 
 ```
