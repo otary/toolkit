@@ -1,6 +1,10 @@
 package cn.chenzw.toolkit.freemarker.builder;
 
-import freemarker.template.*;
+import freemarker.cache.StringTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
+import freemarker.template.Version;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,6 +46,11 @@ public class FreeMarkerBuilder {
 
     private String encoding;
 
+    /**
+     * 模版内容
+     */
+    private String templateContent;
+
     public static FreeMarkerBuilder create() {
         return new FreeMarkerBuilder();
     }
@@ -80,6 +89,11 @@ public class FreeMarkerBuilder {
         return this;
     }
 
+    public FreeMarkerBuilder templateContent(String templateContent) {
+        this.templateContent = templateContent;
+        return this;
+    }
+
     public Template build() throws IOException {
         if (configuration == null) {
             configuration = new Configuration(ObjectUtils.defaultIfNull(version,
@@ -88,6 +102,12 @@ public class FreeMarkerBuilder {
 
         if (!StringUtils.isEmpty(templatePath)) {
             configuration.setDirectoryForTemplateLoading(new File(templatePath));
+        }
+
+        if (!StringUtils.isEmpty(templateContent)) {
+            StringTemplateLoader stringTemplateLoader = new StringTemplateLoader();
+            stringTemplateLoader.putTemplate(templateName, templateContent);
+            configuration.setTemplateLoader(stringTemplateLoader);
         }
 
         // 设置异常处理策略

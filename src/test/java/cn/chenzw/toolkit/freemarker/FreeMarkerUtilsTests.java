@@ -1,10 +1,7 @@
 package cn.chenzw.toolkit.freemarker;
 
 import cn.chenzw.toolkit.domain.entity.User;
-import cn.chenzw.toolkit.freemarker.builder.FreeMarkerBuilder;
 import freemarker.template.TemplateException;
-import org.apache.commons.lang3.StringUtils;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +33,15 @@ public class FreeMarkerUtilsTests {
         String result = FreeMarkerUtils.processToString(new File(templateFile.toURI()), userMap);
 
         Assert.assertEquals("0: 张三_0,1: 张三_1,2: 张三_2,3: 张三_3,4: 张三_4,5: 张三_5,6: 张三_6,7: 张三_7,8: 张三_8,9: 张三_9,", result.replaceAll("\r\n", ","));
+    }
+
+    @Test
+    public void testProcessToString2() throws IOException, TemplateException {
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("user", users.get(0));
+
+        String result = FreeMarkerUtils.processToString("用户:${user.name}", userMap);
+        Assert.assertEquals("用户:张三_0", result);
     }
 
     @Test

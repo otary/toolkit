@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.io.File;
+import java.util.List;
+
 @RunWith(JUnit4.class)
 public class ProjectUtilsTests {
 
@@ -17,9 +20,16 @@ public class ProjectUtilsTests {
     }
 
     @Test
-    public void testGetClassPath(){
+    public void testGetClassPath() {
         String classPath = ProjectUtils.getClassPath();
 
         Assert.assertThat(classPath, Matchers.endsWith("toolkit/target/test-classes/"));
+    }
+
+    @Test
+    public void testGetDependentJarFiles() {
+        List<File> dependentJarFiles = ProjectUtils.getDependentJarFiles();
+
+        Assert.assertTrue(dependentJarFiles.size() > 0);
     }
 }

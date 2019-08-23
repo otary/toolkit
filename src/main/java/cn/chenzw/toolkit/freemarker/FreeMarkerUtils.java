@@ -39,6 +39,20 @@ public abstract class FreeMarkerUtils {
         return writer.toString();
     }
 
+    public static String processToString(String templateContent, Object dataModel) throws IOException, TemplateException {
+        return processToString(toTemplate(templateContent, null), dataModel);
+    }
+
+    /**
+     * @param templateContent
+     * @param dataModel
+     * @param freeMarkerBuilder
+     * @return
+     */
+    public static String processToString(String templateContent, Object dataModel, FreeMarkerBuilder freeMarkerBuilder) throws IOException, TemplateException {
+        return processToString(toTemplate(templateContent, freeMarkerBuilder), dataModel);
+    }
+
 
     public static void processToFile(File templateFile, Object dataModel, File outFile) throws IOException, TemplateException {
         processToFile(templateFile, dataModel, outFile, null);
@@ -58,7 +72,11 @@ public abstract class FreeMarkerUtils {
         processToFile(toTemplate(templateFile, freeMarkerBuilder), dataModel, outFile);
     }
 
-    public static void processToFile(Template template, Object dataModel, File outFile) throws IOException, TemplateException {
+    public static void processToFile(Template template, Object dataModel, File outFile) {
+        if (!outFile.getParentFile().exists()) {
+            outFile.getParentFile().mkdirs();
+        }
+
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)))) {
             template.process(dataModel, bufferedWriter);
         } catch (Exception e) {
@@ -73,12 +91,22 @@ public abstract class FreeMarkerUtils {
         String templatePath = templateFile.getParentFile().getAbsolutePath();
         String templateName = templateFile.getName();
 
-        Template template = null;
         if (freeMarkerBuilder == null) {
-            template = FreeMarkerBuilder.create().templatePath(templatePath).templateName(templateName).build();
+            return FreeMarkerBuilder.create().templatePath(templatePath).templateName(templateName).build();
         } else {
-            template = freeMarkerBuilder.templatePath(templatePath).templateName(templateName).build();
+            return freeMarkerBuilder.templatePath(templatePath).templateName(templateName).build();
         }
-        return template;
     }
+
+    private static Template toTemplate(String templateContent, FreeMarkerBuilder freeMarkerBuilder) throws IOException {
+        Validate.notEmpty(templateContent, "Freemarker templateContent is null!");
+
+        if (freeMarkerBuilder == null) {
+            freeMarkerBuilder = FreeMarkerBuilder.create();
+        }
+        return freeMarkerBuilder.templateContent(templateContent).templateName("stringTemplate").build();
+
+    }
+
+
 }

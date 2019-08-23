@@ -247,6 +247,22 @@ ProjectUtils.getRootPath(); // => C:\Users\chenzw\IdeaProjects\toolkit
 ProjectUtils.getClassPath(); // => /C:/Users/chenzw/IdeaProjects/toolkit/target/test-classes/
 ```
 
+- 获取依赖jar列表
+
+```
+ProjectUtils.getDependentJarFiles();  // => jar文件列表
+```
+
+### FileExtUtils
+
+文件工具类
+
+- 获取两个路径的相对路径地址
+
+```
+
+```
+
 ### ClassExtUtils
 
 - **判断某个类是否存在**
