@@ -48,7 +48,7 @@ public class HttpHolder {
 
     private static HttpServletResponse getResponseInternal() {
         if (SPRING_FREMAE_PRESENT) {
-            return new org.springframework.web.context.request.ServletWebRequest(getRequestInternal()).getResponse();
+            return ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()).getResponse();
         }
         return null;
     }
