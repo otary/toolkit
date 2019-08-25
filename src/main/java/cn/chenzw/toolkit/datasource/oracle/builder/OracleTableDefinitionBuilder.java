@@ -14,15 +14,14 @@ import java.sql.SQLException;
  */
 public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder {
 
-    private static boolean isCommonsDbcp2Present = ClassExtUtils
+    private static boolean commonsDbcp2Present = ClassExtUtils
             .isPresent("org.apache.commons.dbcp2.DelegatingConnection");
 
     public OracleTableDefinitionBuilder(Connection connection, String tableName) throws SQLException {
         super(connection, tableName);
 
-        if (isCommonsDbcp2Present && connection.isWrapperFor(DelegatingConnection.class)) {
-            ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate()))
-                    .setRemarksReporting(true);
+        if (commonsDbcp2Present && connection.isWrapperFor(DelegatingConnection.class)) {
+            ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate())).setRemarksReporting(true);
 
         }
     }
