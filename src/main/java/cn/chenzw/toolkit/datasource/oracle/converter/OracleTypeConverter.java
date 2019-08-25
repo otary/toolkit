@@ -21,6 +21,7 @@ public class OracleTypeConverter extends AbstractTypeConverter {
         typeMappings.add(new TypeMapping("VARCHAR", String.class));
         typeMappings.add(new TypeMapping("VARCHAR2", String.class));
         typeMappings.add(new TypeMapping("LONG", String.class));
+        typeMappings.add(new TypeMapping("CLOB", String.class));
         typeMappings.add(new TypeMapping("RAW", String.class));
 
         typeMappings.add(new TypeMapping("NUMBER", Long.class));
