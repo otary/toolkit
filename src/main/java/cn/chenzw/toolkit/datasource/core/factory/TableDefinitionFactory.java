@@ -2,6 +2,7 @@ package cn.chenzw.toolkit.datasource.core.factory;
 
 import cn.chenzw.toolkit.datasource.core.builder.AbstractTableDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.entity.TableDefinition;
+import cn.chenzw.toolkit.datasource.mysql.builder.MySqlTableDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.oracle.builder.OracleTableDefinitionBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author chenzw
  */
 public class TableDefinitionFactory {
@@ -25,6 +25,7 @@ public class TableDefinitionFactory {
 
     static {
         DRIVER_MAPPING.put("Oracle JDBC driver", OracleTableDefinitionBuilder.class);
+        DRIVER_MAPPING.put("MySQL Connector Java", MySqlTableDefinitionBuilder.class);
     }
 
 

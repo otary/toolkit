@@ -327,6 +327,18 @@ Map<String, String> uriParams = UriExtUtils.getUriParams(
 
 ```
 
+### ZipUtils
+
+压缩工具
+
+- 压缩文件
+
+```
+try (OutputStream os = new FileOutputStream(new File("src.zip"))) {
+    ZipUtils.toZip(new File("src"), os);
+}
+```
+
 ---
 
 ## dozer

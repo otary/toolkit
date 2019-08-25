@@ -3,6 +3,7 @@ package cn.chenzw.toolkit.datasource.oracle.builder;
 import cn.chenzw.toolkit.commons.ClassExtUtils;
 import cn.chenzw.toolkit.datasource.core.builder.AbstractColumnDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.core.builder.AbstractTableDefinitionBuilder;
+import com.alibaba.druid.pool.DruidPooledConnection;
 import oracle.jdbc.driver.OracleConnection;
 import org.apache.commons.dbcp2.DelegatingConnection;
 import org.slf4j.Logger;
@@ -28,6 +29,8 @@ public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder
             ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate())).setRemarksReporting(true);
         } else {
 
+            System.out.println("-----------------------");
+            System.out.println(connection.isWrapperFor(DruidPooledConnection.class));
 
 
             /*try {
