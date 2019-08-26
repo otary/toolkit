@@ -30,12 +30,8 @@ public class MySqlDefinitionTests {
         Connection connection = dataSource.getConnection();
         TableDefinition tableDefinition = new MySqlTableDefinitionBuilder(connection, "sys_permission").build();
 
-
         Assert.assertNotNull(tableDefinition);
         Assert.assertTrue(tableDefinition.getColumnDefinitions().size() > 0);
-
-        System.out.println(tableDefinition);
-
 
         connection.close();
     }
