@@ -22,23 +22,18 @@ public class OracleTableDefinitionBuilder extends AbstractTableDefinitionBuilder
     private static boolean commonsDbcp2Present = ClassExtUtils
             .isPresent("org.apache.commons.dbcp2.DelegatingConnection");
 
+    private static boolean druidPresent = ClassExtUtils.isPresent("com.alibaba.druid.pool.DruidPooledConnection");
+
     public OracleTableDefinitionBuilder(Connection connection, String tableName) throws SQLException {
         super(connection, tableName);
 
         if (commonsDbcp2Present && connection.isWrapperFor(DelegatingConnection.class)) {
             ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate())).setRemarksReporting(true);
+        } else if (druidPresent && connection.isWrapperFor(DruidPooledConnection.class)) {
+            ((OracleConnection) (((DruidPooledConnection) connection).getConnection())).setRemarksReporting(true);
         } else {
-
-            System.out.println("-----------------------");
-            System.out.println(connection.isWrapperFor(DruidPooledConnection.class));
-
-
-            /*try {
-                ((OracleConnection) (((DelegatingConnection) connection).getInnermostDelegate()))
-                        .setRemarksReporting(true);
-            } catch (Throwable e) {
-                logger.warn("Connection [" + connection + "] can't case to OracleConnection!");
-            }*/
+            // @TODO
+            logger.warn("Connection [" + connection + "] can't case to OracleConnection!");
         }
     }
 
