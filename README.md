@@ -482,6 +482,26 @@ HttpServletRequest httpRequest = HttpHolder.getRequest();  // 获取HttpServletR
 HttpServletResponse httpResponse = HttpHolder.getResponse();  // 获取HttpServletResponse
 ```
 
+### RequestUtils
+
+请求工具类
+
+- 获取请求参数的第一个参数
+
+```
+RequestUtils.getFirstParamter(request.getParameter("aaa"));
+```
+
+### ResponseUtils
+
+响应工具类
+
+- 下载文件
+
+```
+
+```
+
 ### ContentCachingRequestWrapperFilter
 
 缓存HTTP请求内容（可多次获取HTTP请求内容）

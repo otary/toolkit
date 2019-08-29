@@ -9,6 +9,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * HttpServletResponse工具类
+ *
  * @author chenzw
  */
 public class ResponseUtils {
@@ -21,10 +23,10 @@ public class ResponseUtils {
 
 
     /**
-     * 下载
+     * 下载文件
      *
-     * @param fileName
-     * @param inputStream
+     * @param fileName    下载的文件名
+     * @param inputStream 输入流
      * @throws IOException
      */
     public static void download(String fileName, InputStream inputStream) throws IOException {
@@ -46,4 +48,13 @@ public class ResponseUtils {
 
         IOUtils.copy(inputStream, response.getOutputStream());
     }
+
+
+    public static String buildHtmlMsg(String title, String msg) {
+        return "<div style=\"position: relative; width: 100%; height: 500px; text-align:center;\">"
+                + "<div style=\" width: 300px; margin: 100px auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px; overflow: hidden;\">"
+                + "<div style=\"padding: 10px 3px; border-bottom: 1px solid #ccc; font-weight: bold;\">" + title
+                + "</div>" + "<div style=\"padding: 10px 3px;\">" + "【错误提示】: " + msg + "</div></div></div>";
+    }
+
 }
