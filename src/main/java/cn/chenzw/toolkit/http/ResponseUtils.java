@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.http;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,11 +51,41 @@ public class ResponseUtils {
     }
 
 
+    /**
+     * 生成html提示消息
+     *
+     * @param title
+     * @param msg
+     * @return
+     */
     public static String buildHtmlMsg(String title, String msg) {
+        return buildHtmlMsg(title, null, msg);
+    }
+
+    public static String buildHtmlMsg(String title, String tip, String msg) {
         return "<div style=\"position: relative; width: 100%; height: 500px; text-align:center;\">"
                 + "<div style=\" width: 300px; margin: 100px auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px; overflow: hidden;\">"
                 + "<div style=\"padding: 10px 3px; border-bottom: 1px solid #ccc; font-weight: bold;\">" + title
-                + "</div>" + "<div style=\"padding: 10px 3px;\">" + "【错误提示】: " + msg + "</div></div></div>";
+                + "</div>" + "<div style=\"padding: 10px 3px;\">" + (StringUtils.isEmpty(tip) ? "" : "【" + tip + "】: ") + msg + "</div></div></div>";
+    }
+
+    /**
+     * 输出html消息提示
+     *
+     * @param response
+     * @param title
+     * @param tip
+     * @param msg
+     */
+    public static void printHtmlMsg(HttpServletResponse response, String title, String tip, String msg) {
+        response.setContentType("text/html");
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+        try {
+            response.getWriter().write(buildHtmlMsg(title, tip, msg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

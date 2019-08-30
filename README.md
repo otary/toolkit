@@ -502,6 +502,18 @@ RequestUtils.getFirstParamter(request.getParameter("aaa"));
 
 ```
 
+- 生成html提示消息
+
+```
+
+```
+
+- 输出html提示消息
+
+```
+
+```
+
 ### ContentCachingRequestWrapperFilter
 
 缓存HTTP请求内容（可多次获取HTTP请求内容）
