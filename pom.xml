@@ -249,6 +249,15 @@
         </dependency>
         <!--/ 模版 -->
 
+        <!-- 身份认证 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.4.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- /身份认证 -->
+
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -256,6 +265,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 数据验证 -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -269,6 +279,8 @@
             <version>2.0.1.Final</version>
             <scope>provided</scope>
         </dependency>
+        <!-- 数据验证 -->
+
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>

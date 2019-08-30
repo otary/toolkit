@@ -662,6 +662,34 @@ ContextBeans beans = SpringUtils.getBeans();  // => ContextBeans{beans=[BeanDesc
 ```
 
 ---
+
+## 身份认证
+
+### shiro
+
+#### ShiroUtils
+
+- 是否已登录
+
+```
+ShiroUtils.isLogin();  // => true
+```
+
+- 退出登录
+
+```
+ShiroUtils.logout();  
+```
+
+- 获取登录用户信息
+
+```
+ShiroUtils.getUserInfo();
+```
+
+
 ## 运行单元测试
 
 $ mvn test
+
+
