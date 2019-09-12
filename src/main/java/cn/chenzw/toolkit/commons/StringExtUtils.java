@@ -107,6 +107,9 @@ public abstract class StringExtUtils {
 
     public static String toPascal(String name, String separator) {
         String camelName = toCamel(name, separator, true);
+        if (StringUtils.isEmpty(camelName)) {
+            return "";
+        }
         return camelName.substring(0, 1).toUpperCase() + camelName.substring(1);
     }
 

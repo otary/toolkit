@@ -1,9 +1,18 @@
 package cn.chenzw.toolkit.datasource.core.converter;
 
+/**
+ * jdbc类型与jdbc类型映射
+ *
+ * @author chenzw
+ */
 public class TypeMapping {
 
     private String jdbcType;
     private Class<?> javaType;
+
+    /**
+     * 类型匹配器
+     */
     private TypeFilter typeFilter;
 
     public TypeMapping(String jdbcType, Class<?> javaType) {

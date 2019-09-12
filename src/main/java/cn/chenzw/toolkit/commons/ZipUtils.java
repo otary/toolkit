@@ -32,52 +32,32 @@ public class ZipUtils {
      */
     public static void toZip(File srcDirectory, OutputStream outputStream) {
         long t1 = System.currentTimeMillis();
-        ZipOutputStream zos = null;
-        try {
-            zos = new ZipOutputStream(outputStream);
+        try (ZipOutputStream zos = new ZipOutputStream(outputStream)) {
             doCompress(srcDirectory, zos, srcDirectory.getName());
 
             long t2 = System.currentTimeMillis();
             logger.debug("Finish zip [{}], cost {} ms", srcDirectory.getPath(), (t2 - t1));
-        } catch (Exception e) {
-            throw new RuntimeException("Zip [" + srcDirectory.getPath() + "] fail!", e);
-        } finally {
-            try {
-                zos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-
     public static void toZip(List<File> srcFiles, OutputStream outputStream) {
-        ZipOutputStream zos = null;
-
-        try {
-            zos = new ZipOutputStream(outputStream);
+        try (ZipOutputStream zos = new ZipOutputStream(outputStream)) {
             for (File srcFile : srcFiles) {
                 byte[] buff = new byte[1024];
                 zos.putNextEntry(new ZipEntry(srcFile.getName()));
 
                 int len;
-                FileInputStream in = new FileInputStream(srcFile);
-                while ((len = in.read(buff)) != -1) {
-                    zos.write(buff, 0, len);
-                }
-                zos.closeEntry();
-                in.close();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Zip [" + srcFiles + "] fail!", e);
-        } finally {
-            if (zos != null) {
-                try {
-                    zos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                try (FileInputStream in = new FileInputStream(srcFile)) {
+                    while ((len = in.read(buff)) != -1) {
+                        zos.write(buff, 0, len);
+                    }
+                    zos.closeEntry();
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -86,13 +66,13 @@ public class ZipUtils {
         if (srcFile.isFile()) {
             zos.putNextEntry(new ZipEntry(name));
 
-            FileInputStream fis = new FileInputStream(srcFile);
-            int len;
-            while ((len = fis.read(buff)) != -1) {
-                zos.write(buff, 0, len);
+            try (FileInputStream fis = new FileInputStream(srcFile)) {
+                int len;
+                while ((len = fis.read(buff)) != -1) {
+                    zos.write(buff, 0, len);
+                }
+                zos.closeEntry();
             }
-            zos.closeEntry();
-            fis.close();
         } else {
             File[] files = srcFile.listFiles();
             // 空文件夹处理

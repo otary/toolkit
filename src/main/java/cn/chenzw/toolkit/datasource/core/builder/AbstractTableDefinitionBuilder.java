@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * 表定义构建器
+ *
  * @author chenzw
  */
 public abstract class AbstractTableDefinitionBuilder {
@@ -29,14 +31,15 @@ public abstract class AbstractTableDefinitionBuilder {
         return rs.getString(DbConstants.RS_TABLE_NAME);
     }
 
-    protected abstract AbstractColumnDefinitionBuilder getColumnDefinitionBuilder(Connection connection, String tableName);
+    protected abstract AbstractColumnDefinitionBuilder getColumnDefinitionBuilder(Connection connection,
+            String tableName);
 
     public TableDefinition build() throws SQLException {
         ResultSet tableRs = connection.getMetaData().getTables(null, null, tableName, new String[]{"TABLE"});
 
-        while (tableRs.next()) {
-            String tableName = getTableName(tableRs);
-            return new TableDefinition(tableName, StringExtUtils.toPascal(tableName), getRemarks(tableRs),
+        if (tableRs.next()) {
+            String _tableName = getTableName(tableRs);
+            return new TableDefinition(_tableName, StringExtUtils.toPascal(_tableName), getRemarks(tableRs),
                     getColumnDefinitionBuilder(connection, this.tableName).build());
         }
         return null;

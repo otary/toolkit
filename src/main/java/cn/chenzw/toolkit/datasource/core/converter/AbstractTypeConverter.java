@@ -3,6 +3,8 @@ package cn.chenzw.toolkit.datasource.core.converter;
 import java.util.Optional;
 
 /**
+ * jdbc类型与java类型转换器
+ *
  * @author chenzw
  */
 public abstract class AbstractTypeConverter implements TypeConverter {
@@ -14,8 +16,7 @@ public abstract class AbstractTypeConverter implements TypeConverter {
                 if (typeMapping.getTypeFilter() == null) {
                     return true;
                 }
-                if (typeMapping.getTypeFilter()
-                        .isMatch(jdbcType, size, digits)) {
+                if (typeMapping.getTypeFilter().isMatch(jdbcType, size, digits)) {
                     return true;
                 }
             }

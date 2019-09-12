@@ -4,8 +4,6 @@ import cn.chenzw.toolkit.datasource.core.builder.AbstractTableDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.entity.TableDefinition;
 import cn.chenzw.toolkit.datasource.mysql.builder.MySqlTableDefinitionBuilder;
 import cn.chenzw.toolkit.datasource.oracle.builder.OracleTableDefinitionBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.lang.reflect.InvocationTargetException;
@@ -15,11 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *
  * @author chenzw
  */
 public class TableDefinitionFactory {
-
-    private static final Logger logger = LoggerFactory.getLogger(TableDefinitionFactory.class);
 
     private static Map<String, Class<?>> DRIVER_MAPPING = new HashMap<>();
 

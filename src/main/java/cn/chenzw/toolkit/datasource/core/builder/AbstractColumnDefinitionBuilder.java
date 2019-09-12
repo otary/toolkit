@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 列定义构建器
+ *
  * @author chenzw
  */
 public abstract class AbstractColumnDefinitionBuilder {
@@ -72,9 +74,10 @@ public abstract class AbstractColumnDefinitionBuilder {
             Integer columnSize = getColumnSize(columnRs);
             Integer columnDigits = getDecimalDigits(columnRs);
             String columnName = getColumnName(columnRs);
-            columnDefinitions.add(new ColumnDefinition(columnName, StringExtUtils.toCamel(columnName), typeName, columnSize,
-                    columnDigits, getRemarks(columnRs), null, null, isNullable(columnRs),
-                    getColumnDef(columnRs), getTypeConverter().toJavaType(typeName, columnSize, columnDigits)));
+            columnDefinitions
+                    .add(new ColumnDefinition(columnName, StringExtUtils.toCamel(columnName), typeName, columnSize,
+                            columnDigits, getRemarks(columnRs), null, null, isNullable(columnRs),
+                            getColumnDef(columnRs), getTypeConverter().toJavaType(typeName, columnSize, columnDigits)));
         }
 
         ResultSet primaryKeyRs = connection.getMetaData().getPrimaryKeys(null, null, tableName);
