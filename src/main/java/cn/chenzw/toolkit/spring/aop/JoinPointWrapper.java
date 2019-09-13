@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 
 /**
  * 切点封装类
+ *
  * @author chenzw
  */
 public class JoinPointWrapper {
@@ -25,7 +26,17 @@ public class JoinPointWrapper {
 
 
     /**
+     * 获取切点对象
+     *
+     * @return
+     */
+    public JoinPoint getJoinPoint() {
+        return joinPoint;
+    }
+
+    /**
      * 获取切点方法上的注解
+     *
      * @param annotationClass
      * @return
      */
@@ -40,6 +51,7 @@ public class JoinPointWrapper {
 
     /**
      * 获取请求链接（含参数）
+     *
      * @return
      */
     public String getURI() {
@@ -126,6 +138,7 @@ public class JoinPointWrapper {
 
     /**
      * 获取HTTP BODY内容
+     *
      * @return
      * @throws IOException
      */
@@ -135,6 +148,7 @@ public class JoinPointWrapper {
 
     /**
      * 获取模块名称
+     *
      * @return
      */
     public String getArtifactId() {
