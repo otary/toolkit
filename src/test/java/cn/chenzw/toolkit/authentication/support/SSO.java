@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.support;
+package cn.chenzw.toolkit.authentication.support;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -176,6 +176,12 @@ Assert.assertEquals(color.getGreen(), 173);
 Assert.assertEquals(color.getBlue(), 71);
 ```
 
+- 生成随机颜色
+
+```
+Color color = ColorUtils.randomColor(0, 255);
+```
+
 ### RegexUtils
 
 正则匹配工具类
@@ -490,6 +496,12 @@ HttpServletResponse httpResponse = HttpHolder.getResponse();  // 获取HttpServl
 
 ```
 RequestUtils.getFirstParamter(request.getParameter("aaa"));
+```
+
+- 获取客户端IP
+
+```
+RequestUtils.getClientIp();
 ```
 
 ### ResponseUtils

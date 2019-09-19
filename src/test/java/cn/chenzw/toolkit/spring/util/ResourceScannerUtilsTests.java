@@ -1,10 +1,9 @@
 package cn.chenzw.toolkit.spring.util;
 
+import cn.chenzw.toolkit.authentication.support.SSO;
 import cn.chenzw.toolkit.domain.Writeable;
 import cn.chenzw.toolkit.domain.dto.BookDto;
-import cn.chenzw.toolkit.domain.entity.Book;
 import cn.chenzw.toolkit.spring.aop.JoinPointWrapper;
-import cn.chenzw.toolkit.support.SSO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,6 @@ import org.junit.runners.JUnit4;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Set;
 
 @RunWith(JUnit4.class)

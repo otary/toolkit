@@ -1,8 +1,8 @@
 package cn.chenzw.toolkit.domain.dto;
 
+import cn.chenzw.toolkit.authentication.support.SSO;
 import cn.chenzw.toolkit.domain.Writeable;
 import cn.chenzw.toolkit.domain.entity.Book;
-import cn.chenzw.toolkit.support.SSO;
 
 import java.math.BigDecimal;
 

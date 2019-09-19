@@ -3,11 +3,12 @@ package cn.chenzw.toolkit.commons;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * 颜色工具类
  *
- * @author
+ * @author chenzw
  */
 public final class ColorUtils {
     private ColorUtils() {
@@ -31,5 +32,25 @@ public final class ColorUtils {
         return new Color(Integer.parseInt(hexColor, 16));
     }
 
+    /**
+     * 生成随机的颜色
+     *
+     * @param fc 起始颜色值
+     * @param bc 结束颜色值
+     * @return
+     */
+    public static final Color randomColor(int fc, int bc) {
+        Random random = new Random();
+        if (fc > 255) {
+            fc = 255;
+        }
+        if (bc > 255) {
+            bc = 255;
+        }
+        int r = fc + random.nextInt(bc - fc);
+        int g = fc + random.nextInt(bc - fc);
+        int b = fc + random.nextInt(bc - fc);
+        return new Color(r, g, b);
+    }
 
 }
