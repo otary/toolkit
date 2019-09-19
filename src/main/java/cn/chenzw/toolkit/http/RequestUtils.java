@@ -1,6 +1,9 @@
 package cn.chenzw.toolkit.http;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * HttpServletRequest工具类
@@ -8,6 +11,9 @@ import org.apache.commons.lang3.ArrayUtils;
  * @author chenzw
  */
 public class RequestUtils {
+
+    private static final String[] CLIENT_IP_HEADERS = {"x-forwarded-for", "Proxy-Client-IP", "WL-Proxy-Client-IP",
+            "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "X-Real-IP"};
 
     private RequestUtils() {
     }
@@ -28,4 +34,19 @@ public class RequestUtils {
         return (String) params;
     }
 
+
+    /**
+     * 获取请求的客户端IP
+     *
+     * @return
+     */
+    public static String getClientIp(HttpServletRequest request) {
+        for (String clientIpHeader : CLIENT_IP_HEADERS) {
+            String ip = request.getHeader(clientIpHeader);
+            if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+                return ip;
+            }
+        }
+        return request.getRemoteAddr();
+    }
 }

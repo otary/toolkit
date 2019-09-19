@@ -17,8 +17,7 @@ public class HttpRequestWrapper {
 
     private static final String POST_METHOD = "POST";
     private static final String MULTIPART = "multipart/";
-    private static final String[] CLIENT_IP_HEADERS = {"x-forwarded-for", "Proxy-Client-IP", "WL-Proxy-Client-IP",
-            "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR", "X-Real-IP"};
+
 
     private static final String X_REQUESTED_WIDTH_HEADER = "X-Requested-With";
     private static final String AJAX_HEADER = "XMLHttpRequest";
@@ -52,7 +51,7 @@ public class HttpRequestWrapper {
 
     /**
      * 获取URI链接
-     *
+     * <p>
      * eg. /users/list
      *
      * @return
@@ -63,7 +62,7 @@ public class HttpRequestWrapper {
 
     /**
      * 获取请求参数
-     *
+     * <p>
      * eg. id=1&name=zhansan
      *
      * @return
@@ -75,8 +74,8 @@ public class HttpRequestWrapper {
 
     /**
      * 获取URL连接
-     *
-     *  eg.http://localhost:8080/users/list?id=1&name=zhansan
+     * <p>
+     * eg.http://localhost:8080/users/list?id=1&name=zhansan
      *
      * @return
      */
@@ -90,13 +89,7 @@ public class HttpRequestWrapper {
      * @return
      */
     public String getClientIp() {
-        for (String clientIpHeader : CLIENT_IP_HEADERS) {
-            String ip = request.getHeader(clientIpHeader);
-            if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
-                return ip;
-            }
-        }
-        return this.request.getRemoteAddr();
+        return RequestUtils.getClientIp(request);
     }
 
     /**
@@ -154,6 +147,7 @@ public class HttpRequestWrapper {
 
     /**
      * 是否Ajax请求
+     *
      * @return
      */
     public boolean isAjax() {
