@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.authentication.support;
 
+import cn.chenzw.toolkit.commons.ProjectUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -15,10 +16,14 @@ public class CaptchaBuilderTest {
 
     @Test
     public void testBasic() throws IOException {
-        BufferedImage image = new CaptchaBuilder().build();
 
-        FileOutputStream fos = new FileOutputStream(new File("a.jpg"));
+        String random = CaptchaBuilders.randomAlphanumeric(4);
+
+        BufferedImage image = CaptchaBuilders.create()
+                //.width(65).height(32)
+                .text("ABCDEFG").build();
+
+        FileOutputStream fos = new FileOutputStream(new File(ProjectUtils.getClassPath() + File.separator + "captcha.jpg"));
         ImageIO.write(image, "JPEG", fos);
-
     }
 }

@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.authentication.support;
 
 import cn.chenzw.toolkit.commons.ColorUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,19 +19,20 @@ public class CaptchaBuilder {
     /**
      * 图片宽度
      */
-    private int width = 64;
+    private int width = 120;
 
     /**
      * 图片高度
      */
-    private int height = 32;
+    private int height = 62;
+
 
     /**
      * 字体样式集合
      */
-    private Font[] fonts = new Font[]{
-            new Font("Times New Roman", Font.ITALIC, height - 5)
-    };
+    private Font[] fonts;
+
+    private String[] fontNames = new String[]{"Times New Roman"};
 
     /**
      * 验证码文本
@@ -41,6 +43,11 @@ public class CaptchaBuilder {
      * 是否允许绘制干扰线
      */
     private boolean enableDrawRandomLine = true;
+
+    /**
+     * 字体大小
+     */
+    private int fontSize = 32;
 
     public CaptchaBuilder width(int width) {
         this.width = width;
@@ -57,6 +64,11 @@ public class CaptchaBuilder {
     public CaptchaBuilder fonts(Font[] fonts) {
         this.fonts = fonts;
 
+        return this;
+    }
+
+    public CaptchaBuilder fonts(String[] fontNames) {
+        this.fontNames = fontNames;
         return this;
     }
 
@@ -79,8 +91,8 @@ public class CaptchaBuilder {
      * 绘制干扰线条
      */
     private void drawRandomLine(Graphics graphics) {
-
-        for (int i = 0; i < 155; i++) {
+        graphics.setColor(ColorUtils.randomColor(160, 200));
+        for (int i = 0; i < 150; i++) {
             int x = RandomUtils.nextInt(0, width);
             int y = RandomUtils.nextInt(0, height);
             int xl = RandomUtils.nextInt(0, width);
@@ -91,7 +103,7 @@ public class CaptchaBuilder {
     }
 
     /**
-     * 写入文本
+     * 绘制文本
      *
      * @param graphics
      */
@@ -99,7 +111,7 @@ public class CaptchaBuilder {
         if (!StringUtils.isEmpty(text)) {
             for (int i = 0; i < text.length(); i++) {
                 graphics.setColor(ColorUtils.randomColor(20, 130));
-                graphics.drawString(String.valueOf(text.charAt(i)), 1, 16);
+                graphics.drawString(String.valueOf(text.charAt(i)), (width / text.length()) * i + RandomUtils.nextInt(0, 10), (height / 2 + fontSize / 2) - RandomUtils.nextInt(0, 10));
             }
         }
     }
@@ -116,17 +128,25 @@ public class CaptchaBuilder {
         graphics.setColor(ColorUtils.randomColor(200, 255));
         // 范围
         graphics.fillRect(0, 0, width, height);
+
         // 字体
-        graphics.setFont(fonts[RandomUtils.nextInt(0, fonts.length - 1)]);
+        if (!ArrayUtils.isEmpty(fonts)) {
+            Font font = fonts[RandomUtils.nextInt(0, fonts.length - 1)];
+            graphics.setFont(font);
+
+            this.fontSize = font.getSize();
+        } else if (!ArrayUtils.isEmpty(fontNames)) {
+            String fontName = fontNames[RandomUtils.nextInt(0, fontNames.length - 1)];
+            graphics.setFont(new Font(fontName, Font.ITALIC, fontSize));
+        }
 
         // 绘制干扰线
         if (enableDrawRandomLine) {
             drawRandomLine(graphics);
         }
 
-
-        graphics.setColor(ColorUtils.randomColor(20, 130));
-        graphics.drawString("4", 0, height);
+        // 绘制验证码
+        drawText(graphics);
 
         graphics.dispose();
 
