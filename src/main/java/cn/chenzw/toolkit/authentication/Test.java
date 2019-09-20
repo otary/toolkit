@@ -21,34 +21,40 @@ public class Test {
     public static void generate() throws IOException {
         int width = 120;
         int height = 62;
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
 
-        Graphics g = image.getGraphics();
+        Graphics2D g = image.createGraphics();
 
         Random random = new Random();
 
         g.setColor(ColorUtils.randomColor(200, 250));
         g.fillRect(0, 0, width, height);
-        g.setFont(new Font("Times New Roman", Font.ITALIC, 20));
-        g.setColor(ColorUtils.randomColor(160, 200));
+        g.setFont(new Font("Times New Roman", Font.ITALIC, 50));
+        //g.setColor(ColorUtils.randomColor(160, 200));
+
+
         for (int i = 0; i < 155; i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
-            int xl = random.nextInt(12);
-            int yl = random.nextInt(12);
+            int xl = random.nextInt(width);
+            int yl = random.nextInt(height);
             g.drawLine(x, y, x + xl, y + yl);
-        }
 
+        }
+       g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
         String sRand = "";
         for (int i = 0; i < 4; i++) {
             String rand = String.valueOf(random.nextInt(10));
             sRand += rand;
 
-
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
-            g.drawString(rand, 13 * i + 6, 16);
+            g.drawString(rand, 20 * i + 11, 50);
         }
         System.out.println(sRand);
+
+        g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
+      //  g.setColor(ColorUtils.randomColor(20, 130));
+        g.drawString("abc", 32, 30);
 
         g.dispose();
 
@@ -56,10 +62,7 @@ public class Test {
 
         ImageIO.write(image, "JPEG", fos);
 
-        //return new ImageCode(image, sRand, 60);
-
     }
-
 
 
     public static void main(String[] args) throws IOException {
