@@ -7,7 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class CaptchaBuilders {
 
-    public static final CaptchaBuilder create() {
+    public static final CaptchaBuilder createDefault() {
         return new CaptchaBuilder();
     }
 

@@ -19,9 +19,9 @@ public class CaptchaBuilderTest {
 
         String random = CaptchaBuilders.randomAlphanumeric(4);
 
-        BufferedImage image = CaptchaBuilders.create()
+        BufferedImage image = CaptchaBuilders.createDefault()
                 //.width(65).height(32)
-                .text("ABCDEFG").build();
+                .text("ABCD").build();
 
         FileOutputStream fos = new FileOutputStream(new File(ProjectUtils.getClassPath() + File.separator + "captcha.jpg"));
         ImageIO.write(image, "JPEG", fos);
