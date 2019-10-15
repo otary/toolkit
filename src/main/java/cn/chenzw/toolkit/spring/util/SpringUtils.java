@@ -27,8 +27,8 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletRegistration;
+import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * Spring工具类
@@ -91,6 +91,21 @@ public class SpringUtils {
      */
     public static <T> T registerBean(Class<T> clazz, Object... args) {
         return registerBean(null, clazz, args);
+    }
+
+
+    /**
+     * 注册controller
+     *
+     * @param requestMappingInfo 映射信息
+     *                           <pre>RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths("/staff/list").methods(RequestMethod.GET).build(); </pre>
+     * @param handler            controller对象
+     * @param method             绑定的方法
+     * @throws NoSuchMethodException
+     */
+    public static void registerController(RequestMappingInfo requestMappingInfo, Object handler, Method method) throws NoSuchMethodException {
+        RequestMappingHandlerMapping requestMappingHandlerMapping = getBean(RequestMappingHandlerMapping.class);
+        requestMappingHandlerMapping.registerMapping(requestMappingInfo, handler, method);
     }
 
     /**

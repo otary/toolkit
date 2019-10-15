@@ -652,6 +652,16 @@ User userBean = SpringUtils.registerBean(User.class);
 Book bookBean = SpringUtils.registerBean("book2", Book.class);
 ```
 
+- 注册controller
+
+```
+RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths("/staff/list").methods(RequestMethod.GET).build();
+Staff staff = SpringUtils.getBean("staff");
+Method getUserNameMethod = staff.getClass().getDeclaredMethod("getUserName",String.class);
+SpringUtils.registerController(requestMappingInfo, staff, getUserNameMethod);
+
+```
+
 - 获取Bean
 
 ```
