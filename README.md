@@ -68,6 +68,16 @@ int i = RandomStringExtUtils.randomFromList(1,7,9,10);  // =>
 
 ```
 
+### ArrayExtUtils
+
+- 分割为指定长度的列表
+
+```
+String[] data = new String[]{"1000000008334", "1000000008333", "1000000008332", "1000000008331", "1000000008330", "1000000008329", "1000000008328"};
+
+List<String[]> result = ArrayExtUtils.split(data, 2);
+```
+
 ### DateExtUtils
 
 - **随机生成日期**
