@@ -179,4 +179,28 @@ public abstract class StringExtUtils {
         }
         return str.substring(0, pos);
     }
+
+
+    /**
+     * String转Integer
+     *
+     * @param str
+     * @param defaultValue 字符串为空时返回的默认值
+     * @return
+     */
+    public static Integer toInteger(final String str, final Integer defaultValue) {
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
+        return Integer.valueOf(defaultValue);
+    }
+
+    /**
+     * String 转 Integer
+     * @param str
+     * @return
+     */
+    public static Integer toInteger(final String str) {
+        return toInteger(str, null);
+    }
 }
