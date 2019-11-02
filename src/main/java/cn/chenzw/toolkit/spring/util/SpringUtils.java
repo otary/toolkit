@@ -18,6 +18,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
@@ -27,6 +29,8 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletRegistration;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -56,6 +60,10 @@ public class SpringUtils {
 
     public static <T> T getBean(String name, Class<T> clazz) {
         return getAppContext().getBean(name, clazz);
+    }
+
+    public static <T> Map<String, T> getBeansOfType(Class<T> clazz) {
+        return getAppContext().getBeansOfType(clazz);
     }
 
 
@@ -220,5 +228,40 @@ public class SpringUtils {
         return new ContextServletMappings(mappings, appContext.getId());
     }
 
+
+    /**
+     * 获取请求对应的HttpMethod对象
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    public static HandlerMethod getHanlerMethod(HttpServletRequest request) throws Exception {
+
+        Map<String, DispatcherServlet> dispatcherServletMap = SpringUtils.getBeansOfType(DispatcherServlet.class);
+        // Not Spring Environment
+        if (dispatcherServletMap == null || dispatcherServletMap.isEmpty()) {
+            return null;
+        }
+
+        for (DispatcherServlet dispatcherServlet : dispatcherServletMap.values()) {
+            Field handlerMappingsField = dispatcherServlet.getClass().getDeclaredField("handlerMappings");
+            handlerMappingsField.setAccessible(true);
+            List<HandlerMapping> handlerMappings = (List<HandlerMapping>) handlerMappingsField.get(dispatcherServlet);
+
+            for (HandlerMapping handlerMapping : handlerMappings) {
+                HandlerExecutionChain handlerExecutionChain = handlerMapping.getHandler(request);
+                if (handlerExecutionChain != null) {
+                    Object handler = handlerExecutionChain.getHandler();
+
+                    if (handler instanceof HandlerMethod) {
+                        return (HandlerMethod) handler;
+                    }
+                }
+
+            }
+        }
+        return null;
+    }
 
 }
