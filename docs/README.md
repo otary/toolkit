@@ -795,8 +795,4 @@ ShiroUtils.logout();
 ShiroUtils.getUserInfo();
 ```
 
-## 运行单元测试
-
-$ mvn test
-
 
