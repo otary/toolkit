@@ -18,7 +18,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
@@ -30,7 +29,6 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -238,7 +236,21 @@ public class SpringUtils {
      */
     public static HandlerMethod getHanlerMethod(HttpServletRequest request) throws Exception {
 
-        Map<String, DispatcherServlet> dispatcherServletMap = SpringUtils.getBeansOfType(DispatcherServlet.class);
+        Map<String, HandlerMapping> handlerMappingMap = getBeansOfType(HandlerMapping.class);
+
+        for (HandlerMapping handlerMapping : handlerMappingMap.values()) {
+            HandlerExecutionChain handlerExecutionChain = handlerMapping.getHandler(request);
+            if (handlerExecutionChain != null) {
+                Object handler = handlerExecutionChain.getHandler();
+
+                if (handler instanceof HandlerMethod) {
+                    return (HandlerMethod) handler;
+                }
+            }
+        }
+
+
+       /* Map<String, DispatcherServlet> dispatcherServletMap = SpringUtils.getBeansOfType(DispatcherServlet.class);
         // Not Spring Environment
         if (dispatcherServletMap == null || dispatcherServletMap.isEmpty()) {
             return null;
@@ -260,7 +272,7 @@ public class SpringUtils {
                 }
 
             }
-        }
+        }*/
         return null;
     }
 
