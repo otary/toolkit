@@ -29,12 +29,12 @@ public class CorsInterceptor implements HandlerInterceptor {
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object,
                                 Exception exception) {
-
+        // nothing to do
     }
 
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object,
                            ModelAndView modelAndView) {
-
+        // nothing to do
     }
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
