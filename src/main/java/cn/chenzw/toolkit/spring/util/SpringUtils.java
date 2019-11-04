@@ -39,9 +39,6 @@ import java.util.*;
  */
 public class SpringUtils {
 
-    private SpringUtils() {
-    }
-
     private static final Logger logger = LoggerFactory.getLogger(SpringUtils.class);
 
     public static ApplicationContext getAppContext() {
@@ -64,6 +61,8 @@ public class SpringUtils {
         return getAppContext().getBeansOfType(clazz);
     }
 
+    private SpringUtils() {
+    }
 
     /**
      * 获取所有Bean

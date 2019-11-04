@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HttpHolder {
 
-    private HttpHolder() {
-    }
-
     private static final ThreadLocal<HttpServletRequest> REQUEST = new ThreadLocal<>();
     private static final ThreadLocal<HttpServletResponse> RESPONSE = new ThreadLocal<>();
 
     private static final boolean SPRING_FREMAE_PRESENT = ClassExtUtils.isPresent("org.springframework.web.context.request.RequestContextHolder");
+
+
+    private HttpHolder() {
+    }
 
     public static void init(HttpServletRequest request, HttpServletResponse response) {
         REQUEST.set(request);

@@ -16,13 +16,6 @@ public class FreeMarkerBuilder {
 
     private Configuration configuration;
 
-    private FreeMarkerBuilder() {
-    }
-
-    private FreeMarkerBuilder(Configuration configuration) {
-        this.configuration = configuration;
-    }
-
     /**
      * freemarker版本
      *
@@ -50,6 +43,13 @@ public class FreeMarkerBuilder {
      * 模版内容
      */
     private String templateContent;
+
+    private FreeMarkerBuilder() {
+    }
+
+    private FreeMarkerBuilder(Configuration configuration) {
+        this.configuration = configuration;
+    }
 
     public static FreeMarkerBuilder create() {
         return new FreeMarkerBuilder();
