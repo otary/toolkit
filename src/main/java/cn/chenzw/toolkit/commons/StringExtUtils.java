@@ -192,15 +192,40 @@ public abstract class StringExtUtils {
         if (StringUtils.isEmpty(str)) {
             return defaultValue;
         }
-        return Integer.valueOf(defaultValue);
+        return Integer.valueOf(str);
     }
 
     /**
      * String 转 Integer
+     *
      * @param str
      * @return
      */
     public static Integer toInteger(final String str) {
         return toInteger(str, null);
+    }
+
+    /**
+     * String 转 Long
+     *
+     * @param str
+     * @param defaultValue
+     * @return
+     */
+    public static Long toLong(final String str, final Long defaultValue) {
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
+        return Long.valueOf(str);
+    }
+
+    /**
+     * String 转 Long
+     *
+     * @param str
+     * @return
+     */
+    public static Long toLong(final String str) {
+        return toLong(str, null);
     }
 }

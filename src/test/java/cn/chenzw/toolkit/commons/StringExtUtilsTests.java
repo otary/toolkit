@@ -51,4 +51,31 @@ public class StringExtUtilsTests {
     }
 
 
+    @Test
+    public void testToInteger() {
+        Assert.assertEquals("10", StringExtUtils.toInteger("10", 1).toString());
+
+        // 空值则返回默认值
+        Assert.assertEquals("1", StringExtUtils.toInteger("", 1).toString());
+        Assert.assertEquals("1", StringExtUtils.toInteger(null, 1).toString());
+
+        // 空值返回null
+        Assert.assertEquals(null, StringExtUtils.toInteger(null));
+        Assert.assertEquals(null, StringExtUtils.toInteger(""));
+
+    }
+
+    @Test
+    public void testToLong(){
+        Assert.assertEquals("100000000", StringExtUtils.toLong("100000000", 1L).toString());
+
+        // 空值则返回默认值
+        Assert.assertEquals("1", StringExtUtils.toLong("", 1L).toString());
+        Assert.assertEquals("1", StringExtUtils.toLong(null, 1L).toString());
+
+        // 空值返回null
+        Assert.assertEquals(null, StringExtUtils.toLong(null));
+        Assert.assertEquals(null, StringExtUtils.toLong(""));
+    }
+
 }

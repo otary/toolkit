@@ -38,6 +38,12 @@
         <jackson.version>2.9.10</jackson.version>
         <mybatis.version>3.5.1</mybatis.version>
         <hibernate-validator.version>6.0.16.Final</hibernate-validator.version>
+        <gson.version>2.8.5</gson.version>
+        <freemarker.version>2.3.28</freemarker.version>
+        <druid.version>1.1.17</druid.version>
+        <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
+        <shiro.version>1.4.1</shiro.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
 
 
@@ -97,13 +103,6 @@
             <version>${commons-codec.version}</version>
         </dependency>
         <!-- /apache commons -->
-
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>${dozer.version}</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- logging -->
         <dependency>
@@ -171,12 +170,14 @@
         </dependency>
         <!-- /spring -->
 
+
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>${pagehelper.version}</version>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>${dozer.version}</version>
             <scope>provided</scope>
         </dependency>
+
 
         <!-- 数据库 -->
         <dependency>
@@ -199,16 +200,32 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
-            <version>2.7.0</version>
+            <version>${commons-dbcp2.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.17</version>
+            <version>${druid.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- / 数据源 -->
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- /mybatis -->
 
         <!-- json -->
         <dependency>
@@ -233,7 +250,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.5</version>
+            <version>${gson.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--/ json -->
@@ -258,7 +275,7 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
+            <version>${freemarker.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--/ 模版 -->
@@ -267,7 +284,7 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>1.4.1</version>
+            <version>${shiro.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- /身份认证 -->
@@ -283,7 +300,7 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>2.0.1.Final</version>
+            <version>${validation-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- 数据验证 -->
@@ -294,14 +311,6 @@
             <version>3.0.1-b08</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
 
     <profiles>
