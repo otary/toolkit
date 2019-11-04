@@ -2,6 +2,10 @@
 
 Java扩展工具库
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3a01d0ffcca4412594bd3d80c5cdf90f)](https://www.codacy.com/manual/otary/toolkit?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=otary/toolkit&amp;utm_campaign=Badge_Grade)
+
+![](https://img.shields.io/maven-central/v/cn.hutool/hutool-all.svg?label=Maven%20Central)
+
 ## commons
 
 ### StringExtUtils
