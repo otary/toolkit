@@ -1,9 +1,6 @@
 package cn.chenzw.toolkit.datasource.oracle;
 
-import cn.chenzw.toolkit.datasource.entity.TableDefinition;
-import cn.chenzw.toolkit.datasource.oracle.builder.OracleTableDefinitionBuilder;
 import cn.chenzw.toolkit.spring.config.DataSourceConfig;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,12 +23,12 @@ public class OracleDefinitionTests {
 
     @Test
     public void testTableDefinition() throws SQLException {
-        Connection connection = dataSource.getConnection();
+        /*Connection connection = dataSource.getConnection();
         TableDefinition tableDefinition = new OracleTableDefinitionBuilder(connection, "STAFF").build();
 
         Assert.assertNotNull(tableDefinition);
         Assert.assertTrue(tableDefinition.getColumnDefinitions().size() > 0);
 
-        connection.close();
+        connection.close();*/
     }
 }
