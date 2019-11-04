@@ -172,12 +172,12 @@ public abstract class ResourceScannerUtils {
      */
     public static class SUFFIX {
 
-        private SUFFIX() {
-        }
-
         public static final String ALL = "*";
         public static final String XML = "xml";
         public static final String CLASS = "class";
+
+        private SUFFIX() {
+        }
     }
 
 }

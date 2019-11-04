@@ -1,12 +1,11 @@
 package cn.chenzw.toolkit.datasource.constants;
 
 /**
+ * 数据库常量
+ *
  * @author chenzw
  */
 public class DbConstants {
-
-    private DbConstants() {
-    }
 
     public static final String RS_COLUMN_NAME = "COLUMN_NAME";
 
@@ -37,4 +36,6 @@ public class DbConstants {
 
     public static final String RS_TABLE_NAME = "TABLE_NAME";
 
+    private DbConstants() {
+    }
 }

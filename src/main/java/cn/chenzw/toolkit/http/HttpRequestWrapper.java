@@ -139,10 +139,7 @@ public class HttpRequestWrapper {
             return false;
         }
 
-        if (contentType.toLowerCase(Locale.ENGLISH).startsWith(MULTIPART)) {
-            return true;
-        }
-        return false;
+        return contentType.toLowerCase(Locale.ENGLISH).startsWith(MULTIPART);
     }
 
     /**

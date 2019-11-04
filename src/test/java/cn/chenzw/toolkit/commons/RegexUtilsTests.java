@@ -88,4 +88,10 @@ public class RegexUtilsTests {
         Assert.assertFalse(RegexUtils.isNumber("1s4"));
     }
 
+    @Test
+    public void testIsQQ(){
+        Assert.assertTrue(RegexUtils.isQQ("6746062"));
+        Assert.assertFalse(RegexUtils.isQQ("674a6062"));
+    }
+
 }

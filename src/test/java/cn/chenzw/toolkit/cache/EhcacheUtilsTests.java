@@ -4,7 +4,6 @@ import cn.chenzw.toolkit.spring.config.AppConfig;
 import cn.chenzw.toolkit.spring.config.CacheConfig;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.hibernate.EhCache;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

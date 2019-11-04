@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -28,7 +27,7 @@ import java.util.concurrent.ConcurrentMap;
 public class SpringUtilsTests {
 
     @Autowired
-    ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     @Test
     public void testRegisterBean() {
@@ -149,6 +148,7 @@ public class SpringUtilsTests {
     public void testGetFilterMappings() {
         ContextFilterMappings filterMappings = SpringUtils.getFilterMappings();
 
+        System.out.println("filterMappings:" + filterMappings);
     }
 
     /**
@@ -170,6 +170,8 @@ public class SpringUtilsTests {
     @Test
     public void testGetServletMappings() {
         ContextServletMappings servletMappings = SpringUtils.getServletMappings();
+
+        System.out.println("servletMappings:" + servletMappings);
     }
 
 

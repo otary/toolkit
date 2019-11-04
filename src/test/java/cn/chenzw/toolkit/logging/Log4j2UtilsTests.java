@@ -6,15 +6,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @RunWith(JUnit4.class)
 public class Log4j2UtilsTests {
-
-    private static final Logger logger = LoggerFactory.getLogger(Log4j2UtilsTests.class);
 
     @Test
     public void test() {

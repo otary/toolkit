@@ -132,7 +132,7 @@ public class SpringUtils {
         return getAppContext().getEnvironment().getProperty("server.port");
     }
 
-    private static <T> T doRegisterBean(String name, Class<T> clazz, Object... args) {
+    private static <T> T doRegisterBean(String beanName, Class<T> clazz, Object... args) {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
         if (ArrayUtils.isNotEmpty(args)) {
             for (Object arg : args) {
@@ -143,11 +143,11 @@ public class SpringUtils {
         BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
         BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry) ((ConfigurableApplicationContext) appContext)
                 .getBeanFactory();
-        if (StringUtils.isBlank(name)) {
-            name = BeanDefinitionReaderUtils.generateBeanName(beanDefinition, beanFactory, false);
+        if (StringUtils.isBlank(beanName)) {
+            beanName = BeanDefinitionReaderUtils.generateBeanName(beanDefinition, beanFactory, false);
         }
-        beanFactory.registerBeanDefinition(name, beanDefinition);
-        return appContext.getBean(name, clazz);
+        beanFactory.registerBeanDefinition(beanName, beanDefinition);
+        return appContext.getBean(beanName, clazz);
     }
 
 

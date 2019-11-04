@@ -1,10 +1,10 @@
-# commons
+## commons
 
-基础类扩展
+> 基础类扩展
 
 ### StringExtUtils
 
-- 驼峰转下划线
+- 驼峰命名 ->下划线命名
 
 ``` java
 StringExtUtils.toUnderscore("HelloWorld");  // => "hello_world"
@@ -13,7 +13,7 @@ StringExtUtils.toUnderscore("Hello2World");  // => "hello2_world"
 StringExtUtils.toUnderscore("HElloWOrld");   // => "h_ello_w_orld"
 ```
 
-- 下划线转驼峰
+- 下划线命名 -> 驼峰命名
 
 ``` java
 StringExtUtils.toCamel("hello_world");  // => "helloWorld"
@@ -21,7 +21,7 @@ StringExtUtils.toCamel("HELLO_WORLD");  // => "helloWorld"
 StringExtUtils.toCamel("Hello_WoRld");  // => "helloWorld"
 ```
 
-- 下划线转帕斯卡
+- 下划线命名 -> 帕斯卡命名
 
 ``` java
 StringExtUtils.toPascal("hello_world");  // => HelloWorld
@@ -44,19 +44,33 @@ StringExtUtils.subStringFirstAfter("abcdef", "g");  // => abcdef
 StringExtUtils.subStringFirstAfter("abcdefabcdef", "c");  // => defabcdef
 ```
 
-### RandomStringExtUtils
-
-- 随机生成中文字符
+- String -> Integer
 
 ``` java
-RandomStringExtUtils.randomChinese(5); // => 已很结同总
+StringExtUtils.toInteger("10", 1); // => 10
+
+// 空值返回默认值
+StringExtUtils.toInteger("", 1);   // => 1
+StringExtUtils.toInteger(null, 1); // => 1
+
+// 空值返回null
+StringExtUtils.toInteger(null);   // => null
+StringExtUtils.toInteger("");     // => null
 ```
 
-- 随机生成常用中文字符（包括复杂字符）
+### RandomStringExtUtils
+
+- 随机生成中文字符（包括复杂字符）
+
+``` java
+RandomStringExtUtils.randomChinese(5); // => 濯鰢猡崐嶖
+```
+
+- 随机生成常用中文字符
 
 ``` java
 // 随机生成3到5个中文字符
-RandomStringExtUtils.randomFrequentlyUsedChinese(3,5); // => 耆牮俤畸蹬
+RandomStringExtUtils.randomFrequentlyUsedChinese(3,5); // => 今兴珍
 ```
 
 - 随机生成姓名
@@ -69,8 +83,7 @@ RandomStringExtUtils.randomName();  // => 虞任
 
 ``` java
 String name = RandomStringExtUtils.randomFromList("张三", "李四", "王五", "赵六");  
-int i = RandomStringExtUtils.randomFromList(1,7,9,10);  // => 
-
+int i = RandomStringExtUtils.randomFromList(1,7,9,10);  // => 7
 ```
 
 ### ArrayExtUtils
@@ -79,7 +92,7 @@ int i = RandomStringExtUtils.randomFromList(1,7,9,10);  // =>
 
 ``` java
 String[] data = new String[]{"1000000008334", "1000000008333", "1000000008332", "1000000008331", "1000000008330", "1000000008329", "1000000008328"};
-List<String[]> result = ArrayExtUtils.split(data, 2);
+List<String[]> result = ArrayExtUtils.split(data, 2);  // => [["1000000008334", "1000000008333"],["1000000008332", "1000000008331"], ["1000000008330", "1000000008329"],["1000000008328"]]
 ```
 
 ### DateExtUtils
@@ -87,7 +100,7 @@ List<String[]> result = ArrayExtUtils.split(data, 2);
 - 随机生成日期
 
 ``` java
- Date randomDate = DateExtUtils.random();
+Date randomDate = DateExtUtils.random();
 ```
 
 - 随机生成指定范围内的日期
@@ -203,11 +216,9 @@ Map < String, Object > kvMap = new HashMap() {
     }
 };
 // 返回所有匹配的元素
-List < User > findedUsers = ListExtUtils.find(users, kvMap);
-Assert.assertEquals(findedUsers.toString(), "[User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}]");
+List < User > findedUsers = ListExtUtils.find(users, kvMap); // => [User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}]
 // 返回第一个匹配的元素
-User findedUser = ListExtUtils.findFirst(users, kvMap);
-Assert.assertEquals(findedUser.toString(), "User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}");
+User findedUser = ListExtUtils.findFirst(users, kvMap); // => User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}
 ```
 
 ### SerializationExtUtils

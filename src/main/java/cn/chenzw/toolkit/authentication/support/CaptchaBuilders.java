@@ -3,6 +3,8 @@ package cn.chenzw.toolkit.authentication.support;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
+ * 验证码构建器
+ *
  * @author chenzw
  */
 public class CaptchaBuilders {
