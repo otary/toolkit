@@ -20,7 +20,7 @@ public class LoggingAspect {
 
     private static final String POINT_CUT = "log()";
 
-    @Pointcut("execution(public * * (..))")
+    @Pointcut("execution(public * cn.chenzw.toolkit.spring.controllers.*.* (..))")
     public void log() {
     }
 
@@ -28,6 +28,8 @@ public class LoggingAspect {
     @Before(POINT_CUT)
     public void before(JoinPoint joinPoint) throws IOException {
 
+
+        System.out.println("-------------------------------------");
         JoinPointWrapper joinPointWrapper = new JoinPointWrapper(joinPoint);
         joinPointWrapperTL.set(joinPointWrapper);
 
