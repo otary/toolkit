@@ -2,120 +2,22 @@
 
 Java扩展工具库
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3a01d0ffcca4412594bd3d80c5cdf90f)](https://www.codacy.com/manual/otary/toolkit?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=otary/toolkit&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/otary/toolkit.svg?branch=master)](https://travis-ci.org/otary/toolkit)
+[![codecov](https://codecov.io/gh/otary/toolkit/branch/master/graph/badge.svg)](https://codecov.io/gh/otary/toolkit)
 
-# 模块
 
 [](commons.md ':include')
 
 [](dozer.md ':include')
 
+[](freemarker.md ':include')
 
-## http
+[](codec.md ':include')
 
-### HttpRequestWrapper
+[]()
 
-HttpRequest包装类
 
-``` java
-// Servlet环境
-HttpRequestWrapper httpRequestWrapper = new HttpRequestWrapper(request);
-
-// Spring环境
-HttpRequestWrapper httpRequestWrapper = new HttpRequestWrapper();
-
-httpRequestWrapper.getMethod();  // HTTP方法
-httpRequestWrapper.getURI();   // URI链接
-httpRequestWrapper.getQueryString();  // 请求参数
-httpRequestWrapper.getClientIp();  // 请求的客户端IP
-httpRequestWrapper.getThreadId();   // 请求线程ID
-httpRequestWrapper.getThreadName();  // 请求线程名称
-httpRequestWrapper.getBodyString();  // HTTP Body内容
-httpRequestWrapper.isMultipart();  // 是否上传文件
-```
-
-### HttpHolder
-
-``` java
-// Spring环境
-HttpServletRequest httpRequest = HttpHolder.getRequest();  // 获取HttpServletRequest
-HttpServletResponse httpResponse = HttpHolder.getResponse();  // 获取HttpServletResponse
-```
-
-### RequestUtils
-
-请求工具类
-
-- 获取请求参数的第一个参数
-
-``` java
-RequestUtils.getFirstParamter(request.getParameter("aaa"));
-```
-
-- 获取客户端IP
-
-``` java
-RequestUtils.getClientIp();
-```
-
-### ResponseUtils
-
-响应工具类
-
-- 下载文件
-
-``` java
-
-```
-
-- 生成html提示消息
-
-``` java
-
-```
-
-- 输出html提示消息
-
-``` java
-
-```
-
-### ContentCachingRequestWrapperFilter
-
-缓存HTTP请求内容（可多次获取HTTP请求内容）
-
-``` java
-@Bean
-public FilterRegistrationBean contentCachingRequestWrapperFilterRegistration() {
-    FilterRegistrationBean registration = new FilterRegistrationBean();
-    registration.setDispatcherTypes(DispatcherType.REQUEST);
-    registration.setFilter(new ContentCachingRequestWrapperFilter());
-    registration.addUrlPatterns("/*");
-    registration.setName("contentCachingRequestWrapperFilter");
-    registration.setOrder(Integer.MAX_VALUE);
-    return registration;
-}
-
-```
-
-### XssFilter
-
-Xss过滤器
-
-``` java
-@Bean
-public FilterRegistrationBean xssFilterRegistration() {
-    FilterRegistrationBean registration = new FilterRegistrationBean();
-    registration.setDispatcherTypes(DispatcherType.REQUEST);
-    registration.setFilter(new XssFilter("/sys/"));
-    registration.addUrlPatterns("/*");
-    registration.setName("xssFilter");
-    registration.setOrder(Integer.MAX_VALUE);
-    return registration;
-}
-
-```
-
----
 ## cache
 
 ### EhCacheUtils

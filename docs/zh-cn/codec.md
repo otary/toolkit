@@ -1,9 +1,10 @@
-
 ## codec
+
+加解密工具类
 
 ### AESUtils
 
-AES加解密工具
+AES算法加解密工具类
 
 - 加解密生成十六进制字符串
 
@@ -32,3 +33,4 @@ String base64String = AESUtils.encryptAsBase64String(plainText, key); // => "W20
 byte[] bytes = AESUtils.decryptBase64String(base64String, key); // => hello
 ```
 
+---

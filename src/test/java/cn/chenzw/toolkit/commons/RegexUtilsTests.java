@@ -63,6 +63,8 @@ public class RegexUtilsTests {
 
         // too long
         Assert.assertFalse(RegexUtils.isIdCard("3506811999101005782"));
+
+
     }
 
 
@@ -93,5 +95,7 @@ public class RegexUtilsTests {
         Assert.assertTrue(RegexUtils.isQQ("6746062"));
         Assert.assertFalse(RegexUtils.isQQ("674a6062"));
     }
+
+
 
 }

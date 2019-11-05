@@ -1,7 +1,7 @@
 package cn.chenzw.toolkit.http;
 
 
-import cn.chenzw.toolkit.commons.ClassExtUtils;
+import cn.chenzw.toolkit.spring.util.SpringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +13,6 @@ public class HttpHolder {
 
     private static final ThreadLocal<HttpServletRequest> REQUEST = new ThreadLocal<>();
     private static final ThreadLocal<HttpServletResponse> RESPONSE = new ThreadLocal<>();
-
-    private static final boolean SPRING_FREMAE_PRESENT = ClassExtUtils.isPresent("org.springframework.web.context.request.RequestContextHolder");
-
 
     private HttpHolder() {
     }
@@ -40,7 +37,7 @@ public class HttpHolder {
     }
 
     private static HttpServletRequest getRequestInternal() {
-        if (SPRING_FREMAE_PRESENT) {
+        if (SpringUtils.SPRING_WEB_FRAME_PRESENT) {
             return ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder
                     .getRequestAttributes()).getRequest();
         }
@@ -48,7 +45,7 @@ public class HttpHolder {
     }
 
     private static HttpServletResponse getResponseInternal() {
-        if (SPRING_FREMAE_PRESENT) {
+        if (SpringUtils.SPRING_WEB_FRAME_PRESENT) {
             return ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()).getResponse();
         }
         return null;

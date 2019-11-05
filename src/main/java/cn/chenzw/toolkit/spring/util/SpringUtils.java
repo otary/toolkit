@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.spring.util;
 
+import cn.chenzw.toolkit.commons.ClassExtUtils;
 import cn.chenzw.toolkit.spring.core.SpringContextHolder;
 import cn.chenzw.toolkit.spring.domain.ContextBeans;
 import cn.chenzw.toolkit.spring.domain.ContextFilterMappings;
@@ -37,9 +38,23 @@ import java.util.*;
  *
  * @author chenzw
  */
-public class SpringUtils {
+public final class SpringUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringUtils.class);
+
+    /**
+     * 是否Spring环境
+     */
+    public static final boolean SPRING_FREMAE_PRESENT = ClassExtUtils.isPresent("org.springframework.context.ApplicationContext");
+
+    /**
+     * 是否SpringWeb环境
+     */
+    public static final boolean SPRING_WEB_FRAME_PRESENT = ClassExtUtils.isPresent("org.springframework.web.servlet.DispatcherServlet");
+
+
+    private SpringUtils() {
+    }
 
     public static ApplicationContext getAppContext() {
         return SpringContextHolder.getAppContext();
@@ -61,8 +76,6 @@ public class SpringUtils {
         return getAppContext().getBeansOfType(clazz);
     }
 
-    private SpringUtils() {
-    }
 
     /**
      * 获取所有Bean

@@ -292,19 +292,32 @@ Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
 - 是否QQ号码
 
 ``` java
-
+RegexUtils.isQQ("6746062")  // => true
+RegexUtils.isQQ("674a6062") // => false
 ```
 
 - 是否身份证号码
 
 ``` java
+RegexUtils.isIdCard("350681199910100578"); // => true
+RegexUtils.isIdCard("130503670401001"); // => true
+
+ // too long
+RegexUtils.isIdCard("3506811999101005782"));  // => false
 
 ```
 
 - 是否手机号码
 
 ``` java
+RegexUtils.isPhoneNO("18012283835");  // => true
 
+// 少于11位
+RegexUtils.isPhoneNO("1801228383");  // => false
+// 多余11位
+RegexUtils.isPhoneNO("180122838356");   // => false
+// 非法字符
+RegexUtils.isPhoneNO("1801228383.");    // => false
 ```
 
 - 中文字符匹配
@@ -312,7 +325,13 @@ Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
   - 是否全是中文
   
 ``` java
+RegexUtils.isChinese("终南山");  // => true
 
+RegexUtils.isChinese("终南山.");   // => false
+RegexUtils.isChinese("中zhong国");  // => false
+
+RegexUtils.containsChinese("中国.."); // => true
+RegexUtils.containsChinese("zhongguo..");  // => false
 ```
 
 - 数值
@@ -320,7 +339,12 @@ Assert.assertFalse(RegexUtils.isEmail("chenzw@123@163.com"));
   - 是否数字（整数和小数）
   
 ``` java
+RegexUtils.isInteger("56745"); // => true
+RegexUtils.isInteger("-3545");  // => true
 
+// 小数
+RegexUtils.isInteger("56.332");  // => false
+RegexUtils.isInteger("-333.32");  // = > false
 ```
 
 ### ProjectUtils
@@ -352,7 +376,9 @@ ProjectUtils.getDependentJarFiles();  // => jar文件列表
 - 获取两个路径的相对路径地址
 
 ``` java
-
+FileExtUtils.relativePath("C:\\Users\\chenzw\\IdeaProjects\\code-generator\\code-generator-server\\target\\classes\\template\\basic\\domain\\entity\\entity.ftl", "C:\\Users\\chenzw\\IdeaProjects\\code-generator\\code-generator-server\\target\\classes\\template\\basic"); // => domain\\entity\\entity.ftl
+FileExtUtils.relativePath(null, "C:\\Users\\chenzw\\IdeaProjects\\code-generator\\code-generator-server\\target\\classes\\template\\basic");   // => ""
+FileExtUtils.relativePath("C:\\Users\\chenzw\\IdeaProjects\\code-generator\\code-generator-server\\target\\classes\\template\\basic\\domain\\entity\\entity.ftl", null);     // => C:\\Users\\chenzw\\IdeaProjects\\code-generator\\code-generator-server\\target\\classes\\template\\basic\\domain\\entity\\entity.ftl
 ```
 
 ### ClassExtUtils
@@ -382,12 +408,21 @@ ProjectUtils.getDependentJarFiles();  // => jar文件列表
 - 获取泛型参数
 
 ``` java
+List<User> users = new ArrayList<>();
+User user = new User();
+users.add(user);
 
+public <T> Class getGenericClassOfListParamter(List<T> ts) throws NoSuchMethodException {
+   return GenericUtils.getSuperClassGenricType(ts);
+}
+
+// List泛型类型测试
+Class aClass = getGenericClassOfListParamter(users);  // => User.class
 ```
 
 ### BinaryConvertUtils
 
-- bytes数组<=>十六进制字符串
+- ~~bytes数组 <=> 十六进制字符串~~（@Deprecated）
 
 ``` java
 BinaryConvertUtils.bytesToHexString("hello".getBytes());  // => 68656c6c6f
@@ -431,3 +466,4 @@ try (OutputStream os = new FileOutputStream(new File("src.zip"))) {
 }
 ```
 
+---

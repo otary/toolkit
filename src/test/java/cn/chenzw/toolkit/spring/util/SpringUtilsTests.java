@@ -182,6 +182,12 @@ public class SpringUtilsTests {
 
         Assert.assertTrue(!appContexts.isEmpty());
     }
+
+    @Test
+    public void testPresent() {
+        Assert.assertTrue(SpringUtils.SPRING_FREMAE_PRESENT);
+        Assert.assertTrue(SpringUtils.SPRING_WEB_FRAME_PRESENT);
+    }
 }
 
 
