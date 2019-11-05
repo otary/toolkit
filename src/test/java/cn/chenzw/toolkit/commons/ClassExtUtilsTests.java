@@ -35,4 +35,8 @@ public class ClassExtUtilsTests {
     }
 
 
+    @Test
+    public void testGenerateUniqueClassName(){
+        Assert.assertEquals("cn.chenzw.toolkit.commons.StringExtUtils$1",ClassExtUtils.generateUniqueClassName("cn.chenzw.toolkit.commons.StringExtUtils"));
+    }
 }

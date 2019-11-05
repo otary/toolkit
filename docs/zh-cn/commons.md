@@ -401,6 +401,13 @@ FileExtUtils.relativePath("C:\\Users\\chenzw\\IdeaProjects\\code-generator\\code
  URL sourceJar = ClassExtUtils.findSourceJar(DateUtils.class);  // => file:/C:/Users/yunli/.m2/repository/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar
 ```
 
+- 生成唯一的类名
+
+``` java
+ClassExtUtils.generateUniqueClassName("cn.chenzw.toolkit.commons.StringExtUtils"));  // => cn.chenzw.toolkit.commons.StringExtUtils$1
+
+```
+
 ### GenericUtils
 
 泛型类工具
