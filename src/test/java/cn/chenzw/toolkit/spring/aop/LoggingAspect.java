@@ -28,22 +28,21 @@ public class LoggingAspect {
     @Before(POINT_CUT)
     public void before(JoinPoint joinPoint) throws IOException {
 
-
-        System.out.println("-------------------------------------");
         JoinPointWrapper joinPointWrapper = new JoinPointWrapper(joinPoint);
         joinPointWrapperTL.set(joinPointWrapper);
 
-        logger.info("methodName:" + joinPointWrapper.getMethodName());
-        logger.info("articleId:" + joinPointWrapper.getArtifactId());
-        logger.info("bodyString:" + joinPointWrapper.getBodyString());
-        logger.info("canonicalClassMethod:" + joinPointWrapper.getCanonicalClassMethod());
-        logger.info("clientIp:" + joinPointWrapper.getClientIp());
-        logger.info("httpMethod:" + joinPointWrapper.getHttpMethod());
-        logger.info("queryString:" + joinPointWrapper.getQueryString());
-        logger.info("threadName:" + joinPointWrapper.getThreadName());
-        logger.info("uri:" + joinPointWrapper.getURI());
-        logger.info("methodArgs:" + Arrays.toString(joinPointWrapper.getMethodArgs()));
-        logger.info("threadId:" + joinPointWrapper.getThreadId());
+        logger.info("【httpMethod】:" + joinPointWrapper.getHttpMethod());
+        logger.info("【uri】:" + joinPointWrapper.getURI());
+        logger.info("【queryString】:" + joinPointWrapper.getQueryString());
+        logger.info("【bodyString】:" + joinPointWrapper.getBodyString());
+        logger.info("【canonicalClassMethod】:" + joinPointWrapper.getCanonicalClassMethod());
+        logger.info("【methodName】:" + joinPointWrapper.getMethodName());
+        logger.info("【methodArgs】:" + Arrays.toString(joinPointWrapper.getMethodArgs()));
+        logger.info("【articleId】:" + joinPointWrapper.getArtifactId());
+        logger.info("【clientIp】:" + joinPointWrapper.getClientIp());
+        logger.info("【threadId】:" + joinPointWrapper.getThreadId());
+        logger.info("【threadName】:" + joinPointWrapper.getThreadName());
+
 
     }
 
