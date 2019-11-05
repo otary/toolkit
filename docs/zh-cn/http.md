@@ -43,7 +43,7 @@ RequestUtils.getFirstParamter(request.getParameter("aaa"));
 - 获取客户端IP
 
 ``` java
-RequestUtils.getClientIp();
+RequestUtils.getClientIp();  // => 192.168.1.1
 ```
 
 ### ResponseUtils
@@ -53,18 +53,23 @@ RequestUtils.getClientIp();
 - 下载文件
 
 ``` java
-
+FileInputStream fis = new FileInputStream(new File("a.xlsx"));
+ResponseUtils.download("测试.xlsx", fis); 
 ```
 
 - 生成html提示消息
 
 ``` java
+ResponseUtils.buildHtmlMsg("提示", "系统异常"); // => 
 
+ResponseUtils.buildHtmlMsg("提示", "注意", "系统异常"); // => 
 ```
 
 - 输出html提示消息
 
 ``` java
+
+ResponseUtils.printHtmlMsg(response, "提示", "注意", "系统异常");
 
 ```
 

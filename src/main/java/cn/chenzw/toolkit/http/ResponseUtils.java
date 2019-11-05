@@ -31,7 +31,7 @@ public class ResponseUtils {
      * @throws IOException
      */
     public static void download(String fileName, InputStream inputStream) throws IOException {
-        download(fileName, inputStream, StandardCharsets.UTF_8);
+        download(fileName, inputStream, Charset.defaultCharset());
     }
 
     public static void download(String fileName, InputStream inputStream, Charset charset) throws IOException {
