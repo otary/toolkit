@@ -11,11 +11,10 @@ import java.util.regex.Pattern;
  */
 public abstract class RegexUtils {
 
+    private static final Pattern CHINESE_PATTERN = Pattern.compile("[\\u4e00-\\u9fa5]");
+
     private RegexUtils() {
     }
-
-
-    private static final Pattern CHINESE_PATTERN = Pattern.compile("[\\u4e00-\\u9fa5]");
 
     /**
      * 是否IPv4地址

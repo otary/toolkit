@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
-    HttpServletRequest orginalRequest;
+    private HttpServletRequest orginalRequest;
 
     // html过滤
     private final static HTMLFilter htmlFilter = new HTMLFilter();

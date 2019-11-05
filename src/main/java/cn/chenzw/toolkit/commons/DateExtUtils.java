@@ -108,7 +108,7 @@ public class DateExtUtils {
      */
     public static Date getLastDayOfMonth(String month, String format) throws ParseException {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(org.apache.commons.lang3.time.DateUtils.parseDate(month, format));
+        calendar.setTime(DateUtils.parseDate(month, format));
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         return calendar.getTime();
     }
