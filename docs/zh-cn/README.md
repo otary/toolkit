@@ -23,6 +23,8 @@ Java扩展工具库
 
 [](spring.mc ':include')
 
+[](datasource.md ':include')
+
 
 ## authentication
 
