@@ -40,6 +40,8 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.1'
 
 [](zh-cn/commons.md ':include')
 
+[](zh-cn/io.md ':include')
+
 [](zh-cn/dozer.md ':include')
 
 [](zh-cn/freemarker.md ':include')
