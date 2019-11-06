@@ -52,7 +52,7 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.1'
 
 [](logging.md ':include')
 
-[](spring.mc ':include')
+[](spring.md ':include')
 
 [](datasource.md ':include')
 
