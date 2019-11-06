@@ -1,6 +1,8 @@
 package cn.chenzw.toolkit.commons;
 
+import cn.chenzw.toolkit.constants.DateConstants;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
@@ -13,6 +15,7 @@ import java.util.Date;
  * @author chenzw
  */
 public class DateExtUtils {
+
 
     private DateExtUtils() {
     }
@@ -127,6 +130,29 @@ public class DateExtUtils {
         }
         return ((date.after(startDateInclusive) && date.before(endDateInclusive)) || date.equals(startDateInclusive)
                 || date.equals(endDateInclusive));
+    }
+
+
+    /**
+     * 解析日期
+     *
+     * @param dateStr
+     * @return
+     */
+    public static Date parseDate(String dateStr) {
+        if (StringUtils.isEmpty(dateStr)) {
+            throw new IllegalArgumentException("Date string must not be null");
+        }
+
+
+        return null;
+
+    }
+
+    public static void main(String[] args) throws ParseException {
+        Date date = DateUtils.parseDate("2019-10-10 10:20:12", DateConstants.HUMAN_DATETIME_FORMATE);
+
+        System.out.println(date);
     }
 
 }

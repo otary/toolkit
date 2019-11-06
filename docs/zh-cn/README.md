@@ -7,6 +7,37 @@ Java扩展工具库
 [![codecov](https://codecov.io/gh/otary/toolkit/branch/master/graph/badge.svg)](https://codecov.io/gh/otary/toolkit)
 
 
+## 文档
+
+[中文文档]()
+
+
+## 依赖
+
+### Maven
+
+```` xml
+<dependency>
+   <groupId>cn.chenzw.toolkit</groupId>
+   <artifactId>toolkit</artifactId>
+   <version>1.0.1</version>
+</dependency>
+````
+
+### Gradle
+
+```
+compile 'cn.chenzw.toolkit:toolkit:1.0.1'
+```
+---
+
+## Changelog
+
+
+
+
+---
+
 [](commons.md ':include')
 
 [](dozer.md ':include')
@@ -25,30 +56,10 @@ Java扩展工具库
 
 [](datasource.md ':include')
 
+[](authentication.md ':include')
 
-## authentication
 
-### shiro
 
-#### ShiroUtils
-
-- 是否已登录
-
-``` java
-ShiroUtils.isLogin();  // => true
-```
-
-- 退出登录
-
-``` java
-ShiroUtils.logout();  
-```
-
-- 获取登录用户信息
-
-``` java
-ShiroUtils.getUserInfo();
-```
 
 ## 运行单元测试
 
