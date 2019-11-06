@@ -7,4 +7,4 @@
 * 工具库：docsify
 
 [GitHub](https://github.com/otary/docsify-samples.git)
-[Get Started](#zh-cn/README)
+[Get Started](#zh-cn/quickStart.md)
