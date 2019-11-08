@@ -28,6 +28,7 @@ public class ProjectUtils {
      *
      * @return
      */
+    @Deprecated
     public static String getRootPath2() {
         return Thread.currentThread().getContextClassLoader().getResource("").getPath();
     }
