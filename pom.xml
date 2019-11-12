@@ -21,6 +21,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-codec.version>1.12</commons-codec.version>
+        <commons-net.version>3.6</commons-net.version>
         <dozer.version>5.5.1</dozer.version>
         <slf4j.version>1.7.26</slf4j.version>
         <servlet.version>3.1.0</servlet.version>
@@ -77,13 +78,6 @@
         </dependency>
         <!-- /test -->
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- apache commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -101,6 +95,12 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>${commons-codec.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>${commons-net.version}</version>
         </dependency>
         <!-- /apache commons -->
 
@@ -305,13 +305,34 @@
         </dependency>
         <!-- 数据验证 -->
 
+        <!-- servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>
             <version>3.0.1-b08</version>
             <scope>provided</scope>
         </dependency>
-        
+        <!-- /servlet -->
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
