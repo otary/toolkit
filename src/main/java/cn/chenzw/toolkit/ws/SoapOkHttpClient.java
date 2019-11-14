@@ -9,36 +9,23 @@ import okhttp3.internal.tls.CertificateChainCleaner;
 import okhttp3.internal.tls.OkHostnameVerifier;
 
 import javax.net.SocketFactory;
-import javax.net.ssl.*;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
 import java.net.Proxy;
 import java.net.ProxySelector;
-import java.security.GeneralSecurityException;
-import java.security.KeyStore;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author chenzw
  */
-public class SoapOkHttpClient extends OkHttpClient {
+public class SoapOkHttpClient {
 
     private static final String MEDIA_TYPE_XML = "text/xml;charset=";
 
-    private static final List<Protocol> DEFAULT_PROTOCOLS = Util.immutableList(
-            Protocol.HTTP_2, Protocol.SPDY_3, Protocol.HTTP_1_1);
-
-    private static final List<ConnectionSpec> DEFAULT_CONNECTION_SPECS;
-
-    static {
-        List<ConnectionSpec> connSpecs = new ArrayList<>(Arrays.asList(ConnectionSpec.MODERN_TLS,
-                ConnectionSpec.COMPATIBLE_TLS));
-        if (Platform.get().isCleartextTrafficPermitted()) {
-            connSpecs.add(ConnectionSpec.CLEARTEXT);
-        }
-        DEFAULT_CONNECTION_SPECS = Util.immutableList(connSpecs);
-    }
+    private final OkHttpClient okHttpClient;
 
     /**
      * @param soapRequest
@@ -46,7 +33,7 @@ public class SoapOkHttpClient extends OkHttpClient {
      */
     public Call newCall(SoapRequest soapRequest) {
         MediaType mediaType = MediaType.parse(MEDIA_TYPE_XML + soapRequest.getCharset().name());
-        return newCall(new Request.Builder()
+        return this.okHttpClient.newCall(new Request.Builder()
                 .url(soapRequest.getUrl())
                 .post(RequestBody.create(mediaType, SoapUtils.toString(soapRequest.getMessage(), soapRequest.getCharset())))
                 .build());
@@ -57,96 +44,44 @@ public class SoapOkHttpClient extends OkHttpClient {
     }
 
 
-    final Dispatcher dispatcher;
-    final java.net.Proxy proxy;
-    final List<Protocol> protocols;
-    final List<ConnectionSpec> connectionSpecs;
-    final List<Interceptor> interceptors;
-    final List<Interceptor> networkInterceptors;
-    final ProxySelector proxySelector;
-    final CookieJar cookieJar;
-    final Cache cache;
-    final InternalCache internalCache;
-    final SocketFactory socketFactory;
-    final SSLSocketFactory sslSocketFactory;
-    final CertificateChainCleaner certificateChainCleaner;
-    final HostnameVerifier hostnameVerifier;
-    final Authenticator proxyAuthenticator;
-    final Authenticator authenticator;
-    final ConnectionPool connectionPool;
-    final Dns dns;
-    final boolean followSslRedirects;
-    final boolean followRedirects;
-    final boolean retryOnConnectionFailure;
-    final int connectTimeout;
-    final int readTimeout;
-    final int writeTimeout;
-
     private SoapOkHttpClient(Builder builder) {
 
-        this.dispatcher = builder.dispatcher;
-        this.proxy = builder.proxy;
-        this.protocols = builder.protocols;
-        this.connectionSpecs = builder.connectionSpecs;
-        this.interceptors = Util.immutableList(builder.interceptors);
-        this.networkInterceptors = Util.immutableList(builder.networkInterceptors);
-        this.proxySelector = builder.proxySelector;
-        this.cookieJar = builder.cookieJar;
-        this.cache = builder.cache;
-        this.internalCache = builder.internalCache;
-        this.socketFactory = builder.socketFactory;
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder()
+                .dispatcher(builder.dispatcher)
+                .proxy(builder.proxy);
 
-        boolean isTLS = false;
-        for (ConnectionSpec spec : connectionSpecs) {
-            isTLS = isTLS || spec.isTls();
+        if (builder.protocols != null) {
+            okHttpClientBuilder.protocols(builder.protocols);
+        }
+        if (builder.connectionSpecs != null) {
+            okHttpClientBuilder.connectionSpecs(builder.connectionSpecs);
         }
 
-        if (builder.sslSocketFactory != null || !isTLS) {
-            this.sslSocketFactory = builder.sslSocketFactory;
-            this.certificateChainCleaner = builder.certificateChainCleaner;
-        } else {
-            X509TrustManager trustManager = systemDefaultTrustManager();
-            this.sslSocketFactory = systemDefaultSslSocketFactory(trustManager);
-            this.certificateChainCleaner = CertificateChainCleaner.get(trustManager);
+        okHttpClientBuilder.proxySelector(builder.proxySelector)
+                .cookieJar(builder.cookieJar)
+                .cache(builder.cache)
+                .socketFactory(builder.socketFactory)
+                .hostnameVerifier(builder.hostnameVerifier)
+                .proxyAuthenticator(builder.proxyAuthenticator)
+                .authenticator(builder.authenticator)
+                .connectionPool(builder.connectionPool)
+                .dns(builder.dns)
+                .followRedirects(builder.followRedirects)
+                .followSslRedirects(builder.followSslRedirects)
+                .retryOnConnectionFailure(builder.retryOnConnectionFailure)
+                .connectTimeout(builder.connectTimeout, TimeUnit.MILLISECONDS)
+                .readTimeout(builder.readTimeout, TimeUnit.MILLISECONDS)
+                .writeTimeout(builder.writeTimeout, TimeUnit.MILLISECONDS);
+
+        for (Interceptor interceptor : builder.interceptors) {
+            okHttpClientBuilder.addInterceptor(interceptor);
+        }
+        for (Interceptor networkInterceptor : builder.networkInterceptors) {
+            okHttpClientBuilder.addNetworkInterceptor(networkInterceptor);
         }
 
-        this.hostnameVerifier = builder.hostnameVerifier;
-        this.proxyAuthenticator = builder.proxyAuthenticator;
-        this.authenticator = builder.authenticator;
-        this.connectionPool = builder.connectionPool;
-        this.dns = builder.dns;
-        this.followSslRedirects = builder.followSslRedirects;
-        this.followRedirects = builder.followRedirects;
-        this.retryOnConnectionFailure = builder.retryOnConnectionFailure;
-        this.connectTimeout = builder.connectTimeout;
-        this.readTimeout = builder.readTimeout;
-        this.writeTimeout = builder.writeTimeout;
-    }
+        this.okHttpClient = okHttpClientBuilder.build();
 
-    private X509TrustManager systemDefaultTrustManager() {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
-                    TrustManagerFactory.getDefaultAlgorithm());
-            trustManagerFactory.init((KeyStore) null);
-            TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-            if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
-                throw new IllegalStateException("Unexpected default trust managers:"
-                        + Arrays.toString(trustManagers));
-            }
-            return (X509TrustManager) trustManagers[0];
-        } catch (GeneralSecurityException e) {
-            throw new AssertionError(); // The system has no TLS. Just give up.
-        }
-    }
-
-    private SSLSocketFactory systemDefaultSslSocketFactory(X509TrustManager trustManager) {
-        try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, new TrustManager[]{trustManager}, null);
-            return sslContext.getSocketFactory();
-        } catch (GeneralSecurityException e) {
-            throw new AssertionError(); // The system has no TLS. Just give up.
-        }
     }
 
 
@@ -178,8 +113,6 @@ public class SoapOkHttpClient extends OkHttpClient {
 
         public Builder() {
             dispatcher = new Dispatcher();
-            protocols = DEFAULT_PROTOCOLS;
-            connectionSpecs = DEFAULT_CONNECTION_SPECS;
             proxySelector = ProxySelector.getDefault();
             cookieJar = CookieJar.NO_COOKIES;
             socketFactory = SocketFactory.getDefault();
@@ -194,33 +127,6 @@ public class SoapOkHttpClient extends OkHttpClient {
             connectTimeout = 10_000;
             readTimeout = 10_000;
             writeTimeout = 10_000;
-        }
-
-        Builder(SoapOkHttpClient okHttpClient) {
-            this.dispatcher = okHttpClient.dispatcher;
-            this.proxy = okHttpClient.proxy;
-            this.protocols = okHttpClient.protocols;
-            this.connectionSpecs = okHttpClient.connectionSpecs;
-            this.interceptors.addAll(okHttpClient.interceptors);
-            this.networkInterceptors.addAll(okHttpClient.networkInterceptors);
-            this.proxySelector = okHttpClient.proxySelector;
-            this.cookieJar = okHttpClient.cookieJar;
-            this.internalCache = okHttpClient.internalCache;
-            this.cache = okHttpClient.cache;
-            this.socketFactory = okHttpClient.socketFactory;
-            this.sslSocketFactory = okHttpClient.sslSocketFactory;
-            this.certificateChainCleaner = okHttpClient.certificateChainCleaner;
-            this.hostnameVerifier = okHttpClient.hostnameVerifier;
-            this.proxyAuthenticator = okHttpClient.proxyAuthenticator;
-            this.authenticator = okHttpClient.authenticator;
-            this.connectionPool = okHttpClient.connectionPool;
-            this.dns = okHttpClient.dns;
-            this.followSslRedirects = okHttpClient.followSslRedirects;
-            this.followRedirects = okHttpClient.followRedirects;
-            this.retryOnConnectionFailure = okHttpClient.retryOnConnectionFailure;
-            this.connectTimeout = okHttpClient.connectTimeout;
-            this.readTimeout = okHttpClient.readTimeout;
-            this.writeTimeout = okHttpClient.writeTimeout;
         }
 
         /**
@@ -578,6 +484,7 @@ public class SoapOkHttpClient extends OkHttpClient {
         public SoapOkHttpClient build() {
             return new SoapOkHttpClient(this);
         }
+
     }
 
 }

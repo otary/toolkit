@@ -40,6 +40,8 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.1'
 
 [](zh-cn/commons.md ':include')
 
+[](zh-cn/io.md ':include')
+
 [](zh-cn/dozer.md ':include')
 
 [](zh-cn/freemarker.md ':include')
@@ -47,6 +49,8 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.1'
 [](zh-cn/codec.md ':include')
 
 [](zh-cn/http.md ':include')
+
+[](zh-cn/ws.md ':include')
 
 [](zh-cn/cache.md ':include')
 

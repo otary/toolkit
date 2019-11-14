@@ -50,6 +50,8 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.1'
 
 [](zh-cn/http.md ':include')
 
+[](zh-cn/ws.md ':include')
+
 [](zh-cn/cache.md ':include')
 
 [](zh-cn/logging.md ':include')
