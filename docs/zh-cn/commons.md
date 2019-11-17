@@ -408,6 +408,55 @@ ClassExtUtils.generateUniqueClassName("cn.chenzw.toolkit.commons.StringExtUtils"
 
 ```
 
+### ReflectExtUtils
+
+反射类工具
+
+- 设置字段值
+
+``` java
+Children children = new Children();
+
+ReflectExtUtils.setFieldValue(children, "childName", "张三");
+ReflectExtUtils.setFieldValue(children, "fatherName", "李四");
+
+children.getChildName();  // => 张三
+children.getFatherName();   // => 李四
+```
+
+- 获取字段值
+
+``` java
+Children children = new Children();
+children.setChildName("张三");
+children.setFatherName("李四");
+
+Object childName = ReflectExtUtils.getFieldValue(children, "childName"); // => 张三
+
+Object fatherName = ReflectExtUtils.getFieldValue(children, "fatherName");  // => 李四
+```
+
+- 获取类的所有字段（带缓存，包括父类的）
+
+``` java
+Field[] fields = ReflectExtUtils.getFields(Children.class);
+```
+
+- 获取类的指定字段
+
+``` java
+Field childNameField = ReflectExtUtils.getField(Children.class, "childName");
+```
+
+- 获取类的所有方法（带缓存，包括父类的）
+
+``` java
+Method[] methods = ReflectExtUtils.getMethods(Children.class);
+```
+
+
+
+
 ### GenericUtils
 
 泛型类工具
