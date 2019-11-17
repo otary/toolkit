@@ -32,10 +32,6 @@ public class SoapRequest implements Cloneable {
      */
     private Charset charset = StandardCharsets.UTF_8;
 
-    /**
-     * SOAP消息工厂（用于创建消息）
-     */
-    private MessageFactory factory;
 
     /**
      * SOAP消息
@@ -75,7 +71,7 @@ public class SoapRequest implements Cloneable {
 
         // 初始化
         try {
-            this.factory = MessageFactory.newInstance(this.soapProtocol.getValue());
+            MessageFactory factory = MessageFactory.newInstance(this.soapProtocol.getValue());
             this.message = factory.createMessage();
 
             this.initSoapHeader(message, builder.soapHeader);

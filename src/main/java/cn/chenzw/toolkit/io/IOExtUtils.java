@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public final class IOExtUtils {
 
@@ -15,9 +16,7 @@ public final class IOExtUtils {
      * @throws IOException
      */
     public static InputStream copy(InputStream is) throws IOException {
-        if (is == null) {
-            throw new NullPointerException("Paramter inputStream is null.");
-        }
+        Objects.requireNonNull(is, "inputStream must not be null!");
 
         if (!is.markSupported()) {
             throw new IllegalArgumentException(is.getClass().getName() + " do not support mark, you can wrapper java.io.BufferedInputStream");

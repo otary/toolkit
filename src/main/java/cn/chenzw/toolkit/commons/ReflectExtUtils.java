@@ -1,12 +1,12 @@
 package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Objects;
 import java.util.WeakHashMap;
 
 /**
@@ -29,13 +29,8 @@ public final class ReflectExtUtils {
      * @throws IllegalAccessException
      */
     public static void setFieldValue(Object o, String fieldName, Object value) throws IllegalAccessException {
-        if (o == null) {
-            throw new IllegalArgumentException("对象为空!");
-        }
-
-        if (StringUtils.isEmpty(fieldName)) {
-            throw new IllegalArgumentException("fieldName is null.");
-        }
+        Objects.requireNonNull(o, "object is null");
+        Objects.requireNonNull(fieldName, "fieldName is null.");
 
         Class<?> aClass = o.getClass();
         Field field = getField(aClass, fieldName);
@@ -52,13 +47,8 @@ public final class ReflectExtUtils {
      * @throws IllegalAccessException
      */
     public static Object getFieldValue(Object o, String fieldName) throws IllegalAccessException {
-        if (o == null) {
-            throw new IllegalArgumentException("对象为空!");
-        }
-
-        if (StringUtils.isEmpty(fieldName)) {
-            throw new IllegalArgumentException("fieldName is null.");
-        }
+        Objects.requireNonNull(o, "object is null");
+        Objects.requireNonNull(fieldName, "fieldName is null.");
 
         Field field = getField(o.getClass(), fieldName);
         setAccessible(field);
@@ -119,7 +109,7 @@ public final class ReflectExtUtils {
      * @return
      */
     public static <T extends AccessibleObject> T setAccessible(T accessibleObject) {
-        if (accessibleObject != null && accessibleObject.isAccessible() == false) {
+        if (accessibleObject != null && !accessibleObject.isAccessible()) {
             accessibleObject.setAccessible(true);
         }
         return accessibleObject;
