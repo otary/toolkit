@@ -34,6 +34,9 @@ public class ReflectExtUtilsTests {
         ReflectExtUtils.setFieldValue(children, "childName", "张三");
         ReflectExtUtils.setFieldValue(children, "fatherName", "李四");
 
+        ReflectExtUtils.setFieldValue(children, "childId", 1);
+
+
         Assert.assertEquals("张三", children.getChildName());
         Assert.assertEquals("李四", children.getFatherName());
     }
@@ -61,7 +64,7 @@ public class ReflectExtUtilsTests {
 
 class Father {
     private String fatherName;
-    public String fatherId;
+    public Long fatherId;
     protected String fatherAge;
 
     public String getFatherName() {
@@ -72,11 +75,11 @@ class Father {
         this.fatherName = fatherName;
     }
 
-    public String getFatherId() {
+    public Long getFatherId() {
         return fatherId;
     }
 
-    public void setFatherId(String fatherId) {
+    public void setFatherId(Long fatherId) {
         this.fatherId = fatherId;
     }
 
@@ -91,7 +94,7 @@ class Father {
 
 class Children extends Father {
     private String childName;
-    private String childId;
+    private Long childId;
     private String childAge;
 
     public String getChildName() {
@@ -102,11 +105,11 @@ class Children extends Father {
         this.childName = childName;
     }
 
-    public String getChildId() {
+    public Long getChildId() {
         return childId;
     }
 
-    public void setChildId(String childId) {
+    public void setChildId(Long childId) {
         this.childId = childId;
     }
 

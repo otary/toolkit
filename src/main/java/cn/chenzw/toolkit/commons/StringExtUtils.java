@@ -182,7 +182,7 @@ public abstract class StringExtUtils {
 
 
     /**
-     * String转Integer
+     * String => Integer
      *
      * @param str
      * @param defaultValue 字符串为空时返回的默认值
@@ -196,7 +196,7 @@ public abstract class StringExtUtils {
     }
 
     /**
-     * String 转 Integer
+     * String => Integer
      *
      * @param str
      * @return
@@ -206,7 +206,7 @@ public abstract class StringExtUtils {
     }
 
     /**
-     * String 转 Long
+     * String => Long
      *
      * @param str
      * @param defaultValue
@@ -220,12 +220,61 @@ public abstract class StringExtUtils {
     }
 
     /**
-     * String 转 Long
+     * String => Long
      *
      * @param str
      * @return
      */
     public static Long toLong(final String str) {
         return toLong(str, null);
+    }
+
+
+    /**
+     * String => Float
+     *
+     * @param str
+     * @param defaultValue
+     * @return
+     */
+    public static Float toFloat(final String str, final Float defaultValue) {
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
+        return Float.valueOf(str);
+    }
+
+    /**
+     * String => Float
+     *
+     * @param str
+     * @return
+     */
+    public static Float toFloat(final String str) {
+        return toFloat(str, null);
+    }
+
+    /**
+     * String => Double
+     *
+     * @param str
+     * @param defaultValue
+     * @return
+     */
+    public static Double toDouble(final String str, final Double defaultValue) {
+        if (StringUtils.isEmpty(str)) {
+            return defaultValue;
+        }
+        return Double.valueOf(str);
+    }
+
+    /**
+     * String => Double
+     *
+     * @param str
+     * @return
+     */
+    public static Double toDouble(final String str) {
+        return toDouble(str, null);
     }
 }

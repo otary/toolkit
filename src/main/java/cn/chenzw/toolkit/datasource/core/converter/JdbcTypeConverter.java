@@ -7,9 +7,9 @@ import java.util.List;
  *
  * @author chenzw
  */
-public interface TypeConverter {
+public interface JdbcTypeConverter {
 
-    List<TypeMapping> getTypeMappings();
+    List<JdbcTypeMapping> getTypeMappings();
 
     Class<?> toJavaType(String jdbcType, Integer size, Integer digits);
 

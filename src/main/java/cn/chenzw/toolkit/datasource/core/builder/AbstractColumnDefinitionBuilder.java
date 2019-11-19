@@ -2,7 +2,7 @@ package cn.chenzw.toolkit.datasource.core.builder;
 
 import cn.chenzw.toolkit.commons.StringExtUtils;
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
-import cn.chenzw.toolkit.datasource.core.converter.TypeConverter;
+import cn.chenzw.toolkit.datasource.core.converter.JdbcTypeConverter;
 import cn.chenzw.toolkit.datasource.entity.ColumnDefinition;
 
 import java.sql.Connection;
@@ -63,7 +63,7 @@ public abstract class AbstractColumnDefinitionBuilder {
         return rs.getInt(DbConstants.RS_DECIMAL_DIGITS);
     }
 
-    protected abstract TypeConverter getTypeConverter();
+    protected abstract JdbcTypeConverter getTypeConverter();
 
     public List<ColumnDefinition> build() throws SQLException {
         ResultSet columnRs = connection.getMetaData().getColumns(null, null, tableName, null);

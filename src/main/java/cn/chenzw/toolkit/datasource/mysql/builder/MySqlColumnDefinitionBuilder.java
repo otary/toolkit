@@ -1,8 +1,8 @@
 package cn.chenzw.toolkit.datasource.mysql.builder;
 
 import cn.chenzw.toolkit.datasource.core.builder.AbstractColumnDefinitionBuilder;
-import cn.chenzw.toolkit.datasource.core.converter.TypeConverter;
-import cn.chenzw.toolkit.datasource.mysql.converter.MySqlTypeConverter;
+import cn.chenzw.toolkit.datasource.core.converter.JdbcTypeConverter;
+import cn.chenzw.toolkit.datasource.mysql.converter.MySqlJdbcTypeConverter;
 
 import java.sql.Connection;
 
@@ -16,7 +16,7 @@ public class MySqlColumnDefinitionBuilder extends AbstractColumnDefinitionBuilde
     }
 
     @Override
-    protected TypeConverter getTypeConverter() {
-        return MySqlTypeConverter.getInstance();
+    protected JdbcTypeConverter getTypeConverter() {
+        return MySqlJdbcTypeConverter.getInstance();
     }
 }

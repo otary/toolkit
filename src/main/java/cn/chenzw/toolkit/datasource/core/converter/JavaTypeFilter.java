@@ -4,7 +4,7 @@ package cn.chenzw.toolkit.datasource.core.converter;
  * 字段类型过滤器
  * @author chenzw
  */
-public interface TypeFilter {
+public interface JavaTypeFilter {
 
     /**
      * 进行匹配

@@ -35,6 +35,16 @@ public final class ReflectExtUtils {
         Class<?> aClass = o.getClass();
         Field field = getField(aClass, fieldName);
         setAccessible(field);
+
+        if (value != null) {
+            Class<?> fieldType = field.getType();
+            if (!fieldType.isAssignableFrom(value.getClass())) {
+                final Object targetValue = ConvertExtUtils.convert(fieldType, value);
+                if (null != targetValue) {
+                    value = targetValue;
+                }
+            }
+        }
         field.set(o, value);
     }
 

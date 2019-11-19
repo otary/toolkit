@@ -7,16 +7,16 @@ import java.util.Optional;
  *
  * @author chenzw
  */
-public abstract class AbstractTypeConverter implements TypeConverter {
+public abstract class AbstractJdbcTypeConverter implements JdbcTypeConverter {
 
     @Override
     public Class<?> toJavaType(String jdbcType, Integer size, Integer digits) {
-        Optional<TypeMapping> typeMappingOptional = getTypeMappings().stream().filter((typeMapping) -> {
-            if (typeMapping.getJdbcType().equals(jdbcType)) {
-                if (typeMapping.getTypeFilter() == null) {
+        Optional<JdbcTypeMapping> typeMappingOptional = getTypeMappings().stream().filter((jdbcTypeMapping) -> {
+            if (jdbcTypeMapping.getJdbcType().equals(jdbcType)) {
+                if (jdbcTypeMapping.getJavaTypeFilter() == null) {
                     return true;
                 }
-                if (typeMapping.getTypeFilter().isMatch(jdbcType, size, digits)) {
+                if (jdbcTypeMapping.getJavaTypeFilter().isMatch(jdbcType, size, digits)) {
                     return true;
                 }
             }

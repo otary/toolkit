@@ -5,7 +5,7 @@ package cn.chenzw.toolkit.datasource.core.converter;
  *
  * @author chenzw
  */
-public class TypeMapping {
+public class JdbcTypeMapping {
 
     private String jdbcType;
     private Class<?> javaType;
@@ -13,17 +13,17 @@ public class TypeMapping {
     /**
      * 类型匹配器
      */
-    private TypeFilter typeFilter;
+    private JavaTypeFilter javaTypeFilter;
 
-    public TypeMapping(String jdbcType, Class<?> javaType) {
+    public JdbcTypeMapping(String jdbcType, Class<?> javaType) {
         this.jdbcType = jdbcType;
         this.javaType = javaType;
     }
 
-    public TypeMapping(String jdbcType, Class<?> javaType, TypeFilter typeFilter) {
+    public JdbcTypeMapping(String jdbcType, Class<?> javaType, JavaTypeFilter javaTypeFilter) {
         this.jdbcType = jdbcType;
         this.javaType = javaType;
-        this.typeFilter = typeFilter;
+        this.javaTypeFilter = javaTypeFilter;
     }
 
     public String getJdbcType() {
@@ -42,11 +42,11 @@ public class TypeMapping {
         this.javaType = javaType;
     }
 
-    public TypeFilter getTypeFilter() {
-        return typeFilter;
+    public JavaTypeFilter getJavaTypeFilter() {
+        return javaTypeFilter;
     }
 
-    public void setTypeFilter(TypeFilter typeFilter) {
-        this.typeFilter = typeFilter;
+    public void setJavaTypeFilter(JavaTypeFilter javaTypeFilter) {
+        this.javaTypeFilter = javaTypeFilter;
     }
 }

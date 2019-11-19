@@ -2,8 +2,8 @@ package cn.chenzw.toolkit.datasource.oracle.builder;
 
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
 import cn.chenzw.toolkit.datasource.core.builder.AbstractColumnDefinitionBuilder;
-import cn.chenzw.toolkit.datasource.core.converter.TypeConverter;
-import cn.chenzw.toolkit.datasource.oracle.converter.OracleTypeConverter;
+import cn.chenzw.toolkit.datasource.core.converter.JdbcTypeConverter;
+import cn.chenzw.toolkit.datasource.oracle.converter.OracleJdbcTypeConverter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,7 +24,7 @@ public class OracleColumnDefinitionBuilder extends AbstractColumnDefinitionBuild
     }
 
     @Override
-    protected TypeConverter getTypeConverter() {
-        return OracleTypeConverter.getInstance();
+    protected JdbcTypeConverter getTypeConverter() {
+        return OracleJdbcTypeConverter.getInstance();
     }
 }
