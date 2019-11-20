@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.ws;
 
 import cn.chenzw.toolkit.ws.builder.SoapBodyBuilders;
+import cn.chenzw.toolkit.ws.builder.SoapHeaderBuilders;
 import cn.chenzw.toolkit.ws.inteceptor.SoapRequestInteceptor;
 import cn.chenzw.toolkit.ws.util.SoapUtils;
 import okhttp3.Call;
@@ -11,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import javax.xml.XMLConstants;
+import javax.xml.namespace.QName;
 import java.io.IOException;
 
 
@@ -35,10 +38,13 @@ public class SoapOkHttpClientTest {
         for (int i = 0; i < 3; i++) {
             SoapRequest soapRequest = SoapRequest.create()
                     .url("http://www.webxml.com.cn/WebServices/ValidateEmailWebService.asmx?wsdl")
+                   .header(SoapHeaderBuilders.create()
+                           .qName(new QName(XMLConstants.XML_NS_URI, "", XMLConstants.XML_NS_PREFIX))
+                           .build())
                     .body(SoapBodyBuilders.create()
                             .methodName("ValidateEmailAddress")
                             .namespaceURI("http://WebXml.com.cn/")
-                            .addMethodParameter("theEmail", "656469722@qq.com")
+                            .addMethodParameter("theEmail", "<![CDATA[<root><text>11</text></root>]]>")
                             .build())
                     .build();
 

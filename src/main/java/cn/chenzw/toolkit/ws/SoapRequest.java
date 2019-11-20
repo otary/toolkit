@@ -5,6 +5,7 @@ import cn.chenzw.toolkit.ws.constants.SoapProtocol;
 import cn.chenzw.toolkit.ws.exception.SoapException;
 import cn.chenzw.toolkit.ws.parts.SoapBody;
 import cn.chenzw.toolkit.ws.parts.SoapHeader;
+import cn.chenzw.toolkit.ws.parts.SoapHeaderElement;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,6 +13,7 @@ import javax.xml.namespace.QName;
 import javax.xml.soap.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -90,27 +92,29 @@ public class SoapRequest implements Cloneable {
         SOAPHeader soapHeaderEntity = message.getSOAPHeader();
 
         if (soapHeader != null) {
-            QName qName = soapHeader.getqName();
-            SOAPHeaderElement soapHeaderEle = soapHeaderEntity.addHeaderElement(qName);
 
-            String roleURI = soapHeader.getRoleURI();
-            if (StringUtils.isNotEmpty(roleURI)) {
-                soapHeaderEle.setRole(roleURI);
-            }
+            List<SoapHeaderElement> soapHeaderElements = soapHeader.getSoapHeaderElements();
+            for (SoapHeaderElement soapHeaderElement : soapHeaderElements) {
+                SOAPHeaderElement soapHeaderEle = soapHeaderEntity.addHeaderElement(soapHeaderElement.getqName());
+                String roleURI = soapHeaderElement.getRoleURI();
+                if (StringUtils.isNotEmpty(roleURI)) {
+                    soapHeaderEle.setRole(roleURI);
+                }
 
-            Boolean relay = soapHeader.getRelay();
-            if (relay != null) {
-                soapHeaderEle.setRelay(relay);
-            }
+                Boolean relay = soapHeaderElement.getRelay();
+                if (relay != null) {
+                    soapHeaderEle.setRelay(relay);
+                }
 
-            String actorURI = soapHeader.getActorURI();
-            if (StringUtils.isNotEmpty(actorURI)) {
-                soapHeaderEle.setActor(actorURI);
-            }
+                String actorURI = soapHeaderElement.getActorURI();
+                if (StringUtils.isNotEmpty(actorURI)) {
+                    soapHeaderEle.setActor(actorURI);
+                }
 
-            Boolean mustUnderstand = soapHeader.getMustUnderstand();
-            if (mustUnderstand != null) {
-                soapHeaderEle.setMustUnderstand(mustUnderstand);
+                Boolean mustUnderstand = soapHeaderElement.getMustUnderstand();
+                if (mustUnderstand != null) {
+                    soapHeaderEle.setMustUnderstand(mustUnderstand);
+                }
             }
 
         }
@@ -259,6 +263,16 @@ public class SoapRequest implements Cloneable {
         public SoapRequest build() {
             return new SoapRequest(this);
         }
+    }
+
+    public static void main(String[] args) {
+        String xml = "<SOAP-ENV:Header>\n" +
+                "        <ns:authInformation xmlns:ns=\"http://www.webservice.com\">12345</ns:authInformation>\n" +
+                "    </SOAP-ENV:Header>";
+
+        String aa = xml.replaceAll("/(?<=.{1}).*(?=.{1})/g", "aa");
+
+        System.out.println(aa);
     }
 
 
