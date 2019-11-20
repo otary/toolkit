@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.ws.builder;
 
-import cn.chenzw.toolkit.ws.parts.SoapHeader;
 import cn.chenzw.toolkit.ws.parts.SoapHeaderElement;
 
 import javax.xml.namespace.QName;
@@ -29,7 +28,7 @@ public final class SoapHeaderBuilders {
         return this;
     }
 
-    public SoapHeader build() {
+    /*public SoapHeader build() {
         return new SoapHeader(soapHeaderElements);
-    }
+    }*/
 }

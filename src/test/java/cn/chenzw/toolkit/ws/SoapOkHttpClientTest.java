@@ -1,8 +1,8 @@
 package cn.chenzw.toolkit.ws;
 
 import cn.chenzw.toolkit.ws.builder.SoapBodyBuilders;
-import cn.chenzw.toolkit.ws.builder.SoapHeaderBuilders;
 import cn.chenzw.toolkit.ws.inteceptor.SoapRequestInteceptor;
+import cn.chenzw.toolkit.ws.parts.SoapHeader;
 import cn.chenzw.toolkit.ws.util.SoapUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -14,6 +14,9 @@ import org.junit.runners.JUnit4;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPFactory;
 import java.io.IOException;
 
 
@@ -29,18 +32,22 @@ public class SoapOkHttpClientTest {
      * @throws IOException
      */
     @Test
-    public void testSoapOkHttpClient() throws IOException {
+    public void testSoapOkHttpClient() throws IOException, SOAPException {
         SoapOkHttpClient soapOkHttpClient = SoapOkHttpClient.create()
                 .addInterceptor(new SoapRequestInteceptor())  // 添加拦截器
                 .build();
 
         // 多次请求
         for (int i = 0; i < 3; i++) {
+
+            SOAPFactory soapFactory = SOAPFactory.newInstance();
+
+            SOAPElement element = soapFactory.createElement(new QName(XMLConstants.XML_NS_URI, "aa", XMLConstants.XML_NS_PREFIX));
+            element.setValue("内容");
+
             SoapRequest soapRequest = SoapRequest.create()
                     .url("http://www.webxml.com.cn/WebServices/ValidateEmailWebService.asmx?wsdl")
-                   .header(SoapHeaderBuilders.create()
-                           .qName(new QName(XMLConstants.XML_NS_URI, "", XMLConstants.XML_NS_PREFIX))
-                           .build())
+                    .header(new SoapHeader(element))
                     .body(SoapBodyBuilders.create()
                             .methodName("ValidateEmailAddress")
                             .namespaceURI("http://WebXml.com.cn/")

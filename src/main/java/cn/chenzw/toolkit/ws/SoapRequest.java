@@ -5,7 +5,6 @@ import cn.chenzw.toolkit.ws.constants.SoapProtocol;
 import cn.chenzw.toolkit.ws.exception.SoapException;
 import cn.chenzw.toolkit.ws.parts.SoapBody;
 import cn.chenzw.toolkit.ws.parts.SoapHeader;
-import cn.chenzw.toolkit.ws.parts.SoapHeaderElement;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -92,8 +91,14 @@ public class SoapRequest implements Cloneable {
         SOAPHeader soapHeaderEntity = message.getSOAPHeader();
 
         if (soapHeader != null) {
+            List<SOAPElement> soapHeaderElements = soapHeader.getSoapHeaderElements();
 
-            List<SoapHeaderElement> soapHeaderElements = soapHeader.getSoapHeaderElements();
+            for (SOAPElement soapHeaderElement : soapHeaderElements) {
+                soapHeaderEntity.addChildElement(soapHeaderElement);
+            }
+
+
+           /* List<SoapHeaderElement> soapHeaderElements = soapHeader.getSoapHeaderElements();
             for (SoapHeaderElement soapHeaderElement : soapHeaderElements) {
                 SOAPHeaderElement soapHeaderEle = soapHeaderEntity.addHeaderElement(soapHeaderElement.getqName());
                 String roleURI = soapHeaderElement.getRoleURI();
@@ -115,7 +120,7 @@ public class SoapRequest implements Cloneable {
                 if (mustUnderstand != null) {
                     soapHeaderEle.setMustUnderstand(mustUnderstand);
                 }
-            }
+            }*/
 
         }
     }
@@ -264,16 +269,5 @@ public class SoapRequest implements Cloneable {
             return new SoapRequest(this);
         }
     }
-
-    public static void main(String[] args) {
-        String xml = "<SOAP-ENV:Header>\n" +
-                "        <ns:authInformation xmlns:ns=\"http://www.webservice.com\">12345</ns:authInformation>\n" +
-                "    </SOAP-ENV:Header>";
-
-        String aa = xml.replaceAll("/(?<=.{1}).*(?=.{1})/g", "aa");
-
-        System.out.println(aa);
-    }
-
 
 }

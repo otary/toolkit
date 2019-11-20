@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.ws.parts;
 
+import javax.xml.soap.SOAPElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,21 +11,20 @@ import java.util.List;
  */
 public final class SoapHeader {
 
-    private List<SoapHeaderElement> soapHeaderElements = new ArrayList<>();
+    private List<SOAPElement> soapHeaderElements = new ArrayList<>();
 
-    public SoapHeader(List<SoapHeaderElement> soapHeaderElements) {
+    public SoapHeader(List<SOAPElement> soapHeaderElements) {
         this.soapHeaderElements = soapHeaderElements;
     }
 
-    public List<SoapHeaderElement> getSoapHeaderElements() {
+    public SoapHeader(SOAPElement... soapHeaderElements) {
+        for (SOAPElement soapHeaderElement : soapHeaderElements) {
+            this.soapHeaderElements.add(soapHeaderElement);
+        }
+    }
+
+    public List<SOAPElement> getSoapHeaderElements() {
         return soapHeaderElements;
     }
 
-    public void setSoapHeaderElements(List<SoapHeaderElement> soapHeaderElements) {
-        this.soapHeaderElements = soapHeaderElements;
-    }
-
-    public void addSoapHeaderElements(SoapHeaderElement soapHeaderElement) {
-        this.soapHeaderElements.add(soapHeaderElement);
-    }
 }
