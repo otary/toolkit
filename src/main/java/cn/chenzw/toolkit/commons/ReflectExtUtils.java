@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.commons;
 
+import cn.chenzw.toolkit.commons.exception.FieldNotExistException;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.AccessibleObject;
@@ -40,7 +41,7 @@ public final class ReflectExtUtils {
             Class<?> fieldType = field.getType();
             if (!fieldType.isAssignableFrom(value.getClass())) {
                 final Object targetValue = ConvertExtUtils.convert(fieldType, value);
-                if (null != targetValue) {
+                if (targetValue != null) {
                     value = targetValue;
                 }
             }
@@ -48,21 +49,50 @@ public final class ReflectExtUtils {
         field.set(o, value);
     }
 
+    public static Object getFieldValue(Object o, Field field) throws IllegalAccessException {
+        Objects.requireNonNull(o, "object must not be null");
+        Objects.requireNonNull(field, "field must not be null.");
+
+        setAccessible(field);
+        return field.get(o);
+    }
+
     /**
-     * 获取字段值
+     * 获取字段值（字段不存在时抛出异常）
      *
      * @param o
      * @param fieldName
      * @return
      * @throws IllegalAccessException
      */
-    public static Object getFieldValue(Object o, String fieldName) throws IllegalAccessException {
-        Objects.requireNonNull(o, "object is null");
-        Objects.requireNonNull(fieldName, "fieldName is null.");
+    public static Object getFieldValue(Object o, String fieldName) throws IllegalAccessException, FieldNotExistException {
+        Objects.requireNonNull(o, "object must not be null");
+        Objects.requireNonNull(fieldName, "fieldName must not be null.");
 
         Field field = getField(o.getClass(), fieldName);
-        setAccessible(field);
-        return field.get(o);
+        if (field == null) {
+            throw new FieldNotExistException(fieldName, o);
+        }
+        return getFieldValue(o, field);
+    }
+
+    /**
+     * 获取字段值（字段不存在时返回null）
+     *
+     * @param o
+     * @param fieldName
+     * @return
+     * @throws IllegalAccessException
+     */
+    public static Object getFieldValueQuietly(Object o, String fieldName) throws IllegalAccessException {
+        Objects.requireNonNull(o, "object must not be null");
+        Objects.requireNonNull(fieldName, "fieldName must not be null.");
+
+        Field field = getField(o.getClass(), fieldName);
+        if (field == null) {
+            return null;
+        }
+        return getFieldValue(o, field);
     }
 
 
