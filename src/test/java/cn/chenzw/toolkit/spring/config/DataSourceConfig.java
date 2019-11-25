@@ -39,4 +39,16 @@ public class DataSourceConfig {
         basicDataSource.setAccessToUnderlyingConnectionAllowed(true);
         return basicDataSource;
     }
+
+    @Bean
+    @Profile("h2")
+    public DataSource h2DataSource() {
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName("org.h2.Driver");
+        basicDataSource.setUrl("jdbc:h2:mem:test");
+        basicDataSource.setUsername("sa");
+        basicDataSource.setPassword("");
+
+        return basicDataSource;
+    }
 }
