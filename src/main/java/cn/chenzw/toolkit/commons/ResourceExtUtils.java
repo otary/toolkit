@@ -57,8 +57,4 @@ public final class ResourceExtUtils {
         return loadFromClassPath(name);
     }
 
-
-    public static void main(String[] args) {
-
-    }
 }

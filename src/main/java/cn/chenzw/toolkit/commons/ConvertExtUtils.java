@@ -45,7 +45,6 @@ public class ConvertExtUtils {
 
         defaultTypeConverterMap.put(java.util.Date.class, new DateTypeConverter());
 
-
         defaultTypeConverterMap.put(String.class, new StringTypeConverter());
         defaultTypeConverterMap.put(AtomicInteger.class, new AtomicIntegerTypeConverter());
         defaultTypeConverterMap.put(AtomicLong.class, new AtomicLongTypeConverter());
@@ -73,7 +72,7 @@ public class ConvertExtUtils {
             return (TypeConverter<T>) typeConverter;
         }
 
-        throw new RuntimeException("No Converter for type [" + type.getTypeName() + "]");
+        throw new UnsupportedOperationException("No Converter for type [" + type.getTypeName() + "]");
     }
 
 }

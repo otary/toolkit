@@ -19,12 +19,11 @@ public enum SoapProtocol {
      */
     SOAP_1_2(SOAPConstants.SOAP_1_2_PROTOCOL);
 
+    private String value;
 
     SoapProtocol(String value) {
         this.value = value;
     }
-
-    private String value;
 
     public String getValue() {
         return this.value;

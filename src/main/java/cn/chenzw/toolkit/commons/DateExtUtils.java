@@ -74,29 +74,7 @@ public class DateExtUtils {
             "HH时mm分ss秒",
             "yyyy-MM-dd HH:mm",
             "yyyy-MM-dd HH:mm:ss.SSS"
-
     };
-
-
-    /*
-    private final static Map<Integer, List<String>> FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMAT_MAP;
-    private final static Map<Integer, List<String>> FREQUENTLEY_USED_UTC_DATE_FORMAT_MAP;
-    private final static Map<Integer, List<String>> FREQUENTLY_USED_NUMBER_DATE_FORMAT_MAP;
-    private final static Map<Integer, List<String>> FREQUENTLY_USED_DATE_FORMAT_MAP;
-    private final static Map<Integer, List<String>> FREQUENTLY_USED_CST_DATE_FORMAT_MAP;
-    */
-
-
-    static {
-        /*
-        FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
-        FREQUENTLEY_USED_UTC_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLEY_USED_UTC_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
-        FREQUENTLY_USED_NUMBER_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLY_USED_NUMBER_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
-        FREQUENTLY_USED_CST_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLY_USED_CST_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
-        FREQUENTLY_USED_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLY_USED_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
-        */
-    }
-
 
     private DateExtUtils() {
     }
@@ -225,7 +203,7 @@ public class DateExtUtils {
             throw new IllegalArgumentException("Date string must not be null");
         }
 
-        int dateTimeLen = dateTimeStr.length();
+        // int dateTimeLen = dateTimeStr.length();
         String[] dateFormats;
 
         if (NumberUtils.isCreatable(dateTimeStr)) {
