@@ -1,14 +1,10 @@
-package cn.chenzw.toolkit.commons.support.convert.impl.primitive;
+package cn.chenzw.toolkit.commons.support.convert.impl.wrapper;
 
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
-import cn.chenzw.toolkit.commons.StringExtUtils;
-import cn.chenzw.toolkit.commons.support.convert.AbstractFieldTypeConverter;
+import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
+import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author chenzw
- */
-public class DoubleFieldTypeConverter extends AbstractFieldTypeConverter<Double> {
-
+public class DoubleWrapperTypeConverter extends AbstractTypeConverter<Double> {
 
     @Override
     protected Double convertInternal(Object value) {
@@ -18,6 +14,9 @@ public class DoubleFieldTypeConverter extends AbstractFieldTypeConverter<Double>
             return BooleanExtUtils.toDouble((Boolean) value);
         }
         final String sValue = convertToStr(value);
-        return StringExtUtils.toDouble(sValue, 0D);
+        if (StringUtils.isEmpty(sValue)) {
+            return null;
+        }
+        return Double.valueOf(sValue);
     }
 }

@@ -1,13 +1,10 @@
-package cn.chenzw.toolkit.commons.support.convert.impl.primitive;
+package cn.chenzw.toolkit.commons.support.convert.impl.wrapper;
 
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
-import cn.chenzw.toolkit.commons.StringExtUtils;
-import cn.chenzw.toolkit.commons.support.convert.AbstractFieldTypeConverter;
+import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
+import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author chenzw
- */
-public class FloatFieldTypeConverter extends AbstractFieldTypeConverter<Float> {
+public class FloatWrapperTypeConverter extends AbstractTypeConverter<Float> {
 
     @Override
     protected Float convertInternal(Object value) {
@@ -17,6 +14,9 @@ public class FloatFieldTypeConverter extends AbstractFieldTypeConverter<Float> {
             return BooleanExtUtils.toFloat((Boolean) value);
         }
         final String sValue = convertToStr(value);
-        return StringExtUtils.toFloat(sValue, 0F);
+        if (StringUtils.isEmpty(sValue)) {
+            return null;
+        }
+        return Float.valueOf(sValue);
     }
 }

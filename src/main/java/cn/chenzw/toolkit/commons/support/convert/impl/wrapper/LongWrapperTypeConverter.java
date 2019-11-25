@@ -1,10 +1,10 @@
-package cn.chenzw.toolkit.commons.support.convert.impl.primitive;
+package cn.chenzw.toolkit.commons.support.convert.impl.wrapper;
 
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
-import cn.chenzw.toolkit.commons.StringExtUtils;
-import cn.chenzw.toolkit.commons.support.convert.AbstractFieldTypeConverter;
+import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
+import org.apache.commons.lang3.StringUtils;
 
-public class LongFieldTypeConverter extends AbstractFieldTypeConverter<Long> {
+public class LongWrapperTypeConverter extends AbstractTypeConverter<Long> {
 
 
     @Override
@@ -15,6 +15,9 @@ public class LongFieldTypeConverter extends AbstractFieldTypeConverter<Long> {
             return BooleanExtUtils.toLong((Boolean) value);
         }
         final String sValue = convertToStr(value);
-        return StringExtUtils.toLong(sValue, 0L);
+        if (StringUtils.isEmpty(sValue)) {
+            return null;
+        }
+        return Long.valueOf(sValue);
     }
 }

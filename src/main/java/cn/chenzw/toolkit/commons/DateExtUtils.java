@@ -2,9 +2,12 @@ package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
+import java.time.*;
+import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,6 +17,85 @@ import java.util.Date;
  * @author chenzw
  */
 public class DateExtUtils {
+
+    /**
+     * java.util.Date EEE MMM zzz 缩写数组
+     */
+    private final static String[] wtb = { //
+            "sun", "mon", "tue", "wed", "thu", "fri", "sat", // 星期
+            "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec", //
+            "gmt", "ut", "utc", "est", "edt", "cst", "cdt", "mst", "mdt", "pst", "pdt"//
+    };
+
+    /**
+     * 常用的UTC时间格式
+     */
+    private final static String[] FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMATS = new String[]{
+            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    };
+
+    private final static String[] FREQUENTLEY_USED_UTC_DATE_FORMATS = new String[]{
+            "yyyy-MM-dd'T'HH:mm:ssZ",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    };
+
+    /**
+     * 常用纯数字时间格式
+     */
+    private final static String[] FREQUENTLY_USED_NUMBER_DATE_FORMATS = new String[]{
+            "yyyyMMddHHmmss",
+            "yyyyMMddHHmmssSSS",
+            "yyyyMMdd",
+            "yyyyMMss",
+            "HHmmss"
+    };
+
+    /**
+     * CST格式
+     */
+    private final static String[] FREQUENTLY_USED_CST_DATE_FORMATS = new String[]{
+            "EEE, dd MMM yyyy HH:mm:ss z",
+            "EEE MMM dd HH:mm:ss zzz yyyy"
+    };
+
+    /**
+     * 常用的时间格式
+     */
+    private final static String[] FREQUENTLY_USED_DATE_FORMATS = new String[]{
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy/MM/dd HH:mm:ss",
+            "yyyy.MM.dd HH:mm:ss",
+            "yyyy年MM月dd日 HH时mm分ss秒",
+            "yyyy-MM-dd",
+            "yyyy/MM/dd",
+            "yyyy.MM.dd",
+            "HH:mm:ss",
+            "HH时mm分ss秒",
+            "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd HH:mm:ss.SSS"
+
+    };
+
+
+    /*
+    private final static Map<Integer, List<String>> FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMAT_MAP;
+    private final static Map<Integer, List<String>> FREQUENTLEY_USED_UTC_DATE_FORMAT_MAP;
+    private final static Map<Integer, List<String>> FREQUENTLY_USED_NUMBER_DATE_FORMAT_MAP;
+    private final static Map<Integer, List<String>> FREQUENTLY_USED_DATE_FORMAT_MAP;
+    private final static Map<Integer, List<String>> FREQUENTLY_USED_CST_DATE_FORMAT_MAP;
+    */
+
+
+    static {
+        /*
+        FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
+        FREQUENTLEY_USED_UTC_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLEY_USED_UTC_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
+        FREQUENTLY_USED_NUMBER_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLY_USED_NUMBER_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
+        FREQUENTLY_USED_CST_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLY_USED_CST_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
+        FREQUENTLY_USED_DATE_FORMAT_MAP = Arrays.stream(FREQUENTLY_USED_DATE_FORMATS).collect(Collectors.groupingBy((s) -> s.length()));
+        */
+    }
 
 
     private DateExtUtils() {
@@ -133,24 +215,82 @@ public class DateExtUtils {
 
 
     /**
-     * 解析日期
+     * 自动解析日期
      *
-     *  // @TODO
      * @param dateTimeStr
      * @return
      */
-    private static Date parseDateTime(String dateTimeStr) {
+    public static Date parseDate(String dateTimeStr) throws ParseException {
         if (StringUtils.isEmpty(dateTimeStr)) {
             throw new IllegalArgumentException("Date string must not be null");
         }
 
+        int dateTimeLen = dateTimeStr.length();
+        String[] dateFormats;
 
-        // 包含T
+        if (NumberUtils.isCreatable(dateTimeStr)) {
+            // 纯数字
+            dateFormats = FREQUENTLY_USED_NUMBER_DATE_FORMATS;
+        } else if (StringUtils.contains(dateTimeStr, 'T')) {
+            // UTC
+            if (StringUtils.contains(dateTimeStr, 'Z')) {
+                dateFormats = FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMATS;
+            } else {
+                dateFormats = FREQUENTLEY_USED_UTC_DATE_FORMATS;
+            }
+        } else if (StringUtils.containsAny(dateTimeStr, wtb)) {
+            // CST格式
+            dateFormats = FREQUENTLY_USED_CST_DATE_FORMATS;
+        } else {
+            // 其它
+            dateFormats = FREQUENTLY_USED_DATE_FORMATS;
+        }
+        return DateUtils.parseDate(dateTimeStr, dateFormats);
+    }
 
-        // 14 ~ 19
+    /**
+     * Date => {@link Instant}
+     *
+     * @param date
+     * @return {@link Instant}对象
+     */
+    public static Instant toInstant(Date date) {
+        return date == null ? null : date.toInstant();
+    }
 
-        return null;
 
+    /**
+     * {@link TemporalAccessor} => {@link Instant}
+     *
+     * @param temporalAccessor
+     * @return {@link Instant}对象
+     */
+    public static Instant toInstant(TemporalAccessor temporalAccessor) {
+        if (temporalAccessor == null) {
+            return null;
+        }
+        Instant result;
+        if (temporalAccessor instanceof Instant) {
+            result = (Instant) temporalAccessor;
+        } else if (temporalAccessor instanceof LocalDateTime) {
+            result = ((LocalDateTime) temporalAccessor).atZone(ZoneId.systemDefault()).toInstant();
+        } else if (temporalAccessor instanceof ZonedDateTime) {
+            result = ((ZonedDateTime) temporalAccessor).toInstant();
+        } else if (temporalAccessor instanceof OffsetDateTime) {
+            result = ((OffsetDateTime) temporalAccessor).toInstant();
+        } else if (temporalAccessor instanceof LocalDate) {
+            result = ((LocalDate) temporalAccessor).atStartOfDay(ZoneId.systemDefault()).toInstant();
+        } else if (temporalAccessor instanceof LocalTime) {
+            // 指定本地时间转换 为Instant，取当天日期
+            result = ((LocalTime) temporalAccessor).atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant();
+        } else if (temporalAccessor instanceof OffsetTime) {
+            // 指定本地时间转换 为Instant，取当天日期
+            result = ((OffsetTime) temporalAccessor).atDate(LocalDate.now()).toInstant();
+        } else {
+            result = Instant.from(temporalAccessor);
+        }
+
+        return result;
     }
 
 

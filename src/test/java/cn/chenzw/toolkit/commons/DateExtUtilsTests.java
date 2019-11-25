@@ -81,6 +81,19 @@ public class DateExtUtilsTests {
                 .isDayBetween(calendar.getTime(), startDateCalendar.getTime(), endDateCalendar.getTime());
         Assert.assertTrue(dayBetween);
 
+    }
+
+    @Test
+    public void testParseDate() throws ParseException {
+        Date date = DateExtUtils.parseDate("2018-10-20 12:2:1");
+        Assert.assertEquals("Sat Oct 20 12:02:01 CST 2018", date.toString());
+
+        Date date2 = DateExtUtils.parseDate("2018-10-20");
+        Assert.assertEquals("Sat Oct 20 00:00:00 CST 2018", date2.toString());
+
+        Date date3 = DateExtUtils.parseDate("22:11:33");
+        Assert.assertEquals("Thu Jan 01 22:11:33 CST 1970", date3.toString());
+
 
     }
 

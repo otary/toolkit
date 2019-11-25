@@ -3,18 +3,21 @@ package cn.chenzw.toolkit.commons.support.convert;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @param <T>
  * @author chenzw
  */
-public abstract class AbstractFieldTypeConverter<T> implements FieldTypeConverter<T>, Serializable {
+public abstract class AbstractTypeConverter<T> implements TypeConverter<T>, Serializable {
 
     @Override
     public T convert(Object value, T defaultValue) {
+        Objects.requireNonNull(value, "value must not be null!");
 
         // @TODO
-        return convertInternal(value);
+        T result = convertInternal(value);
+        return ((result == null) ? defaultValue : result);
     }
 
     protected abstract T convertInternal(Object value);

@@ -2,12 +2,12 @@ package cn.chenzw.toolkit.commons.support.convert.impl.primitive;
 
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
 import cn.chenzw.toolkit.commons.StringExtUtils;
-import cn.chenzw.toolkit.commons.support.convert.AbstractFieldTypeConverter;
+import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
 
 /**
  * @author chenzw
  */
-public class IntegerFieldTypeConverter extends AbstractFieldTypeConverter<Integer> {
+public class IntegerPrimitiveTypeConverter extends AbstractTypeConverter<Integer> {
 
     @Override
     protected Integer convertInternal(Object value) {

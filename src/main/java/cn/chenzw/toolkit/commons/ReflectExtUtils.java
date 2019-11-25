@@ -21,20 +21,51 @@ public final class ReflectExtUtils {
 
     private static final Map<Class<?>, Method[]> METHODS_CACHE = new WeakHashMap<>();
 
+
     /**
-     * 设置字段值
+     * 设置字段值（字段不存在时抛出异常）
+     *
+     * @param o
+     * @param fieldName
+     * @param value
+     * @throws IllegalAccessException
+     * @throws FieldNotExistException
+     */
+    public static void setFieldValue(Object o, String fieldName, Object value) throws IllegalAccessException, FieldNotExistException {
+        Objects.requireNonNull(o, "object is null");
+        Objects.requireNonNull(fieldName, "fieldName is null.");
+
+        Class<?> aClass = o.getClass();
+        Field field = getField(aClass, fieldName);
+
+        if (field == null) {
+            throw new FieldNotExistException(fieldName, o);
+        }
+        setFieldValue(o, field, value);
+    }
+
+    /**
+     * 设置字段值（字段不存在时不抛出异常）
      *
      * @param o
      * @param fieldName
      * @param value
      * @throws IllegalAccessException
      */
-    public static void setFieldValue(Object o, String fieldName, Object value) throws IllegalAccessException {
+    public static void setFieldValueQuietly(Object o, String fieldName, Object value) throws IllegalAccessException {
         Objects.requireNonNull(o, "object is null");
         Objects.requireNonNull(fieldName, "fieldName is null.");
 
         Class<?> aClass = o.getClass();
         Field field = getField(aClass, fieldName);
+
+        if (field == null) {
+            return;
+        }
+        setFieldValue(o, field, value);
+    }
+
+    public static void setFieldValue(Object o, Field field, Object value) throws IllegalAccessException {
         setAccessible(field);
 
         if (value != null) {

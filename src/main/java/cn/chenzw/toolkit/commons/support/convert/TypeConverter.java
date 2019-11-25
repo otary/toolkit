@@ -5,7 +5,7 @@ package cn.chenzw.toolkit.commons.support.convert;
  *
  * @param <T>
  */
-public interface FieldTypeConverter<T> {
+public interface TypeConverter<T> {
 
     /**
      * 将值转换成指定类型（如果类型无法确定，则使用默认值）

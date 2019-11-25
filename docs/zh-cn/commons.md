@@ -152,6 +152,16 @@ boolean dayBetween = DateExtUtils
                 .isDayBetween(calendar.getTime(), startDateCalendar.getTime(), endDateCalendar.getTime());
 ```
 
+- 解析日期
+
+``` java
+Date date = DateExtUtils.parseDate("2018-10-20 12:2:1");  // => Sat Oct 20 12:02:01 CST 2018
+Date date2 = DateExtUtils.parseDate("2018-10-20");  // => Sat Oct 20 00:00:00 CST 2018
+Date date3 = DateExtUtils.parseDate("22:11:33");   // => Thu Jan 01 22:11:33 CST 1970
+
+```
+
+
 ### ListExtUtils
 
 - 提取列表对象中某个字段的值，并拼接成字符串
@@ -220,6 +230,20 @@ List < User > findedUsers = ListExtUtils.find(users, kvMap); // => [User{id=3, n
 // 返回第一个匹配的元素
 User findedUser = ListExtUtils.findFirst(users, kvMap); // => User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}
 ```
+
+### ConvertExtUtils
+
+类型转换工具
+
+- 类型转换
+
+``` java
+String v1 = ConvertExtUtils.convert(String.class, 1222L);  // => 1222
+BigDecimal v2 = ConvertExtUtils.convert(BigDecimal.class, 103.35F); // => 103.35
+Date v3 = ConvertExtUtils.convert(Date.class, "2010-12-23 12:33:11"); // => Thu Dec 23 12:33:11 CST 2010
+```
+
+
 
 ### SerializationExtUtils
 
@@ -418,7 +442,9 @@ ClassExtUtils.generateUniqueClassName("cn.chenzw.toolkit.commons.StringExtUtils"
 Children children = new Children();
 
 ReflectExtUtils.setFieldValue(children, "childName", "张三");
-ReflectExtUtils.setFieldValue(children, "fatherName", "李四");
+ReflectExtUtils.setFieldValue(children, "fatherName", "李四");  // 字段不存在时抛出异常
+
+ReflectExtUtils.setFieldValueQuietly(children, "fatherName", "李四");  // 字段不存在不抛出异常
 
 children.getChildName();  // => 张三
 children.getFatherName();   // => 李四
@@ -432,8 +458,9 @@ children.setChildName("张三");
 children.setFatherName("李四");
 
 Object childName = ReflectExtUtils.getFieldValue(children, "childName"); // => 张三
+Object fatherName = ReflectExtUtils.getFieldValue(children, "fatherName");  // => 李四  // 字段不存在时抛出异常
 
-Object fatherName = ReflectExtUtils.getFieldValue(children, "fatherName");  // => 李四
+Object fatherName = ReflectExtUtils.getFieldValue(children, "fatherName2");  // => null  // 字段不存在时返回null
 ```
 
 - 获取类的所有字段（带缓存，包括父类的）

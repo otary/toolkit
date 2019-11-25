@@ -1,11 +1,17 @@
 package cn.chenzw.toolkit.commons;
 
-import cn.chenzw.toolkit.commons.support.convert.FieldTypeConverter;
+import cn.chenzw.toolkit.commons.support.convert.TypeConverter;
+import cn.chenzw.toolkit.commons.support.convert.impl.*;
 import cn.chenzw.toolkit.commons.support.convert.impl.primitive.*;
+import cn.chenzw.toolkit.commons.support.convert.impl.wrapper.*;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 转换器工具类
@@ -14,25 +20,38 @@ import java.util.Map;
  */
 public class ConvertExtUtils {
 
-    private static Map<Type, FieldTypeConverter<?>> defaultConverterMap;
+    private static Map<Type, TypeConverter<?>> defaultTypeConverterMap;
 
     static {
-        defaultConverterMap = new HashMap<>();
+        defaultTypeConverterMap = new HashMap<>();
 
-        defaultConverterMap.put(int.class, new IntegerFieldTypeConverter());
-        defaultConverterMap.put(long.class, new LongFieldTypeConverter());
-        defaultConverterMap.put(byte.class, new ByteFieldTypeConverter());
-        defaultConverterMap.put(short.class, new ShortFieldTypeConverter());
-        defaultConverterMap.put(float.class, new FloatFieldTypeConverter());
-        defaultConverterMap.put(double.class, new DoubleFieldTypeConverter());
+        defaultTypeConverterMap.put(int.class, new IntegerPrimitiveTypeConverter());
+        defaultTypeConverterMap.put(long.class, new LongPrimitiveTypeConverter());
+        defaultTypeConverterMap.put(byte.class, new BytePrimitiveTypeConverter());
+        defaultTypeConverterMap.put(short.class, new ShortPrimitiveTypeConverter());
+        defaultTypeConverterMap.put(float.class, new FloatPrimitiveTypeConverter());
+        defaultTypeConverterMap.put(double.class, new DoublePrimitiveTypeConverter());
+        defaultTypeConverterMap.put(char.class, new CharPrimitiveTypeConverter());
+        defaultTypeConverterMap.put(boolean.class, new BooleanPrimitiveTypeConverter());
 
-        defaultConverterMap.put(Integer.class, new IntegerFieldTypeConverter());
-        defaultConverterMap.put(Long.class, new LongFieldTypeConverter());
-        defaultConverterMap.put(Byte.class, new ByteFieldTypeConverter());
-        defaultConverterMap.put(Short.class, new ShortFieldTypeConverter());
-        defaultConverterMap.put(Float.class, new FloatFieldTypeConverter());
-        defaultConverterMap.put(Double.class, new DoubleFieldTypeConverter());
+        defaultTypeConverterMap.put(Integer.class, new IntegerWrapperTypeConverter());
+        defaultTypeConverterMap.put(Long.class, new LongWrapperTypeConverter());
+        defaultTypeConverterMap.put(Byte.class, new ByteWrapperTypeConverter());
+        defaultTypeConverterMap.put(Short.class, new ShortWrapperTypeConverter());
+        defaultTypeConverterMap.put(Float.class, new FloatWrapperTypeConverter());
+        defaultTypeConverterMap.put(Double.class, new DoubleWrapperTypeConverter());
+        defaultTypeConverterMap.put(Boolean.class, new BooleanWrapperTypeConverter());
+        defaultTypeConverterMap.put(Character.class, new CharPrimitiveTypeConverter());
 
+        defaultTypeConverterMap.put(java.util.Date.class, new DateTypeConverter());
+
+
+        defaultTypeConverterMap.put(String.class, new StringTypeConverter());
+        defaultTypeConverterMap.put(AtomicInteger.class, new AtomicIntegerTypeConverter());
+        defaultTypeConverterMap.put(AtomicLong.class, new AtomicLongTypeConverter());
+        defaultTypeConverterMap.put(BigDecimal.class, new BigDecimalTypeConverter());
+        defaultTypeConverterMap.put(BigInteger.class, new BigIntegerTypeConverter());
+        defaultTypeConverterMap.put(Number.class, new NumberTypeConverter());
     }
 
     private ConvertExtUtils() {
@@ -48,10 +67,10 @@ public class ConvertExtUtils {
         return (T) getConverter(type).convert(value, null);
     }
 
-    private static <T> FieldTypeConverter<T> getConverter(Type type) {
-        FieldTypeConverter<?> fieldTypeConverter = defaultConverterMap.get(type);
-        if (fieldTypeConverter != null) {
-            return (FieldTypeConverter<T>) fieldTypeConverter;
+    private static <T> TypeConverter<T> getConverter(Type type) {
+        TypeConverter<?> typeConverter = defaultTypeConverterMap.get(type);
+        if (typeConverter != null) {
+            return (TypeConverter<T>) typeConverter;
         }
 
         throw new RuntimeException("No Converter for type [" + type.getTypeName() + "]");

@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.commons;
 
+import cn.chenzw.toolkit.commons.exception.FieldNotExistException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,14 +29,14 @@ public class ReflectExtUtilsTests {
     }
 
     @Test
-    public void testSetFieldValue() throws IllegalAccessException {
+    public void testSetFieldValue() throws IllegalAccessException, FieldNotExistException {
         Children children = new Children();
 
         ReflectExtUtils.setFieldValue(children, "childName", "张三");
         ReflectExtUtils.setFieldValue(children, "fatherName", "李四");
-
         ReflectExtUtils.setFieldValue(children, "childId", 1);
 
+        ReflectExtUtils.setFieldValue(children, "childId2", 1); // 字段不存在
 
         Assert.assertEquals("张三", children.getChildName());
         Assert.assertEquals("李四", children.getFatherName());
@@ -48,7 +49,7 @@ public class ReflectExtUtilsTests {
     }
 
     @Test
-    public void testGetFieldValue() throws IllegalAccessException {
+    public void testGetFieldValue() throws IllegalAccessException, FieldNotExistException {
         Children children = new Children();
         children.setChildName("张三");
         children.setFatherName("李四");

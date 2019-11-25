@@ -128,4 +128,25 @@ public class BooleanExtUtils {
     public static Double toDouble(boolean value) {
         return Double.valueOf(todouble(value));
     }
+
+
+    /**
+     * boolean => char
+     *
+     * @param value
+     * @return
+     */
+    public static char toChar(boolean value) {
+        return (char) toInt(value);
+    }
+
+    /**
+     * boolean => Character
+     *
+     * @param value
+     * @return
+     */
+    public static Character toCharacter(boolean value) {
+        return Character.valueOf(toChar(value));
+    }
 }

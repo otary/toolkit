@@ -1,15 +1,11 @@
-package cn.chenzw.toolkit.commons.support.convert.impl.primitive;
+package cn.chenzw.toolkit.commons.support.convert.impl.wrapper;
 
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
-import cn.chenzw.toolkit.commons.support.convert.AbstractFieldTypeConverter;
+import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * Byte格式转换器
- *
- * @author chenzw
- */
-public class ByteFieldTypeConverter extends AbstractFieldTypeConverter<Byte> {
+public class ByteWrapperTypeConverter extends AbstractTypeConverter<Byte> {
+
     @Override
     protected Byte convertInternal(Object value) {
         if (value instanceof Number) {
@@ -20,8 +16,8 @@ public class ByteFieldTypeConverter extends AbstractFieldTypeConverter<Byte> {
 
         String sValue = convertToStr(value);
         if (StringUtils.isBlank(sValue)) {
-            return 0;
+            return null;
         }
-        return Byte.parseByte(sValue);
+        return Byte.valueOf(sValue);
     }
 }
