@@ -9,14 +9,14 @@ import java.text.MessageFormat;
  */
 public class FieldNotExistException extends Exception {
 
+
     private String fieldName;
 
     private Object target;
 
 
     public FieldNotExistException(String fieldName, Object target) {
-        super(MessageFormat.format( "Field[ {0} ] does not exist in [ {1} ]", fieldName, target.getClass().getName()));
-
+        super(MessageFormat.format("Field[ {0} ] does not exist in [{1}]", fieldName, target.getClass().getName()));
         this.fieldName = fieldName;
         this.target = target;
     }
@@ -38,5 +38,10 @@ public class FieldNotExistException extends Exception {
         this.target = target;
     }
 
+
+    @Override
+    public String toString() {
+        return MessageFormat.format("Field[ {0} ] does not exist in [ {1} ]", fieldName, target.getClass().getName());
+    }
 
 }

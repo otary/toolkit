@@ -161,6 +161,29 @@ public class DateExtUtils {
     }
 
     /**
+     * 获取某天的昨天
+     *
+     * @param date
+     * @return
+     */
+    public static Date getYesterday(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取昨天
+     *
+     * @return
+     */
+    public static Date getYesterday() {
+        return getYesterday(Calendar.getInstance().getTime());
+    }
+
+    /**
      * 获取指定月份的最后一天
      *
      * @param month

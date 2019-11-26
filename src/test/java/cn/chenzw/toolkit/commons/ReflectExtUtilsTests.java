@@ -36,10 +36,14 @@ public class ReflectExtUtilsTests {
         ReflectExtUtils.setFieldValue(children, "fatherName", "李四");
         ReflectExtUtils.setFieldValue(children, "childId", 1);
 
-        ReflectExtUtils.setFieldValue(children, "childId2", 1); // 字段不存在
-
         Assert.assertEquals("张三", children.getChildName());
         Assert.assertEquals("李四", children.getFatherName());
+    }
+
+    @Test(expected = FieldNotExistException.class)
+    public void testSetFieldValue2() throws FieldNotExistException, IllegalAccessException {
+        Children children = new Children();
+        ReflectExtUtils.setFieldValue(children, "childId2", 1); // 字段不存在
     }
 
     @Test

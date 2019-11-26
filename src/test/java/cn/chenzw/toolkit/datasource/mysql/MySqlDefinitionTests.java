@@ -4,6 +4,7 @@ import cn.chenzw.toolkit.datasource.entity.TableDefinition;
 import cn.chenzw.toolkit.datasource.mysql.builder.MySqlTableDefinitionBuilder;
 import cn.chenzw.toolkit.spring.config.DataSourceConfig;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class MySqlDefinitionTests {
     DataSource dataSource;
 
     @Test
+    @Ignore
     public void testTableDefinition() throws SQLException {
         Connection connection = dataSource.getConnection();
         TableDefinition tableDefinition = new MySqlTableDefinitionBuilder(connection, "sys_permission").build();

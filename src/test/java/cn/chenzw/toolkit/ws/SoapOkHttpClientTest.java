@@ -9,6 +9,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import org.dom4j.Node;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -33,6 +34,7 @@ public class SoapOkHttpClientTest {
      * @throws IOException
      */
     @Test
+    @Ignore
     public void testSoapOkHttpClient() throws IOException, SOAPException {
         SoapOkHttpClient soapOkHttpClient = SoapOkHttpClient.create()
                 .addInterceptor(new SoapRequestInteceptor())  // 添加拦截器
@@ -85,6 +87,7 @@ public class SoapOkHttpClientTest {
      * 异步请求示例
      */
     @Test
+    @Ignore
     public void testSoapOkHttpClientAsync() {
         SoapOkHttpClient soapOkHttpClient = SoapOkHttpClient.create()
                 .addInterceptor(new SoapRequestInteceptor())  // 添加拦截器
