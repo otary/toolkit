@@ -170,7 +170,7 @@ public class DateExtUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        calendar.add(Calendar.DATE, 1);
+        calendar.add(Calendar.DATE, -1);
         return calendar.getTime();
     }
 
