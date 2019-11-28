@@ -6,6 +6,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
@@ -53,8 +54,8 @@ public final class ReflectExtUtils {
      * @throws IllegalAccessException
      */
     public static void setFieldValueQuietly(Object o, String fieldName, Object value) throws IllegalAccessException {
-        Objects.requireNonNull(o, "object is null");
-        Objects.requireNonNull(fieldName, "fieldName is null.");
+        Objects.requireNonNull(o, "object must not be null.");
+        Objects.requireNonNull(fieldName, "fieldName must not be null.");
 
         Class<?> aClass = o.getClass();
         Field field = getField(aClass, fieldName);
@@ -65,19 +66,69 @@ public final class ReflectExtUtils {
         setFieldValue(o, field, value);
     }
 
+
+    /**
+     * 设置静态常量值
+     *
+     * @param o
+     * @param fieldName
+     * @param value
+     * @throws NoSuchFieldException
+     * @throws FieldNotExistException
+     * @throws IllegalAccessException
+     */
+    public static void setStaticFinalFieldValue(Object o, String fieldName, Object value) throws NoSuchFieldException, FieldNotExistException, IllegalAccessException {
+        Objects.requireNonNull(o, "object must not be null.");
+        Objects.requireNonNull(fieldName, "fieldName must not be null.");
+
+        Class<?> aClass = o.getClass();
+        Field field = getField(aClass, fieldName);
+
+        if (field == null) {
+            throw new FieldNotExistException(fieldName, o);
+        }
+        setStaticFinalFieldValue(field, value);
+    }
+
+
+    /**
+     * 设置静态常量值
+     *
+     * @param field
+     * @param value
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
+    public static void setStaticFinalFieldValue(Field field, Object value) throws NoSuchFieldException, IllegalAccessException {
+        setAccessible(field);
+        setFinalAccessible(field);
+        field.set(null, tryConvert(field, value));
+    }
+
+    public static void setFinalAccessible(Field field) throws NoSuchFieldException, IllegalAccessException {
+        Field modifiers = Field.class.getDeclaredField("modifiers");
+        modifiers.setAccessible(true);
+        modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+    }
+
+
     public static void setFieldValue(Object o, Field field, Object value) throws IllegalAccessException {
         setAccessible(field);
 
+        field.set(o, tryConvert(field, value));
+    }
+
+    private static Object tryConvert(Field field, Object value) {
         if (value != null) {
             Class<?> fieldType = field.getType();
             if (!fieldType.isAssignableFrom(value.getClass())) {
                 final Object targetValue = ConvertExtUtils.convert(fieldType, value);
                 if (targetValue != null) {
-                    value = targetValue;
+                    return targetValue;
                 }
             }
         }
-        field.set(o, value);
+        return value;
     }
 
     public static Object getFieldValue(Object o, Field field) throws IllegalAccessException {
@@ -185,6 +236,7 @@ public final class ReflectExtUtils {
         }
         return accessibleObject;
     }
+
 
     /**
      * 获取类中的所有方法（包括父类的）

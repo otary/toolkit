@@ -47,6 +47,14 @@ public class ReflectExtUtilsTests {
     }
 
     @Test
+    public void testSetStaticFinalFieldValue() throws IllegalAccessException, FieldNotExistException, NoSuchFieldException {
+        Children children = new Children();
+        ReflectExtUtils.setStaticFinalFieldValue(children, "SID", "2.0");
+
+        Assert.assertEquals("2.0", Children.getSID());
+    }
+
+    @Test
     public void testGetMethods() {
         Method[] methods = ReflectExtUtils.getMethods(Children.class);
         System.out.println(Arrays.toString(methods));
@@ -64,6 +72,8 @@ public class ReflectExtUtilsTests {
         Object fatherName = ReflectExtUtils.getFieldValue(children, "fatherName");
         Assert.assertEquals("李四", fatherName);
     }
+
+
 }
 
 
@@ -102,6 +112,10 @@ class Children extends Father {
     private Long childId;
     private String childAge;
 
+    private static final String VERSION = "1.0";
+
+    private static String SID = "1.0";
+
     public String getChildName() {
         return childName;
     }
@@ -124,6 +138,14 @@ class Children extends Father {
 
     public void setChildAge(String childAge) {
         this.childAge = childAge;
+    }
+
+    public static String getVERSION() {
+        return VERSION;
+    }
+
+    public static String getSID() {
+        return SID;
     }
 
     @Override

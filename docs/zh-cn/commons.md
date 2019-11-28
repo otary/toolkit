@@ -450,6 +450,13 @@ children.getChildName();  // => 张三
 children.getFatherName();   // => 李四
 ```
 
+- 设置静态常量值
+
+``` java
+Children children = new Children();
+ReflectExtUtils.setStaticFinalFieldValue(children, "SID", "2.0");
+```
+
 - 获取字段值
 
 ``` java
