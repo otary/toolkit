@@ -152,13 +152,19 @@ boolean dayBetween = DateExtUtils
                 .isDayBetween(calendar.getTime(), startDateCalendar.getTime(), endDateCalendar.getTime());
 ```
 
-- 解析日期
+- 自动解析日期
 
 ``` java
 Date date = DateExtUtils.parseDate("2018-10-20 12:2:1");  // => Sat Oct 20 12:02:01 CST 2018
 Date date2 = DateExtUtils.parseDate("2018-10-20");  // => Sat Oct 20 00:00:00 CST 2018
 Date date3 = DateExtUtils.parseDate("22:11:33");   // => Thu Jan 01 22:11:33 CST 1970
 
+```
+
+- 获取昨天日期
+
+``` java
+Date yesterDay = DateExtUtils.getYesterday();
 ```
 
 
