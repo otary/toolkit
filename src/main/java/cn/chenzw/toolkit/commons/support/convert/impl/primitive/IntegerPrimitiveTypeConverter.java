@@ -17,6 +17,7 @@ public class IntegerPrimitiveTypeConverter extends AbstractTypeConverter<Integer
             return BooleanExtUtils.toInt((Boolean) value);
         }
         String sValue = convertToStr(value);
+
         return StringExtUtils.toInteger(sValue, 0);
     }
 }

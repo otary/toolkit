@@ -17,6 +17,10 @@ public class IntegerWrapperTypeConverter extends AbstractTypeConverter<Integer> 
         if (StringUtils.isEmpty(sValue)) {
             return null;
         }
+
+        if (StringUtils.contains(sValue, ".")) {
+            return Double.valueOf(sValue).intValue();
+        }
         return Integer.valueOf(sValue);
     }
 }
