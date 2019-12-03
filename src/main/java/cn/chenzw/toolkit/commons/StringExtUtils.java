@@ -192,6 +192,10 @@ public abstract class StringExtUtils {
         if (StringUtils.isEmpty(StringUtils.trim(str))) {
             return defaultValue;
         }
+
+        if (StringUtils.contains(str, ".")) {
+            return Double.valueOf(str).intValue();
+        }
         return Integer.valueOf(str);
     }
 
