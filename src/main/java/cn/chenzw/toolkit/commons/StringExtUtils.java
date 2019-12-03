@@ -189,7 +189,7 @@ public abstract class StringExtUtils {
      * @return
      */
     public static Integer toInteger(final String str, final Integer defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isEmpty(StringUtils.trim(str))) {
             return defaultValue;
         }
         return Integer.valueOf(str);
@@ -213,7 +213,7 @@ public abstract class StringExtUtils {
      * @return
      */
     public static Long toLong(final String str, final Long defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isEmpty(StringUtils.trim(str))) {
             return defaultValue;
         }
         return Long.valueOf(str);
@@ -238,7 +238,7 @@ public abstract class StringExtUtils {
      * @return
      */
     public static Float toFloat(final String str, final Float defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isEmpty(StringUtils.trim(str))) {
             return defaultValue;
         }
         return Float.valueOf(str);
@@ -262,7 +262,7 @@ public abstract class StringExtUtils {
      * @return
      */
     public static Double toDouble(final String str, final Double defaultValue) {
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtils.isEmpty(StringUtils.trim(str))) {
             return defaultValue;
         }
         return Double.valueOf(str);

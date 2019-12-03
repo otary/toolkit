@@ -56,7 +56,7 @@ public class StringExtUtilsTests {
         Assert.assertEquals("10", StringExtUtils.toInteger("10", 1).toString());
 
         // 空值则返回默认值
-        Assert.assertEquals("1", StringExtUtils.toInteger("", 1).toString());
+        Assert.assertEquals("1", StringExtUtils.toInteger(" ", 1).toString());
         Assert.assertEquals("1", StringExtUtils.toInteger(null, 1).toString());
 
         // 空值返回null
