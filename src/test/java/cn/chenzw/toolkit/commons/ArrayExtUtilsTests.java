@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(JUnit4.class)
@@ -18,5 +19,14 @@ public class ArrayExtUtilsTests {
         List<String[]> result = ArrayExtUtils.split(data, 2);
 
         Assert.assertEquals(result.size(), 4);
+    }
+
+    @Test
+    public void testClone(){
+        String[] data = {"张三", "李四", "王五"};
+        String[] clone = ArrayExtUtils.clone(data);
+
+        Assert.assertEquals("[张三, 李四, 王五]", Arrays.toString(clone));
+        Assert.assertNotEquals(data.hashCode(), clone.hashCode());
     }
 }

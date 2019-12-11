@@ -2,11 +2,9 @@ package cn.chenzw.toolkit.commons;
 
 import cn.chenzw.toolkit.commons.exception.FieldNotExistException;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
@@ -258,6 +256,62 @@ public final class ReflectExtUtils {
         }
         METHODS_CACHE.put(aClass, declaredMethods);
         return declaredMethods;
+    }
+
+    /**
+     * @param o
+     * @param methodName
+     * @param args
+     * @return
+     */
+    public static Method getMethod(Object o, String methodName, Object... args) {
+        Method[] methods = getMethods(o.getClass());
+
+        Class<?>[] paramTypes = new Class<?>[args.length];
+        for (int i = 0; i < args.length; i++) {
+            paramTypes[i] = (args[i] == null ? Object.class : args[i].getClass());
+        }
+
+        if (methods != null && methods.length > 0) {
+            for (Method method : methods) {
+                if (StringUtils.contains(method.getName(), methodName)) {
+                    if (ClassExtUtils.isAllAssignableFrom(method.getParameterTypes(), paramTypes)) {
+                        return method;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 反射调用方法
+     *
+     * @param o
+     * @param methodName
+     * @param args
+     * @param <T>
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public static <T> T invoke(Object o, String methodName, Object... args) throws InvocationTargetException, IllegalAccessException {
+        Objects.requireNonNull(o, "object must not be null!");
+
+        if (StringUtils.isEmpty(methodName)) {
+            throw new IllegalArgumentException("methodName must not be null!");
+        }
+
+        Method method = getMethod(o, methodName, args);
+        Objects.requireNonNull(method, "No such method: [ " + methodName + " ]!");
+
+        setAccessible(method);
+
+        if (ClassExtUtils.isStatic(method)) {
+            return (T) method.invoke(null, args);
+        } else {
+            return (T) method.invoke(o, args);
+        }
     }
 
 }

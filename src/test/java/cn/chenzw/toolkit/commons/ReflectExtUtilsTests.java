@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -73,6 +74,23 @@ public class ReflectExtUtilsTests {
         Assert.assertEquals("李四", fatherName);
     }
 
+    @Test
+    public void testInvoke() throws InvocationTargetException, IllegalAccessException {
+        Children children = new Children();
+
+        // 单参数
+        Object result = ReflectExtUtils.invoke(children, "say", "张三");
+        Assert.assertEquals("hello,张三", result);
+
+        // 没有参数
+        Object result2 = ReflectExtUtils.invoke(children, "say");
+        Assert.assertEquals("hello world!", result2);
+
+        // 调用静态方法
+        Object result3 = ReflectExtUtils.invoke(children, "go");
+        Assert.assertEquals("let's go!", result3);
+    }
+
 
 }
 
@@ -105,6 +123,19 @@ class Father {
     public void setFatherAge(String fatherAge) {
         this.fatherAge = fatherAge;
     }
+
+    public String say(String name) {
+        return "hello," + name;
+    }
+
+    public String say() {
+        return "hello world!";
+    }
+
+    public static String go() {
+        return "let's go!";
+    }
+
 }
 
 class Children extends Father {

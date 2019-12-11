@@ -95,6 +95,17 @@ String[] data = new String[]{"1000000008334", "1000000008333", "1000000008332", 
 List<String[]> result = ArrayExtUtils.split(data, 2);  // => [["1000000008334", "1000000008333"],["1000000008332", "1000000008331"], ["1000000008330", "1000000008329"],["1000000008328"]]
 ```
 
+- 数组克隆
+
+``` java
+String[] data = {"张三", "李四", "王五"};
+String[] clone = ArrayExtUtils.clone(data);
+
+data.hashCode();  // => 1330278544
+clone.hashCode();  // => 1634198
+
+```
+
 ### DateExtUtils
 
 - 随机生成日期
@@ -399,6 +410,12 @@ ProjectUtils.getClassPath(); // => /C:/Users/chenzw/IdeaProjects/toolkit/target/
 ProjectUtils.getDependentJarFiles();  // => jar文件列表
 ```
 
+- 获取项目进程ID
+
+``` java
+int processId = ProjectUtils.getProcessId();  // => 19283
+```
+
 ### FileExtUtils
 
 文件工具类
@@ -494,8 +511,38 @@ Field childNameField = ReflectExtUtils.getField(Children.class, "childName");
 Method[] methods = ReflectExtUtils.getMethods(Children.class);
 ```
 
+- 反射调用方法
 
+``` java
+Children children = new Children();
 
+// 单参数
+Object result = ReflectExtUtils.invoke(children, "say", "张三");  // => hello,张三
+
+// 没有参数
+Object result2 = ReflectExtUtils.invoke(children, "say");  // => hello world!
+
+// 调用静态方法
+Object result3 = ReflectExtUtils.invoke(children, "go");   // => let's go!
+```
+
+### ObjectExtUtils
+
+Object扩展工具类
+
+- 获取对象的内存地址
+
+``` java
+User user = new User();
+int address = ObjectExtUtils.identityHashCode(user); // => 1330278544
+```
+
+- 克隆对象
+
+``` java
+User user = new User();
+User clonedUser = ObjectExtUtils.clone(user);  // 深克隆
+```
 
 ### GenericUtils
 

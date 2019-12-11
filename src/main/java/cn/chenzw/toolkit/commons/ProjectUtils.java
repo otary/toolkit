@@ -1,6 +1,8 @@
 package cn.chenzw.toolkit.commons;
 
 import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +60,16 @@ public class ProjectUtils {
             jarFiles.add(new File(jarPath));
         }
         return jarFiles;
+    }
+
+    /**
+     * 获取项目进程ID
+     *
+     * @return
+     */
+    public static int getProcessId() {
+        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+        return Integer.valueOf(runtimeMXBean.getName().split("@")[0])
+                .intValue();
     }
 }

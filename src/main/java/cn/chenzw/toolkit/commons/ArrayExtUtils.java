@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.commons;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +39,37 @@ public class ArrayExtUtils {
             }
         }
         return result;
+    }
+
+
+    /**
+     * 数组克隆
+     *
+     * @param o
+     * @param <T>
+     * @return
+     */
+    public static <T> T clone(T o) {
+        if (o == null) {
+            return null;
+        }
+
+        if (o.getClass().isArray()) {
+            final Object result;
+            final Class<?> componentType = o.getClass().getComponentType();
+            if (componentType.isPrimitive()) {// 原始类型
+                int length = Array.getLength(o);
+                result = Array.newInstance(componentType, length);
+                while (length-- > 0) {
+                    Array.set(result, length, Array.get(o, length));
+                }
+            } else {
+                result = ((Object[]) o).clone();
+            }
+            return (T) result;
+        }
+
+        return null;
     }
 }
 

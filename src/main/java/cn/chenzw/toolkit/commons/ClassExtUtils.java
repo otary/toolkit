@@ -1,9 +1,14 @@
 package cn.chenzw.toolkit.commons;
 
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
+import java.util.Objects;
 
 /**
  * org.apache.commons.lang3.ClassUtils扩展类
@@ -111,6 +116,47 @@ public abstract class ClassExtUtils {
         }
         return className;
 
+    }
+
+
+    /**
+     * 判断fatherTypes中所有类是否与childTypes中的类相同，或是其父类或接口
+     *
+     * @param fatherTypes
+     * @param childTypes
+     * @return
+     */
+    public static boolean isAllAssignableFrom(Class<?>[] fatherTypes, Class<?>[] childTypes) {
+
+        if (ArrayUtils.isEmpty(fatherTypes) && ArrayUtils.isEmpty(childTypes)) {
+            return true;
+        }
+
+        if (fatherTypes == null || childTypes == null) {
+            return false;
+        }
+
+        if (fatherTypes.length != childTypes.length) {
+            return false;
+        }
+
+        for (int i = 0; i < fatherTypes.length; i++) {
+            if (!fatherTypes[i].isAssignableFrom(childTypes[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 是否静态方法
+     *
+     * @param method
+     * @return
+     */
+    public static boolean isStatic(Method method) {
+        Objects.requireNonNull(method, "Method to provided is null!");
+        return Modifier.isStatic(method.getModifiers());
     }
 
 }

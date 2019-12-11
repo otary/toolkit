@@ -32,4 +32,11 @@ public class ProjectUtilsTests {
 
         Assert.assertTrue(dependentJarFiles.size() > 0);
     }
+
+    @Test
+    public void testGetProcessId(){
+        int processId = ProjectUtils.getProcessId();
+        Assert.assertTrue(processId > 0);
+    }
+
 }
