@@ -66,6 +66,8 @@ public class ProjectUtils {
      * 获取项目进程ID
      *
      * @return
+     * @see ThreadExtUtils#getProcessId()
+     * @deprecated
      */
     public static int getProcessId() {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
