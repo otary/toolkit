@@ -215,6 +215,7 @@ public abstract class StringExtUtils {
      * @param str
      * @param defaultValue
      * @return
+     * @deprecated {@link org.apache.commons.lang3.math.NumberUtils#toLong(String, long)}
      */
     public static Long toLong(final String str, final Long defaultValue) {
         if (StringUtils.isEmpty(StringUtils.trim(str))) {
@@ -228,6 +229,7 @@ public abstract class StringExtUtils {
      *
      * @param str
      * @return
+     * @deprecated {@link org.apache.commons.lang3.math.NumberUtils#toLong(String)}
      */
     public static Long toLong(final String str) {
         return toLong(str, null);
@@ -240,6 +242,7 @@ public abstract class StringExtUtils {
      * @param str
      * @param defaultValue
      * @return
+     * @deprecated {@link org.apache.commons.lang3.math.NumberUtils#toFloat(String, float)}
      */
     public static Float toFloat(final String str, final Float defaultValue) {
         if (StringUtils.isEmpty(StringUtils.trim(str))) {
@@ -253,6 +256,7 @@ public abstract class StringExtUtils {
      *
      * @param str
      * @return
+     * @deprecated {@link org.apache.commons.lang3.math.NumberUtils#toFloat(String)}
      */
     public static Float toFloat(final String str) {
         return toFloat(str, null);
@@ -264,6 +268,7 @@ public abstract class StringExtUtils {
      * @param str
      * @param defaultValue
      * @return
+     * @deprecated {@link org.apache.commons.lang3.math.NumberUtils#toDouble(String, double)}
      */
     public static Double toDouble(final String str, final Double defaultValue) {
         if (StringUtils.isEmpty(StringUtils.trim(str))) {
@@ -277,6 +282,7 @@ public abstract class StringExtUtils {
      *
      * @param str
      * @return
+     * @deprecated {@link org.apache.commons.lang3.math.NumberUtils#toDouble(String)}
      */
     public static Double toDouble(final String str) {
         return toDouble(str, null);
