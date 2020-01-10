@@ -638,3 +638,31 @@ try (OutputStream os = new FileOutputStream(new File("src.zip"))) {
 ```
 
 ---
+
+### ThreadExtUtils
+
+- 获取进程ID
+
+``` java
+int processId = ProjectUtils.getProcessId(); 
+```
+
+- 获取当前的栈元素信息
+
+``` java
+StackTraceElement stackElement = ThreadExtUtils.getCurrentStackElement();
+stackElement.getClassName();  // => cn.chenzw.toolkit.commons.ThreadExtUtils
+stackElement.getFileName();   // => ThreadExtUtils.java
+stackElement.getMethodName();  // => getCurrentStackElement
+stackElement.getLineNumber();  // => 38
+```
+
+---
+
+### RuntimeExtUtils
+
+- 执行系统命令
+
+```
+
+```
