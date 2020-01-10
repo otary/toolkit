@@ -94,5 +94,114 @@ public class ListExtUtilsTests {
 
     }
 
+    /**
+     * 交集
+     */
+    @Test
+    public void testIntersection() {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            user.setId(i);
+            user.setName("zhangsan" + i);
 
+            users.add(user);
+        }
+
+        List<User> users2 = new ArrayList<>();
+        User user21 = new User();
+        user21.setId(2);
+        user21.setName("zhangsan");
+        users2.add(user21);
+
+        User user22 = new User();
+        user22.setId(4);
+        user22.setName("zhangsan");
+        users2.add(user22);
+
+        User user23 = new User();
+        user23.setId(12);
+        user23.setName("zhangsan");
+        users2.add(user23);
+
+        List<User> intersectionList = ListExtUtils.intersection(users, users2, (user, user2) -> {
+            if (user.getId() == user2.getId()) {
+                return true;
+            }
+            return false;
+        });
+
+        Assert.assertEquals("[User{id=2, name='zhangsan2', sex='null', age=null, birthDate=null}, User{id=4, name='zhangsan4', sex='null', age=null, birthDate=null}]",
+                intersectionList.toString());
+    }
+
+
+    /**
+     * 差集
+     */
+    @Test
+    public void testSubtract() {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            User user = new User();
+            user.setId(i);
+            user.setName("zhangsan" + i);
+            users.add(user);
+        }
+
+        List<User> users2 = new ArrayList<>();
+        User user21 = new User();
+        user21.setId(2);
+        user21.setName("zhangsan");
+        users2.add(user21);
+
+        User user22 = new User();
+        user22.setId(4);
+        user22.setName("zhangsan");
+        users2.add(user22);
+
+        User user23 = new User();
+        user23.setId(12);
+        user23.setName("zhangsan");
+        users2.add(user23);
+
+        List<User> subtractList = ListExtUtils.subtract(users, users2, (user, user2) -> {
+            if (user.getId() == user2.getId()) {
+                return true;
+            }
+            return false;
+        });
+
+
+        Assert.assertEquals("[User{id=0, name='zhangsan0', sex='null', age=null, birthDate=null}, User{id=1, name='zhangsan1', sex='null', age=null, birthDate=null}, User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}]",
+                subtractList.toString());
+    }
+
+
+    /**
+     * 去重
+     */
+    @Test
+    public void testUnique() {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            User user = new User();
+            user.setId(i);
+            user.setName("zhangsan" + i);
+
+            users.add(user);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            User user = new User();
+            user.setId(i);
+            user.setName("zhangsan" + i * 2);
+
+            users.add(user);
+        }
+        List<User> uniqueList = ListExtUtils.unique(users, user -> user.getId());
+
+        Assert.assertEquals("[User{id=0, name='zhangsan0', sex='null', age=null, birthDate=null}, User{id=1, name='zhangsan1', sex='null', age=null, birthDate=null}, User{id=2, name='zhangsan2', sex='null', age=null, birthDate=null}]",
+                uniqueList.toString());
+    }
 }

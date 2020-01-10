@@ -248,6 +248,34 @@ List < User > findedUsers = ListExtUtils.find(users, kvMap); // => [User{id=3, n
 User findedUser = ListExtUtils.findFirst(users, kvMap); // => User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}
 ```
 
+- 获取2个集合的交集
+
+``` java
+List<User> subtractList = ListExtUtils.subtract(users, users2, (user, user2) -> {
+    if (user.getId() == user2.getId() && user.getName().equals(user2.getName())) {
+        return true;
+    }
+    return false;
+});
+```
+
+- 获取2个集合的差集
+
+``` java
+List<User> subtractList = ListExtUtils.subtract(users, users2, (user, user2) -> {
+    if (user.getId() == user2.getId()) {
+        return true;
+    }
+    return false;
+});
+```
+
+- 集合去重
+
+``` java
+List<User> uniqueList = ListExtUtils.unique(users, user -> user.getId());
+```
+
 ### ConvertExtUtils
 
 类型转换工具

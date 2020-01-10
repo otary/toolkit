@@ -4,6 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * org.apache.commons.collections.ListUtils扩展类
@@ -147,6 +150,53 @@ public class ListExtUtils {
         return null;
     }
 
+    /**
+     * 获取两个集合的差集（listA - listB）
+     *
+     * @param listA
+     * @param listB
+     * @param <T>
+     * @return
+     */
+    public static final <T> List<T> subtract(Collection<T> listA, Collection<T> listB, BiFunction<T, T, Boolean> matchFunction) {
+        Objects.requireNonNull(listA, "listA must not be null!");
+        Objects.requireNonNull(listB, "listB must not be null!");
+        return listA.stream().filter(item -> listB.stream().allMatch(item2 -> !matchFunction.apply(item, item2))).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 获取两个集合的交集（listA的元素同时存在于listB中）
+     *
+     * @param listA
+     * @param listB
+     * @param <T>
+     * @return
+     */
+    public static final <T> List<T> intersection(Collection<T> listA, Collection<T> listB, BiFunction<T, T, Boolean> matchFunction) {
+        Objects.requireNonNull(listA, "listA must not be null!");
+        Objects.requireNonNull(listB, "listB must not be null!");
+        return listA.stream().filter(item -> listB.stream().anyMatch(item2 -> matchFunction.apply(item, item2))).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 集合去重
+     *
+     * @param list
+     * @param matchFunction
+     * @param <T>
+     * @return
+     */
+    public static final <T, U extends Comparable<? super U>> List<T> unique(Collection<T> list, Function<T, U> matchFunction) {
+        Objects.requireNonNull(list);
+
+        return list.stream().collect(
+                Collectors.collectingAndThen(Collectors.toCollection(
+                        () -> new TreeSet<>(Comparator.comparing(matchFunction))), ArrayList::new)
+        );
+    }
+
 
     private static final <T> Map<Field, Object> getFielddMap(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException {
         Map<Field, Object> fvMap = new HashMap<>();
@@ -167,5 +217,6 @@ public class ListExtUtils {
         }
         return true;
     }
+
 
 }
