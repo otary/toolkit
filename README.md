@@ -62,6 +62,8 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.1'
 
 [](zh-cn/authentication.md ':include')
 
+[](zh-cn/concurrent.md ':include')
+
 
 ## 运行单元测试
 
