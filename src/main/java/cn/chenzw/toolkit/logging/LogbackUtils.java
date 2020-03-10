@@ -47,6 +47,7 @@ public class LogbackUtils {
             }
         } catch (SecurityException ex) {
             // Unable to determine location
+            ex.printStackTrace();
         }
         return "unknown location";
     }

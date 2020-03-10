@@ -13,7 +13,6 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,8 +25,6 @@ import java.util.Map;
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
 public class SpringUtilsTests {
 
-    @Autowired
-    private ApplicationContext applicationContext;
 
     @Test
     public void testRegisterBean() {
@@ -107,7 +104,8 @@ public class SpringUtilsTests {
         ContextHandlerMappings handlerMappings = SpringUtils.getHandlerMappings();
 
         Assert.assertThat(handlerMappings.getMappings(), Matchers.hasItem(Matchers.hasProperty("handler", Matchers.is("public java.lang.String cn.chenzw.toolkit.spring.controllers.HelloRestController.receive(java.lang.String)"))));
-        Assert.assertThat(handlerMappings.getMappings(), Matchers.hasItem(Matchers.hasProperty("predicate", Matchers.is("{[/hello/say],methods=[GET]}"))));
+      //  Assert.assertThat(handlerMappings.getMappings(), Matchers.hasItem(Matchers.hasProperty("predicate", Matchers.is("{[/hello/say],methods=[GET]}"))));
+        Assert.assertThat(handlerMappings.getMappings(), Matchers.hasItem(Matchers.hasProperty("predicate", Matchers.is("{POST /hello/receive}"))));
 
     }
 
