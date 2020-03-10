@@ -198,14 +198,14 @@ String ids2 = ListExtUtils.joinFieldValue(users, "id");  // => 0,1,2,3,4,5,6,7,8
 - 判断对象集合中是否包含某个元素
 
 ``` java
-List < User > users = new ArrayList < > ();
+List <User> users = new ArrayList<> ();
 for (int i = 0; i < 10; i++) {
     User user = new User();
     user.setId(i);
     user.setName("zhangsan" + i);
     users.add(user);
 }
-Map < String, Object > kvMap = new HashMap() {
+Map <String, Object> kvMap = new HashMap() {
     {
         put("id", 3);
         put("name", "zhangsan3");
@@ -213,7 +213,7 @@ Map < String, Object > kvMap = new HashMap() {
 };
 // 存在
 Assert.assertTrue(ListExtUtils.contains(users, kvMap));
-Map < String, Object > kvMap2 = new HashMap() {
+Map <String, Object> kvMap2 = new HashMap() {
     {
         put("id", "3"); //类型不一致
     }
@@ -229,21 +229,21 @@ Assert.assertTrue(ListExtUtils.contains(users, "id", 3));
 - 对象集合中查找匹配的第一个元素
 
 ``` java
-List < User > users = new ArrayList < > ();
+List <User> users = new ArrayList<> ();
 for (int i = 0; i < 10; i++) {
     User user = new User();
     user.setId(i);
     user.setName("zhangsan" + i);
     users.add(user);
 }
-Map < String, Object > kvMap = new HashMap() {
+Map <String, Object> kvMap = new HashMap() {
     {
         put("id", 3);
         put("name", "zhangsan3");
     }
 };
 // 返回所有匹配的元素
-List < User > findedUsers = ListExtUtils.find(users, kvMap); // => [User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}]
+List <User> findedUsers = ListExtUtils.find(users, kvMap); // => [User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}]
 // 返回第一个匹配的元素
 User findedUser = ListExtUtils.findFirst(users, kvMap); // => User{id=3, name='zhangsan3', sex='null', age=null, birthDate=null}
 ```
@@ -274,6 +274,20 @@ List<User> subtractList = ListExtUtils.subtract(users, users2, (user, user2) -> 
 
 ``` java
 List<User> uniqueList = ListExtUtils.unique(users, user -> user.getId());
+```
+
+### MapExtUtils
+
+- Map 转 Properties
+
+``` java
+ Map<String, Object> kvMap = new HashMap() {
+    {
+        put("id", 3);
+        put("name", "zhangsan3");
+    }
+};
+Properties properties = MapExtUtils.toProperties(kvMap);  // => {name=zhangsan3, id=3}
 ```
 
 ### ConvertExtUtils
