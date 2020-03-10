@@ -20,14 +20,14 @@ Java扩展工具库
 <dependency>
    <groupId>cn.chenzw.toolkit</groupId>
    <artifactId>toolkit</artifactId>
-   <version>1.0.1</version>
+   <version>1.0.2</version>
 </dependency>
 ````
 
 ### Gradle
 
 ```
-compile 'cn.chenzw.toolkit:toolkit:1.0.1'
+compile 'cn.chenzw.toolkit:toolkit:1.0.2'
 ```
 ---
 
@@ -59,6 +59,8 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.1'
 [](zh-cn/spring.md ':include')
 
 [](zh-cn/datasource.md ':include')
+
+[](zh-cn/mybatis.md ':include')
 
 [](zh-cn/authentication.md ':include')
 
