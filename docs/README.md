@@ -66,6 +66,7 @@ compile 'cn.chenzw.toolkit:toolkit:1.0.2'
 
 [](zh-cn/concurrent.md ':include')
 
+[](zh-cn/dial.md ':include')
 
 ## 运行单元测试
 

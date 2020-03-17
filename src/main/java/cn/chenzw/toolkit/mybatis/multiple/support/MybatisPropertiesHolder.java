@@ -5,7 +5,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 
 /**
+ *
  * @author chenzw
+ * @since 1.0.3
  */
 @Configuration
 @EnableConfigurationProperties(MybatisProperties.class)

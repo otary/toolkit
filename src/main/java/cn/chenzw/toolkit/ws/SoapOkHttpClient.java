@@ -2,9 +2,9 @@ package cn.chenzw.toolkit.ws;
 
 import cn.chenzw.toolkit.ws.util.SoapUtils;
 import okhttp3.*;
-import okhttp3.internal.InternalCache;
-import okhttp3.internal.Platform;
 import okhttp3.internal.Util;
+import okhttp3.internal.cache.InternalCache;
+import okhttp3.internal.platform.Platform;
 import okhttp3.internal.tls.CertificateChainCleaner;
 import okhttp3.internal.tls.OkHostnameVerifier;
 
@@ -257,13 +257,8 @@ public class SoapOkHttpClient {
          */
         public Builder sslSocketFactory(SSLSocketFactory sslSocketFactory) {
             if (sslSocketFactory == null) throw new NullPointerException("sslSocketFactory == null");
-            X509TrustManager trustManager = Platform.get().trustManager(sslSocketFactory);
-            if (trustManager == null) {
-                throw new IllegalStateException("Unable to extract the trust manager on " + Platform.get()
-                        + ", sslSocketFactory is " + sslSocketFactory.getClass());
-            }
             this.sslSocketFactory = sslSocketFactory;
-            this.certificateChainCleaner = CertificateChainCleaner.get(trustManager);
+            this.certificateChainCleaner = Platform.get().buildCertificateChainCleaner(sslSocketFactory);
             return this;
         }
 
