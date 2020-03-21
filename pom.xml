@@ -581,7 +581,14 @@
 
     <!-- 发布配置 -->
     <distributionManagement>
-        <repository>
+
+        <!--<repository>
+            <id>itmmaven</id>
+            <name>Nexus Release Repository</name>
+            <url>http://192.168.17.223:8085/repository/maven-3rd/</url>
+        </repository>-->
+
+       <repository>
             <id>sonatype-oss</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
@@ -589,6 +596,8 @@
             <id>sonatype-oss</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+
     </distributionManagement>
+
 
 </project>

@@ -1,22 +1,19 @@
 package cn.chenzw.toolkit.spring.util;
 
-import cn.chenzw.toolkit.spring.config.AppConfig;
-import cn.chenzw.toolkit.spring.config.WebConfig;
+import cn.chenzw.toolkit.spring.SpringBootStarter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
-@EnableConfigurationProperties
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SpringBootStarter.class)
+//@WebAppConfiguration
+//@ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
 public class PropertyUtilsTests {
 
     @Autowired
