@@ -1,17 +1,23 @@
 package cn.chenzw.toolkit.mybatis.multiple.util;
 
+import cn.chenzw.toolkit.commons.ReflectExtUtils;
 import cn.chenzw.toolkit.mybatis.multiple.support.MybatisPropertiesHolder;
+import org.apache.ibatis.binding.MapperProxy;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 
 /**
  * Mapper工具类
@@ -20,6 +26,8 @@ import javax.sql.DataSource;
  * @since 1.0.3
  */
 public final class SqlMapperUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(SqlMapperUtils.class);
 
     private SqlMapperUtils() {
 
@@ -68,6 +76,34 @@ public final class SqlMapperUtils {
 
         SqlSessionFactory sqlSessionFactory = factory.getObject();
         SqlSession session = sqlSessionFactory.openSession();
-        return session.getMapper(mapper);
+        T mapper1 = session.getMapper(mapper);
+
+        return mapper1;
     }
+
+
+    /**
+     * 关闭Mapper
+     *
+     * @param mapper
+     */
+    public static void closeMapper(Object mapper) {
+        if (mapper == null) {
+            throw new NullPointerException("Mapper is null!");
+        }
+        InvocationHandler proxy = Proxy.getInvocationHandler(mapper);
+        if (!(proxy instanceof MapperProxy)) {
+            throw new IllegalArgumentException("Mapper [" + mapper + "] not instanceof MapperProxy!");
+        }
+        try {
+            SqlSession sqlSession = (SqlSession) ReflectExtUtils.getFieldValueQuietly((MapperProxy) proxy, "sqlSession");
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

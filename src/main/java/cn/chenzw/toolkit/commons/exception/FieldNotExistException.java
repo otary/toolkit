@@ -16,7 +16,7 @@ public class FieldNotExistException extends Exception {
 
 
     public FieldNotExistException(String fieldName, Object target) {
-        super(MessageFormat.format("Field[ {0} ] does not exist in [{1}]", fieldName, target.getClass().getName()));
+        super(MessageFormat.format("Field [{0}] does not exist in Object[{1}]", fieldName, target.getClass().getName()));
         this.fieldName = fieldName;
         this.target = target;
     }
@@ -41,7 +41,7 @@ public class FieldNotExistException extends Exception {
 
     @Override
     public String toString() {
-        return MessageFormat.format("Field[ {0} ] does not exist in [ {1} ]", fieldName, target.getClass().getName());
+        return MessageFormat.format("Field [{0}] does not exist in Object [{1}]", fieldName, target.getClass().getName());
     }
 
 }
