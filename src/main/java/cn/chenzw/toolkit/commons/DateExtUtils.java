@@ -294,5 +294,22 @@ public class DateExtUtils {
         return result;
     }
 
+    /**
+     * 抹除时间，只保留日期
+     *
+     * @since 1.0.3
+     * @param date
+     * @return
+     */
+    public static Date eraseTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
 
 }

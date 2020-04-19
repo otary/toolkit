@@ -178,6 +178,14 @@ Date date3 = DateExtUtils.parseDate("22:11:33");   // => Thu Jan 01 22:11:33 CST
 Date yesterDay = DateExtUtils.getYesterday();
 ```
 
+- 檫除时间，只保留日期
+
+``` java
+Date date = DateExtUtils.eraseTime(new Date());
+Assert.assertEquals(0, date.getHours());
+Assert.assertEquals(0, date.getMinutes());
+Assert.assertEquals(0, date.getSeconds());
+```
 
 ### ListExtUtils
 

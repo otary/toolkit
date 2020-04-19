@@ -94,7 +94,14 @@ public class DateExtUtilsTests {
         Date date3 = DateExtUtils.parseDate("22:11:33");
         Assert.assertEquals("Thu Jan 01 22:11:33 CST 1970", date3.toString());
 
+    }
 
+    @Test
+    public void testEraseTime(){
+        Date date = DateExtUtils.eraseTime(new Date());
+        Assert.assertEquals(0, date.getHours());
+        Assert.assertEquals(0, date.getMinutes());
+        Assert.assertEquals(0, date.getSeconds());
     }
 
 }

@@ -36,6 +36,14 @@ public class HttpHolder {
         return RESPONSE.get();
     }
 
+    /**
+     * @since 1.0.3
+     */
+    public static void clear() {
+        REQUEST.remove();
+        RESPONSE.remove();
+    }
+
     private static HttpServletRequest getRequestInternal() {
         if (SpringUtils.SPRING_WEB_FRAME_PRESENT) {
             return ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder

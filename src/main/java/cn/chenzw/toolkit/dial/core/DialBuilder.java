@@ -53,25 +53,27 @@ public class DialBuilder {
             return;
         }
 
-        if (dialResponse.isSuccessful()) {
-            if (this.successCallback != null) {
-                this.successCallback.call(dialRequest, dialResponse);
-            }
-        } else {
-            if (this.failureCallback != null) {
-                this.failureCallback.call(dialRequest, dialResponse);
+        try {
+            if (dialResponse.isSuccessful()) {
+                if (this.successCallback != null) {
+                    this.successCallback.call(dialRequest, dialResponse);
+                }
             } else {
-                if (dialRequest instanceof DialHttpRequest) {
-                    DialHttpRequest dialHttpRequest = (DialHttpRequest) dialRequest;
-                    logger.error("[{}] process url [{}] with exception!", this.dialProcessor.getClass().getSimpleName(), dialHttpRequest.getUrl());
+                if (this.failureCallback != null) {
+                    this.failureCallback.call(dialRequest, dialResponse);
                 } else {
-                    logger.warn("[{}] process fail!", this.dialProcessor.getClass().getSimpleName());
+                    if (dialRequest instanceof DialHttpRequest) {
+                        DialHttpRequest dialHttpRequest = (DialHttpRequest) dialRequest;
+                        logger.error("[{}] process url [{}] with exception!", this.dialProcessor.getClass().getSimpleName(), dialHttpRequest.getUrl());
+                    } else {
+                        logger.warn("[{}] process fail!", this.dialProcessor.getClass().getSimpleName());
+                    }
                 }
             }
-        }
-
-        if (dialResponse != null) {
-            dialResponse.close();
+        }finally {
+            if (dialResponse != null) {
+                dialResponse.close();
+            }
         }
     }
 
