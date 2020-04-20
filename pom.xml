@@ -46,6 +46,8 @@
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
         <shiro.version>1.4.1</shiro.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
+        <spring-security.version>5.1.5.RELEASE</spring-security.version>
+        <mysql.version></mysql.version>
     </properties>
 
 
@@ -190,7 +192,6 @@
             <version>2.0.1</version>
             <scope>provided</scope>
         </dependency>
-
         <!--/springboot-->
 
         <!-- spring -->
@@ -207,15 +208,28 @@
             <scope>provided</scope>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
             <version>4.1.2.RELEASE</version>
             <scope>provided</scope>
         </dependency>
-        <!-- /spring -->
 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <!-- /spring -->
 
         <dependency>
             <groupId>net.sf.dozer</groupId>
@@ -248,12 +262,14 @@
             <artifactId>commons-dbcp2</artifactId>
             <version>${commons-dbcp2.version}</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!-- / 数据源 -->
 
@@ -394,7 +410,6 @@
             <version>4.1.1.4</version>
             <scope>provided</scope>
         </dependency>
-
 
 
         <!-- xml解析 -->
@@ -597,7 +612,7 @@
             <url>http://192.168.17.223:8085/repository/maven-3rd/</url>
         </repository>-->
 
-       <repository>
+        <repository>
             <id>sonatype-oss</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
