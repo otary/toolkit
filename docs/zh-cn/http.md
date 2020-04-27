@@ -21,6 +21,9 @@ httpRequestWrapper.getThreadName();  // 请求线程名称
 httpRequestWrapper.getBodyString();  // HTTP Body内容
 httpRequestWrapper.isMultipart();  // 是否上传文件
 ```
+### HeadHttpRequestWrapper
+
+可添加Head的HttpServletRequest对象
 
 ### HttpHolder
 

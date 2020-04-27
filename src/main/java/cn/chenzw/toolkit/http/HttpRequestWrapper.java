@@ -17,8 +17,6 @@ public class HttpRequestWrapper {
 
     private static final String POST_METHOD = "POST";
     private static final String MULTIPART = "multipart/";
-
-
     private static final String X_REQUESTED_WIDTH_HEADER = "X-Requested-With";
     private static final String AJAX_HEADER = "XMLHttpRequest";
 
