@@ -154,8 +154,16 @@ public abstract class RegexUtils {
         return true;
     }
 
+    /**
+     * 是否手机号
+     *
+     * @param mobile
+     * @return
+     */
+    public static boolean isLooseMobile(String mobile) {
+        return Pattern.matches("(?:0|86|\\+86)?1[3456789]\\d{9}", mobile);
+    }
 
     // @TODO ip带子网掩码 - netmask
-    // @TODO 电话好
     // @TODO URL
 }
