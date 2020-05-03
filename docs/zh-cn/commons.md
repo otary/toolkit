@@ -409,6 +409,14 @@ RegexUtils.isPhoneNO("1801228383");  // => false
 RegexUtils.isPhoneNO("180122838356");   // => false
 // 非法字符
 RegexUtils.isPhoneNO("1801228383.");    // => false
+
+
+// 宽松模式
+Assert.assertTrue(RegexUtils.isLooseMobile("18046048666"));
+Assert.assertTrue(RegexUtils.isLooseMobile("018046048666"));
+Assert.assertTrue(RegexUtils.isLooseMobile("8618046048666"));
+Assert.assertTrue(RegexUtils.isLooseMobile("+8618046048666"));
+Assert.assertFalse(RegexUtils.isLooseMobile("12342345679"));
 ```
 
 - 中文字符匹配
@@ -437,6 +445,9 @@ RegexUtils.isInteger("-3545");  // => true
 RegexUtils.isInteger("56.332");  // => false
 RegexUtils.isInteger("-333.32");  // = > false
 ```
+
+
+
 
 ### ProjectUtils
 

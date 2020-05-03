@@ -94,7 +94,7 @@ public class ListExtUtils {
      */
     public static final <T> boolean contains(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException, IllegalAccessException {
         if (list != null && !list.isEmpty()) {
-            Map<Field, Object> fvMap = getFielddMap(list, kvMap);
+            Map<Field, Object> fvMap = getFieldMap(list, kvMap);
 
             for (T item : list) {
                 if (contains(fvMap, item)) {
@@ -119,7 +119,7 @@ public class ListExtUtils {
     public static final <T> List<T> find(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException, IllegalAccessException {
         List<T> finded = new ArrayList<T>();
         if (list != null && !list.isEmpty()) {
-            Map<Field, Object> fvMap = getFielddMap(list, kvMap);
+            Map<Field, Object> fvMap = getFieldMap(list, kvMap);
             for (T item : list) {
                 if (contains(fvMap, item)) {
                     finded.add(item);
@@ -158,10 +158,10 @@ public class ListExtUtils {
      * @param <T>
      * @return
      */
-    public static final <T> List<T> subtract(Collection<T> listA, Collection<T> listB, BiFunction<T, T, Boolean> matchFunction) {
+    public static final <T, T1, T2> List<T> subtract(Collection<T1> listA, Collection<T2> listB, BiFunction<T1, T2, Boolean> matchFunction) {
         Objects.requireNonNull(listA, "listA must not be null!");
         Objects.requireNonNull(listB, "listB must not be null!");
-        return listA.stream().filter(item -> listB.stream().allMatch(item2 -> !matchFunction.apply(item, item2))).collect(Collectors.toList());
+        return (List<T>) listA.stream().filter(item -> listB.stream().allMatch(item2 -> !matchFunction.apply(item, item2))).collect(Collectors.toList());
     }
 
 
@@ -198,7 +198,7 @@ public class ListExtUtils {
     }
 
 
-    private static final <T> Map<Field, Object> getFielddMap(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException {
+    private static final <T> Map<Field, Object> getFieldMap(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException {
         Map<Field, Object> fvMap = new HashMap<>();
         for (Map.Entry<String, Object> kvEntity : kvMap.entrySet()) {
             Field field = list.get(0).getClass().getDeclaredField(kvEntity.getKey());

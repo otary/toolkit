@@ -96,6 +96,14 @@ public class RegexUtilsTests {
         Assert.assertFalse(RegexUtils.isQQ("674a6062"));
     }
 
+    @Test
+    public void isLooseMobile(){
+        Assert.assertTrue(RegexUtils.isLooseMobile("18046048666"));
+        Assert.assertTrue(RegexUtils.isLooseMobile("018046048666"));
+        Assert.assertTrue(RegexUtils.isLooseMobile("8618046048666"));
+        Assert.assertTrue(RegexUtils.isLooseMobile("+8618046048666"));
+        Assert.assertFalse(RegexUtils.isLooseMobile("12342345679"));
+    }
 
 
 }
