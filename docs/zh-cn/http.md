@@ -112,4 +112,13 @@ public FilterRegistrationBean xssFilterRegistration() {
 
 ```
 
+### R
+
+响应对象
+
+
+#### HttpResult
+
+Http响应结果
+
 ---
