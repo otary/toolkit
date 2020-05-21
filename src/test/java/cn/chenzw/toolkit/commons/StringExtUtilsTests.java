@@ -66,7 +66,7 @@ public class StringExtUtilsTests {
     }
 
     @Test
-    public void testToLong(){
+    public void testToLong() {
         Assert.assertEquals("100000000", StringExtUtils.toLong("100000000", 1L).toString());
 
         // 空值则返回默认值
@@ -77,5 +77,45 @@ public class StringExtUtilsTests {
         Assert.assertEquals(null, StringExtUtils.toLong(null));
         Assert.assertEquals(null, StringExtUtils.toLong(""));
     }
+
+    @Test
+    public void testHasAsciiAlphas() {
+        Assert.assertEquals(7, StringExtUtils.hasAsciiAlphas("我是xXsdAx数据库Y的"));
+
+        Assert.assertEquals(0, StringExtUtils.hasAsciiAlphas("我是123数据库23的"));
+    }
+
+    @Test
+    public void testHasCapitalizedAsciiAlphas() {
+        Assert.assertEquals(3, StringExtUtils.hasCapitalizedAsciiAlphas("我是xXsdAx数据库Y的"));
+    }
+
+    @Test
+    public void testHasDigit() {
+        Assert.assertEquals(3, StringExtUtils.hasDigit("我是134abc的人"));
+    }
+
+    @Test
+    public void testContainsAsciiAlpha() {
+        Assert.assertTrue(StringExtUtils.containsAsciiAlpha("我是xXsdAx数据库Y的"));
+
+        Assert.assertFalse(StringExtUtils.containsAsciiAlpha("我是123数据库56的"));
+    }
+
+    @Test
+    public void testContainsCapitalizedAsciiAlpha() {
+        Assert.assertTrue(StringExtUtils.containsCapitalizedAsciiAlpha("我是xXsdAx数据库Y的"));
+
+        Assert.assertFalse(StringExtUtils.containsCapitalizedAsciiAlpha("我是xxsdax数据库e的"));
+    }
+
+    @Test
+    public void testContainsDigit() {
+        Assert.assertTrue(StringExtUtils.containsDigit("我是123数据库56的"));
+
+        Assert.assertFalse(StringExtUtils.containsDigit("我是数据库的"));
+    }
+
+
 
 }

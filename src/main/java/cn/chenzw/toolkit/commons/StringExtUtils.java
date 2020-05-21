@@ -287,4 +287,86 @@ public abstract class StringExtUtils {
     public static Double toDouble(final String str) {
         return toDouble(str, null);
     }
+
+
+    /**
+     * 获取字符串中包含的字母个数
+     *
+     * @return
+     */
+    public static int hasAsciiAlphas(String str) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch >= 'A' && ch <= 'Z' || ch >= 'a' && ch <= 'z') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 获取字符串中包含的大写字母个数
+     *
+     * @return
+     */
+    public static int hasCapitalizedAsciiAlphas(String str) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch >= 'A' && ch <= 'Z') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 获取字符串中包含的数字个数
+     *
+     * @return
+     */
+    public static int hasDigit(String str) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isDigit(str.charAt(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
+    /**
+     * 是否包含字母
+     *
+     * @return
+     */
+    public static boolean containsAsciiAlpha(String str) {
+        return StringExtUtils.hasAsciiAlphas(str) > 0;
+    }
+
+
+    /**
+     * 是否包含大写字母
+     *
+     * @param str
+     * @return
+     */
+    public static boolean containsCapitalizedAsciiAlpha(String str) {
+        return StringExtUtils.hasCapitalizedAsciiAlphas(str) > 0;
+    }
+
+
+    /**
+     * 是否包含数字
+     *
+     * @param str
+     * @return
+     */
+    public static boolean containsDigit(String str) {
+        return StringExtUtils.hasDigit(str) > 0;
+    }
+
+
 }

@@ -58,6 +58,48 @@ StringExtUtils.toInteger(null);   // => null
 StringExtUtils.toInteger("");     // => null
 ```
 
+- 获取字符串中包含的字母个数
+
+``` java
+StringExtUtils.hasAsciiAlphas("我是xXsdAx数据库Y的");  // => 7
+
+StringExtUtils.hasAsciiAlphas("我是123数据库23的");  // => 0
+```
+
+- 获取字符串中包含的大写字母个数
+
+``` java
+StringExtUtils.hasCapitalizedAsciiAlphas("我是xXsdAx数据库Y的");  // => 3
+```
+
+- 获取字符串中包含的数字个数
+
+``` java
+StringExtUtils.hasDigit("我是134abc的人");  // => 3
+
+```
+
+- 是否包含字母
+
+``` java
+StringExtUtils.containsAsciiAlpha("我是xXsdAx数据库Y的"); // => true
+StringExtUtils.containsAsciiAlpha("我是123数据库56的");   // => false
+```
+
+- 是否包含大写字母
+
+``` java
+StringExtUtils.containsCapitalizedAsciiAlpha("我是xXsdAx数据库Y的");  // => true
+StringExtUtils.containsCapitalizedAsciiAlpha("我是xxsdax数据库e的");  // => false
+```
+
+- 是否包含数字
+
+``` java
+StringExtUtils.containsDigit("我是123数据库56的");  // => true
+StringExtUtils.containsDigit("我是数据库的");  // => false
+```
+
 ### RandomStringExtUtils
 
 - 随机生成中文字符（包括复杂字符）

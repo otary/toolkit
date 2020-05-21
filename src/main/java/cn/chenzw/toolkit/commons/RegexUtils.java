@@ -2,6 +2,7 @@ package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -155,7 +156,7 @@ public abstract class RegexUtils {
     }
 
     /**
-     * 是否手机号
+     * 是否手机号(宽松)
      *
      * @param mobile
      * @return
@@ -163,6 +164,33 @@ public abstract class RegexUtils {
     public static boolean isLooseMobile(String mobile) {
         return Pattern.matches("(?:0|86|\\+86)?1[3456789]\\d{9}", mobile);
     }
+
+    /**
+     * 包含特殊字符的个数
+     *
+     * @param str
+     * @return
+     */
+    public static int hasSpecialCharacters(String str) {
+        int count = 0;
+        Pattern pattern = Pattern.compile("[ _`~!@#$%^&*()+\\-=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t");
+        Matcher matcher = pattern.matcher(str);
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
+    }
+
+    /**
+     * 是否包含特殊字符
+     *
+     * @param str
+     * @return
+     */
+    public static boolean containsSpecialCharacter(String str) {
+        return hasSpecialCharacters(str) > 0;
+    }
+
 
     // @TODO ip带子网掩码 - netmask
     // @TODO URL

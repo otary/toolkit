@@ -97,7 +97,7 @@ public class RegexUtilsTests {
     }
 
     @Test
-    public void isLooseMobile(){
+    public void testIsLooseMobile(){
         Assert.assertTrue(RegexUtils.isLooseMobile("18046048666"));
         Assert.assertTrue(RegexUtils.isLooseMobile("018046048666"));
         Assert.assertTrue(RegexUtils.isLooseMobile("8618046048666"));
@@ -105,5 +105,11 @@ public class RegexUtilsTests {
         Assert.assertFalse(RegexUtils.isLooseMobile("12342345679"));
     }
 
+    @Test
+    public void testHasSpecialCharacters() {
+        Assert.assertEquals(4, RegexUtils.hasSpecialCharacters("我是xsx123-+ss@#"));
+
+        Assert.assertEquals(0, RegexUtils.hasSpecialCharacters("我是xsx123ss我"));
+    }
 
 }
