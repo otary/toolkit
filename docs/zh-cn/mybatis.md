@@ -36,7 +36,7 @@ public class MyBatisConfig {
 ### 多数据源
 
 ``` java
-import cn.chenzw.toolkit.mybatis.multiple.annotation.EnableMultipleDataSource;
+import cn.chenzw.toolkit.mybatis.dynamic.annotation.EnableDynamicDataSource;
 
 @Configuration
 @EnableMultipleDataSource
@@ -46,10 +46,10 @@ public class DataSourceConfig {
 
 public void test() {
     // 获取主数据源
-    DataSource primaryDataSource = DataSourceHolder.getInstance().getPrimary();
+    DataSource primaryDataSource = DataSourceContext.getInstance().getPrimary();
     
     // 获取所有的数据源
-    // Map<String, DataSource> dataSources = DataSourceHolder.getInstance().list();
+    // Map<String, DataSource> dataSources = DataSourceContext.getInstance().list();
     
     // 获取指定数据源的Mapper
     UserMapper userMapper = SqlMapperUtils.getMapper(dataSource, UserMapper.class);

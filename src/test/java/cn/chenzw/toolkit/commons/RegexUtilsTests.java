@@ -112,4 +112,10 @@ public class RegexUtilsTests {
         Assert.assertEquals(0, RegexUtils.hasSpecialCharacters("我是xsx123ss我"));
     }
 
+    @Test
+    public void testContainsSpecialCharacter() {
+        Assert.assertTrue(RegexUtils.containsSpecialCharacter("我是+012-1s一颗韭菜"));
+        Assert.assertFalse(RegexUtils.containsSpecialCharacter("我是0121s一颗韭菜"));
+    }
+
 }

@@ -488,8 +488,19 @@ RegexUtils.isInteger("56.332");  // => false
 RegexUtils.isInteger("-333.32");  // = > false
 ```
 
+- 包含特殊字符的个数
 
+``` java
+RegexUtils.hasSpecialCharacters("我是xsx123-+ss@#"); // => 4
+RegexUtils.hasSpecialCharacters("我是xsx123ss我");   // => 0
+```
 
+- 是否包含特殊字符
+
+``` java
+RegexUtils.containsSpecialCharacter("我是+012-1s一颗韭菜");   // => true
+RegexUtils.containsSpecialCharacter("我是0121s一颗韭菜");    // => false
+```
 
 ### ProjectUtils
 

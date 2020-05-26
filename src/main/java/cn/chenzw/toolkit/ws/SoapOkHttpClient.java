@@ -184,7 +184,7 @@ public class SoapOkHttpClient {
 
         /**
          * Sets the proxy selection policy to be used if no {@link #proxy proxy} is specified
-         * explicitly. The proxy selector may return multiple proxies; in that case they will be tried
+         * explicitly. The proxy selector may return dynamic proxies; in that case they will be tried
          * in sequence until a successful connection is established.
          *
          * <p>If unset, the {@link ProxySelector#getDefault() system-wide default} proxy selector will
@@ -372,13 +372,13 @@ public class SoapOkHttpClient {
          * this client silently recovers from the following problems:
          *
          * <ul>
-         * <li><strong>Unreachable IP addresses.</strong> If the URL's host has multiple IP addresses,
+         * <li><strong>Unreachable IP addresses.</strong> If the URL's host has dynamic IP addresses,
          * failure to reach any individual IP address doesn't fail the overall request. This can
          * increase availability of multi-homed services.
          * <li><strong>Stale pooled connections.</strong> The {@link ConnectionPool} reuses sockets
          * to decrease request latency, but these connections will occasionally time out.
          * <li><strong>Unreachable proxy servers.</strong> A {@link ProxySelector} can be used to
-         * attempt multiple proxy servers in sequence, eventually falling back to a direct
+         * attempt dynamic proxy servers in sequence, eventually falling back to a direct
          * connection.
          * </ul>
          * <p>
@@ -417,7 +417,7 @@ public class SoapOkHttpClient {
          * <p><strong>This is an evolving set.</strong> Future releases include support for transitional
          * protocols. The http/1.1 transport will never be dropped.
          *
-         * <p>If multiple protocols are specified, <a
+         * <p>If dynamic protocols are specified, <a
          * href="http://tools.ietf.org/html/draft-ietf-tls-applayerprotoneg">ALPN</a> will be used to
          * negotiate a transport.
          *

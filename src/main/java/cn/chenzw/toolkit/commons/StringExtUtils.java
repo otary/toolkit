@@ -322,6 +322,24 @@ public abstract class StringExtUtils {
     }
 
     /**
+     * 获取字符串中包含的小写字母的个数
+     *
+     * @param str
+     * @return
+     */
+    public static int hasLowercaseAsciiAlphas(String str) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch >= 'a' && ch <= 'z') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
+    /**
      * 获取字符串中包含的数字个数
      *
      * @return
@@ -355,6 +373,16 @@ public abstract class StringExtUtils {
      */
     public static boolean containsCapitalizedAsciiAlpha(String str) {
         return StringExtUtils.hasCapitalizedAsciiAlphas(str) > 0;
+    }
+
+    /**
+     * 是否包含小写字母
+     *
+     * @param str
+     * @return
+     */
+    public static boolean containsLowercaseAsciiAlphas(String str) {
+        return StringExtUtils.hasLowercaseAsciiAlphas(str) > 0;
     }
 
 

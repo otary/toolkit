@@ -1,7 +1,7 @@
-package cn.chenzw.toolkit.mybatis.multiple.util;
+package cn.chenzw.toolkit.mybatis.dynamic.util;
 
 import cn.chenzw.toolkit.commons.ReflectExtUtils;
-import cn.chenzw.toolkit.mybatis.multiple.support.MybatisPropertiesHolder;
+import cn.chenzw.toolkit.mybatis.dynamic.support.MybatisPropertiesHolder;
 import org.apache.ibatis.binding.MapperProxy;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
@@ -16,8 +16,10 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.util.Optional;
 
 /**
  * Mapper工具类
@@ -103,6 +105,37 @@ public final class SqlMapperUtils {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * 获取Mapper上的注解
+     *
+     * @param target
+     * @param annotationClass
+     * @param <T>
+     * @return
+     */
+    public static <T extends Annotation> Optional<T> getProxyTargetAnnotation(Object target, Class<T> annotationClass) {
+        if (Proxy.isProxyClass(target.getClass())) {
+            InvocationHandler proxy = Proxy.getInvocationHandler(target);
+
+            if (MapperProxy.class.isInstance(proxy)) {
+                Object targetMapper = null;
+                try {
+                    targetMapper = ReflectExtUtils.getFieldValueQuietly((MapperProxy) proxy, "mapperInterface");
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                if (targetMapper != null) {
+                    if (((Class) targetMapper).isAnnotationPresent(annotationClass)) {
+                        return Optional.ofNullable((T) ((Class) targetMapper).getAnnotation(annotationClass));
+                    }
+                }
+            }
+        }
+        return Optional.empty();
     }
 
 

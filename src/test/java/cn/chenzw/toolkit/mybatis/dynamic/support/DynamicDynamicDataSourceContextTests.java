@@ -1,7 +1,7 @@
-package cn.chenzw.toolkit.mybatis.multiple.support;
+package cn.chenzw.toolkit.mybatis.dynamic.support;
 
 
-import cn.chenzw.toolkit.mybatis.multiple.annotation.EnableMultipleDataSource;
+import cn.chenzw.toolkit.mybatis.dynamic.annotation.EnableDynamicDataSource;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,20 +12,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.sql.DataSource;
 
 @RunWith(SpringRunner.class)
-@EnableMultipleDataSource
-@SpringBootTest(classes = DataSourceHolderTests.class)
-public class DataSourceHolderTests {
+@EnableDynamicDataSource
+@SpringBootTest(classes = DynamicDynamicDataSourceContextTests.class)
+public class DynamicDynamicDataSourceContextTests {
 
     @Test
     @Ignore
     public void testGetPrimary(){
-        DataSource primaryDataSource = DataSourceHolder.getInstance().getPrimary();
+        DataSource primaryDataSource = DynamicDataSourceContext.getInstance().getPrimary();
         System.out.println(primaryDataSource);
     }
 
 
     public static void main(String[] args) {
-        SpringApplication.run(DataSourceHolder.class, args);
+        SpringApplication.run(DynamicDataSourceContext.class, args);
     }
 
 }

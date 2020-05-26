@@ -1,7 +1,7 @@
-package cn.chenzw.toolkit.mybatis.multiple.annotation;
+package cn.chenzw.toolkit.mybatis.dynamic.annotation;
 
-import cn.chenzw.toolkit.mybatis.multiple.config.MultipleDataSourceConfig;
-import cn.chenzw.toolkit.mybatis.multiple.support.MybatisPropertiesHolder;
+import cn.chenzw.toolkit.mybatis.dynamic.config.DynamicDataSourceConfig;
+import cn.chenzw.toolkit.mybatis.dynamic.support.MybatisPropertiesHolder;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -17,6 +17,8 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({MultipleDataSourceConfig.class, MybatisPropertiesHolder.class})
-public @interface EnableMultipleDataSource {
+@Import({DynamicDataSourceConfig.class, MybatisPropertiesHolder.class})
+public @interface EnableDynamicDataSource {
+
+
 }
