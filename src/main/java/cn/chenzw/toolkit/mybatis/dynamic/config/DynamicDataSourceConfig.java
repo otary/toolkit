@@ -17,6 +17,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -26,11 +28,14 @@ import java.util.Map;
  * @since 1.0.3
  */
 @Configuration
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class DynamicDataSourceConfig implements ApplicationContextAware {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static final String MULTIPLE_DATASOURCE_PROPERTY_PREFIX = "spring.datasource.druid";
+    private static final String DYNAMIC_DATASOURCE_PROPERTY_PREFIX = "spring.datasource.dynamic";
+
+    private static final String DEFAULT_DATASOURCE_PROPERTY_PREFIX = "spring.datasource";
 
     public static final String DEFAULT_DATASOURCE_NAME = "default.ds";
 
@@ -49,30 +54,55 @@ public class DynamicDataSourceConfig implements ApplicationContextAware {
     }
 
 
+    private Map<String, Object> getPropertiesMap(Binder binder, String prefix) {
+        try {
+            return binder.bind(prefix, Map.class).get();
+        } catch (Exception e) {
+            // 忽略
+        }
+        return null;
+    }
+
+    private DruidDataSource createDruidDataSource(Map<String, Object> dsMap) {
+        DruidDataSource defaultDataSource = new DruidDataSource();
+        TransformedMap.transformedMap(dsMap, propertyName -> "druid." + StringExtUtils.toCamel(propertyName, "-", false), propertyValue -> ConvertExtUtils.convert(String.class, propertyValue));
+        defaultDataSource.configFromPropety(MapExtUtils.toProperties(dsMap));
+        return defaultDataSource;
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        Binder binder = Binder.get(applicationContext.getEnvironment());
-        Map<String, Object> dynamicDsMap = binder.bind(MULTIPLE_DATASOURCE_PROPERTY_PREFIX, Map.class).get();
-        logger.debug("Find {} datasource!", dynamicDsMap == null ? 0 : dynamicDsMap.size());
-
-        if (dynamicDsMap == null) {
-            throw new IllegalArgumentException("Missing property [" + MULTIPLE_DATASOURCE_PROPERTY_PREFIX + "]");
-        }
         DynamicDataSourceContext dynamicDataSourceContext = DynamicDataSourceContext.getInstance();
-        if (dynamicDsMap.containsKey("url") || dynamicDsMap.containsKey("type")) {
-            DruidDataSource druidDataSource = new DruidDataSource();
-            druidDataSource.configFromPropety(MapExtUtils.toProperties(dynamicDsMap));
-            dynamicDataSourceContext.add(DEFAULT_DATASOURCE_NAME, druidDataSource, true);
-            return;
+
+        Binder binder = Binder.get(applicationContext.getEnvironment());
+        Map<String, Object> defaultDsMap = getPropertiesMap(binder, DEFAULT_DATASOURCE_PROPERTY_PREFIX);
+        if (defaultDsMap == null) {
+            throw new IllegalArgumentException("Missing property [" + DEFAULT_DATASOURCE_PROPERTY_PREFIX + "]");
         }
+
+        if (defaultDsMap.containsKey("url") && defaultDsMap.containsKey("username") && defaultDsMap.containsKey("password")) {
+            dynamicDataSourceContext.add(DEFAULT_DATASOURCE_NAME, createDruidDataSource(defaultDsMap), true);
+        }
+
+        // 如果存在druid配置, 则将druid的数据源作为主数据源
+        if (defaultDsMap.containsKey("druid")) {
+            Map<String, Object> druidDsMap = (Map<String, Object>) defaultDsMap.get("druid");
+            if (druidDsMap.containsKey("url") && druidDsMap.containsKey("username") && druidDsMap.containsKey("password")) {
+                dynamicDataSourceContext.add(DEFAULT_DATASOURCE_NAME, createDruidDataSource(druidDsMap), true);
+            }
+        }
+
+        if (!defaultDsMap.containsKey("dynamic")) {
+            throw new IllegalArgumentException("Missing property [" + DYNAMIC_DATASOURCE_PROPERTY_PREFIX + "]");
+        }
+
+        Map<String, Object> dynamicDsMap = (Map<String, Object>) defaultDsMap.get("dynamic");
+        logger.debug("Find {} datasource!", dynamicDsMap == null ? 0 : dynamicDsMap.size());
 
         dynamicDsMap.forEach((dsName, dsProperies) -> {
             Map<String, Object> dsPropertiesMap = (Map<String, Object>) dsProperies;
             boolean isPrimary = ConvertExtUtils.convert(Boolean.class, dsPropertiesMap.getOrDefault("primary", false));
-            TransformedMap.transformedMap(dsPropertiesMap, propertyName -> "druid." + StringExtUtils.toCamel(propertyName, "-", false), propertyValue -> ConvertExtUtils.convert(String.class, propertyValue));
-            DruidDataSource druidDataSource = new DruidDataSource();
-            druidDataSource.configFromPropety(MapExtUtils.toProperties(dsPropertiesMap));
-            dynamicDataSourceContext.add(dsName, druidDataSource, isPrimary);
+            dynamicDataSourceContext.add(dsName, createDruidDataSource(dsPropertiesMap), isPrimary);
         });
     }
 
