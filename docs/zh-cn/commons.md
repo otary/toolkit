@@ -752,3 +752,50 @@ stackElement.getLineNumber();  // => 38
 ```
 
 ```
+
+### TreeBuilder
+
+树形数据构建器
+
+``` java
+List<Organization> orgs = new ArrayList<>();
+
+Organization o1 = new Organization();
+o1.setOrgId(1);
+o1.setParentOrgId(0);
+orgs.add(o1);
+
+Organization o2 = new Organization();
+o2.setOrgId(2);
+o2.setParentOrgId(1);
+orgs.add(o2);
+
+Organization o3 = new Organization();
+o3.setOrgId(3);
+o3.setParentOrgId(1);
+orgs.add(o3);
+
+Organization o4 = new Organization();
+o4.setOrgId(4);
+o4.setParentOrgId(2);
+orgs.add(o4);
+
+Organization o5 = new Organization();
+o5.setOrgId(5);
+o5.setParentOrgId(2);
+orgs.add(o5);
+
+Organization o6 = new Organization();
+o6.setOrgId(6);
+o6.setParentOrgId(1);
+orgs.add(o6);
+
+List<TreeNode> treeNodes = TreeBuilder.create(orgs)
+                .configIdField(Organization::getOrgId)
+                .configParentIdField(Organization::getParentOrgId)
+                .startWith(0)
+                .build();
+// => [TreeNode{id=1, parentId=0, isLeaf=false, childrens=[TreeNode{id=2, parentId=1, isLeaf=false, childrens=[TreeNode{id=4, parentId=2, isLeaf=true, childrens=[]}, TreeNode{id=5, parentId=2, isLeaf=true, childrens=[]}]}, TreeNode{id=3, parentId=1, isLeaf=true, childrens=[]}, TreeNode{id=6, parentId=1, isLeaf=true, childrens=[]}]}]
+
+
+```
