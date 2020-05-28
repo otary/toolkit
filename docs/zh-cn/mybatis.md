@@ -39,14 +39,14 @@ public class MyBatisConfig {
 import cn.chenzw.toolkit.mybatis.dynamic.annotation.EnableDynamicDataSource;
 
 @Configuration
-@EnableMultipleDataSource
+@EnableDynamicDataSource
 public class DataSourceConfig {
 
 }
 
 public void test() {
     // 获取主数据源
-    DataSource primaryDataSource = DataSourceContext.getInstance().getPrimary();
+    DataSource primaryDataSource = DynamicDataSourceContext.getInstance().getPrimary();
     
     // 获取所有的数据源
     // Map<String, DataSource> dataSources = DataSourceContext.getInstance().list();
@@ -60,13 +60,14 @@ public void test() {
 ``` yaml
 spring:
   datasource:
-    druid:
+    dynamic:
       first:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: org.h2.Driver
         url: jdbc:h2:mem:test
         username: sa
         password:
+        primary: true
       second:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: org.h2.Driver
