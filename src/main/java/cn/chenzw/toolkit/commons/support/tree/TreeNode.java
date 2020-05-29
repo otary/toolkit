@@ -15,8 +15,14 @@ public class TreeNode<I> implements Serializable {
 
     private I id;
     private I parentId;
+    private String label;
     private boolean isLeaf;
     private List<TreeNode> childrens;
+
+    /**
+     * 自定义扩展字段
+     */
+    private Object ext;
 
     public I getId() {
         return id;
@@ -50,13 +56,31 @@ public class TreeNode<I> implements Serializable {
         this.childrens = childrens;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public Object getExt() {
+        return ext;
+    }
+
+    public void setExt(Object ext) {
+        this.ext = ext;
+    }
+
     @Override
     public String toString() {
         return "TreeNode{" +
                 "id=" + id +
                 ", parentId=" + parentId +
+                ", label='" + label + '\'' +
                 ", isLeaf=" + isLeaf +
                 ", childrens=" + childrens +
+                ", ext=" + ext +
                 '}';
     }
 }
