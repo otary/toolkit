@@ -21,6 +21,10 @@ public class TreeBuilder<T, I> {
 
     private Function<T, I> parentIdCallbackFn;
 
+    private Function<T, String> labelCallbackFn;
+
+    private Function<T, Object> extCallbackFn;
+
     private I startIdValue;
 
     public static <T, I> TreeBuilder<T, I> create(Collection<T> list) {
@@ -54,6 +58,28 @@ public class TreeBuilder<T, I> {
     }
 
     /**
+     * 配置label字段
+     *
+     * @param labelCallbackFn
+     * @return
+     */
+    public TreeBuilder<T, I> configLabelField(Function<T, String> labelCallbackFn) {
+        this.labelCallbackFn = labelCallbackFn;
+        return this;
+    }
+
+    /**
+     * 配置ext字段
+     *
+     * @param extCallbackFn
+     * @return
+     */
+    public TreeBuilder<T, I> configExtField(Function<T, Object> extCallbackFn) {
+        this.extCallbackFn = extCallbackFn;
+        return this;
+    }
+
+    /**
      * 起始id值
      *
      * @param id
@@ -74,6 +100,9 @@ public class TreeBuilder<T, I> {
         if (startIdValue == null) {
             throw new NullPointerException("Missing \"startWith\" config!");
         }
+        if (labelCallbackFn == null) {
+            throw new NullPointerException("Missing \"label\" field config!");
+        }
         return findChilds(startIdValue);
     }
 
@@ -81,13 +110,20 @@ public class TreeBuilder<T, I> {
     private List<TreeNode> findChilds(I id) {
         List<TreeNode> childNode = new ArrayList<>();
         for (T item : list) {
-            I _id = idCallbackFn.apply(item);
+
             I _parentId = parentIdCallbackFn.apply(item);
             if (Objects.equals(id, _parentId)) {
                 TreeNode<Object> treeNode = new TreeNode<>();
                 treeNode.setParentId(_parentId);
+                treeNode.setLabel(labelCallbackFn.apply(item));
+
+                I _id = idCallbackFn.apply(item);
                 treeNode.setId(_id);
                 treeNode.setChildrens(findChilds(_id));
+
+                if (extCallbackFn != null) {
+                    treeNode.setExt(extCallbackFn.apply(item));
+                }
                 treeNode.setLeaf(treeNode.getChildrens().isEmpty());
                 childNode.add(treeNode);
             }
