@@ -32,4 +32,6 @@ public @interface MethodRateLimit {
      */
     TimeUnit unit() default TimeUnit.SECONDS;
 
+    long timeout() default 1;
+
 }
