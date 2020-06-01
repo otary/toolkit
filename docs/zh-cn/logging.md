@@ -13,8 +13,8 @@ for (LoggerConfig loggerConfig : loggers) {
 }
 
 // 动态设置某个类的日志输出级别
-Log4j2Utils.setLogLevel("cn.chenzw.toolkit.logging.Log4j2Utils", Level.WARN); 
-LoggerConfig logger = Log4j2Utils.getLogger("cn.chenzw.toolkit.logging.Log4j2Utils");  // => WARN级别
+Log4j2Utils.setLogLevel("cn.chenzw.toolkit.logging.util.Log4j2Utils", Level.WARN); 
+LoggerConfig logger = Log4j2Utils.getLogger("cn.chenzw.toolkit.logging.util.Log4j2Utils");  // => WARN级别
 ```
 
 ### LogbackUtils

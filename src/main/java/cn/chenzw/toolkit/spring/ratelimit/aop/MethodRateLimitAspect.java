@@ -42,7 +42,7 @@ public class MethodRateLimitAspect {
             rateLimiters.putIfAbsent(rateLimitKey, rateLimiter);
         }
 
-        if(!rateLimiter.tryAcquire()){
+        if(!rateLimiter.tryAcquire(methodRateLimit.timeout(), methodRateLimit.unit())){
             throw new RateLimitException("Request rate exceeds limit");
         }
     }

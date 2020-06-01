@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.logging;
+package cn.chenzw.toolkit.logging.util;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;

@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.logging;
 
+import cn.chenzw.toolkit.logging.util.Log4j2Utils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.junit.Assert;
@@ -19,8 +20,8 @@ public class Log4j2UtilsTests {
             System.out.println(loggerConfig);
         }
 
-        Log4j2Utils.setLogLevel("cn.chenzw.toolkit.logging.Log4j2Utils", Level.WARN);
-        LoggerConfig logger = Log4j2Utils.getLogger("cn.chenzw.toolkit.logging.Log4j2Utils");
+        Log4j2Utils.setLogLevel("cn.chenzw.toolkit.logging.util.Log4j2Utils", Level.WARN);
+        LoggerConfig logger = Log4j2Utils.getLogger("cn.chenzw.toolkit.logging.util.Log4j2Utils");
         Assert.assertEquals(Level.WARN, logger.getLevel());
 
     }
