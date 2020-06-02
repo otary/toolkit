@@ -1,4 +1,6 @@
-package cn.chenzw.toolkit.logging.core;
+package cn.chenzw.toolkit.logging.annotation;
+
+import cn.chenzw.toolkit.logging.entity.LogField;
 
 import java.lang.annotation.*;
 
@@ -11,8 +13,5 @@ import java.lang.annotation.*;
 public @interface MethodLogging {
 
     LogField[] logFields() default {};
-
-
-
 
 }
