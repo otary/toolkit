@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.commons.support.convert.impl;
 
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
+import cn.chenzw.toolkit.commons.exception.ConvertException;
 import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,8 +26,7 @@ public class NumberTypeConverter extends AbstractTypeConverter<Number> {
         try {
             return NumberFormat.getInstance().parse(sValue);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new ConvertException(e);
         }
-        return null;
     }
 }

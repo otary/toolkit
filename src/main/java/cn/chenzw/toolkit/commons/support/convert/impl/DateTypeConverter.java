@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.commons.support.convert.impl;
 
 import cn.chenzw.toolkit.commons.DateExtUtils;
+import cn.chenzw.toolkit.commons.exception.ConvertException;
 import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
 
 import java.text.ParseException;
@@ -24,7 +25,7 @@ public class DateTypeConverter extends AbstractTypeConverter<Date> {
             try {
                 mills = DateExtUtils.parseDate(sValue).getTime();
             } catch (ParseException e) {
-                e.printStackTrace();
+                throw new ConvertException(e);
             }
         }
 
