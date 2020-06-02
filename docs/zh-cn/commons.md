@@ -100,6 +100,19 @@ StringExtUtils.containsDigit("我是123数据库56的");  // => true
 StringExtUtils.containsDigit("我是数据库的");  // => false
 ```
 
+### StringTemplateUtils
+
+简易字符串模版
+
+``` java
+Map<String, Object> map = new HashMap<>();
+map.put("name", "zhangsan");
+map.put("age", 10.0);
+map.put("sex", "男");
+String result = StringTemplateUtils.processTemplate("姓名:${name}, 年龄: ${age}, 性别: ${sex}", map);  // => 姓名:zhangsan, 年龄: 10.0, 性别: 男
+```
+
+
 ### RandomStringExtUtils
 
 - 随机生成中文字符（包括复杂字符）

@@ -2,6 +2,7 @@ package cn.chenzw.toolkit.logging;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
+import cn.chenzw.toolkit.logging.util.LogbackUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;

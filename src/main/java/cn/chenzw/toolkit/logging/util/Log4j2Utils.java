@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.logging;
+package cn.chenzw.toolkit.logging.util;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
