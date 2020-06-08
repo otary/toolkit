@@ -763,7 +763,16 @@ stackElement.getLineNumber();  // => 38
 - 执行系统命令
 
 ```
+if (SystemUtils.IS_OS_WINDOWS) {
+  List<String> ipconfigs = RuntimeExtUtils.execForLines("ipconfig /all");
+  Assert.assertTrue(ipconfigs.size() > 0);
 
+  List<String> ipconfigs2 = RuntimeExtUtils.execForLines("ipconfig", "/all");
+  Assert.assertTrue(ipconfigs2.size() > 0);
+} else {
+  List<String> homeDirs = RuntimeExtUtils.execForLines("cd /home; mkdir -p test; ls; rm -rf test");
+  Assert.assertTrue(homeDirs.contains("test"));
+}
 ```
 
 ### TreeBuilder
