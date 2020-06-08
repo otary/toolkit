@@ -91,9 +91,12 @@ public class RuntimeExtUtils {
         }
 
         if (cmds.length == 1) {
-            cmds = StringUtils.split(cmds[0]);
+            if (SystemUtils.IS_OS_WINDOWS) {
+                cmds = StringUtils.split(cmds[0], (char) Character.SPACE_SEPARATOR);
+            } else {
+                cmds = ArrayUtils.addAll(new String[]{"bash", "-c"}, cmds);
+            }
         }
-
         return cmds;
     }
 
@@ -132,5 +135,17 @@ public class RuntimeExtUtils {
             }
         }
     }
+
+    /**
+     * 销毁进程
+     *
+     * @param process 进程
+     */
+    public static void destroy(Process process) {
+        if (null != process) {
+            process.destroy();
+        }
+    }
+
 
 }
