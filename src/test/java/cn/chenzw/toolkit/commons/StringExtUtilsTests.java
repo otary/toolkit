@@ -93,13 +93,13 @@ public class StringExtUtilsTests {
     @Test
     public void testHasLowercaseAsciiAlphas() {
         Assert.assertEquals(4, StringExtUtils.hasLowercaseAsciiAlphas("我是xXsdAx数据库Y的"));
-        Assert.assertEquals(0, StringExtUtils.hasLowercaseAsciiAlphas("我是XdA数据库Y的"));
+        Assert.assertEquals(0, StringExtUtils.hasLowercaseAsciiAlphas("我是XDA数据库Y的"));
     }
 
     @Test
     public void testContainsLowercaseAsciiAlphas(){
         Assert.assertTrue(StringExtUtils.containsLowercaseAsciiAlphas("我是xXsdAx数据库Y的"));
-        Assert.assertFalse(StringExtUtils.containsLowercaseAsciiAlphas("我是XdA数据库Y的"));
+        Assert.assertFalse(StringExtUtils.containsLowercaseAsciiAlphas("我是XDA数据库Y的"));
     }
 
     @Test

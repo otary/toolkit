@@ -1,9 +1,9 @@
 package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -4,7 +4,7 @@
     <groupId>cn.chenzw.toolkit</groupId>
     <artifactId>toolkit</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <url>http://maven.apache.org</url>
     <name>toolkit</name>
     <description>Java Toolkit</description>
@@ -86,14 +86,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
-            <!--<scope>provided</scope>-->
         </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
-           <!-- <scope>provided</scope>-->
             <optional>true</optional>
         </dependency>
 

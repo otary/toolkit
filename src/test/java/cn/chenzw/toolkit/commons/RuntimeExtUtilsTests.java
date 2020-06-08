@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,22 +15,26 @@ public class RuntimeExtUtilsTests {
 
     @Test
     public void testExecForStr() throws IOException {
-        String ipconfigStr = RuntimeExtUtils.execForStr("ipconfig /all");
-        Assert.assertTrue(StringUtils.contains(ipconfigStr, "IPv4 地址"));
+        if (SystemUtils.IS_OS_WINDOWS) {
+            String ipconfigStr = RuntimeExtUtils.execForStr("ipconfig /all");
+            Assert.assertTrue(StringUtils.contains(ipconfigStr, "IPv4 地址"));
 
-        String ipconfigStr2 = RuntimeExtUtils.execForStr("ipconfig", "/all");
-        Assert.assertTrue(StringUtils.contains(ipconfigStr2, "IPv4 地址"));
+            String ipconfigStr2 = RuntimeExtUtils.execForStr("ipconfig", "/all");
+            Assert.assertTrue(StringUtils.contains(ipconfigStr2, "IPv4 地址"));
+        }
+
     }
 
     @Test
     public void testExecForLines() throws IOException {
-        List<String> ipconfigs = RuntimeExtUtils.execForLines("ipconfig /all");
-        Assert.assertTrue(ipconfigs.size() > 0);
+        if (SystemUtils.IS_OS_WINDOWS) {
+            List<String> ipconfigs = RuntimeExtUtils.execForLines("ipconfig /all");
+            Assert.assertTrue(ipconfigs.size() > 0);
 
-        List<String> ipconfigs2 = RuntimeExtUtils.execForLines("ipconfig", "/all");
-        Assert.assertTrue(ipconfigs2.size() > 0);
+            List<String> ipconfigs2 = RuntimeExtUtils.execForLines("ipconfig", "/all");
+            Assert.assertTrue(ipconfigs2.size() > 0);
+        }
     }
-
 
 
 }
