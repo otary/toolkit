@@ -15,7 +15,7 @@ public interface PR<T> extends Serializable {
      *
      * @return
      */
-    Integer getTotal();
+    Long getTotal();
 
     /**
      * 获取总页数

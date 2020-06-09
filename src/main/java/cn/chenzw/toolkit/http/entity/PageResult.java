@@ -1,5 +1,7 @@
 package cn.chenzw.toolkit.http.entity;
 
+import com.github.pagehelper.Page;
+
 import java.util.List;
 
 /**
@@ -10,20 +12,33 @@ import java.util.List;
  */
 public class PageResult<T> implements PR<T> {
 
-    private Integer total;
+    private Long total;
     private Integer pages;
     private Integer limit;
     private Integer offset;
     private List<T> data;
 
-    public PageResult(Integer total, Integer offset, Integer limit, List<T> data) {
+    public PageResult(Long total, Integer offset, Integer limit, Integer pages, List<T> data) {
         this.total = total;
         this.offset = offset;
         this.limit = limit;
+        this.pages = pages;
         this.data = data;
     }
 
-    public void setTotal(Integer total) {
+    public PageResult(Page page) {
+        this.total = page.getTotal();
+        this.limit = page.getPageSize();
+        this.offset = page.getPageNum();
+        this.pages = page.getPages();
+        this.data = (List<T>) page.getResult();
+    }
+
+    public static <T> PageResult<T> of(Page page) {
+        return new PageResult(page.getTotal(), page.getPageNum(), page.getPageSize(), page.getPages(), page.getResult());
+    }
+
+    public void setTotal(Long total) {
         this.total = total;
     }
 
@@ -44,7 +59,7 @@ public class PageResult<T> implements PR<T> {
     }
 
     @Override
-    public Integer getTotal() {
+    public Long getTotal() {
         return total;
     }
 
