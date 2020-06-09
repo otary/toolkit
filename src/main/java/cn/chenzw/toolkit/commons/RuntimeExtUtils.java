@@ -94,7 +94,7 @@ public class RuntimeExtUtils {
             if (SystemUtils.IS_OS_WINDOWS) {
                 cmds = StringUtils.split(cmds[0], (char) Character.SPACE_SEPARATOR);
             } else {
-                cmds = ArrayUtils.addAll(new String[]{"bash", "-c"}, cmds);
+                cmds = ArrayUtils.addAll(new String[]{"sh", "-c"}, cmds);
             }
         }
         return cmds;

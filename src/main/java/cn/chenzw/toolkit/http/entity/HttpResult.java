@@ -2,6 +2,10 @@ package cn.chenzw.toolkit.http.entity;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author chenzw
+ * @param <T>
+ */
 public class HttpResult<T> implements R<T> {
 
     private Integer code;
