@@ -148,4 +148,14 @@ public class HttpRequestWrapper {
     public boolean isAjax() {
         return AJAX_HEADER.equalsIgnoreCase(request.getHeader(X_REQUESTED_WIDTH_HEADER));
     }
+
+    /**
+     * 获取domain值
+     *
+     * @return
+     */
+    public String getDomain() {
+        StringBuffer url = request.getRequestURL();
+        return url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+    }
 }
