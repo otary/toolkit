@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.authentication.security;
 
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -23,12 +22,25 @@ public class SecurityUtils {
      * @param <T>
      * @return
      */
-    public static <T> T getCurrentUser() {
+    public static <T> T getUser() {
         Authentication authentication = getAuthentication();
         if (authentication == null) {
             return null;
         }
         return (T) authentication.getPrincipal();
+    }
+
+    /**
+     * 获取用户名
+     *
+     * @return
+     */
+    public static String getUserName() {
+        Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        return authentication.getName();
     }
 
 
@@ -37,7 +49,7 @@ public class SecurityUtils {
      *
      * @return
      */
-    public static String getCurrentUserIp() {
+    public static String getUserIp() {
         Authentication authentication = getAuthentication();
         if (authentication == null) {
             return "";
@@ -50,6 +62,19 @@ public class SecurityUtils {
         return webDetails.getRemoteAddress();
     }
 
+    /**
+     * 获取客户端ID
+     *
+     * @return
+     */
+    public static String getClientId() {
+        Authentication authentication = getAuthentication();
+        if (authentication instanceof org.springframework.security.oauth2.provider.OAuth2Authentication) {
+            org.springframework.security.oauth2.provider.OAuth2Authentication auth2Authentication = (org.springframework.security.oauth2.provider.OAuth2Authentication) authentication;
+            return auth2Authentication.getOAuth2Request().getClientId();
+        }
+        return null;
+    }
 
     /**
      * 判断用户是否拥有某角色

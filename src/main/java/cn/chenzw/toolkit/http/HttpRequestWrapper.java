@@ -153,9 +153,20 @@ public class HttpRequestWrapper {
      * 获取domain值
      *
      * @return
+     * @since 1.0.3
      */
     public String getDomain() {
         StringBuffer url = request.getRequestURL();
         return url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+    }
+
+    /**
+     * 获取浏览器agent
+     *
+     * @return
+     * @since 1.0.3
+     */
+    public String getUserAgent() {
+        return request.getHeader("user-agent");
     }
 }

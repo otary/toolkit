@@ -47,6 +47,7 @@
         <shiro.version>1.4.2</shiro.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <spring-security.version>5.1.5.RELEASE</spring-security.version>
+        <spring-security-oauth2.version>2.3.6.RELEASE</spring-security-oauth2.version>
         <guava.version>28.1-jre</guava.version>
     </properties>
 
@@ -226,14 +227,17 @@
             <artifactId>spring-security-core</artifactId>
             <version>${spring-security.version}</version>
             <scope>provided</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring-security.version}</version>
             <scope>provided</scope>
-            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>${spring-security-oauth2.version}</version>
         </dependency>
         <!-- /spring -->
 
