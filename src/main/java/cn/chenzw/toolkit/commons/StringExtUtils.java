@@ -396,5 +396,14 @@ public abstract class StringExtUtils {
         return StringExtUtils.hasDigit(str) > 0;
     }
 
-
+    /**
+     * 文本拆分并去除前后空格
+     *
+     * @param str
+     * @param separatorChars
+     * @return
+     */
+    public static String[] splitTrim(final String str, final String separatorChars) {
+        return ArrayExtUtils.trim(StringUtils.split(str, separatorChars));
+    }
 }

@@ -1,5 +1,7 @@
 package cn.chenzw.toolkit.commons;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +72,20 @@ public class ArrayExtUtils {
         }
 
         return null;
+    }
+
+    /**
+     * 去除数组项前后空格
+     *
+     * @param data
+     * @return
+     */
+    public static String[] trim(String[] data) {
+        String[] result = new String[data.length];
+        for (int i = 0; i < data.length; i++) {
+            result[i] = StringUtils.trim(data[i]);
+        }
+        return result;
     }
 }
 

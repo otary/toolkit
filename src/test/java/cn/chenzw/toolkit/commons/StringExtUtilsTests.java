@@ -97,7 +97,7 @@ public class StringExtUtilsTests {
     }
 
     @Test
-    public void testContainsLowercaseAsciiAlphas(){
+    public void testContainsLowercaseAsciiAlphas() {
         Assert.assertTrue(StringExtUtils.containsLowercaseAsciiAlphas("我是xXsdAx数据库Y的"));
         Assert.assertFalse(StringExtUtils.containsLowercaseAsciiAlphas("我是XDA数据库Y的"));
     }
@@ -110,24 +110,26 @@ public class StringExtUtilsTests {
     @Test
     public void testContainsAsciiAlpha() {
         Assert.assertTrue(StringExtUtils.containsAsciiAlpha("我是xXsdAx数据库Y的"));
-
         Assert.assertFalse(StringExtUtils.containsAsciiAlpha("我是123数据库56的"));
     }
 
     @Test
     public void testContainsCapitalizedAsciiAlpha() {
         Assert.assertTrue(StringExtUtils.containsCapitalizedAsciiAlpha("我是xXsdAx数据库Y的"));
-
         Assert.assertFalse(StringExtUtils.containsCapitalizedAsciiAlpha("我是xxsdax数据库e的"));
     }
 
     @Test
     public void testContainsDigit() {
         Assert.assertTrue(StringExtUtils.containsDigit("我是123数据库56的"));
-
         Assert.assertFalse(StringExtUtils.containsDigit("我是数据库的"));
     }
 
+    @Test
+    public void testSplitTrim() {
+        String[] result = StringExtUtils.splitTrim("a, b, c,  d  , e, f", ",");
+        Assert.assertEquals(new String[]{"a", "b", "c", "d", "e", "f"}, result);
+    }
 
 
 }

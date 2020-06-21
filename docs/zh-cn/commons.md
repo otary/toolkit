@@ -100,6 +100,12 @@ StringExtUtils.containsDigit("我是123数据库56的");  // => true
 StringExtUtils.containsDigit("我是数据库的");  // => false
 ```
 
+- 拆分文本并去除前后空格
+
+``` java
+String[] result = StringExtUtils.splitTrim("a, b, c,  d  , e, f", ",");  // => "a", "b", "c", "d", "e", "f"
+```
+
 ### StringTemplateUtils
 
 简易字符串模版
@@ -158,6 +164,14 @@ String[] clone = ArrayExtUtils.clone(data);
 
 data.hashCode();  // => 1330278544
 clone.hashCode();  // => 1634198
+
+```
+
+- 去除数组项前后空格
+
+``` java
+String[] data = new String[] {" a", "b ", "c", "", "   e  "};
+String[] result = ArrayExtUtils.trim(data); // => "a", "b", "c", "", "e"
 
 ```
 

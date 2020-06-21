@@ -29,4 +29,11 @@ public class ArrayExtUtilsTests {
         Assert.assertEquals("[张三, 李四, 王五]", Arrays.toString(clone));
         Assert.assertNotEquals(data.hashCode(), clone.hashCode());
     }
+
+    @Test
+    public void testTrim() {
+        String[] data = new String[] {" a", "b ", "c", "", "   e  "};
+        String[] result = ArrayExtUtils.trim(data);
+        Assert.assertEquals(new String[]{"a", "b", "c", "", "e"}, result);
+    }
 }
