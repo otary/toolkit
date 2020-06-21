@@ -238,6 +238,7 @@
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
             <version>${spring-security-oauth2.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- /spring -->
 
