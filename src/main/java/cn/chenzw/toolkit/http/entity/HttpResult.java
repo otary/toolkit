@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HttpResult<T> implements R<T> {
 
+    public static final Integer SUCCESS_CODE = HttpServletResponse.SC_OK;
+    public static final Integer ERROR_CODE = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+
     private Integer code;
     private String msg;
     private T data;
@@ -30,7 +33,7 @@ public class HttpResult<T> implements R<T> {
      * @return
      */
     public static HttpResult ok() {
-        return new HttpResult<>(HttpServletResponse.SC_OK, null);
+        return new HttpResult<>(SUCCESS_CODE, null);
     }
 
     /**
@@ -40,7 +43,7 @@ public class HttpResult<T> implements R<T> {
      * @return
      */
     public static HttpResult error(String msg) {
-        return new HttpResult<>(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, msg);
+        return new HttpResult<>(ERROR_CODE, msg);
     }
 
     public static HttpResult error(Integer code, String msg) {
