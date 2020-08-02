@@ -50,6 +50,18 @@ public class JoinPointWrapper {
     }
 
     /**
+     * 切点方法上是否存在指定的注解
+     *
+     * @param annotationClass
+     * @return
+     * @since 1.0.3
+     */
+    public boolean hasAnnotation(Class<? extends Annotation> annotationClass) {
+        MethodSignature methodSignature = (MethodSignature) this.joinPoint.getSignature();
+        return methodSignature.getMethod().isAnnotationPresent(annotationClass);
+    }
+
+    /**
      * 获取请求链接（含参数）
      *
      * @return

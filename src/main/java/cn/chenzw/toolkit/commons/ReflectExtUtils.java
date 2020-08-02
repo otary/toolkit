@@ -314,4 +314,22 @@ public final class ReflectExtUtils {
         }
     }
 
+    /**
+     * 是否包含某个字段
+     *
+     * @param aClas
+     * @param fieldName
+     * @return
+     * @since 1.0.3
+     */
+    public static boolean hasField(Class<?> aClas, String fieldName) {
+        Field[] fields = getFields(aClas);
+        for (Field field : fields) {
+            if (fieldName.equals(field.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
