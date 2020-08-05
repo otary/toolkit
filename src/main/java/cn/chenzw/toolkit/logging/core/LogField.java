@@ -7,7 +7,22 @@ package cn.chenzw.toolkit.logging.core;
 public enum LogField {
 
     ALL,
-    HTTP_METHOD, URI, QUERY_STRING, BODY_STRING,
-    CLASS_NAME, METHOD_NAME, METHOD_ARGS,
-    CLIENT_IP, THREAD_ID, THREAD_NAME;
+    LOG_ID,
+    APP_NAME,
+    MODULE_NAME,
+    HTTP_METHOD,
+    URI,
+    QUERY_STRING,
+    BODY_STRING,
+    CLASS_NAME,
+    METHOD_NAME,
+    METHOD_ARGS,
+    CLIENT_IP,
+    THREAD_ID,
+    THREAD_NAME,
+    START_TIME,
+    FINISH_TIME,
+    COST,
+    RETURN_VALUE,
+    EXCEPTION;
 }

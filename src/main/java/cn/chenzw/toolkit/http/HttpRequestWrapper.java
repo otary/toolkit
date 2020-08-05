@@ -39,6 +39,15 @@ public class HttpRequestWrapper {
     }
 
     /**
+     * 获取request对象
+     *
+     * @return
+     */
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    /**
      * 获取HTTP方法
      *
      * @return
@@ -167,6 +176,16 @@ public class HttpRequestWrapper {
      * @since 1.0.3
      */
     public String getUserAgent() {
-        return request.getHeader("user-agent");
+        return request.getHeader("User-Agent");
+    }
+
+
+    /**
+     * @param name
+     * @return
+     * @since 1.0.3
+     */
+    public String getParameter(String name) {
+        return request.getParameter(name);
     }
 }

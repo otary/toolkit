@@ -8,6 +8,8 @@ import java.io.Serializable;
  */
 public interface R<T> extends Serializable {
 
+    String getMsgId();
+
     Integer getCode();
 
     String getMsg();

@@ -5,6 +5,7 @@ import cn.chenzw.toolkit.http.HttpRequestWrapper;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -32,6 +33,25 @@ public class JoinPointWrapper {
      */
     public JoinPoint getJoinPoint() {
         return joinPoint;
+    }
+
+    /**
+     * 获取HttpServletRequest对象
+     *
+     * @return
+     * @since
+     */
+    public HttpServletRequest getRequest() {
+        return requestWrapper.getRequest();
+    }
+
+    /**
+     * 获取HttpRequestWrapper对象
+     *
+     * @return
+     */
+    public HttpRequestWrapper getRequestWrapper() {
+        return requestWrapper;
     }
 
     /**

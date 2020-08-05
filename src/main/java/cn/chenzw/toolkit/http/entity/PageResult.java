@@ -82,4 +82,15 @@ public class PageResult<T> implements PR<T> {
     public List<T> getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "PageResult{" +
+                "total=" + total +
+                ", pages=" + pages +
+                ", limit=" + limit +
+                ", offset=" + offset +
+                ", data=" + data +
+                '}';
+    }
 }

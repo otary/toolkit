@@ -11,6 +11,7 @@ public class HttpResult<T> implements R<T> {
     public static final Integer SUCCESS_CODE = HttpServletResponse.SC_OK;
     public static final Integer ERROR_CODE = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
+    private String msgId;
     private Integer code;
     private String msg;
     private T data;
@@ -25,7 +26,6 @@ public class HttpResult<T> implements R<T> {
         this.msg = msg;
         this.data = data;
     }
-
 
     /**
      * 成功
@@ -78,11 +78,20 @@ public class HttpResult<T> implements R<T> {
         return data;
     }
 
+    @Override
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
+    }
 
     @Override
     public String toString() {
         return "HttpResult{" +
-                "code=" + code +
+                "msgId='" + msgId + '\'' +
+                ", code=" + code +
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
                 '}';
