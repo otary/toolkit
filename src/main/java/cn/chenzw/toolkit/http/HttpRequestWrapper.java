@@ -19,6 +19,7 @@ public class HttpRequestWrapper {
     private static final String MULTIPART = "multipart/";
     private static final String X_REQUESTED_WIDTH_HEADER = "X-Requested-With";
     private static final String AJAX_HEADER = "XMLHttpRequest";
+    private static final String[] USER_AGENT_HEADERS = new String[]{"User-Agent", "user-agent"};
 
     private HttpServletRequest request;
 
@@ -176,7 +177,13 @@ public class HttpRequestWrapper {
      * @since 1.0.3
      */
     public String getUserAgent() {
-        return request.getHeader("User-Agent");
+        for (String userAgentHeader : USER_AGENT_HEADERS) {
+            String userAgent = request.getHeader(userAgentHeader);
+            if (StringUtils.isNotEmpty(userAgent)) {
+                return userAgent;
+            }
+        }
+        return "";
     }
 
 

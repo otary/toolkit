@@ -9,9 +9,10 @@ import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * request内容缓存
@@ -24,8 +25,13 @@ public class ContentCachingRequestWrapper extends HttpServletRequestWrapper {
 
     private ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
+    private Map<String, String[]> parameterMap;
+
     public ContentCachingRequestWrapper(HttpServletRequest request) {
         super(request);
+
+        // Fix getParameter() 和 getInputStream() 互斥问题
+        this.parameterMap = request.getParameterMap();
 
         try {
             IOUtils.copy(request.getInputStream(), baos);
@@ -59,4 +65,33 @@ public class ContentCachingRequestWrapper extends HttpServletRequestWrapper {
             }
         };
     }
+
+    @Override
+    public BufferedReader getReader() throws IOException {
+        return new BufferedReader(new InputStreamReader(getInputStream()));
+    }
+
+    @Override
+    public String getParameter(String name) {
+        String[] pvs = getParameterValues(name);
+        if (pvs == null) {
+            return null;
+        }
+        return pvs[0];
+    }
+
+    @Override
+    public Enumeration getParameterNames() {
+        return Collections.enumeration(parameterMap.keySet());
+    }
+
+    @Override
+    public String[] getParameterValues(String name) {
+        String[] vs = parameterMap.get(name);
+        if (vs == null || vs.length < 1)
+            return null;
+        return vs;
+    }
+
+
 }

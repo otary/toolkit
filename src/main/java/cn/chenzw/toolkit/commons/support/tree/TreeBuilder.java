@@ -1,9 +1,6 @@
 package cn.chenzw.toolkit.commons.support.tree;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -16,6 +13,8 @@ import java.util.function.Function;
 public class TreeBuilder<T, I> {
 
     private Collection<T> list;
+
+    private Collection<T> wholeTree;
 
     private Function<T, I> idCallbackFn;
 
@@ -106,11 +105,27 @@ public class TreeBuilder<T, I> {
         return findChilds(startIdValue);
     }
 
+    /**
+     * 补全根节点构建
+     *
+     * @param wholeTree
+     * @return
+     */
+    public List<TreeNode> build(List<T> wholeTree) {
+        this.wholeTree = wholeTree;
+
+        Collection<T> nonExistingNodeParents = list;
+        while (nonExistingNodeParents != null && !nonExistingNodeParents.isEmpty()) {
+            nonExistingNodeParents = findNonExistingNodeParents(nonExistingNodeParents);
+        }
+
+        return build();
+    }
+
 
     private List<TreeNode> findChilds(I id) {
         List<TreeNode> childNode = new ArrayList<>();
         for (T item : list) {
-
             I _parentId = parentIdCallbackFn.apply(item);
             if (Objects.equals(id, _parentId)) {
                 TreeNode<Object> treeNode = new TreeNode<>();
@@ -129,5 +144,35 @@ public class TreeBuilder<T, I> {
             }
         }
         return childNode;
+    }
+
+    /**
+     * 查找父层未存在的节点
+     *
+     * @param nodes
+     * @return
+     */
+    private Collection<T> findNonExistingNodeParents(Collection<T> nodes) {
+        Collection<T> parentNodes = new ArrayList<>();
+        for (T node : nodes) {
+            // 底层是否已存在父节点
+            Optional<T> nodeOpt = findNode(list, parentIdCallbackFn.apply(node));
+            Optional<T> nodeOpt2 = findNode(nodes, parentIdCallbackFn.apply(node));
+            if (!nodeOpt.isPresent() && !nodeOpt2.isPresent()) {
+                Optional<T> newNodeOpt = findNode(wholeTree, parentIdCallbackFn.apply(node));
+                if (newNodeOpt.isPresent()) {
+                    parentNodes.add(newNodeOpt.get());
+                }
+            }
+        }
+        list.addAll(parentNodes);
+        return parentNodes;
+    }
+
+    private Optional<T> findNode(Collection<T> nodes, I id) {
+        return nodes.stream().filter(item -> {
+            I _id = idCallbackFn.apply(item);
+            return Objects.equals(_id, id);
+        }).findFirst();
     }
 }

@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ContentCachingRequestWrapperFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        filterChain.doFilter(new ContentCachingRequestWrapper(httpServletRequest), httpServletResponse);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        filterChain.doFilter(new ContentCachingRequestWrapper(request), response);
     }
 }
