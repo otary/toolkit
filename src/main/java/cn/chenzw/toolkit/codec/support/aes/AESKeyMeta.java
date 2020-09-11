@@ -1,16 +1,19 @@
 package cn.chenzw.toolkit.codec.support.aes;
 
+/**
+ * @author chenzw
+ */
 public enum AESKeyMeta {
 
     BIT_128(128), BIT_192(192), BIT_256(256);
 
     private int bitLen;
 
-    private AESKeyMeta(int value) {
+    AESKeyMeta(int value) {
         this.bitLen = value;
     }
 
-    public int getBitLen() {
+    public int bitLen() {
         return bitLen;
     }
 }

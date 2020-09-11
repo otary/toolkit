@@ -1,17 +1,19 @@
 package cn.chenzw.toolkit.logging.core;
 
+import org.springframework.core.NamedThreadLocal;
+
 /**
  * @author chenzw
  */
 public class MethodLoggingContext {
 
-    private static final ThreadLocal<String> LOG_ID_TPL = new ThreadLocal<>();
+    private static final ThreadLocal<String> logIdHolder = new NamedThreadLocal<>("logid-threadlocal");
 
     public static String getLogId() {
-        return LOG_ID_TPL.get();
+        return logIdHolder.get();
     }
 
     public static void setLogId(String logId) {
-        LOG_ID_TPL.set(logId);
+        logIdHolder.set(logId);
     }
 }

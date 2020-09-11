@@ -177,6 +177,24 @@ public class DateExtUtils {
         return getYesterday(Calendar.getInstance().getTime());
     }
 
+
+    /**
+     * 获取某天的明天
+     * @param date
+     * @return
+     */
+    public static Date getTomorrow(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTime();
+    }
+
+    public static Date getTomorrow() {
+        return getTomorrow(Calendar.getInstance().getTime());
+    }
+
     /**
      * 获取指定月份的最后一天
      *

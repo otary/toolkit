@@ -98,13 +98,12 @@ public enum AESMode {AES_DEFAULT("AES"), AES_CBC_NoPadding("AES/CBC/NoPadding"),
 
     private String modeAndPadding;
 
-    private AESMode(String modeAndPadding) {
+    AESMode(String modeAndPadding) {
         this.modeAndPadding = modeAndPadding;
     }
 
-    public String getModeAndPadding() {
+    public String modeAndPadding() {
         return modeAndPadding;
     }
-
 
 }

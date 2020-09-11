@@ -157,6 +157,44 @@ public final class ReflectExtUtils {
     }
 
     /**
+     * 获取多层级嵌套的字段值
+     *
+     * @param o
+     * @param nestedFieldName
+     * @return
+     * @throws FieldNotExistException
+     * @throws IllegalAccessException
+     * @since 1.0.3
+     */
+    public static Object getNestedFieldValue(Object o, String nestedFieldName, String separator) throws FieldNotExistException, IllegalAccessException {
+        Objects.requireNonNull(nestedFieldName, "Parameter \"nestedFieldName\" must not be null!");
+        Objects.requireNonNull(separator, "Parameter \"separator\" must not be null!");
+
+        String[] fieldNames = nestedFieldName.split(separator);
+        Object target = o;
+        for (String fieldName : fieldNames) {
+            target = getFieldValue(target, fieldName);
+            if (target == null) {
+                return null;
+            }
+        }
+        return target;
+    }
+
+    /**
+     * 获取多层级嵌套的字段值
+     * @param o
+     * @param nestedFieldName
+     * @return
+     * @throws IllegalAccessException
+     * @throws FieldNotExistException
+     * @since 1.0.3
+     */
+    public static Object getNestedFieldValue(Object o, String nestedFieldName) throws IllegalAccessException, FieldNotExistException {
+        return getNestedFieldValue(o, nestedFieldName, "#");
+    }
+
+    /**
      * 获取字段值（字段不存在时返回null）
      *
      * @param o

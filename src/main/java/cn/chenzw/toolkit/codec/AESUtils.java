@@ -31,7 +31,7 @@ public abstract class AESUtils {
     /**
      * AES加解密
      * @param mode {@link javax.crypto.Cipher#ENCRYPT_MODE}、{@link javax.crypto.Cipher#DECRYPT_MODE}
-     * @param data 待加密数据
+     * @param data 明文数据
      * @param key 密钥
      * @param aesMode 模式/填充 {@link cn.chenzw.toolkit.codec.support.aes.AESMode}
      * @param aesKeyMeta 密钥长度 {@link cn.chenzw.toolkit.codec.support.aes.AESKeyMeta}
@@ -69,13 +69,13 @@ public abstract class AESUtils {
         random.setSeed(key.getBytes());
 
         KeyGenerator kgen = KeyGenerator.getInstance(AES_ALGORITHM);
-        kgen.init(aesKeyMeta.getBitLen(), random);
+        kgen.init(aesKeyMeta.bitLen(), random);
         SecretKey secretKey = kgen.generateKey();
         byte[] enCodeFormat = secretKey.getEncoded();
         SecretKeySpec keySpec = new SecretKeySpec(enCodeFormat, AES_ALGORITHM);
 
         // 创建密码器
-        Cipher cipher = Cipher.getInstance(aesMode.getModeAndPadding());
+        Cipher cipher = Cipher.getInstance(aesMode.modeAndPadding());
         if (iv != null) {
             // 指定初始化向量(Initialization vector, 必须是16位)
             cipher.init(mode, keySpec, new IvParameterSpec(iv));
