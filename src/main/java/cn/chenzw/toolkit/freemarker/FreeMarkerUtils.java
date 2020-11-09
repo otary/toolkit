@@ -73,8 +73,12 @@ public abstract class FreeMarkerUtils {
     }
 
     public static void processToFile(Template template, Object dataModel, File outFile) {
-        if (!outFile.getParentFile().exists()) {
-            outFile.getParentFile().mkdirs();
+        Validate.notNull(outFile, "Freemarker out file is null !");
+
+        if (outFile.getParentFile() != null) {
+            if (!outFile.getParentFile().exists()) {
+                outFile.getParentFile().mkdirs();
+            }
         }
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)))) {
