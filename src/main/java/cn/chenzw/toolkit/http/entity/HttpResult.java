@@ -3,8 +3,10 @@ package cn.chenzw.toolkit.http.entity;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author chenzw
+ * HTTP响应结果对象
+ *
  * @param <T>
+ * @author chenzw
  */
 public class HttpResult<T> implements R<T> {
 
@@ -17,14 +19,18 @@ public class HttpResult<T> implements R<T> {
     private T data;
 
     public HttpResult(Integer code, String msg) {
-        this.code = code;
-        this.msg = msg;
+        this(code, msg, null, null);
     }
 
     public HttpResult(Integer code, String msg, T data) {
+        this(code, msg, null, data);
+    }
+
+    public HttpResult(Integer code, String msg, String msgId, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
+        this.msgId = msgId;
     }
 
     /**
@@ -34,6 +40,17 @@ public class HttpResult<T> implements R<T> {
      */
     public static HttpResult ok() {
         return new HttpResult<>(SUCCESS_CODE, null);
+    }
+
+    /**
+     * 成功
+     *
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> HttpResult ok(T data) {
+        return new HttpResult<T>(SUCCESS_CODE, null, data);
     }
 
     /**
@@ -95,5 +112,51 @@ public class HttpResult<T> implements R<T> {
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
                 '}';
+    }
+
+    public static HttpResultBuilder builder() {
+        return new HttpResultBuilder();
+    }
+
+    public static class HttpResultBuilder {
+
+        private String msgId;
+        private Integer code;
+        private String msg;
+        private Object data;
+
+        public HttpResultBuilder msgId(String msgId) {
+            this.msgId = msgId;
+            return this;
+        }
+
+        public HttpResultBuilder code(Integer code) {
+            this.code = code;
+            return this;
+        }
+
+        public HttpResultBuilder msg(String msg) {
+            this.msg = msg;
+            return this;
+        }
+
+        public HttpResultBuilder data(Object data) {
+            this.data = data;
+            return this;
+        }
+
+        public HttpResultBuilder ok() {
+            this.code = SUCCESS_CODE;
+            return this;
+        }
+
+        public HttpResultBuilder error() {
+            this.code = ERROR_CODE;
+            return this;
+        }
+
+        public HttpResult build() {
+            return new HttpResult(code, msg, msgId, data);
+        }
     }
 }
