@@ -9,6 +9,7 @@ import org.junit.runners.JUnit4;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(JUnit4.class)
 public class DateExtUtilsTests {
@@ -97,11 +98,17 @@ public class DateExtUtilsTests {
     }
 
     @Test
-    public void testEraseTime(){
+    public void testEraseTime() {
         Date date = DateExtUtils.eraseTime(new Date());
         Assert.assertEquals(0, date.getHours());
         Assert.assertEquals(0, date.getMinutes());
         Assert.assertEquals(0, date.getSeconds());
+    }
+
+    @Test
+    public void testGetGapTime() {
+        String gapTime = DateExtUtils.getGapTime(106752, TimeUnit.MILLISECONDS);
+        Assert.assertEquals("01:46", gapTime);
     }
 
 }

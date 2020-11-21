@@ -18,11 +18,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DynamicDataSourceContext {
 
+    private Map<String, DataSourceExtProperties> dataSourceMap = new ConcurrentHashMap<>();
+
     private DynamicDataSourceContext() {
 
     }
-
-    private Map<String, DataSourceExtProperties> dataSourceMap = new ConcurrentHashMap<>();
 
     public static DynamicDataSourceContext getInstance() {
         return InnerDataSourceContext.instance;
@@ -71,11 +71,21 @@ public class DynamicDataSourceContext {
         return getPrimaryExt().getDataSource();
     }
 
+    /**
+     * 获取主数据源名称
+     *
+     * @return
+     */
     public String getPrimaryName() {
         return getPrimaryExt().getName();
     }
 
 
+    /**
+     * 获取数据源列表
+     *
+     * @return
+     */
     public Map<String, DataSource> list() {
         Map<String, DataSource> results = new HashMap<>();
         for (Map.Entry<String, DataSourceExtProperties> extPropertiesEntry : dataSourceMap.entrySet()) {

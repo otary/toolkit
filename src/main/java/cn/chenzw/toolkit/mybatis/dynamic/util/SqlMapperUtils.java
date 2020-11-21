@@ -78,9 +78,7 @@ public final class SqlMapperUtils {
 
         SqlSessionFactory sqlSessionFactory = factory.getObject();
         SqlSession session = sqlSessionFactory.openSession();
-        T mapper1 = session.getMapper(mapper);
-
-        return mapper1;
+        return session.getMapper(mapper);
     }
 
 

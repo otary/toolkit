@@ -80,6 +80,7 @@ public class DynamicDataSourceConfig implements ApplicationContextAware {
             throw new IllegalArgumentException("Missing property [" + DEFAULT_DATASOURCE_PROPERTY_PREFIX + "]");
         }
 
+        // 如果直接存在url/username/password, 则将其作为主数据源
         if (defaultDsMap.containsKey("url") && defaultDsMap.containsKey("username") && defaultDsMap.containsKey("password")) {
             dynamicDataSourceContext.add(DEFAULT_DATASOURCE_NAME, createDruidDataSource(defaultDsMap), true);
         }
@@ -99,14 +100,23 @@ public class DynamicDataSourceConfig implements ApplicationContextAware {
         Map<String, Object> dynamicDsMap = (Map<String, Object>) defaultDsMap.get("dynamic");
         logger.debug("Find {} datasource!", dynamicDsMap == null ? 0 : dynamicDsMap.size());
 
-        dynamicDsMap.forEach((dsName, dsProperies) -> {
-            Map<String, Object> dsPropertiesMap = (Map<String, Object>) dsProperies;
+        dynamicDsMap.forEach((dsName, dsProperties) -> {
+            Map<String, Object> dsPropertiesMap = (Map<String, Object>) dsProperties;
             boolean isPrimary = ConvertExtUtils.convert(Boolean.class, dsPropertiesMap.getOrDefault("primary", false));
             dynamicDataSourceContext.add(dsName, createDruidDataSource(dsPropertiesMap), isPrimary);
         });
+
+
+
+
     }
 
 
+    /**
+     * 注解拦截器
+     *
+     * @return
+     */
     @Bean
     public AnnotationDynamicDataSourceAspect annotationDynamicDataSourceAspect() {
         return new AnnotationDynamicDataSourceAspect();

@@ -3,9 +3,9 @@ package cn.chenzw.toolkit.commons.support.convert;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
+ * 类型转换器
  * @param <T>
  * @author chenzw
  */
@@ -13,7 +13,9 @@ public abstract class AbstractTypeConverter<T> implements TypeConverter<T>, Seri
 
     @Override
     public T convert(Object value, T defaultValue) {
-        Objects.requireNonNull(value, "value must not be null!");
+        if (value == null) {
+            return null;
+        }
 
         // @TODO
         T result = convertInternal(value);

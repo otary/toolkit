@@ -2,7 +2,6 @@ package cn.chenzw.toolkit.mybatis.dynamic.support;
 
 
 import cn.chenzw.toolkit.mybatis.dynamic.annotation.EnableDynamicDataSource;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +16,7 @@ import javax.sql.DataSource;
 public class DynamicDynamicDataSourceContextTests {
 
     @Test
-    @Ignore
+   // @Ignore
     public void testGetPrimary(){
         DataSource primaryDataSource = DynamicDataSourceContext.getInstance().getPrimary();
         System.out.println(primaryDataSource);

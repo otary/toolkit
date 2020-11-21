@@ -36,17 +36,7 @@ public class MapperDynamicDataSourceAspect extends AbstractDynamicDataSourceAspe
      */
     @Before(POINT_CUT)
     public void before(JoinPoint joinPoint) {
-        System.out.println("---------------------------");
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-
-
-
-
-
-       /* if () {
-
-        }*/
-        //super.before(joinPoint);
     }
 }

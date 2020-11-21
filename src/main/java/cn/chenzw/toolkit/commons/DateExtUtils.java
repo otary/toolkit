@@ -10,6 +10,7 @@ import java.time.*;
 import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * org.apache.commons.lang3.time.DateUtils扩展类
@@ -180,6 +181,7 @@ public class DateExtUtils {
 
     /**
      * 获取某天的明天
+     *
      * @param date
      * @return
      */
@@ -309,9 +311,9 @@ public class DateExtUtils {
     /**
      * 抹除时间，只保留日期
      *
-     * @since 1.0.3
      * @param date
      * @return
+     * @since 1.0.3
      */
     public static Date eraseTime(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -320,6 +322,13 @@ public class DateExtUtils {
         return calendar.getTime();
     }
 
+    /**
+     * 抹除时间，只保留日期
+     *
+     * @param calendar
+     * @return
+     * @since 1.0.3
+     */
     public static Date eraseTime(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -328,5 +337,42 @@ public class DateExtUtils {
         return calendar.getTime();
     }
 
+
+    /**
+     * 获取格式化时长
+     *
+     * @param timeLength
+     * @param timeUnit
+     * @return
+     * @since 1.0.3
+     */
+    public static String getGapTime(long timeLength, TimeUnit timeUnit) {
+        String SEPARATOR_CHAR = ":";
+        StringBuilder gapTime = new StringBuilder();
+        long days = timeUnit.toDays(timeLength);
+        if (days > 0) {
+            gapTime.append(StringUtils.leftPad(String.valueOf(days % 365), 2, "0"));
+            gapTime.append(SEPARATOR_CHAR);
+        }
+
+        long hours = timeUnit.toHours(timeLength);
+        if (hours > 0) {
+            gapTime.append(StringUtils.leftPad(String.valueOf(hours % 24), 2, "0"));
+            gapTime.append(SEPARATOR_CHAR);
+        }
+
+        long minutes = timeUnit.toMinutes(timeLength);
+        if (minutes > 0) {
+            gapTime.append(StringUtils.leftPad(String.valueOf(minutes % 60), 2, "0"));
+            gapTime.append(SEPARATOR_CHAR);
+        }
+
+        long seconds = timeUnit.toSeconds(timeLength);
+        if (seconds > 0) {
+            gapTime.append(StringUtils.leftPad(String.valueOf(seconds % 60), 2, "0"));
+        }
+
+        return gapTime.toString();
+    }
 
 }
