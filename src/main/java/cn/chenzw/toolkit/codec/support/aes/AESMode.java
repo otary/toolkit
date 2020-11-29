@@ -1,7 +1,7 @@
 package cn.chenzw.toolkit.codec.support.aes;
 
 /**
- * 加密模式
+ * AES加密模式
  * <table>
  *     <tr>
  *         <td>算法/模式/填充</td>
