@@ -6,7 +6,7 @@ import cn.chenzw.toolkit.codec.support.aes.AESMode;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -15,6 +15,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Objects;
 
 /**
  *  AES加密算法工具类
@@ -48,21 +49,10 @@ public abstract class AESUtils {
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException,
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
-        if (data == null) {
-            throw new IllegalArgumentException("Parameter \"data\" must not be null");
-        }
-
-        if (StringUtils.isBlank(key)) {
-            throw new IllegalArgumentException("Parameter \"key\" must not be null");
-        }
-
-        if (aesMode == null) {
-            throw new IllegalArgumentException("Parameter \"aesMod\" must not be null");
-        }
-
-        if (aesKeyMeta == null) {
-            throw new IllegalArgumentException("Parameter \"aesKeyMeta\" must not be null");
-        }
+        Objects.requireNonNull(data, "Parameter \"data\" is null");
+        Validate.notEmpty(key, "Parameter \"key\" is null");
+        Objects.requireNonNull(aesMode, "Parameter \"aesMod\" is null");
+        Objects.requireNonNull(aesKeyMeta, "Parameter \"aesKeyMeta\" is null");
 
         // 解决Liux、Mac系统异常
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");

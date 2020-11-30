@@ -34,3 +34,9 @@ byte[] bytes = AESUtils.decryptBase64String(base64String, key); // => hello
 ```
 
 ---
+
+### DESUtils
+
+DES算法加解密工具
+
+

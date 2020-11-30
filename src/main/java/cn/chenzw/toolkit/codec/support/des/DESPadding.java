@@ -35,5 +35,8 @@ public enum DESPadding {
      *
      */
     PKCS5Padding,
+
+    PKCS7Padding,
+
     SSL3Padding
 }
