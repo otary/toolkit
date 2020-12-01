@@ -1,7 +1,7 @@
 package cn.chenzw.toolkit.spring.util;
 
 import cn.chenzw.toolkit.commons.ClassExtUtils;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
