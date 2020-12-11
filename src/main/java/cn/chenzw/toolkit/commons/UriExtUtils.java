@@ -2,6 +2,7 @@ package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -51,6 +52,24 @@ public class UriExtUtils {
         } else {
             return uri + "?" + sParam;
         }
+    }
+
+    /**
+     * 构建url链接
+     *
+     * @param uri
+     * @param paramObject 参数对象
+     * @return
+     * @throws IllegalAccessException
+     */
+    public static String buildParams(String uri, Object paramObject) throws IllegalAccessException {
+        Map<String, String> paramsMap = new HashMap<>();
+        Field[] fields = ReflectExtUtils.getFields(paramObject.getClass());
+        for (Field field : fields) {
+            Object fieldValue = ReflectExtUtils.getFieldValue(paramObject, field);
+            paramsMap.put(field.getName(), String.valueOf(fieldValue));
+        }
+        return UriExtUtils.buildParams(uri, paramsMap);
     }
 
 

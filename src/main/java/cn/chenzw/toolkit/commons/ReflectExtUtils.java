@@ -183,6 +183,7 @@ public final class ReflectExtUtils {
 
     /**
      * 获取多层级嵌套的字段值
+     *
      * @param o
      * @param nestedFieldName
      * @return
@@ -221,18 +222,29 @@ public final class ReflectExtUtils {
      * @return
      */
     public static Field[] getFields(Class<?> aClass) {
+        return getFields(aClass, true);
+    }
 
+    /**
+     * 获取类的所有字段
+     *
+     * @param aClass
+     * @param includeSuperClass 是否包含父类字段
+     * @return
+     */
+    public static Field[] getFields(Class<?> aClass, boolean includeSuperClass) {
         if (FIELDS_CACHE.containsKey(aClass)) {
             return FIELDS_CACHE.get(aClass);
         }
 
         Field[] declaredFields = aClass.getDeclaredFields();
-
-        Class<?> superClass = aClass.getSuperclass();
-        while (superClass != null) {
-            Field[] superClassFileds = superClass.getDeclaredFields();
-            declaredFields = ArrayUtils.addAll(declaredFields, superClassFileds);
-            superClass = superClass.getSuperclass();
+        if (includeSuperClass) {
+            Class<?> superClass = aClass.getSuperclass();
+            while (superClass != null) {
+                Field[] superClassFileds = superClass.getDeclaredFields();
+                declaredFields = ArrayUtils.addAll(declaredFields, superClassFileds);
+                superClass = superClass.getSuperclass();
+            }
         }
 
         FIELDS_CACHE.put(aClass, declaredFields);

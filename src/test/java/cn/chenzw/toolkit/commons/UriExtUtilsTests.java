@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.commons;
 
+import cn.chenzw.toolkit.domain.entity.Book;
 import org.apache.commons.collections.MapUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,6 +50,18 @@ public class UriExtUtilsTests {
         Assert.assertEquals("", MapUtils.getString(uriParams4, "redirect_uri"));
         Assert.assertEquals("", MapUtils.getString(uriParams4, "authentication_type"));
 
+    }
+
+    @Test
+    public void testBuildParams2() throws IllegalAccessException {
+        Book book = new Book();
+        book.setId(1L);
+        book.setIsbn("ISN12345");
+        book.setName("hello");
+
+        String uri = UriExtUtils.buildParams("http://www.baidu.com", book);
+
+        Assert.assertEquals("http://www.baidu.com?isbn=ISN12345&name=hello&id=1", uri);
     }
 
 }
