@@ -5,9 +5,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
+import java.util.function.BiPredicate;
 
 /**
  * 反射类扩展
@@ -249,6 +251,29 @@ public final class ReflectExtUtils {
 
         FIELDS_CACHE.put(aClass, declaredFields);
         return declaredFields;
+    }
+
+    /**
+     * 将对象转换成Map
+     *
+     * @param o
+     * @param includeSuperClass
+     * @return
+     * @throws IllegalAccessException
+     */
+    public static Map<String, Object> getFieldsAsMap(Object o, boolean includeSuperClass) throws IllegalAccessException {
+        return getFieldsAsMap(o, includeSuperClass, (field, _o) -> true);
+    }
+
+    public static Map<String, Object> getFieldsAsMap(Object o, boolean includeSuperClass, BiPredicate<Field, Object> predicate) throws IllegalAccessException {
+        Map<String, Object> fieldMap = new HashMap<>();
+        Field[] fields = getFields(o.getClass(), includeSuperClass);
+        for (Field field : fields) {
+            if (predicate.test(field, o)) {
+                fieldMap.put(field.getName(), getFieldValue(o, field));
+            }
+        }
+        return fieldMap;
     }
 
     /**

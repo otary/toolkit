@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
 
 @RunWith(JUnit4.class)
 public class ReflectExtUtilsTests {
@@ -89,6 +90,22 @@ public class ReflectExtUtilsTests {
         // 调用静态方法
         Object result3 = ReflectExtUtils.invoke(children, "go");
         Assert.assertEquals("let's go!", result3);
+    }
+
+    @Test
+    public void testGetFieldsAsMap() throws IllegalAccessException {
+        Children children = new Children();
+        children.setChildName("张三");
+        children.setFatherName("李四");
+
+        Map<String, Object> fieldMap = ReflectExtUtils.getFieldsAsMap(children, true);
+
+        Assert.assertEquals("{fatherName=李四, fatherAge=null, childName=张三, VERSION=1.0, fatherId=null, childAge=null, childId=null, SID=1.0}", fieldMap.toString());
+
+        // 过滤去除fatherAge字段
+        Map<String, Object> fieldMap2 = ReflectExtUtils.getFieldsAsMap(children, true, (field, o) -> (!"fatherAge".equals(field.getName())));
+
+        Assert.assertEquals("{fatherName=李四, childName=张三, VERSION=1.0, fatherId=null, childAge=null, childId=null, SID=1.0}", fieldMap2.toString());
     }
 
 
