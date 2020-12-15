@@ -54,8 +54,6 @@ public abstract class GenericUtils {
     public static Class getSuperClassGenricType(Class clazz, int index)
             throws IndexOutOfBoundsException {
 
-        // @TODO 暂时无效
-
         Type genType = clazz.getGenericSuperclass();
         if (!(genType instanceof ParameterizedType)) {
             return Object.class;
