@@ -2,7 +2,6 @@ package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -30,10 +29,7 @@ public class FileExtUtils {
         if (StringUtils.isEmpty(fullPath)) {
             return "";
         }
-        Path fullPath2 = Paths.get(fullPath);
-        Path fragmentPath2 = Paths.get(fragmentPath);
-        Path relativizePath = fragmentPath2.relativize(fullPath2);
-        return relativizePath.toString();
+        return Paths.get(fragmentPath).relativize(Paths.get(fullPath)).toString();
     }
 
 }

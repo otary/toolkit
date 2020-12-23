@@ -260,16 +260,26 @@ public final class ReflectExtUtils {
      * @param includeSuperClass
      * @return
      * @throws IllegalAccessException
+     * @since 1.0.3
      */
     public static Map<String, Object> getFieldsAsMap(Object o, boolean includeSuperClass) throws IllegalAccessException {
         return getFieldsAsMap(o, includeSuperClass, (field, _o) -> true);
     }
 
-    public static Map<String, Object> getFieldsAsMap(Object o, boolean includeSuperClass, BiPredicate<Field, Object> predicate) throws IllegalAccessException {
+    /**
+     * 将对象转换成Map
+     * @param o
+     * @param includeSuperClass
+     * @param filter 字段过滤
+     * @return
+     * @throws IllegalAccessException
+     * @since 1.0.3
+     */
+    public static Map<String, Object> getFieldsAsMap(Object o, boolean includeSuperClass, BiPredicate<Field, Object> filter) throws IllegalAccessException {
         Map<String, Object> fieldMap = new HashMap<>();
         Field[] fields = getFields(o.getClass(), includeSuperClass);
         for (Field field : fields) {
-            if (predicate.test(field, o)) {
+            if (filter.test(field, o)) {
                 fieldMap.put(field.getName(), getFieldValue(o, field));
             }
         }
