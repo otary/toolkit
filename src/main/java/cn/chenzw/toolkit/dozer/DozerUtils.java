@@ -49,6 +49,15 @@ public abstract class DozerUtils {
         return targetList;
     }
 
+    /**
+     * List对象互转
+     *
+     * @param sourceList
+     * @param targetClass
+     * @param <T>
+     * @param <S>
+     * @return 目标List对象
+     */
     public static <T, S> List<T> mapList(List<S> sourceList, Class<T> targetClass) {
         Mapper mapper = new DozerBeanMapper();
         return mapList(mapper, sourceList, targetClass);
@@ -66,7 +75,7 @@ public abstract class DozerUtils {
      * @return
      */
     public static <T, S> List<T> mapList(final Mapper mapper, List<S> sourceList, Class<T> destClass,
-            List<DozerFieldMapping> dozerFieldMappings) {
+                                         List<DozerFieldMapping> dozerFieldMappings) {
         logger.debug("Dozer [{}] start mapList, source:{}, dest: {}", dozerFieldMappings, sourceList, destClass);
         long t1 = System.currentTimeMillis();
 
@@ -91,12 +100,12 @@ public abstract class DozerUtils {
             }
         };
         ((DozerBeanMapper) mapper).addMapping(builder);
-        List<T> rets = mapList(mapper, sourceList, destClass);
+        List<T> results = mapList(mapper, sourceList, destClass);
 
         long t2 = System.currentTimeMillis();
         logger.debug("Dozer [{}] finsh mapList, cost {} ms", mapper, (t2 - t1));
 
-        return rets;
+        return results;
     }
 
 }

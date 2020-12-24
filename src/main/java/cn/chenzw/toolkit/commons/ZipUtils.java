@@ -42,6 +42,11 @@ public class ZipUtils {
         }
     }
 
+    /**
+     * 压缩文件（多个文件）
+     * @param srcFiles
+     * @param outputStream
+     */
     public static void toZip(List<File> srcFiles, OutputStream outputStream) {
         try (ZipOutputStream zos = new ZipOutputStream(outputStream)) {
             for (File srcFile : srcFiles) {

@@ -7,7 +7,9 @@ import org.apache.commons.lang3.StringUtils;
  * 进制转换
  *
  * @auther chenzw
+ * @deprecated use {@link org.apache.commons.codec.binary.Hex#encodeHexString(byte[])}
  */
+@Deprecated
 public abstract class BinaryConvertUtils {
 
     private BinaryConvertUtils() {
@@ -41,7 +43,6 @@ public abstract class BinaryConvertUtils {
      * 十六进制字符串 => byte数组
      *
      * @return
-     *
      * @deprecated use {@link org.apache.commons.codec.binary.Hex#decodeHex(java.lang.String)}
      */
     @Deprecated
