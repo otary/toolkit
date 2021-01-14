@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * 扩展UriUtils
@@ -25,6 +26,10 @@ public class UriExtUtils {
      * @return
      */
     public static String buildParams(String uri, Map<String, String> params) {
+        return buildParams(uri, params, entry -> true);
+    }
+
+    public static String buildParams(String uri, Map<String, String> params, Predicate<Map.Entry<String, String>> filter) {
         if (StringUtils.isBlank(uri)) {
             return "";
         } else {
@@ -35,11 +40,7 @@ public class UriExtUtils {
             return uri.trim();
         }
 
-        List<String> list = new ArrayList<>();
-        for (Map.Entry<String, String> map : params.entrySet()) {
-            list.add(map.getKey() + "=" + map.getValue());
-        }
-        String sParam = StringUtils.join(list, "&");
+        String sParam = buildParams(params, filter);
 
         int index = uri.indexOf('?');
         if (index > -1) {
@@ -63,13 +64,51 @@ public class UriExtUtils {
      * @throws IllegalAccessException
      */
     public static String buildParams(String uri, Object paramObject) throws IllegalAccessException {
-        Map<String, String> paramsMap = new HashMap<>();
+        return buildParams(uri, paramObject, entry -> true);
+    }
+
+    public static String buildParams(String uri, Object paramObject, Predicate<Map.Entry<String, String>> filter) throws IllegalAccessException {
+        Map<String, String> paramsMap = new TreeMap<>();
         Field[] fields = ReflectExtUtils.getFields(paramObject.getClass());
         for (Field field : fields) {
             Object fieldValue = ReflectExtUtils.getFieldValue(paramObject, field);
             paramsMap.put(field.getName(), String.valueOf(fieldValue));
         }
-        return UriExtUtils.buildParams(uri, paramsMap);
+        if (StringUtils.isEmpty(uri)) {
+            return buildParams(paramsMap, filter);
+        }
+        return buildParams(uri, paramsMap, filter);
+    }
+
+    /**
+     * 将Map对象转换成URL字符串
+     *
+     * @param params
+     * @return
+     */
+    public static String buildParams(Map<String, String> params) {
+        return buildParams(params, entry -> true);
+    }
+
+    public static String buildParams(Map<String, String> params, Predicate<Map.Entry<String, String>> predicate) {
+        List<String> list = new ArrayList<>();
+        for (Map.Entry<String, String> map : params.entrySet()) {
+            if (predicate.test(map)) {
+                list.add(map.getKey() + "=" + map.getValue());
+            }
+        }
+        return StringUtils.join(list, "&");
+    }
+
+    /**
+     * 将Java对象转换成URL字符串
+     *
+     * @param paramObject
+     * @return
+     * @throws IllegalAccessException
+     */
+    public static String buildParams(Object paramObject) throws IllegalAccessException {
+        return buildParams(null, paramObject);
     }
 
 

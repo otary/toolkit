@@ -1,11 +1,13 @@
 package cn.chenzw.toolkit.commons;
 
+import cn.chenzw.toolkit.commons.exception.ConvertException;
 import cn.chenzw.toolkit.commons.exception.FieldNotExistException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 @RunWith(JUnit4.class)
 public class ReflectExtUtilsTests {
+
 
     @Test
     public void testGetFields() {
@@ -108,6 +111,26 @@ public class ReflectExtUtilsTests {
         Assert.assertEquals("{fatherName=李四, childName=张三, VERSION=1.0, fatherId=null, childAge=null, childId=null, SID=1.0}", fieldMap2.toString());
     }
 
+
+    public void myParameter(int a, String b) {
+
+    }
+
+    @Test
+    public void testGetMethodParameterNames() throws NoSuchMethodException {
+        Method method = ReflectExtUtilsTests.class.getDeclaredMethod("myParameter", int.class, String.class);
+        String[] methodParameterNames = ReflectExtUtils.getMethodParameterNames(method);
+
+        Assert.assertEquals("[a, b]", Arrays.toString(methodParameterNames));
+    }
+
+    @Test
+    public void testGetConstructorParameterNames() throws NoSuchMethodException {
+        Constructor<ConvertException> constructor = ConvertException.class.getDeclaredConstructor(String.class);
+        String[] constructorParameterNames = ReflectExtUtils.getConstructorParameterNames(constructor);
+
+        Assert.assertEquals("[message]", Arrays.toString(constructorParameterNames));
+    }
 
 }
 

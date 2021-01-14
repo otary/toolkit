@@ -268,9 +268,10 @@ public final class ReflectExtUtils {
 
     /**
      * 将对象转换成Map
+     *
      * @param o
      * @param includeSuperClass
-     * @param filter 字段过滤
+     * @param filter            字段过滤
      * @return
      * @throws IllegalAccessException
      * @since 1.0.3
@@ -415,6 +416,31 @@ public final class ReflectExtUtils {
             }
         }
         return false;
+    }
+
+
+    /**
+     * 获取方法参数名
+     *
+     * @param method
+     * @return
+     * @since 1.0.3
+     */
+    public static String[] getMethodParameterNames(Method method) {
+        org.springframework.core.ParameterNameDiscoverer parameterNameDiscoverer = new org.springframework.core.DefaultParameterNameDiscoverer();
+        return parameterNameDiscoverer.getParameterNames(method);
+    }
+
+    /**
+     * 获取构造函数参数名
+     *
+     * @param constructor
+     * @return
+     * @since 1.0.3
+     */
+    public static String[] getConstructorParameterNames(Constructor constructor) {
+        org.springframework.core.ParameterNameDiscoverer parameterNameDiscoverer = new org.springframework.core.DefaultParameterNameDiscoverer();
+        return parameterNameDiscoverer.getParameterNames(constructor);
     }
 
 }
