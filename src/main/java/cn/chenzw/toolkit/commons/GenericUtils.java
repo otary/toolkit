@@ -1,7 +1,5 @@
 package cn.chenzw.toolkit.commons;
 
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -63,8 +61,8 @@ public abstract class GenericUtils {
             return Object.class;
         }
 
-        if (params[index] instanceof ParameterizedTypeImpl) {
-            return ((ParameterizedTypeImpl) params[index]).getRawType();
+        if (params[index] instanceof ParameterizedType) {
+            return (Class) ((ParameterizedType) params[index]).getRawType();
         }
 
         if (!(params[index] instanceof Class)) {
