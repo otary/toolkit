@@ -101,4 +101,27 @@ ContextBeans beans = SpringUtils.getBeans();  // => ContextBeans{beans=[BeanDesc
 
 ```
 
+### 请求参数Base64加密
+
+```
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        // 添加Base64参数解析器
+        resolvers.add(new RequestBodyBase64ArgumentResolver());
+    }
+}
+
+
+@PostMapping("/base64-body")
+public UserDto base64ArgResolver(@RequestBodyBase64 UserDto user) {
+   return user;
+}
+
+
+POST /base64-body
+eyJuYW1lIjoi5byg5LiJIiwiYWdlIjoiMTAifQ==
+
+```
 ---

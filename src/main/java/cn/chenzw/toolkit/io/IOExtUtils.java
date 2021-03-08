@@ -1,11 +1,11 @@
 package cn.chenzw.toolkit.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Objects;
 
+/**
+ * @author chenzw
+ */
 public final class IOExtUtils {
 
     /**
@@ -32,5 +32,21 @@ public final class IOExtUtils {
         baos.flush();
         is.reset();
         return new ByteArrayInputStream(baos.toByteArray());
+    }
+
+    /**
+     * 将输出流转输入流
+     *
+     * @param os
+     * @param is
+     * @since 1.0.3
+     */
+    public static void copy(OutputStream os, InputStream is) {
+        if (os instanceof ByteArrayOutputStream) {
+            ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
+            is = new ByteArrayInputStream(baos.toByteArray());
+        } else {
+            throw new IllegalArgumentException("Just support ByteArrayOutputStream!");
+        }
     }
 }
