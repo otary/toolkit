@@ -100,7 +100,13 @@ Book bookBean2 = SpringUtils.getBean(Book.class);
 ContextBeans beans = SpringUtils.getBeans();  // => ContextBeans{beans=[BeanDescriptor{name='appConfig', aliases=[], scope='singleton', type=class cn.chenzw.toolkit.spring.config.AppConfig$$EnhancerBySpringCGLIB$$6d190be5, resource='null', dependencies=[]}, BeanDescriptor{name='springUtils', aliases=[], scope='singleton', type=class cn.chenzw.toolkit.spring.util.SpringUtils, resource='cn.chenzw.toolkit.spring.config.AppConfig', dependencies=[]}], parentId='null'}
 
 ```
+- 获取所有的静态资源映射关系
 
+``` java
+ Map<String, List<Resource>> resourceMappings = SpringUtils.getResourceMappings();  // => {/webjars/**=[class path resource [META-INF/resources/webjars/]], /**=[class path resource [META-INF/resources/], class path resource [resources/], class path resource [static/], class path resource [public/], ServletContext resource [/]]}
+```
+
+-- 
 ### 请求参数Base64加密
 
 ```

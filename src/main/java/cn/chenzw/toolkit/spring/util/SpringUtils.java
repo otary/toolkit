@@ -16,6 +16,7 @@ import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
@@ -41,6 +42,8 @@ import java.util.*;
 public final class SpringUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringUtils.class);
+
+    private static final String RESOURCE_HANDLER_MAPPING_BEAN_NAME = "resourceHandlerMapping";
 
     /**
      * 是否Spring环境
@@ -76,6 +79,9 @@ public final class SpringUtils {
         return getAppContext().getBeansOfType(clazz);
     }
 
+    public static boolean containsBean(String name) {
+        return getAppContext().containsBean(name);
+    }
 
     /**
      * 获取所有Bean
@@ -286,6 +292,24 @@ public final class SpringUtils {
             }
         }*/
         return null;
+    }
+
+    /**
+     * 获取所有的静态资源映射关系
+     *
+     * @return
+     */
+    public static Map<String, List<Resource>> getResourceMappings() {
+        Map<String, List<Resource>> resourceMappingMap = new HashMap<>();
+        if (containsBean(RESOURCE_HANDLER_MAPPING_BEAN_NAME)) {
+            SimpleUrlHandlerMapping urlHandlerMapping = getBean(RESOURCE_HANDLER_MAPPING_BEAN_NAME, SimpleUrlHandlerMapping.class);
+            Map<String, ?> urlMap = urlHandlerMapping.getUrlMap();
+            for (Map.Entry<String, ?> entry : urlMap.entrySet()) {
+                ResourceHttpRequestHandler resourceHttpRequestHandler = (ResourceHttpRequestHandler) entry.getValue();
+                resourceMappingMap.put(entry.getKey(), resourceHttpRequestHandler.getLocations());
+            }
+        }
+        return resourceMappingMap;
     }
 
 }

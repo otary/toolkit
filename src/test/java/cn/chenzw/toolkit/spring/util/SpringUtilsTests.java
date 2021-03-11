@@ -13,16 +13,21 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class SpringUtilsTests {
 
 
@@ -185,6 +190,14 @@ public class SpringUtilsTests {
     public void testPresent() {
         Assert.assertTrue(SpringUtils.SPRING_FREMAE_PRESENT);
         Assert.assertTrue(SpringUtils.SPRING_WEB_FRAME_PRESENT);
+    }
+
+
+    @Test
+    public void testGetResourceMappings() {
+        Map<String, List<Resource>> resourceMappings = SpringUtils.getResourceMappings();
+
+        Assert.assertNotNull(resourceMappings);
     }
 }
 
