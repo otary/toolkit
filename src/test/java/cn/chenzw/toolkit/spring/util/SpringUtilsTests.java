@@ -13,6 +13,7 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
@@ -198,6 +199,14 @@ public class SpringUtilsTests {
         Map<String, List<Resource>> resourceMappings = SpringUtils.getResourceMappings();
 
         Assert.assertNotNull(resourceMappings);
+    }
+
+
+    @Test
+    public void testGetBeanDefinitionRegistry() {
+        BeanDefinitionRegistry beanDefinitionRegistry = SpringUtils.getBeanDefinitionRegistry();
+
+        Assert.assertNotNull(beanDefinitionRegistry);
     }
 }
 

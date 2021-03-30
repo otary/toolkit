@@ -83,6 +83,18 @@ public final class SpringUtils {
         return getAppContext().containsBean(name);
     }
 
+
+    /**
+     * 获取BeanDefinitionRegistry
+     *
+     * @return
+     * @since 1.0.3
+     */
+    public static BeanDefinitionRegistry getBeanDefinitionRegistry() {
+        return (BeanDefinitionRegistry) ((ConfigurableApplicationContext) getAppContext())
+                .getBeanFactory();
+    }
+
     /**
      * 获取所有Bean
      *
