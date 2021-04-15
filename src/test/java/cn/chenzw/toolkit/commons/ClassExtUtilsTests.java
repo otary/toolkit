@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 @RunWith(JUnit4.class)
 public class ClassExtUtilsTests {
@@ -38,5 +40,21 @@ public class ClassExtUtilsTests {
     @Test
     public void testGenerateUniqueClassName(){
         Assert.assertEquals("cn.chenzw.toolkit.commons.StringExtUtils$1",ClassExtUtils.generateUniqueClassName("cn.chenzw.toolkit.commons.StringExtUtils"));
+    }
+
+    @Test
+    public void testGetBootstrapClassPath() {
+        URL[] bootstrapClassPaths = ClassExtUtils.getBootstrapClassPath();
+
+    }
+
+    @Test
+    public void testGetExtClassPath() throws MalformedURLException {
+        List<URL> extClassPath = ClassExtUtils.getExtClassPath();
+    }
+
+    @Test
+    public void testGetAppClassPath() throws MalformedURLException {
+        List<URL> appClassPath = ClassExtUtils.getAppClassPath();
     }
 }

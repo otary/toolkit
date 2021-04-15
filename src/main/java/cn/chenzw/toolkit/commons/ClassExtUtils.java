@@ -2,12 +2,20 @@ package cn.chenzw.toolkit.commons;
 
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import sun.misc.Launcher;
+import sun.net.www.ParseUtil;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -157,6 +165,57 @@ public abstract class ClassExtUtils {
     public static boolean isStatic(Method method) {
         Objects.requireNonNull(method, "Method to provided is null!");
         return Modifier.isStatic(method.getModifiers());
+    }
+
+    /**
+     * 获取Boostrap ClassLoader加载的目录
+     *
+     * @return
+     * @since 1.0.3
+     */
+    public static URL[] getBootstrapClassPath() {
+        return Launcher.getBootstrapClassPath().getURLs();
+    }
+
+
+    /**
+     * 获取Extension ClassLoader加載的目录
+     *
+     * @return
+     * @throws MalformedURLException
+     */
+    public static List<URL> getExtClassPath() throws MalformedURLException {
+        String extDirStr = System.getProperty("java.ext.dirs");
+        if (StringUtils.isBlank(extDirStr)) {
+            return Collections.emptyList();
+        }
+
+        List<URL> urls = new ArrayList<>();
+        String[] extDirs = extDirStr.split(";");
+        for (String extDir : extDirs) {
+            urls.add(ParseUtil.fileToEncodedURL(new File(extDir)));
+        }
+        return urls;
+    }
+
+
+    /**
+     * 获取App ClassLoader加载的目录
+     *
+     * @return
+     * @throws MalformedURLException
+     */
+    public static List<URL> getAppClassPath() throws MalformedURLException {
+        String classPathStr = System.getProperty("java.class.path");
+        if (StringUtils.isBlank(classPathStr)) {
+            return Collections.emptyList();
+        }
+        List<URL> urls = new ArrayList<>();
+        String[] classPaths = classPathStr.split(";");
+        for (String classPath : classPaths) {
+            urls.add(ParseUtil.fileToEncodedURL(new File(classPath)));
+        }
+        return urls;
     }
 
 }
