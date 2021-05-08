@@ -3,7 +3,7 @@ package cn.chenzw.toolkit.http.entity;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * HTTP响应结果对象
+ * HTTP响应对象
  *
  * @param <T>
  * @author chenzw
@@ -14,18 +14,54 @@ public class HttpResult<T> implements R<T> {
     public static final Integer ERROR_CODE = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
     private String msgId;
+
+    /**
+     * 异常编码
+     */
     private Integer code;
+    /**
+     * 简短信息
+     */
     private String msg;
+    /**
+     * 详细信息
+     */
+    private String detail;
+
+    /**
+     * 数据
+     */
     private T data;
 
+    /**
+     * @param code
+     * @param msg
+     * @deprecated use {@link #builder()} instead
+     */
+    @Deprecated
     public HttpResult(Integer code, String msg) {
         this(code, msg, null, null);
     }
 
+    /**
+     * @param code
+     * @param msg
+     * @param data
+     * @deprecated use {@link #builder()} instead
+     */
+    @Deprecated
     public HttpResult(Integer code, String msg, T data) {
         this(code, msg, null, data);
     }
 
+    /**
+     * @param code
+     * @param msg
+     * @param msgId
+     * @param data
+     * @deprecated use {@link #builder()} instead
+     */
+    @Deprecated
     public HttpResult(Integer code, String msg, String msgId, T data) {
         this.code = code;
         this.msg = msg;
@@ -33,14 +69,25 @@ public class HttpResult<T> implements R<T> {
         this.msgId = msgId;
     }
 
+
+    public HttpResult(HttpResultBuilder builder) {
+        this.code = builder.code;
+        this.msg = builder.msg;
+        this.detail = builder.detail;
+        this.data = (T) builder.data;
+        this.msgId = builder.msgId;
+    }
+
     /**
      * 成功
      *
      * @return
+     * @deprecated use {@link #builder()} instead
      */
+   /* @Deprecated
     public static HttpResult ok() {
         return new HttpResult<>(SUCCESS_CODE, null);
-    }
+    }*/
 
     /**
      * 成功
@@ -48,7 +95,9 @@ public class HttpResult<T> implements R<T> {
      * @param data
      * @param <T>
      * @return
+     * @deprecated use {@link #builder()} instead
      */
+    @Deprecated
     public static <T> HttpResult ok(T data) {
         return new HttpResult<T>(SUCCESS_CODE, null, data);
     }
@@ -58,11 +107,20 @@ public class HttpResult<T> implements R<T> {
      *
      * @param msg
      * @return
+     * @deprecated use {@link #builder()} instead
      */
+    @Deprecated
     public static HttpResult error(String msg) {
         return new HttpResult<>(ERROR_CODE, msg);
     }
 
+    /**
+     * @param code
+     * @param msg
+     * @return
+     * @deprecated use {@link #builder()} instead
+     */
+    @Deprecated
     public static HttpResult error(Integer code, String msg) {
         return new HttpResult<>(code, msg);
     }
@@ -110,6 +168,7 @@ public class HttpResult<T> implements R<T> {
                 "msgId='" + msgId + '\'' +
                 ", code=" + code +
                 ", msg='" + msg + '\'' +
+                ", detail='" + detail + '\'' +
                 ", data=" + data +
                 '}';
     }
@@ -118,12 +177,31 @@ public class HttpResult<T> implements R<T> {
         return new HttpResultBuilder();
     }
 
+    public static HttpResultBuilder ok() {
+        return new HttpResultBuilder(SUCCESS_CODE);
+    }
+
+    public static HttpResultBuilder error() {
+        return new HttpResultBuilder(ERROR_CODE);
+    }
+
+    /**
+     * HttpResult构建器
+     */
     public static class HttpResultBuilder {
 
         private String msgId;
         private Integer code;
         private String msg;
+        private String detail;
         private Object data;
+
+        public HttpResultBuilder() {
+        }
+
+        public HttpResultBuilder(Integer code) {
+            this.code = code;
+        }
 
         public HttpResultBuilder msgId(String msgId) {
             this.msgId = msgId;
@@ -140,23 +218,18 @@ public class HttpResult<T> implements R<T> {
             return this;
         }
 
+        public HttpResultBuilder detail(String detail) {
+            this.detail = detail;
+            return this;
+        }
+
         public HttpResultBuilder data(Object data) {
             this.data = data;
             return this;
         }
 
-        public HttpResultBuilder ok() {
-            this.code = SUCCESS_CODE;
-            return this;
-        }
-
-        public HttpResultBuilder error() {
-            this.code = ERROR_CODE;
-            return this;
-        }
-
         public HttpResult build() {
-            return new HttpResult(code, msg, msgId, data);
+            return new HttpResult(this);
         }
     }
 }
