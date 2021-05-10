@@ -19,7 +19,6 @@ public abstract class AbstractDynamicDataSourceAspect {
     public void before(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        System.out.println(method);
 
         Optional<DynamicDataSource> dataSourceOptl = findAnnotation(method, DynamicDataSource.class);
         if (!dataSourceOptl.isPresent()) {
@@ -28,8 +27,7 @@ public abstract class AbstractDynamicDataSourceAspect {
             }
         }
         if (dataSourceOptl.isPresent()) {
-            System.out.println(method + "use" + dataSourceOptl.get().value());
-            logger.debug("[{}] use [{}] dataSource ", method, dataSourceOptl.get().value());
+            logger.debug("method [{}] use [{}] dataSource ", method, dataSourceOptl.get().value());
             DynamicDataSourceHolder.set(dataSourceOptl.get().value());
         }
     }

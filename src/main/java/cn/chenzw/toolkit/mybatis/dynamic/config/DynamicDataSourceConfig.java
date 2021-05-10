@@ -46,9 +46,10 @@ public class DynamicDataSourceConfig implements ApplicationContextAware {
 
         DynamicDataSourceContext dynamicDataSourceContext = DynamicDataSourceContext.getInstance();
         DataSource primaryDataSource = dynamicDataSourceContext.getPrimary();
-        logger.debug("Use primary datasource [{}]", dynamicDataSourceContext.getPrimaryName());
-        dynamicRoutingDataSource.setDefaultTargetDataSource(primaryDataSource);
 
+        logger.debug("Use primary datasource [{}]", dynamicDataSourceContext.getPrimaryName());
+
+        dynamicRoutingDataSource.setDefaultTargetDataSource(primaryDataSource);
         dynamicRoutingDataSource.setTargetDataSources(dynamicDataSourceContext.list2());
         return dynamicRoutingDataSource;
     }
@@ -105,10 +106,6 @@ public class DynamicDataSourceConfig implements ApplicationContextAware {
             boolean isPrimary = ConvertExtUtils.convert(Boolean.class, dsPropertiesMap.getOrDefault("primary", false));
             dynamicDataSourceContext.add(dsName, createDruidDataSource(dsPropertiesMap), isPrimary);
         });
-
-
-
-
     }
 
 
