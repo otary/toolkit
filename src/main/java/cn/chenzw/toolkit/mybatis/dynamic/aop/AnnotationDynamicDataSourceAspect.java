@@ -17,7 +17,7 @@ public class AnnotationDynamicDataSourceAspect extends AbstractDynamicDataSource
 
     private static final String POINT_CUT = "datasource()";
 
-    @Pointcut("@annotation(cn.chenzw.toolkit.mybatis.dynamic.support.DynamicDataSource) || @within(cn.chenzw.toolkit.mybatis.dynamic.support.DynamicDataSource)")
+    @Pointcut("@annotation(cn.chenzw.toolkit.mybatis.dynamic.annotation.DynamicDS) || @within(cn.chenzw.toolkit.mybatis.dynamic.annotation.DynamicDS)")
     public void datasource() {
 
     }

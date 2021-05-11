@@ -26,7 +26,7 @@ public class MapperDynamicDataSourceAspect extends AbstractDynamicDataSourceAspe
     private static final String POINT_CUT = "datasource()";
 
     @Pointcut("!execution(* cn.chenzw.toolkit..*.*(..))")
-   //@Pointcut("@annotation(cn.chenzw.toolkit.mybatis.dynamic.support.DynamicDataSource)")
+   //@Pointcut("@annotation(cn.chenzw.toolkit.mybatis.dynamic.annotation.DynamicDS)")
     public void datasource() {
 
     }

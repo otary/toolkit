@@ -2,11 +2,12 @@ package cn.chenzw.toolkit.mybatis.dynamic.support;
 
 
 import cn.chenzw.toolkit.commons.MapExtUtils;
-import cn.chenzw.toolkit.mybatis.dynamic.config.DynamicDataSourceConfig;
+import cn.chenzw.toolkit.mybatis.dynamic.support.factory.DynamicDataSourceFactory;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,48 +19,53 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DynamicDataSourceContext {
 
-    private Map<String, DataSourceExtProperties> dataSourceMap = new ConcurrentHashMap<>();
+    private Map<String, DataSourceExt> dataSourceMap = new ConcurrentHashMap<>();
 
     private DynamicDataSourceContext() {
-
     }
 
     public static DynamicDataSourceContext getInstance() {
         return InnerDataSourceContext.instance;
     }
 
-
     private static class InnerDataSourceContext {
         private static DynamicDataSourceContext instance = new DynamicDataSourceContext();
     }
 
     public void add(String dsName, DataSource dataSource) {
-        dataSourceMap.put(dsName, new DataSourceExtProperties(dsName, dataSource));
+        dataSourceMap.put(dsName, new DataSourceExt(dsName, dataSource));
+    }
+
+    public void addAll(List<DataSourceExt> dsExts) {
+        for (DataSourceExt dsExt : dsExts) {
+            dataSourceMap.put(dsExt.getName(), dsExt);
+        }
     }
 
 
     public DataSource get(String dsName) {
-        DataSourceExtProperties dataSourceExtProperties = dataSourceMap.get(dsName);
-        if (dataSourceExtProperties != null) {
-            return dataSourceExtProperties.getDataSource();
+        DataSourceExt dataSourceExt = dataSourceMap.get(dsName);
+        if (dataSourceExt != null) {
+            return dataSourceExt.getDataSource();
         }
         return null;
     }
 
-    public DataSourceExtProperties getExt(String dsName) {
+    public DataSourceExt getExt(String dsName) {
         return dataSourceMap.get(dsName);
     }
 
-    private DataSourceExtProperties getPrimaryExt() {
-        Iterator<Map.Entry<String, DataSourceExtProperties>> iterator = dataSourceMap.entrySet().iterator();
+    private DataSourceExt getPrimaryExt() {
+        Iterator<Map.Entry<String, DataSourceExt>> iterator = dataSourceMap.entrySet().iterator();
         if (iterator.hasNext()) {
-            DataSourceExtProperties extProperties = iterator.next().getValue();
+            DataSourceExt extProperties = iterator.next().getValue();
             if (extProperties.isPrimary()) {
                 return extProperties;
             }
         }
-        return dataSourceMap.getOrDefault(DynamicDataSourceConfig.DEFAULT_DATASOURCE_NAME,
-                (DataSourceExtProperties) MapExtUtils.getFirstValue(dataSourceMap));
+
+        return dataSourceMap.getOrDefault(DynamicDataSourceFactory.DEFAULT_DATASOURCE_NAME,
+                (DataSourceExt) MapExtUtils.getFirstValue(dataSourceMap));
     }
 
     /**
@@ -86,84 +92,21 @@ public class DynamicDataSourceContext {
      *
      * @return
      */
-    public Map<String, DataSource> list() {
-        Map<String, DataSource> results = new HashMap<>();
-        for (Map.Entry<String, DataSourceExtProperties> extPropertiesEntry : dataSourceMap.entrySet()) {
-            results.put(extPropertiesEntry.getKey(), extPropertiesEntry.getValue().getDataSource());
-        }
-        return results;
-    }
-
-    public Map<Object, Object> list2() {
-        Map<Object, Object> results = new HashMap<>();
-        for (Map.Entry<String, DataSourceExtProperties> extPropertiesEntry : dataSourceMap.entrySet()) {
-            results.put(extPropertiesEntry.getKey(), extPropertiesEntry.getValue().getDataSource());
+    public <K, V> Map<K, V> list() {
+        Map<K, V> results = new HashMap<>();
+        for (Map.Entry<String, DataSourceExt> extPropertiesEntry : dataSourceMap.entrySet()) {
+            results.put((K) extPropertiesEntry.getKey(), (V) extPropertiesEntry.getValue().getDataSource());
         }
         return results;
     }
 
 
-    public Map<String, DataSourceExtProperties> listExt() {
+    public Map<String, DataSourceExt> listExt() {
         return dataSourceMap;
     }
 
     public void add(String dsName, DataSource dataSource, boolean primary) {
-        dataSourceMap.put(dsName, new DataSourceExtProperties(dsName, dataSource, primary));
-    }
-
-
-    public class DataSourceExtProperties {
-
-        private String name;
-
-        private boolean primary = false;
-
-        private DataSource dataSource;
-
-
-        public DataSourceExtProperties(String name, DataSource dataSource) {
-            this.name = name;
-            this.dataSource = dataSource;
-        }
-
-        public DataSourceExtProperties(String name, DataSource dataSource, boolean primary) {
-            this.name = name;
-            this.dataSource = dataSource;
-            this.primary = primary;
-        }
-
-        public void setPrimary(boolean primary) {
-            this.primary = primary;
-        }
-
-        public boolean isPrimary() {
-            return primary;
-        }
-
-        public DataSource getDataSource() {
-            return dataSource;
-        }
-
-        public void setDataSource(DataSource dataSource) {
-            this.dataSource = dataSource;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return "DataSourceExtProperties{" +
-                    "name='" + name + '\'' +
-                    ", primary=" + primary +
-                    ", dataSource=" + dataSource +
-                    '}';
-        }
+        dataSourceMap.put(dsName, new DataSourceExt(dsName, dataSource, primary));
     }
 
 }

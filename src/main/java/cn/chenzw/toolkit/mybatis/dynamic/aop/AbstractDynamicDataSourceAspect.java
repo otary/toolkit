@@ -1,6 +1,6 @@
 package cn.chenzw.toolkit.mybatis.dynamic.aop;
 
-import cn.chenzw.toolkit.mybatis.dynamic.support.DynamicDataSource;
+import cn.chenzw.toolkit.mybatis.dynamic.annotation.DynamicDS;
 import cn.chenzw.toolkit.mybatis.dynamic.support.DynamicDataSourceHolder;
 import cn.chenzw.toolkit.mybatis.dynamic.util.SqlMapperUtils;
 import org.aspectj.lang.JoinPoint;
@@ -20,10 +20,10 @@ public abstract class AbstractDynamicDataSourceAspect {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
 
-        Optional<DynamicDataSource> dataSourceOptl = findAnnotation(method, DynamicDataSource.class);
+        Optional<DynamicDS> dataSourceOptl = findAnnotation(method, DynamicDS.class);
         if (!dataSourceOptl.isPresent()) {
             if (DynamicDataSourceHolder.get() == null) {
-                dataSourceOptl = SqlMapperUtils.getProxyTargetAnnotation(joinPoint.getTarget(), DynamicDataSource.class);
+                dataSourceOptl = SqlMapperUtils.getProxyTargetAnnotation(joinPoint.getTarget(), DynamicDS.class);
             }
         }
         if (dataSourceOptl.isPresent()) {

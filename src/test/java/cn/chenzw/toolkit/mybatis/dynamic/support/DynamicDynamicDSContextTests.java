@@ -12,8 +12,8 @@ import javax.sql.DataSource;
 
 @RunWith(SpringRunner.class)
 @EnableDynamicDataSource
-@SpringBootTest(classes = DynamicDynamicDataSourceContextTests.class)
-public class DynamicDynamicDataSourceContextTests {
+@SpringBootTest(classes = DynamicDynamicDSContextTests.class)
+public class DynamicDynamicDSContextTests {
 
     @Test
    // @Ignore

@@ -1,9 +1,9 @@
-package cn.chenzw.toolkit.mybatis.dynamic.support;
+package cn.chenzw.toolkit.mybatis.dynamic.annotation;
 
 import java.lang.annotation.*;
 
 /**
- * 指定使用的数据源
+ * 动态数据源注解（指定使用的数据源）
  *
  * @author chenzw
  * @since 1.0.3
@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Inherited
-public @interface DynamicDataSource {
+public @interface DynamicDS {
 
     /**
      * 数据源名称
