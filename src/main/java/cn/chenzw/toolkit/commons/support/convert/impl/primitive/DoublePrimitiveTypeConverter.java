@@ -3,6 +3,7 @@ package cn.chenzw.toolkit.commons.support.convert.impl.primitive;
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
 import cn.chenzw.toolkit.commons.StringExtUtils;
 import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  * @author chenzw
@@ -18,6 +19,6 @@ public class DoublePrimitiveTypeConverter extends AbstractTypeConverter<Double> 
             return BooleanExtUtils.todouble((Boolean) value);
         }
         final String sValue = convertToStr(value);
-        return StringExtUtils.toDouble(sValue, 0D);
+        return NumberUtils.toDouble(sValue, 0D);
     }
 }

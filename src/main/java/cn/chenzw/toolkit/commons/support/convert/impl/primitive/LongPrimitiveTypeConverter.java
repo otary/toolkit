@@ -3,6 +3,7 @@ package cn.chenzw.toolkit.commons.support.convert.impl.primitive;
 import cn.chenzw.toolkit.commons.BooleanExtUtils;
 import cn.chenzw.toolkit.commons.StringExtUtils;
 import cn.chenzw.toolkit.commons.support.convert.AbstractTypeConverter;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public class LongPrimitiveTypeConverter extends AbstractTypeConverter<Long> {
 
@@ -15,6 +16,6 @@ public class LongPrimitiveTypeConverter extends AbstractTypeConverter<Long> {
             return BooleanExtUtils.tolong((Boolean) value);
         }
         final String sValue = convertToStr(value);
-        return StringExtUtils.toLong(sValue, 0L);
+        return NumberUtils.toLong(sValue, 0L);
     }
 }

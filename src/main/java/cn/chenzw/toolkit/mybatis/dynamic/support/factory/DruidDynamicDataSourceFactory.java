@@ -5,10 +5,10 @@ import cn.chenzw.toolkit.commons.MapExtUtils;
 import cn.chenzw.toolkit.commons.StringExtUtils;
 import com.alibaba.druid.pool.DruidDataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.map.TransformedMap;
 
 import javax.sql.DataSource;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Druid数据源工厂类
@@ -29,7 +29,11 @@ public class DruidDynamicDataSourceFactory extends AbstractDynamicDataSourceFact
     @Override
     protected DataSource doCreateDs(Map<String, Object> dsMap) {
         DruidDataSource druidDataSource = new DruidDataSource();
-        TransformedMap.transformedMap(dsMap, propertyName -> "druid." + StringExtUtils.toCamel(propertyName, "-", false), propertyValue -> ConvertExtUtils.convert(String.class, propertyValue));
+        dsMap = dsMap.entrySet().stream().collect(
+                Collectors.toMap(
+                        (entry) -> "druid." + StringExtUtils.toCamel(entry.getKey(), "-", false),
+                        (entry) -> ConvertExtUtils.convert(String.class, entry.getValue())
+                ));
         druidDataSource.configFromPropety(MapExtUtils.toProperties(dsMap));
         return druidDataSource;
     }

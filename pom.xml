@@ -18,110 +18,71 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
 
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <commons-io.version>2.6</commons-io.version>
-        <commons-codec.version>1.12</commons-codec.version>
-        <commons-net.version>3.6</commons-net.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <dozer.version>5.5.1</dozer.version>
-        <slf4j.version>1.7.26</slf4j.version>
-        <servlet.version>3.1.0</servlet.version>
-
-        <junit.version>4.12</junit.version>
-        <hamcrest.version>1.3</hamcrest.version>
-
-        <aspectjweaver.version>1.9.4</aspectjweaver.version>
-        <pagehelper.version>5.1.10</pagehelper.version>
-        <ehcache3.version>3.7.1</ehcache3.version>
-        <ehcache2.version>2.10.6</ehcache2.version>
-
-        <log4j.version>2.12.0</log4j.version>
-        <logback.version>1.2.3</logback.version>
-        <jackson.version>2.9.10</jackson.version>
-        <mybatis.version>3.5.1</mybatis.version>
-        <hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
-        <gson.version>2.8.5</gson.version>
-        <freemarker.version>2.3.28</freemarker.version>
-        <druid.version>1.1.17</druid.version>
-        <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
-        <shiro.version>1.4.2</shiro.version>
-        <validation-api.version>2.0.1.Final</validation-api.version>
-        <spring-security.version>5.1.5.RELEASE</spring-security.version>
-        <spring-security-oauth2.version>2.3.6.RELEASE</spring-security-oauth2.version>
-        <guava.version>28.1-jre</guava.version>
+        <maven-jdk8-bom.version>1.0.1</maven-jdk8-bom.version>
     </properties>
-
 
     <!-- 依赖配置 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.1.5.RELEASE</version>
+                <groupId>cn.chenzw.bom</groupId>
+                <artifactId>maven-jdk8-bom</artifactId>
+                <version>${maven-jdk8-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-
     <dependencies>
-        <!-- test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>${hamcrest.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- /test -->
-
         <!-- apache commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>${commons-codec.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
-            <version>${commons-net.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>${commons-collections4.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!-- /apache commons -->
+
+
+        <!-- test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- /test -->
 
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
             <optional>true</optional>
         </dependency>
 
@@ -129,40 +90,34 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!-- /logging -->
 
@@ -180,7 +135,7 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -190,14 +145,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.0.1</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!--/springboot-->
 
@@ -205,48 +153,42 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>${aspectjweaver.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
-            <version>4.1.2.RELEASE</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>${spring-security.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>${spring-security.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
-            <version>${spring-security-oauth2.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!-- /spring -->
 
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-            <version>${dozer.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
 
@@ -255,7 +197,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.46</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <!--<dependency>
@@ -278,15 +220,11 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
-            <version>${commons-dbcp2.version}</version>
-            <scope>provided</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
-            <scope>provided</scope>
             <optional>true</optional>
         </dependency>
         <!-- / 数据源 -->
@@ -295,22 +233,19 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>2.0.1</version>
-            <scope>provided</scope>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>${pagehelper.version}</version>
-            <scope>provided</scope>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <optional>true</optional>
         </dependency>
         <!-- /mybatis -->
 
@@ -318,27 +253,23 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!--/ json -->
 
@@ -346,15 +277,13 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>${ehcache2.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
-            <version>1.1.1</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!--/ ehcache -->
 
@@ -362,8 +291,7 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>${freemarker.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!--/ 模版 -->
 
@@ -371,8 +299,7 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!-- /身份认证 -->
 
@@ -380,15 +307,13 @@
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>${validation-api.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <!-- 数据验证 -->
 
@@ -396,8 +321,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.version}</version>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -466,7 +390,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
     </dependencies>
 
     <profiles>
@@ -628,14 +551,7 @@
     </scm>
 
     <!-- 发布配置 -->
-    <distributionManagement>
-
-        <!--<repository>
-            <id>itmmaven</id>
-            <name>Nexus Release Repository</name>
-            <url>http://192.168.17.223:8085/repository/maven-3rd/</url>
-        </repository>-->
-
+    <!--<distributionManagement>
         <repository>
             <id>sonatype-oss</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
@@ -645,7 +561,20 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
 
+    </distributionManagement>-->
+
+
+    <!-- 云效仓库 -->
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/501-release-VOLnt5/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/501-snapshot-cGnq6m/</url>
+        </snapshotRepository>
     </distributionManagement>
-
-
+    <!-- /云效仓库 -->
 </project>

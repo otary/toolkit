@@ -9,6 +9,7 @@ import org.apache.commons.collections4.map.TransformedMap;
 
 import javax.sql.DataSource;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author chenzw
@@ -26,8 +27,11 @@ public class HikariDataSourceFactory extends AbstractDynamicDataSourceFactory {
     @Override
     protected DataSource doCreateDs(Map<String, Object> dsMap) {
         // 中划线格式 转 驼峰
-        TransformedMap.transformedMap(dsMap,
-                propertyName -> StringExtUtils.toCamel(propertyName, "-", false), propertyValue -> ConvertExtUtils.convert(String.class, propertyValue));
+        dsMap = dsMap.entrySet().stream().collect(
+                Collectors.toMap(
+                        (entry) -> StringExtUtils.toCamel(entry.getKey(), "-", false),
+                        (entry) -> ConvertExtUtils.convert(String.class, entry.getValue())
+                ));
 
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(String.valueOf(tryGetProperty(dsMap, "jdbcUrl", "url", "jdbc-url")));
