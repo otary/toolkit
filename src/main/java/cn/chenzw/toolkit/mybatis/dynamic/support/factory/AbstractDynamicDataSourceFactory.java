@@ -59,9 +59,18 @@ public abstract class AbstractDynamicDataSourceFactory implements DynamicDataSou
             Map<String, Object> dsPropertiesMap = (Map<String, Object>) dsProperties;
             boolean isPrimary = ConvertExtUtils.convert(Boolean.class, dsPropertiesMap.getOrDefault("primary", false));
 
-            dataSourceExts.add(new DataSourceExt(dsName, doCreateDs(dsMap), isPrimary));
+            dataSourceExts.add(new DataSourceExt(dsName, doCreateDs(dsPropertiesMap), isPrimary));
         });
         return dataSourceExts;
 
+    }
+
+    protected Object tryGetProperty(Map<String, Object> dsMap, String... properties) {
+        for (String property : properties) {
+            if (dsMap.containsKey(property)) {
+                return dsMap.get(property);
+            }
+        }
+        return null;
     }
 }

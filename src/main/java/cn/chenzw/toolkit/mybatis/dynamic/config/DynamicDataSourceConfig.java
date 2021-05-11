@@ -65,6 +65,7 @@ public class DynamicDataSourceConfig implements ApplicationContextAware {
         DynamicDataSourceFactory dataSourceFactory = new DefaultDynamicDataSourceFactory();
         List<DataSourceExt> dsExts = dataSourceFactory.createDs(dsMap);
         dynamicDataSourceContext.addAll(dsExts);
+
     }
 
 
