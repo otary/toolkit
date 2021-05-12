@@ -7,8 +7,6 @@ import cn.chenzw.toolkit.mybatis.dynamic.support.DynamicRoutingDataSource;
 import cn.chenzw.toolkit.mybatis.dynamic.support.factory.DefaultDynamicDataSourceFactory;
 import cn.chenzw.toolkit.mybatis.dynamic.support.factory.DynamicDataSourceFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.bind.Binder;
@@ -33,7 +31,6 @@ import java.util.Map;
 public class DynamicDataSourceConfig implements ApplicationContextAware {
 
     private static final String DEFAULT_DATASOURCE_PROPERTY_PREFIX = "spring.datasource";
-
 
     @Bean
     @ConditionalOnMissingBean
@@ -60,7 +57,10 @@ public class DynamicDataSourceConfig implements ApplicationContextAware {
         }
 
         DynamicDataSourceFactory dataSourceFactory = new DefaultDynamicDataSourceFactory();
-        List<DataSourceExt> dsExts = dataSourceFactory.createDs(dsMap);
+        List<DataSourceExt> dsExts = dataSourceFactory.buildDataSources(dsMap);
+        if (dsExts.isEmpty()) {
+            throw new IllegalArgumentException("Found 0 dataSource!");
+        }
         dynamicDataSourceContext.addAll(dsExts);
 
     }

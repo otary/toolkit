@@ -14,6 +14,6 @@ public interface DynamicDataSourceFactory {
 
     String DYNAMIC_DATASOURCE_PROPERTY_PREFIX = "spring.datasource.dynamic";
 
-    List<DataSourceExt> createDs(Map<String, Object> dsMap);
+    List<DataSourceExt> buildDataSources(Map<String, Object> dsMap);
 
 }

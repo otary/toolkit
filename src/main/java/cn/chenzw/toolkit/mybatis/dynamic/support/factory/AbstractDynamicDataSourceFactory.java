@@ -34,7 +34,7 @@ public abstract class AbstractDynamicDataSourceFactory implements DynamicDataSou
     protected abstract DataSource createSpecialDs(Map<String, Object> dsMap);
 
     @Override
-    public List<DataSourceExt> createDs(Map<String, Object> dsMap) {
+    public List<DataSourceExt> buildDataSources(Map<String, Object> dsMap) {
         List<DataSourceExt> dataSourceExts = new ArrayList<>();
 
         // 如果直接存在url/username/password, 则将其作为主数据源
