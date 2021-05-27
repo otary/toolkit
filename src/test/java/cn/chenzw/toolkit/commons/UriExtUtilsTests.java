@@ -64,4 +64,18 @@ public class UriExtUtilsTests {
         Assert.assertEquals("http://www.baidu.com?isbn=ISN12345&name=hello&id=1", uri);
     }
 
+    @Test
+    public void testRemoveAllParams() {
+        String uri = UriExtUtils.removeAllParams("https://www.baidu.com?q=xx&s=ttt");
+
+        Assert.assertEquals("https://www.baidu.com", uri);
+    }
+
+
+    @Test
+    public void testRemoveParam() {
+        String uri = UriExtUtils.removeParams("https://www.baidu.com?q=xx&s=ttt", "s");
+
+        Assert.assertEquals("https://www.baidu.com?q=xx", uri);
+    }
 }

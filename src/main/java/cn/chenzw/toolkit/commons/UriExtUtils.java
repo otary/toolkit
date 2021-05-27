@@ -159,5 +159,28 @@ public class UriExtUtils {
         return retParamMap;
     }
 
+    /**
+     * 去除url指定参数
+     *
+     * @param url
+     * @param names
+     * @return
+     */
+    public static String removeParams(String url, String... names) {
+        for (String name : names) {
+            url = url.replaceAll("&?" + name + "=[^&]*", "");
+        }
+        return url;
+    }
+
+    /**
+     * 去除所有参数
+     *
+     * @param url
+     * @return
+     */
+    public static String removeAllParams(String url) {
+        return url.substring(0, url.indexOf("?"));
+    }
 
 }
