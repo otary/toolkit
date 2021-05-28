@@ -92,7 +92,7 @@ public class DefaultConstraintViolationExceptionWrapper implements ConstraintVio
         StringBuilder msgBuilder = new StringBuilder();
         for (InvalidField invalidField : invalidFields) {
             msgBuilder.append(String
-                    .format("参数[%s = %s]校验不通过:[%s]; ", invalidField.getFieldName(), invalidField.getInvalidValue(),
+                    .format("参数[%s=%s]校验不通过:[%s]; ", invalidField.getFieldName(), invalidField.getInvalidValue(),
                             invalidField.getMessage()));
         }
         return msgBuilder.toString();
