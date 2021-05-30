@@ -1,8 +1,11 @@
 package cn.chenzw.toolkit.commons;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 /**
  * 文件工具类
@@ -31,5 +34,17 @@ public class FileExtUtils {
         }
         return Paths.get(fragmentPath).relativize(Paths.get(fullPath)).toString();
     }
+
+    /**
+     * 生成UUID名称
+     *
+     * @param file
+     * @return
+     */
+    public static String uuidFileName(File file) {
+        String fileExtension = FilenameUtils.getExtension(file.getName());
+        return UUID.randomUUID().toString() + "." + fileExtension;
+    }
+
 
 }
