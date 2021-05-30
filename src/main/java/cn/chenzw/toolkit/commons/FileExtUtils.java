@@ -42,7 +42,12 @@ public class FileExtUtils {
      * @return
      */
     public static String uuidFileName(File file) {
-        String fileExtension = FilenameUtils.getExtension(file.getName());
+        return uuidFileName(file.getName());
+    }
+
+
+    public static String uuidFileName(String fileName) {
+        String fileExtension = FilenameUtils.getExtension(fileName);
         return UUID.randomUUID().toString() + "." + fileExtension;
     }
 
