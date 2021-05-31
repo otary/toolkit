@@ -46,9 +46,19 @@ public class FileExtUtils {
     }
 
 
-    public static String uuidFileName(String fileName) {
-        String fileExtension = FilenameUtils.getExtension(fileName);
+    public static String uuidFileName(String originalFileName) {
+        String fileExtension = FilenameUtils.getExtension(originalFileName);
         return UUID.randomUUID().toString() + "." + fileExtension;
+    }
+
+
+    /**
+     * 获取系统临时文件路径
+     *
+     * @return
+     */
+    public static String getTempDir() {
+        return System.getProperty("java.io.tmpdir");
     }
 
 
