@@ -17,7 +17,7 @@ public class TableDefinition {
     private String pascalName;
 
     private Set<String> javaTypes = new HashSet<>();
-    private List<ColumnDefinition> columnDefinitions = Collections.emptyList();
+    private List<ColumnDefinition> columnDefinitions;
 
     public TableDefinition(String tableName, String pascalName, String remarks, List<ColumnDefinition> columnDefinitions) {
         this.columnDefinitions = columnDefinitions;
