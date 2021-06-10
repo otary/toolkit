@@ -1,5 +1,9 @@
-package cn.chenzw.toolkit.sql.core;
+package cn.chenzw.toolkit.sql.core.meta;
 
+/**
+ * 表格
+ * @author chenzw
+ */
 public interface TableMetaData {
 
     /**

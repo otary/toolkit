@@ -1,5 +1,6 @@
-package cn.chenzw.toolkit.sql.meta;
+package cn.chenzw.toolkit.sql.core.meta;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 /**
@@ -8,43 +9,43 @@ import lombok.Data;
  * @author chenzw
  * @since 1.0.4
  */
-@Data
-public class ColumnMetaData {
+public interface ColumnMetaData {
 
     /**
      * 字段名称
      */
-    private String columnName;
+    String getColumnName();
 
     /**
      * 字段类型名称
      */
-    private String dataType;
+    String getDataType();
 
     /**
      * 字段大小
      */
-    private Integer columnSize;
-
+    Integer getColumnSize();
 
     /**
      * 备注
      */
-    private String remarks;
+    String getRemarks();
 
 
     /**
      * 是否为主键
      */
-    private Boolean primaryKey = false;
+    Boolean getPrimaryKey();
 
     /**
      * 是否为外键
      */
-    private Boolean foreignKey = false;
+    Boolean getForeignKey();
+
 
     /**
      * 是否允许为空
      */
-    private Boolean nullable = true;
+    Boolean getNullable();
+
 }
