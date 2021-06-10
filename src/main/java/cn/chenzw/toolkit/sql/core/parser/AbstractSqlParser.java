@@ -15,7 +15,10 @@ import java.util.List;
 public abstract class AbstractSqlParser implements SqlParser {
 
 
+    protected abstract void preParse(SqlParserContext parserContext) throws SqlParseException;
+
     public SqlMetaData parse(SqlParserContext parserContext) throws SqlParseException {
+        this.preParse(parserContext);
         SqlMetaData sqlMetaData = this.createSqlMetaData();
         sqlMetaData.setTableMetaData(this.parseTableMeta(parserContext));
         sqlMetaData.setColumnMetaDatas(this.parseColumnMeta(parserContext));

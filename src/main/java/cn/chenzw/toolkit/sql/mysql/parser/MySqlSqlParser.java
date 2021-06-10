@@ -10,7 +10,6 @@ import cn.chenzw.toolkit.sql.mysql.meta.MySqlColumnMetaData;
 import cn.chenzw.toolkit.sql.mysql.meta.MySqlSqlMetaData;
 import cn.chenzw.toolkit.sql.mysql.meta.MySqlTableMetaData;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.list.TreeList;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -32,9 +31,11 @@ public class MySqlSqlParser extends AbstractSqlParser {
 
     private Pattern columnDefinitionPattern = Pattern.compile("\\(([\\s\\S]*)\\)");
 
+    private Pattern columnPattern = Pattern.compile("`(?<name>.*?)`\\s*(?<dataType>int|bigint|varchar|date)?(?:\\((?<size>\\d+)\\))?\\s*(?<unsigned>unsigned)?\\s*(?<notNull>not null)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*comment\\s*`(?<comment>.*?)`");
+
 
     @Override
-    protected TableMetaData parseTableMeta(SqlParserContext parserContext) throws SqlParseException {
+    protected void preParse(SqlParserContext parserContext) throws SqlParseException {
         String createTableSql = parserContext.getCreateTableSql();
         if (StringUtils.isBlank(createTableSql)) {
             throw new SqlParseException("SQL为空!");
@@ -49,7 +50,14 @@ public class MySqlSqlParser extends AbstractSqlParser {
                 .replaceAll("``", "`")
                 .replaceAll("\\\\", "").toLowerCase();
 
-        log.info("SQL => {}", createTableSql);
+        parserContext.setCreateTableSql(createTableSql);
+    }
+
+    @Override
+    protected TableMetaData parseTableMeta(SqlParserContext parserContext) throws SqlParseException {
+        String createTableSql = parserContext.getCreateTableSql();
+
+        //log.info("SQL => {}", createTableSql);
 
         String tableName = findMatchingValue(tableNamePattern, createTableSql);
         String tableComment = findMatchingValue(tableCommentPattern, createTableSql);
@@ -62,16 +70,38 @@ public class MySqlSqlParser extends AbstractSqlParser {
         String createTableSql = parserContext.getCreateTableSql();
 
         String columnDefinitionContent = findMatchingValue(columnDefinitionPattern, createTableSql);
-        String[] columnDefinitions = columnDefinitionContent.split(",");
 
-
-//        for (String columnDefinition : columnDefinitions) {
-//            columnDefinition
-//        }
+        // 字段分离
+        String[] columnDefinitions = columnDefinitionContent.split(",\\n");
 
         List<MySqlColumnMetaData> columnMetaDatas = new ArrayList<>();
+        for (String columnDefinition : columnDefinitions) {
 
-        columnMetaDatas.add(new MySqlColumnMetaData());
+            System.out.println(columnDefinition);
+
+            System.out.println(columnPattern.toString());
+
+            Matcher matcher = columnPattern.matcher(columnDefinition);
+            if (matcher.find()) {
+                MySqlColumnMetaData columnMetaData = new MySqlColumnMetaData();
+                columnMetaData.setColumnName(matcher.group("name"));
+                columnMetaData.setDataType(matcher.group("dataType"));
+                // columnMetaData.setNullable(matcher.group("notNull"));
+                columnMetaData.setRemarks(matcher.group("comment"));
+                columnMetaData.setColumnSize(matcher.group("size") == null ?
+                        null : Integer.valueOf(matcher.group("size")));
+
+                columnMetaData.setColumnDef(matcher.group("defaultValue"));
+
+
+                columnMetaDatas.add(columnMetaData);
+            }
+        }
+
+
+/*        System.out.println(matcher.group("unsigned"));
+        System.out.println(matcher.group("notNull"));*/
+
 
         return columnMetaDatas;
     }
@@ -87,5 +117,21 @@ public class MySqlSqlParser extends AbstractSqlParser {
             return matcher.group(1);
         }
         return "";
+    }
+
+
+    public static void main(String[] args) {
+        Pattern pattern = Pattern.compile("`(?<name>.*?)`\\s*(?<dataType>int|bigint|varchar)?(\\(\\d+\\))?\\s*(?<unsigned>unsigned)?\\s*(?<notNull>not null)?\\s*comment\\s*`(?<comment>.*?)`");
+
+        Matcher matcher = pattern.matcher(" `duty_id` bigint(20) unsigned not null comment `值班id`");
+        if (matcher.find()) {
+            System.out.println(matcher.group("dataType"));
+            System.out.println(matcher.group("name"));
+            System.out.println(matcher.group("unsigned"));
+            System.out.println(matcher.group("notNull"));
+            System.out.println(matcher.group("comment"));
+
+        }
+
     }
 }

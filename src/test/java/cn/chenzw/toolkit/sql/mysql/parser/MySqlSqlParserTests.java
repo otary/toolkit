@@ -3,8 +3,6 @@ package cn.chenzw.toolkit.sql.mysql.parser;
 import cn.chenzw.toolkit.sql.core.context.SqlParserContext;
 import cn.chenzw.toolkit.sql.core.meta.SqlMetaData;
 import cn.chenzw.toolkit.sql.core.parser.SqlParser;
-import cn.chenzw.toolkit.sql.exception.SqlParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +18,7 @@ public class MySqlSqlParserTests {
 
     @SneakyThrows
     @Test
-    public void testParse() throws SqlParseException, JsonProcessingException {
+    public void testParse() {
         SqlParser sqlParser = new MySqlSqlParser();
         SqlParserContext parserContext = new SqlParserContext();
         parserContext.setCreateTableSql("DROP TABLE IF EXISTS `duty_line`;\n" +

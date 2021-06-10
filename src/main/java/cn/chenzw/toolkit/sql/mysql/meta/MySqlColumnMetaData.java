@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.sql.mysql.meta;
 
 import cn.chenzw.toolkit.sql.core.meta.ColumnMetaData;
+import lombok.Data;
 
 /**
  * MySql列元数据
@@ -8,6 +9,7 @@ import cn.chenzw.toolkit.sql.core.meta.ColumnMetaData;
  * @author chenzw
  * @since 1.0.3
  */
+@Data
 public class MySqlColumnMetaData implements ColumnMetaData {
 
     private String columnName;
@@ -18,11 +20,18 @@ public class MySqlColumnMetaData implements ColumnMetaData {
 
     private String remarks;
 
+    private String defaultValue;
+
     private Boolean primaryKey;
 
     private Boolean foreignKey;
 
     private Boolean nullable;
+
+    /**
+     * 默认值
+     */
+    private String columnDef;
 
 
     @Override

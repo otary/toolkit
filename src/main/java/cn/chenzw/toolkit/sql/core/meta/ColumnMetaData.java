@@ -1,8 +1,5 @@
 package cn.chenzw.toolkit.sql.core.meta;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import lombok.Data;
-
 /**
  * 列元数据
  *
@@ -47,5 +44,12 @@ public interface ColumnMetaData {
      * 是否允许为空
      */
     Boolean getNullable();
+
+    /**
+     * 默认值
+     *
+     * @return
+     */
+    String getColumnDef();
 
 }
