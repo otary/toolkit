@@ -1,7 +1,10 @@
 package cn.chenzw.toolkit.sql.core.meta;
 
+import java.util.Map;
+
 /**
  * 表格
+ *
  * @author chenzw
  */
 public interface TableMetaData {
@@ -19,5 +22,13 @@ public interface TableMetaData {
      * @return
      */
     String getRemarks();
+
+
+    /**
+     * 扩展属性
+     *
+     * @return
+     */
+    Map<String, Object> getExt();
 }
 

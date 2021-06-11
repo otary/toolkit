@@ -31,7 +31,7 @@ public class MySqlSqlParser extends AbstractSqlParser {
 
     private Pattern columnDefinitionPattern = Pattern.compile("\\(([\\s\\S]*)\\)");
 
-    private Pattern columnPattern = Pattern.compile("`(?<name>.*?)`\\s*(?<dataType>int|bigint|varchar|date)?(?:\\((?<size>\\d+)\\))?\\s*(?<unsigned>unsigned)?\\s*(?<notNull>not null)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*comment\\s*`(?<comment>.*?)`");
+    private Pattern columnPattern = Pattern.compile("`(?<name>.*?)`\\s*(?<dataType>int|bigint|varchar|date|datetime)?(?:\\((?<size>\\d+)\\))?\\s*(?<unsigned>unsigned)?\\s*(?<notNull>not null)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*comment\\s*`(?<comment>.*?)`");
 
 
     @Override
@@ -77,10 +77,6 @@ public class MySqlSqlParser extends AbstractSqlParser {
         List<MySqlColumnMetaData> columnMetaDatas = new ArrayList<>();
         for (String columnDefinition : columnDefinitions) {
 
-            System.out.println(columnDefinition);
-
-            System.out.println(columnPattern.toString());
-
             Matcher matcher = columnPattern.matcher(columnDefinition);
             if (matcher.find()) {
                 MySqlColumnMetaData columnMetaData = new MySqlColumnMetaData();
@@ -92,17 +88,9 @@ public class MySqlSqlParser extends AbstractSqlParser {
                         null : Integer.valueOf(matcher.group("size")));
 
                 columnMetaData.setColumnDef(matcher.group("defaultValue"));
-
-
                 columnMetaDatas.add(columnMetaData);
             }
         }
-
-
-/*        System.out.println(matcher.group("unsigned"));
-        System.out.println(matcher.group("notNull"));*/
-
-
         return columnMetaDatas;
     }
 

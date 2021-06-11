@@ -1,5 +1,7 @@
 package cn.chenzw.toolkit.sql.core.meta;
 
+import java.util.Map;
+
 /**
  * 列元数据
  *
@@ -51,5 +53,12 @@ public interface ColumnMetaData {
      * @return
      */
     String getColumnDef();
+
+    /**
+     * 扩展属性
+     *
+     * @return
+     */
+    Map<String, Object> getExt();
 
 }

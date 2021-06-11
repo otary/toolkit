@@ -3,6 +3,8 @@ package cn.chenzw.toolkit.sql.mysql.meta;
 import cn.chenzw.toolkit.sql.core.meta.ColumnMetaData;
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * MySql列元数据
  *
@@ -32,6 +34,11 @@ public class MySqlColumnMetaData implements ColumnMetaData {
      * 默认值
      */
     private String columnDef;
+
+    /**
+     * 扩展属性
+     */
+    private Map<String, Object> ext;
 
 
     @Override
@@ -67,6 +74,11 @@ public class MySqlColumnMetaData implements ColumnMetaData {
     @Override
     public Boolean getNullable() {
         return nullable;
+    }
+
+    @Override
+    public Map<String, Object> getExt() {
+        return ext;
     }
 
 
