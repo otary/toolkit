@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.sql.mysql.meta;
 
 import cn.chenzw.toolkit.sql.core.meta.TableMetaData;
+import lombok.Data;
 
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import java.util.Map;
  * @author chenzw
  * @since 1.0.3
  */
+@Data
 public class MySqlTableMetaData implements TableMetaData {
 
     private String tableName;

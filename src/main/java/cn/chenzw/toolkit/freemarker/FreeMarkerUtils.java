@@ -108,7 +108,7 @@ public abstract class FreeMarkerUtils {
         if (freeMarkerBuilder == null) {
             freeMarkerBuilder = FreeMarkerBuilder.create();
         }
-        return freeMarkerBuilder.templateContent(templateContent).templateName("stringTemplate").build();
+        return freeMarkerBuilder.templateContent(templateContent).templateName("StringTemplate").build();
 
     }
 

@@ -20,6 +20,8 @@ public class MySqlColumnMetaData implements ColumnMetaData {
 
     private Integer columnSize;
 
+    private Integer decimalDigits;
+
     private String remarks;
 
     private String defaultValue;
@@ -29,6 +31,8 @@ public class MySqlColumnMetaData implements ColumnMetaData {
     private Boolean foreignKey;
 
     private Boolean nullable;
+
+    private Boolean autoIncrement;
 
     /**
      * 默认值
@@ -57,6 +61,11 @@ public class MySqlColumnMetaData implements ColumnMetaData {
     }
 
     @Override
+    public Integer getDecimalDigits() {
+        return decimalDigits;
+    }
+
+    @Override
     public String getRemarks() {
         return remarks;
     }
@@ -81,5 +90,8 @@ public class MySqlColumnMetaData implements ColumnMetaData {
         return ext;
     }
 
-
+    @Override
+    public Boolean getAutoIncrement() {
+        return autoIncrement;
+    }
 }

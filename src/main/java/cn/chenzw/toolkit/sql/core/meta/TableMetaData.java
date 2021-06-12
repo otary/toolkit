@@ -30,5 +30,7 @@ public interface TableMetaData {
      * @return
      */
     Map<String, Object> getExt();
+
+    void setExt(Map<String, Object> extMap);
 }
 

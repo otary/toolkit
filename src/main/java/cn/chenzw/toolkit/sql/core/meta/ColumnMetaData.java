@@ -26,6 +26,13 @@ public interface ColumnMetaData {
     Integer getColumnSize();
 
     /**
+     * 小数位
+     *
+     * @return
+     */
+    Integer getDecimalDigits();
+
+    /**
      * 备注
      */
     String getRemarks();
@@ -48,11 +55,19 @@ public interface ColumnMetaData {
     Boolean getNullable();
 
     /**
+     * 是否自增
+     *
+     * @return
+     */
+    Boolean getAutoIncrement();
+
+    /**
      * 默认值
      *
      * @return
      */
     String getColumnDef();
+
 
     /**
      * 扩展属性
@@ -60,5 +75,7 @@ public interface ColumnMetaData {
      * @return
      */
     Map<String, Object> getExt();
+
+    void setExt(Map<String, Object> extMap);
 
 }

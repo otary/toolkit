@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,8 +32,9 @@ public class MySqlSqlParser extends AbstractSqlParser {
 
     private Pattern columnDefinitionPattern = Pattern.compile("\\(([\\s\\S]*)\\)");
 
-    private Pattern columnPattern = Pattern.compile("`(?<name>.*?)`\\s*(?<dataType>int|bigint|varchar|date|datetime)?(?:\\((?<size>\\d+)\\))?\\s*(?<unsigned>unsigned)?\\s*(?<notNull>not null)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*comment\\s*`(?<comment>.*?)`");
+    private Pattern columnPattern = Pattern.compile("^`(?<name>.*?)`\\s*(?<dataType>tinyint|smallint|mediumint|integer|int|bigint|float|double|decimal|date|datetime|year|timestamp|time|char|varchar|tinytext|text|mediumtext|longtext|blob|mediumblob|longblob)?(?:\\((?<size>\\d+)\\))?\\s*(?<unsigned>unsigned)?\\s*(?<notNull>not null)?\\s*(?<autoIncrement>auto_increment)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*(?:comment\\s*`(?<comment>.*?)`)?");
 
+    private Pattern primaryKeyPattern = Pattern.compile("primary\\s*key\\s*\\(`(.*?)`\\)");
 
     @Override
     protected void preParse(SqlParserContext parserContext) throws SqlParseException {
@@ -72,23 +74,42 @@ public class MySqlSqlParser extends AbstractSqlParser {
         String columnDefinitionContent = findMatchingValue(columnDefinitionPattern, createTableSql);
 
         // 字段分离
-        String[] columnDefinitions = columnDefinitionContent.split(",\\n");
+        String[] columnDefinitions = columnDefinitionContent.split(",\\n|,\\r\\n");
 
         List<MySqlColumnMetaData> columnMetaDatas = new ArrayList<>();
         for (String columnDefinition : columnDefinitions) {
 
-            Matcher matcher = columnPattern.matcher(columnDefinition);
+            Matcher matcher = columnPattern.matcher(columnDefinition.trim());
             if (matcher.find()) {
                 MySqlColumnMetaData columnMetaData = new MySqlColumnMetaData();
                 columnMetaData.setColumnName(matcher.group("name"));
                 columnMetaData.setDataType(matcher.group("dataType"));
-                // columnMetaData.setNullable(matcher.group("notNull"));
                 columnMetaData.setRemarks(matcher.group("comment"));
                 columnMetaData.setColumnSize(matcher.group("size") == null ?
                         null : Integer.valueOf(matcher.group("size")));
 
+                String autoIncrement = matcher.group("autoIncrement");
+                if (autoIncrement != null) {
+                    columnMetaData.setAutoIncrement(true);
+                }
+
+                String notNull = matcher.group("notNull");
+                if (notNull != null) {
+                    columnMetaData.setNullable(false);
+                }
+
                 columnMetaData.setColumnDef(matcher.group("defaultValue"));
                 columnMetaDatas.add(columnMetaData);
+            }
+
+            // 设置主键
+            String primaryKey = findMatchingValue(primaryKeyPattern, columnDefinition.trim());
+            if (StringUtils.isNotBlank(primaryKey)) {
+                columnMetaDatas.stream().forEach((data) -> {
+                    if (Objects.equals(primaryKey, data.getColumnName())) {
+                        data.setPrimaryKey(true);
+                    }
+                });
             }
         }
         return columnMetaDatas;
