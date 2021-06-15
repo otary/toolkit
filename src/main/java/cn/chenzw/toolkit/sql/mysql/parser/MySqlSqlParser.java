@@ -26,15 +26,15 @@ import java.util.regex.Pattern;
 @Slf4j
 public class MySqlSqlParser extends AbstractSqlParser {
 
-    private Pattern tableNamePattern = Pattern.compile("create\\s*table\\s*(?=if\\s*not\\s*exists\\s*)?`?(.*?)`?\\s*\\(");
+    private static final Pattern TABLE_NAME_PATTERN = Pattern.compile("create\\s*table\\s*(?=if\\s*not\\s*exists\\s*)?`?(.*?)`?\\s*\\(");
 
-    private Pattern tableCommentPattern = Pattern.compile("comment\\s*=\\s*`(.*?)`");
+    private static final Pattern TABLE_COMMENT_PATTERN = Pattern.compile("comment\\s*=\\s*`(.*?)`");
 
-    private Pattern columnDefinitionPattern = Pattern.compile("\\(([\\s\\S]*)\\)");
+    private static final Pattern COLUM_DEFINITION_PATTERN = Pattern.compile("\\(([\\s\\S]*)\\)");
 
-    private Pattern columnPattern = Pattern.compile("^`(?<name>.*?)`\\s*(?<dataType>tinyint|smallint|mediumint|integer|int|bigint|float|double|decimal|date|datetime|year|timestamp|time|char|varchar|tinytext|text|mediumtext|longtext|blob|mediumblob|longblob)?(?:\\((?<size>\\d+)\\))?\\s*(?<unsigned>unsigned)?\\s*(?<notNull>not null)?\\s*(?<autoIncrement>auto_increment)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*(?:comment\\s*`(?<comment>.*?)`)?");
+    private static final Pattern COLUMN_PATTERN = Pattern.compile("^`(?<name>.*?)`\\s*(?<dataType>tinyint|smallint|mediumint|integer|int|bigint|float|double|decimal|datetime|date|year|timestamp|time|char|varchar|tinytext|text|mediumtext|longtext|blob|mediumblob|longblob)?(?:\\((?<size>\\d+)(\\s*,?\\s*(?<digits>\\d+))?\\))?\\s*(?<unsigned>unsigned)?\\s*(character\\s*set\\s*(.*?)\\s*collate\\s*(.*?))?\\s*(?<nullable>not null|null)?\\s*(?<autoIncrement>auto_increment)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*(?:comment\\s*`(?<comment>.*?)`)?");
 
-    private Pattern primaryKeyPattern = Pattern.compile("primary\\s*key\\s*\\(`(.*?)`\\)");
+    private static final Pattern PRIMARY_KEY_PATTERN = Pattern.compile("primary\\s*key\\s*\\(`(.*?)`\\)");
 
     @Override
     protected void preParse(SqlParserContext parserContext) throws SqlParseException {
@@ -61,8 +61,8 @@ public class MySqlSqlParser extends AbstractSqlParser {
 
         //log.info("SQL => {}", createTableSql);
 
-        String tableName = findMatchingValue(tableNamePattern, createTableSql);
-        String tableComment = findMatchingValue(tableCommentPattern, createTableSql);
+        String tableName = findMatchingValue(TABLE_NAME_PATTERN, createTableSql);
+        String tableComment = findMatchingValue(TABLE_COMMENT_PATTERN, createTableSql);
 
         return new MySqlTableMetaData(tableName, tableComment);
     }
@@ -71,7 +71,7 @@ public class MySqlSqlParser extends AbstractSqlParser {
     protected List<? extends ColumnMetaData> parseColumnMeta(SqlParserContext parserContext) throws SqlParseException {
         String createTableSql = parserContext.getCreateTableSql();
 
-        String columnDefinitionContent = findMatchingValue(columnDefinitionPattern, createTableSql);
+        String columnDefinitionContent = findMatchingValue(COLUM_DEFINITION_PATTERN, createTableSql);
 
         // 字段分离
         String[] columnDefinitions = columnDefinitionContent.split(",\\n|,\\r\\n");
@@ -79,7 +79,7 @@ public class MySqlSqlParser extends AbstractSqlParser {
         List<MySqlColumnMetaData> columnMetaDatas = new ArrayList<>();
         for (String columnDefinition : columnDefinitions) {
 
-            Matcher matcher = columnPattern.matcher(columnDefinition.trim());
+            Matcher matcher = COLUMN_PATTERN.matcher(columnDefinition.trim());
             if (matcher.find()) {
                 MySqlColumnMetaData columnMetaData = new MySqlColumnMetaData();
                 columnMetaData.setColumnName(matcher.group("name"));
@@ -87,15 +87,22 @@ public class MySqlSqlParser extends AbstractSqlParser {
                 columnMetaData.setRemarks(matcher.group("comment"));
                 columnMetaData.setColumnSize(matcher.group("size") == null ?
                         null : Integer.valueOf(matcher.group("size")));
+                columnMetaData.setDecimalDigits(matcher.group("digits") == null ?
+                        null : Integer.valueOf(matcher.group("digits")));
 
                 String autoIncrement = matcher.group("autoIncrement");
                 if (autoIncrement != null) {
                     columnMetaData.setAutoIncrement(true);
                 }
 
-                String notNull = matcher.group("notNull");
-                if (notNull != null) {
-                    columnMetaData.setNullable(false);
+                String nullable = matcher.group("nullable");
+                if (nullable != null) {
+                    if ("null".equalsIgnoreCase(nullable)) {
+                        columnMetaData.setNullable(true);
+                    }
+                    if ("not null".equalsIgnoreCase(nullable)) {
+                        columnMetaData.setNullable(false);
+                    }
                 }
 
                 columnMetaData.setColumnDef(matcher.group("defaultValue"));
@@ -103,7 +110,7 @@ public class MySqlSqlParser extends AbstractSqlParser {
             }
 
             // 设置主键
-            String primaryKey = findMatchingValue(primaryKeyPattern, columnDefinition.trim());
+            String primaryKey = findMatchingValue(PRIMARY_KEY_PATTERN, columnDefinition.trim());
             if (StringUtils.isNotBlank(primaryKey)) {
                 columnMetaDatas.stream().forEach((data) -> {
                     if (Objects.equals(primaryKey, data.getColumnName())) {
