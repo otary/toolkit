@@ -26,8 +26,8 @@ public class MySqlSqlParserTests {
                 "  `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主题',\n" +
                 "  `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '语录内容',\n" +
                 "  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',\n" +
-                "  `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',\n" +
-                "  `likes_count` int(0) NOT NULL DEFAULT 0 COMMENT '点赞次数',\n" +
+                "  `update_time` date NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',\n" +
+                "  `likes_count` datetime NOT NULL DEFAULT 0 COMMENT '点赞次数',\n" +
                 "  `collect_count` int(0) NOT NULL DEFAULT 0 COMMENT '收藏数量',\n" +
                 "  `view_count` int(0) NOT NULL DEFAULT 0 COMMENT '查看次数',\n" +
                 "  `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'PUBLISH' COMMENT '状态',\n" +
