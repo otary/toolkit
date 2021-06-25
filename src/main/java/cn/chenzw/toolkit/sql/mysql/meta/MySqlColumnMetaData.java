@@ -26,13 +26,13 @@ public class MySqlColumnMetaData implements ColumnMetaData {
 
     private String defaultValue;
 
-    private Boolean primaryKey;
+    private Boolean primaryKey = Boolean.FALSE;
 
     private Boolean foreignKey;
 
-    private Boolean nullable;
+    private Boolean nullable = Boolean.TRUE;
 
-    private Boolean autoIncrement;
+    private Boolean autoIncrement = Boolean.FALSE;
 
     /**
      * 默认值
