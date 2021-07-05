@@ -51,4 +51,30 @@ public final class MapExtUtils {
         return null;
     }
 
+    /**
+     * 获取深层值
+     *
+     * @param map
+     * @param deepKeys
+     * @param <T>
+     * @return
+     */
+    public static final <T> T getDeepValue(Map<String, T> map, String[] deepKeys) {
+        Map<String, T> tmp = map;
+        for (int i = 0; i < deepKeys.length; i++) {
+            Object value = tmp.get(deepKeys[i]);
+            // 最后一个元素
+            if (i == deepKeys.length - 1) {
+                return (T) value;
+            }
+
+            if (!(value instanceof Map)) {
+                return null;
+            }
+            tmp = (Map<String, T>) value;
+        }
+        return null;
+    }
+
+
 }
