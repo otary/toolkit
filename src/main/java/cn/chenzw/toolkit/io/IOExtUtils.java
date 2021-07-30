@@ -1,5 +1,7 @@
 package cn.chenzw.toolkit.io;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.*;
 import java.util.Objects;
 
@@ -23,13 +25,7 @@ public final class IOExtUtils {
         }
 
         is.mark(Integer.MAX_VALUE);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = is.read(buffer)) > -1) {
-            baos.write(buffer, 0, len);
-        }
-        baos.flush();
+        ByteArrayOutputStream baos = toByteArrayOutputStream(is);
         is.reset();
         return new ByteArrayInputStream(baos.toByteArray());
     }
@@ -48,5 +44,22 @@ public final class IOExtUtils {
         } else {
             throw new IllegalArgumentException("Just support ByteArrayOutputStream!");
         }
+    }
+
+    /**
+     * 转ByteArrayOutputStream
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    public static ByteArrayOutputStream toByteArrayOutputStream(InputStream is) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = is.read(buffer)) > -1) {
+            baos.write(buffer, 0, len);
+        }
+        baos.flush();
+        return baos;
     }
 }

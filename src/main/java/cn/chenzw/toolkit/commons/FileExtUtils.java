@@ -1,10 +1,14 @@
 package cn.chenzw.toolkit.commons;
 
+import cn.chenzw.toolkit.commons.enums.FileType;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -59,6 +63,24 @@ public class FileExtUtils {
      */
     public static String getTempDir() {
         return System.getProperty("java.io.tmpdir");
+    }
+
+
+    public static FileType getFileType(InputStream is) throws IOException {
+        // 缓存前N个字节
+        byte[] cacheBytes = new byte[20];
+        is.read(cacheBytes, 0, cacheBytes.length);
+
+        FileType[] fileTypes = FileType.values();
+        for (FileType fileType : fileTypes) {
+            byte[] headBytes = new byte[fileType.headBytes()];
+            System.arraycopy(cacheBytes, 0, headBytes, 0, fileType.headBytes());
+            String hex = BinaryConvertUtils.bytesToHexString(headBytes).toUpperCase();
+            if (Objects.equals(hex, fileType.signatureCode())) {
+                return fileType;
+            }
+        }
+        return null;
     }
 
 
