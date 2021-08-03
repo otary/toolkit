@@ -76,6 +76,7 @@ public class FileExtUtils {
             byte[] headBytes = new byte[fileType.headBytes()];
             System.arraycopy(cacheBytes, 0, headBytes, 0, fileType.headBytes());
             String hex = BinaryConvertUtils.bytesToHexString(headBytes).toUpperCase();
+            System.out.println(hex);
             if (Objects.equals(hex, fileType.signatureCode())) {
                 return fileType;
             }

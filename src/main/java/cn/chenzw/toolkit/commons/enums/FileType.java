@@ -35,8 +35,12 @@ public enum FileType {
     MPEG_2(4, "000001B3", ".mpg", ""),
     MOV(4, "6D6F6F76", ".mov", "Quicktime"),
     ASF(8, "3026B2758E66CF11", ".asf", "Windows Media"),
-    MID(4, "4D546864", ".mid", "MIDI");
-
+    MID(4, "4D546864", ".mid", "MIDI"),
+    JAR(5, "504B03040A", ".jar", ""),
+    JAVA(10, "7061636B616765207765", ".java", ""),
+    BAT(10, "406563686F206F66660D", ".bat", ""),
+    CLASS(10, "CAFEBABE0000002E0041", ".class", ""),
+    DOCX(10, "504B0304140006000800", ".docx", "");
 
 
     private int headBytes;

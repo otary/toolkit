@@ -25,8 +25,10 @@ public class FileExtUtilsTests {
         FileType fileType = FileExtUtils.getFileType(is);
         Assert.assertSame(FileType.XML, fileType);
 
-       // InputStream is2 = Thread.currentThread().getContextClassLoader().getResourceAsStream("commons/template.xlsx");
-       // FileType fileType2 = FileExtUtils.getFileType(is2);
+        InputStream is2 = Thread.currentThread().getContextClassLoader().getResourceAsStream("commons/index.js");
+        FileType fileType2 = FileExtUtils.getFileType(is2);
+
+        System.out.println(fileType2);
 
     }
 
