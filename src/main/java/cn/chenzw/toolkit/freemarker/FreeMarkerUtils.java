@@ -3,6 +3,7 @@ package cn.chenzw.toolkit.freemarker;
 import cn.chenzw.toolkit.freemarker.builder.FreeMarkerBuilder;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 import java.io.*;
@@ -72,7 +73,7 @@ public abstract class FreeMarkerUtils {
         processToFile(toTemplate(templateFile, freeMarkerBuilder), dataModel, outFile);
     }
 
-    public static void processToFile(Template template, Object dataModel, File outFile) {
+    public static void processToFile(Template template, Object dataModel, File outFile) throws TemplateException, IOException {
         Validate.notNull(outFile, "Freemarker out file is null !");
 
         if (outFile.getParentFile() != null) {
@@ -83,8 +84,6 @@ public abstract class FreeMarkerUtils {
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)))) {
             template.process(dataModel, bufferedWriter);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -108,8 +107,7 @@ public abstract class FreeMarkerUtils {
         if (freeMarkerBuilder == null) {
             freeMarkerBuilder = FreeMarkerBuilder.create();
         }
-        return freeMarkerBuilder.templateContent(templateContent).templateName("StringTemplate").build();
-
+        return freeMarkerBuilder.templateContent(templateContent).templateName(StringUtils.defaultIfBlank(freeMarkerBuilder.getTemplateName(), "StringTemplate")).build();
     }
 
 

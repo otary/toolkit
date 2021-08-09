@@ -89,6 +89,10 @@ public class FreeMarkerBuilder {
         return this;
     }
 
+    public String getTemplateName() {
+        return this.templateName;
+    }
+
     public FreeMarkerBuilder templateContent(String templateContent) {
         this.templateContent = templateContent;
         return this;
