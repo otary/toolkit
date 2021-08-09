@@ -36,4 +36,12 @@ public class MySqlSqlMetaData implements SqlMetaData {
     public void setColumnMetaDatas(List<? extends ColumnMetaData> columnMetaDatas) {
         this.columnMetaDatas = (List<MySqlColumnMetaData>) columnMetaDatas;
     }
+
+    @Override
+    public String toString() {
+        return "MySqlSqlMetaData{" +
+                "tableMetaData=" + tableMetaData +
+                ", columnMetaDatas=" + columnMetaDatas +
+                '}';
+    }
 }
