@@ -3,7 +3,9 @@ package cn.chenzw.toolkit.commons;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,31 +23,45 @@ public final class JsonUtils {
      *
      * @param json
      * @return
-     * @throws JsonProcessingException
      */
-    public static String json2Xml(String json) throws JsonProcessingException {
-        Map map = objectMapper.readValue(json, Map.class);
+    public static String json2Xml(String json) {
+        Map map = null;
+        try {
+            map = objectMapper.readValue(json, Map.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return map2Xml(map);
     }
 
     private static String map2Xml(Map<String, Object> map) {
-        return recursionMap2Xml(map);
+        return recursionItem2Xml(map, null);
     }
 
-    private static String recursionMap2Xml(Map<String, Object> map) {
+    private static String recursionItem2Xml(Object item, String key) {
         StringBuilder resultBuilder = new StringBuilder();
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            if (entry.getValue() instanceof Map) {
-                resultBuilder.append("<").append(entry.getKey()).append(">")
-                        .append(recursionMap2Xml((Map<String, Object>) entry.getValue()))
-                        .append("</").append(entry.getKey()).append(">");
-            } else {
-                resultBuilder.append("<").append(entry.getKey()).append(">")
-                        .append(entry.getValue())
-                        .append("</").append(entry.getKey()).append(">");
+        if (item instanceof List) {
+            for (Object item2 : (List) item) {
+                resultBuilder.append("<").append(key).append(">")
+                        .append(recursionItem2Xml(item2, ""))
+                        .append("</").append(key).append(">");
             }
+        } else if (item instanceof Map) {
+            if (StringUtils.isNotBlank(key)) {
+                resultBuilder.append("<").append(key).append(">");
+            }
+            for (Map.Entry<String, Object> entry : ((Map<String, Object>) item).entrySet()) {
+                resultBuilder
+                        .append(recursionItem2Xml(entry.getValue(), entry.getKey()));
+            }
+            if (StringUtils.isNotBlank(key)) {
+                resultBuilder.append("</").append(key).append(">");
+            }
+        } else {
+            resultBuilder.append("<").append(key).append(">")
+                    .append(item)
+                    .append("</").append(key).append(">");
         }
         return resultBuilder.toString();
     }
-
 }
