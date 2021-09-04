@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public final class JsonUtils {
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
     /**
      * JSON转Xml
      *
@@ -22,7 +24,6 @@ public final class JsonUtils {
      * @throws JsonProcessingException
      */
     public static String json2Xml(String json) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
         Map map = objectMapper.readValue(json, Map.class);
         return map2Xml(map);
     }

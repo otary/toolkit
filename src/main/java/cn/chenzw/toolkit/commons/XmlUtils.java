@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class XmlUtils {
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * xml => map
@@ -46,13 +47,13 @@ public class XmlUtils {
 
     /**
      * XML转JSON
+     *
      * @param xml
      * @return
      * @throws DocumentException
      */
     public static String xml2Json(String xml) throws DocumentException {
         Map<Object, Object> map = xmlToMap(xml);
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
