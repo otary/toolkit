@@ -1,5 +1,7 @@
 package cn.chenzw.toolkit.commons;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -18,6 +20,7 @@ import java.util.Map;
 
 public class XmlUtils {
 
+
     /**
      * xml => map
      *
@@ -35,9 +38,27 @@ public class XmlUtils {
             return contextMap;
         }
 
+        // 遍历
         recursionXmlToMap(doc.getRootElement(), contextMap);
 
         return contextMap;
+    }
+
+    /**
+     * XML转JSON
+     * @param xml
+     * @return
+     * @throws DocumentException
+     */
+    public static String xml2Json(String xml) throws DocumentException {
+        Map<Object, Object> map = xmlToMap(xml);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static <K, V> void recursionXmlToMap(Element element, Map<K, V> contextMap) {

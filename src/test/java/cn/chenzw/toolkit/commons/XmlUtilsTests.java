@@ -22,4 +22,19 @@ public class XmlUtilsTests {
 
         Assert.assertEquals("{note={heading=Reminder, from=John, to=George, body={b=xxx}}}", result.toString());
     }
+
+    @Test
+    public void testXml2Json() throws DocumentException {
+        String json = XmlUtils.xml2Json("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                "<root> \n" +
+                "    <a>aaa</a>\n" +
+                "    <b>bbb</b>\n" +
+                "    <c>\n" +
+                "        <d>ddd</d>\n" +
+                "        <e>eee</e>\n" +
+                "    </c>\n" +
+                "</root>");
+
+        Assert.assertEquals("{\"root\":{\"a\":\"aaa\",\"b\":\"bbb\",\"c\":{\"d\":\"ddd\",\"e\":\"eee\"}}}", json);
+    }
 }
