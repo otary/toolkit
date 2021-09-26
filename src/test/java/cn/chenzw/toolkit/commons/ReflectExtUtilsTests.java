@@ -2,6 +2,7 @@ package cn.chenzw.toolkit.commons;
 
 import cn.chenzw.toolkit.commons.exception.ConvertException;
 import cn.chenzw.toolkit.commons.exception.FieldNotExistException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
 
+@Slf4j
 @RunWith(JUnit4.class)
 public class ReflectExtUtilsTests {
 
@@ -21,7 +23,8 @@ public class ReflectExtUtilsTests {
     @Test
     public void testGetFields() {
         Field[] fields = ReflectExtUtils.getFields(Children.class);
-        System.out.println(Arrays.toString(fields));
+
+        log.info("=> {}", Arrays.toString(fields));
     }
 
     @Test
@@ -51,18 +54,11 @@ public class ReflectExtUtilsTests {
         ReflectExtUtils.setFieldValue(children, "childId2", 1); // 字段不存在
     }
 
-    @Test
-    public void testSetStaticFinalFieldValue() throws IllegalAccessException, FieldNotExistException, NoSuchFieldException {
-        Children children = new Children();
-        ReflectExtUtils.setStaticFinalFieldValue(children, "SID", "2.0");
-
-        Assert.assertEquals("2.0", Children.getSID());
-    }
 
     @Test
     public void testGetMethods() {
         Method[] methods = ReflectExtUtils.getMethods(Children.class);
-        System.out.println(Arrays.toString(methods));
+        log.info("=> {}", Arrays.toString(methods));
     }
 
     @Test
@@ -132,6 +128,13 @@ public class ReflectExtUtilsTests {
         Assert.assertEquals("[message]", Arrays.toString(constructorParameterNames));
     }
 
+    @Test
+    public void testSetStaticFinalFieldValue() throws IllegalAccessException, FieldNotExistException, NoSuchFieldException {
+        Children children = new Children();
+        ReflectExtUtils.setStaticFinalFieldValue(children, "SID", "2.0");
+
+        Assert.assertEquals("2.0", Children.getSID());
+    }
 }
 
 

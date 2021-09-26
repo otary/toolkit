@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.commons;
 
 import cn.chenzw.toolkit.commons.enums.FileType;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.junit.runners.JUnit4;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Slf4j
 @RunWith(JUnit4.class)
 public class FileExtUtilsTests {
 
@@ -28,8 +30,7 @@ public class FileExtUtilsTests {
         InputStream is2 = Thread.currentThread().getContextClassLoader().getResourceAsStream("commons/index.js");
         FileType fileType2 = FileExtUtils.getFileType(is2);
 
-        System.out.println(fileType2);
-
+        log.info("文件类型 => {}", fileType2);
     }
 
 }

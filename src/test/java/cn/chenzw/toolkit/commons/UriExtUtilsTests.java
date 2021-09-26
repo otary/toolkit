@@ -61,7 +61,7 @@ public class UriExtUtilsTests {
 
         String uri = UriExtUtils.buildParams("http://www.baidu.com", book);
 
-        Assert.assertEquals("http://www.baidu.com?isbn=ISN12345&name=hello&id=1", uri);
+        Assert.assertEquals("http://www.baidu.com?id=1&isbn=ISN12345&name=hello", uri);
     }
 
     @Test
