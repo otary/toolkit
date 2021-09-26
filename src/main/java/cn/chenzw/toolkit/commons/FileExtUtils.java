@@ -92,6 +92,10 @@ public class FileExtUtils {
                 return fileType;
             }
         }
+
+        String cacheHex = BinaryConvertUtils.bytesToHexString(cacheBytes).toUpperCase();
+        log.debug("File HeadBytes hex [{}] not matched!", cacheHex);
+
         return null;
     }
 
@@ -118,6 +122,12 @@ public class FileExtUtils {
                 matchedFileTypes.add(fileType);
             }
         }
+
+        if (matchedFileTypes.isEmpty()) {
+            String cacheHex = BinaryConvertUtils.bytesToHexString(cacheBytes).toUpperCase();
+            log.debug("File HeadBytes hex [{}] not matched!", cacheHex);
+        }
+
         return matchedFileTypes.toArray(new FileType[matchedFileTypes.size()]);
     }
 
