@@ -1,6 +1,7 @@
 package cn.chenzw.toolkit.commons;
 
 import cn.chenzw.toolkit.commons.enums.FileType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,6 +19,7 @@ import java.util.UUID;
  *
  * @author chenzw
  */
+@Slf4j
 public class FileExtUtils {
 
     private FileExtUtils() {
@@ -66,6 +70,13 @@ public class FileExtUtils {
     }
 
 
+    /**
+     * 获取文件类型
+     *
+     * @param is
+     * @return
+     * @throws IOException
+     */
     public static FileType getFileType(InputStream is) throws IOException {
         // 缓存前N个字节
         byte[] cacheBytes = new byte[20];
@@ -76,12 +87,38 @@ public class FileExtUtils {
             byte[] headBytes = new byte[fileType.headBytes()];
             System.arraycopy(cacheBytes, 0, headBytes, 0, fileType.headBytes());
             String hex = BinaryConvertUtils.bytesToHexString(headBytes).toUpperCase();
-            System.out.println(hex);
+
             if (Objects.equals(hex, fileType.signatureCode())) {
                 return fileType;
             }
         }
         return null;
+    }
+
+    /**
+     * 获取可能的文件类型列表
+     *
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    public static FileType[] getProbableFileType(InputStream is) throws IOException {
+        // 缓存前N个字节
+        byte[] cacheBytes = new byte[20];
+        is.read(cacheBytes, 0, cacheBytes.length);
+
+        List<FileType> matchedFileTypes = new ArrayList<>();
+        FileType[] fileTypes = FileType.values();
+        for (FileType fileType : fileTypes) {
+            byte[] headBytes = new byte[fileType.headBytes()];
+            System.arraycopy(cacheBytes, 0, headBytes, 0, fileType.headBytes());
+            String hex = BinaryConvertUtils.bytesToHexString(headBytes).toUpperCase();
+
+            if (Objects.equals(hex, fileType.signatureCode())) {
+                matchedFileTypes.add(fileType);
+            }
+        }
+        return matchedFileTypes.toArray(new FileType[matchedFileTypes.size()]);
     }
 
 

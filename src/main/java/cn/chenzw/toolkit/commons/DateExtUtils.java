@@ -156,6 +156,34 @@ public class DateExtUtils {
     }
 
     /**
+     * 获取上个月日期
+     *
+     * @param date
+     * @return
+     */
+    public static Date getLastMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MONTH, -1);
+        eraseTime(calendar);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取下个月日期
+     *
+     * @param date
+     * @return
+     */
+    public static Date getNextMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MONTH, 1);
+        eraseTime(calendar);
+        return calendar.getTime();
+    }
+
+    /**
      * 获取某天的昨天
      *
      * @param date
