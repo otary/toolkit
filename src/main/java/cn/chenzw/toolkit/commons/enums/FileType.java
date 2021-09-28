@@ -24,6 +24,7 @@ public enum FileType {
 
     EXE(2, "4D5A", ".exe", "", "EXE", "Executable file"),
     EMAIL(14, "44656C69766572792D646174653A", ".eml", "", "EMAIL", ""),
+    ESP(20, "252150532D41646F62652D332E3020455053462D", ".esp", "", "ESP", "EPS File"),
 
     FLV(3, "464C56", ".flv", "", "FLV", ""),
 
@@ -36,6 +37,7 @@ public enum FileType {
     JPEG(2, "FFD8", ".jpg", "", "JPEG", ""),
     JP2(10, "0000000C6A5020200D0A", ".jp2", "", "", ""),
     JAR(5, "504B03040A", ".jar", "", "JAR", ""),
+
 
     MS_ACCESS(10, "5374616E64617264204A", ".mdb", "", "ACCESS", ""),
     MPEG(4, "000001BA", ".mpg", "", "MPEG", ""),
@@ -50,7 +52,8 @@ public enum FileType {
     OUTLOOK_EXPRESS(8, "CFAD12FEC5FD746F", ".dbx", "", "OUTLOOK_EXPRESS", ""),
     OUTLOOK(4, "21424442", ".pst", "", "OUTLOOK", "Outlook Post Office file"),
     OBJ(2, "4C01", ".obj", "", "OBJ", "Object Code File"),
-   // OUTLOOK_MESSAGE(8, "D0CF11E0A1B11AE1", ".msg", "", "MSG", "")
+    OUTLOOK_MESSAGE(8, "D0CF11E0A1B11AE1", ".msg", "", "MSG", ""),
+
 
     PNG(4, "89504E47", ".png", "", "PNG", ""),
     PSD(4, "38425053", ".psd", "Photoshop", "PSD文件", ""),
@@ -67,6 +70,7 @@ public enum FileType {
 
     SWF(3, "465753", ".swf", "", "SWF", "Flash Shockwave"),
     SYS(2, "4D5A", ".sys", "", "SYS", "SYS file"),
+    SDF(2, "789C", ".sdf", "", "SDF", "SDF file"),
 
     // 测试 4949
     TIF(4, "49492A00", ".tif", "", "TIFF", ""),
@@ -87,6 +91,7 @@ public enum FileType {
     XLS(8, "D0CF11E0A1B11AE1", ".xls", "", "EXCEL", ""),
     XLSX(4, "504B0304", ".xlsx", "", "EXCEL 2010", "Excel 2010"),
 
+    ZLIB(2, "789C", ".zlib", "", "Zlib", ""),
     ZIP(4, "504B0304", ".zip", "", "ZIP", "");
 
 
