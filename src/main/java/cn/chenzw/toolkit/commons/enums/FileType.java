@@ -6,6 +6,7 @@ package cn.chenzw.toolkit.commons.enums;
  * @author chenzw
  */
 public enum FileType {
+    A7Z(6, "377ABCAF271C", ".7z", "", "7Z", ""),
     AI(4, "25504446", ".ai", "Adobe Illustrator", "Adobe Illustrator", ""),
     ADOBE_ACROBAT(7, "255044462D312E", ".pdf", "", "ADOBE_ACROBAT", ""),
     ASF(8, "3026B2758E66CF11", ".asf", "Windows Media", "ASF", ""),
@@ -17,7 +18,7 @@ public enum FileType {
 
     CAB(4, "4D534346", ".cab", "", "CAB", "CAB Installer file"),
     CAD(4, "41433130", ".dwg", "", "CAD", ""),
-    CLASS(10, "CAFEBABE0000002E0041", ".class", "", "CLASS", ""),
+    CLASS(4, "CAFEBABE", ".class", "", "CLASS", ""),
     DOCX(10, "504B0304140006000800", ".docx", "", "DOCX", ""),
     DLL(2, "4D5A", ".dll", "", "DLL", "Dynamic Library"),
     DOC(8, "D0CF11E0A1B11AE1", ".doc", "", "DOC", ""),

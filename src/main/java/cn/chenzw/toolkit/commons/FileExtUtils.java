@@ -82,6 +82,9 @@ public class FileExtUtils {
         byte[] cacheBytes = new byte[20];
         is.read(cacheBytes, 0, cacheBytes.length);
 
+        String cacheHeadBytesHex = BinaryConvertUtils.bytesToHexString(cacheBytes).toUpperCase();
+        log.debug("File HeadBytes hex is [{}]", cacheHeadBytesHex);
+
         FileType[] fileTypes = FileType.values();
         for (FileType fileType : fileTypes) {
             byte[] headBytes = new byte[fileType.headBytes()];
@@ -93,8 +96,7 @@ public class FileExtUtils {
             }
         }
 
-        String cacheHex = BinaryConvertUtils.bytesToHexString(cacheBytes).toUpperCase();
-        log.debug("File HeadBytes hex [{}] not matched!", cacheHex);
+        log.debug("File HeadBytes hex [{}] not matched!", cacheHeadBytesHex);
 
         return null;
     }
@@ -111,6 +113,9 @@ public class FileExtUtils {
         byte[] cacheBytes = new byte[20];
         is.read(cacheBytes, 0, cacheBytes.length);
 
+        String cacheHeadBytesHex = BinaryConvertUtils.bytesToHexString(cacheBytes).toUpperCase();
+        log.debug("File HeadBytes hex is [{}]", cacheHeadBytesHex);
+
         List<FileType> matchedFileTypes = new ArrayList<>();
         FileType[] fileTypes = FileType.values();
         for (FileType fileType : fileTypes) {
@@ -124,8 +129,7 @@ public class FileExtUtils {
         }
 
         if (matchedFileTypes.isEmpty()) {
-            String cacheHex = BinaryConvertUtils.bytesToHexString(cacheBytes).toUpperCase();
-            log.debug("File HeadBytes hex [{}] not matched!", cacheHex);
+            log.debug("File HeadBytes hex [{}] not matched!", cacheHeadBytesHex);
         }
 
         return matchedFileTypes.toArray(new FileType[matchedFileTypes.size()]);
