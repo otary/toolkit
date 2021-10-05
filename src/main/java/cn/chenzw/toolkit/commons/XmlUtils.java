@@ -66,14 +66,26 @@ public class XmlUtils {
      * @return
      * @throws DocumentException
      */
-    public static String xml2Json(String xml) throws DocumentException {
-        Map<Object, Object> map = xmlToMap(xml);
+    public static String xml2Json(String xml, XmlToMapAttr xmlToMapAttr) throws DocumentException {
+        Map<Object, Object> map = xmlToMap(xml, xmlToMapAttr);
         try {
             return objectMapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * XML转JSON
+     *
+     * @param xml
+     * @return
+     * @throws DocumentException
+     */
+    public static String xml2Json(String xml) throws DocumentException {
+        return xml2Json(xml, new XmlToMapAttr());
     }
 
 

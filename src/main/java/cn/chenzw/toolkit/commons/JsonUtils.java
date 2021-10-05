@@ -2,7 +2,10 @@ package cn.chenzw.toolkit.commons;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -32,6 +35,31 @@ public final class JsonUtils {
             e.printStackTrace();
         }
         return map2Xml(map);
+    }
+
+    /**
+     * JSON 转 Yaml
+     * @param json
+     * @return
+     */
+    public static String json2Yaml(String json) {
+        return json2Yaml(json, new YAMLFactory());
+    }
+
+    /**
+     * JSON 转 Yaml
+     *
+     * @param json
+     * @return
+     */
+    public static String json2Yaml(String json, YAMLFactory yamlFactory) {
+        try {
+            JsonNode jsonNodeTree = objectMapper.readTree(json);
+            return new YAMLMapper(yamlFactory).writeValueAsString(jsonNodeTree);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static String map2Xml(Map<String, Object> map) {

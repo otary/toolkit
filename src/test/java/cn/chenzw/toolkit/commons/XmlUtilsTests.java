@@ -24,8 +24,7 @@ public class XmlUtilsTests {
                 "<body>Don't forget the meeting! <b>xxx</b></body>\n" +
                 "</note>", xmlToMapAttr);
 
-        System.out.println(result);
-        Assert.assertEquals("{note={heading=Reminder, from=John, to=George, body={b=xxx}}}", result.toString());
+        Assert.assertEquals("{note={heading={#text=Reminder}, #attrs={a=ttt, b=kk}, from={c={d={#text=xxx}}}, to={#attrs={cc=xxx, dd=yyy}, #text=George}, body={b={#text=xxx}, #text=Don't forget the meeting! }}}", result.toString());
     }
 
     @Test
