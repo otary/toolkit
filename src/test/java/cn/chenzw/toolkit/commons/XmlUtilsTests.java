@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.commons;
 
+import cn.chenzw.toolkit.commons.attr.XmlToMapAttr;
 import org.dom4j.DocumentException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,13 +14,17 @@ public class XmlUtilsTests {
 
     @Test
     public void testXmlToMap() throws DocumentException {
-        Map<String, String> result = XmlUtils.xmlToMap("<note>\n" +
-                "<to>George</to>\n" +
-                "<from>John</from>\n" +
+        XmlToMapAttr xmlToMapAttr = new XmlToMapAttr();
+        xmlToMapAttr.setUseTextAttr(true);
+
+        Map<String, String> result = XmlUtils.xmlToMap("<note a=\"ttt\" b=\"kk\">\n" +
+                "<to cc=\"xxx\" dd=\"yyy\">George</to>\n" +
+                "<from><c><d>xxx</d></c></from>\n" +
                 "<heading>Reminder</heading>\n" +
                 "<body>Don't forget the meeting! <b>xxx</b></body>\n" +
-                "</note>");
+                "</note>", xmlToMapAttr);
 
+        System.out.println(result);
         Assert.assertEquals("{note={heading=Reminder, from=John, to=George, body={b=xxx}}}", result.toString());
     }
 
