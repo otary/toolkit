@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomUtils;
  * org.apache.commons.lang3.RandomStringUtils 扩展类
  *
  * @author chenzw
+ * @since 1.0.3
  */
 public class RandomStringExtUtils {
 
