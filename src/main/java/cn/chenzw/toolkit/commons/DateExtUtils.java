@@ -241,6 +241,32 @@ public class DateExtUtils {
     }
 
     /**
+     * 获取指定年份的第一天
+     *
+     * @param year
+     * @return
+     */
+    public static Date getFirstDayOfYear(int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获取指定年份的最后一天
+     * @param year
+     * @return
+     */
+    public static Date getLastDayOfYear(int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        calendar.roll(Calendar.DAY_OF_YEAR, -1);
+        return calendar.getTime();
+    }
+
+    /**
      * 判断指定日期是否在某个时间区间内
      *
      * @param date
