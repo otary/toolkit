@@ -72,6 +72,7 @@ public enum FileType {
     SWF(3, "465753", ".swf", "", "SWF", "Flash Shockwave"),
     SYS(2, "4D5A", ".sys", "", "SYS", "SYS file"),
     SDF(2, "789C", ".sdf", "", "SDF", "SDF file"),
+    SQL_LITE(5, "53514C6974", ".db", "", "SqlLite", "SQL Lite数据库文件"),
 
     // 测试 4949
     TIF(4, "49492A00", ".tif", "", "TIFF", ""),
