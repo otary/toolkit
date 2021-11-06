@@ -25,14 +25,13 @@ public abstract class DozerPageUtils {
      * @return 目标List对象
      */
     public static <T, S> List<T> mapList(final Mapper mapper, List<S> sourceList, Class<T> targetClass) {
-        List<T> targetList = new ArrayList<>();
+        List<T> targetList = doMapList(mapper, sourceList, targetClass);
         if (sourceList instanceof Page) {
             Page<S> sourcePage = (Page<S>) sourceList;
             Page<T> targetPage = mapper.map(sourcePage, Page.class);
+            targetPage.clear();
             targetPage.addAll(targetList);
             return targetPage;
-        } else {
-            targetList = doMapList(mapper, sourceList, targetClass);
         }
         return targetList;
     }
