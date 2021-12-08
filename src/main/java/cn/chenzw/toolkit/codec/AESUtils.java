@@ -55,12 +55,13 @@ public abstract class AESUtils {
         Objects.requireNonNull(aesKeyMeta, "Parameter \"aesKeyMeta\" is null");
 
         // 解决Liux、Mac系统异常
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        /*SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         random.setSeed(key.getBytes());
-
         KeyGenerator kgen = KeyGenerator.getInstance(AES_ALGORITHM);
         kgen.init(aesKeyMeta.bitLen(), random);
-        SecretKey secretKey = kgen.generateKey();
+        SecretKey secretKey = kgen.generateKey();*/
+
+        SecretKey secretKey = new SecretKeySpec(key.getBytes(), AES_ALGORITHM);
         byte[] enCodeFormat = secretKey.getEncoded();
         SecretKeySpec keySpec = new SecretKeySpec(enCodeFormat, AES_ALGORITHM);
 
