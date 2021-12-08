@@ -46,7 +46,7 @@ RequestUtils.getFirstParamter(request.getParameter("aaa"));
 - 获取客户端IP
 
 ``` java
-RequestUtils.getClientIp();  // => 192.168.1.1
+RequestUtils.getClientIp(request);  // => 192.168.1.1
 ```
 
 ### ResponseUtils
