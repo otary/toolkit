@@ -59,11 +59,11 @@ public abstract class AESUtils {
         random.setSeed(key.getBytes());
         KeyGenerator kgen = KeyGenerator.getInstance(AES_ALGORITHM);
         kgen.init(aesKeyMeta.bitLen(), random);
-        SecretKey secretKey = kgen.generateKey();*/
-
-        SecretKey secretKey = new SecretKeySpec(key.getBytes(), AES_ALGORITHM);
+        SecretKey secretKey = kgen.generateKey();
         byte[] enCodeFormat = secretKey.getEncoded();
-        SecretKeySpec keySpec = new SecretKeySpec(enCodeFormat, AES_ALGORITHM);
+        SecretKeySpec keySpec = new SecretKeySpec(enCodeFormat, AES_ALGORITHM);*/
+
+        SecretKey keySpec = new SecretKeySpec(key.getBytes(), AES_ALGORITHM);
 
         // 创建密码器
         Cipher cipher = Cipher.getInstance(aesMode.modeAndPadding());
