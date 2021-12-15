@@ -42,10 +42,10 @@ public final class RSAUtils {
 
 
     /**
-     * 将私钥字符串转换成PrivateKey对象
+     * 将私钥字符串转换成PrivateKey对象{@link java.security.PrivateKey}对象
      *
      * @param privateKey
-     * @return
+     * @return {@link java.security.PrivateKey}对象
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
@@ -56,10 +56,25 @@ public final class RSAUtils {
     }
 
     /**
+     * 将PEM格式字符串转换成PrivateKey对象{@link java.security.PrivateKey}对象
+     *
+     * @param privateKey
+     * @return {@link java.security.PrivateKey}对象
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static final PrivateKey parsePEMAsPrivateKey(String privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        privateKey = privateKey.replaceAll("BEGIN PRIVATE KEY", "")
+                .replaceAll("END PRIVATE KEY", "")
+                .replaceAll("-", "");
+        return parsePrivateKey(privateKey);
+    }
+
+    /**
      * 将公钥字符串转换成PublicKey{@link java.security.PublicKey}对象
      *
      * @param publicKey
-     * @return
+     * @return {@link java.security.PublicKey}对象
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
@@ -67,6 +82,21 @@ public final class RSAUtils {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decodeBase64(publicKey.getBytes()));
         return keyFactory.generatePublic(keySpec);
+    }
+
+    /**
+     * 将PEM格式字符串转换成PublicKey对象{@link java.security.PublicKey}对象
+     *
+     * @param publicKey
+     * @return {@link java.security.PublicKey}对象
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static final PublicKey parsePEMAsPublicKey(String publicKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        publicKey = publicKey.replaceAll("BEGIN PUBLIC KEY", "")
+                .replaceAll("END PUBLIC KEY", "")
+                .replaceAll("-", "");
+        return parsePublicKey(publicKey);
     }
 
     /**
