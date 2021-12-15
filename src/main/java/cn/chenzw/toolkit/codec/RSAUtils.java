@@ -2,12 +2,17 @@ package cn.chenzw.toolkit.codec;
 
 import cn.chenzw.toolkit.codec.support.rsa.RSAKeySize;
 import cn.chenzw.toolkit.codec.support.rsa.RSASignatureAlgorithm;
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -26,7 +31,7 @@ public final class RSAUtils {
      * 生成密钥对
      *
      * @param keySize
-     * @return
+     * @return 默认生成 PKCS#8 格式的私钥 及 X.509 格式的公钥
      * @throws NoSuchAlgorithmException
      */
     public static final KeyPair createKeyPair(RSAKeySize keySize) throws NoSuchAlgorithmException {
@@ -46,8 +51,7 @@ public final class RSAUtils {
      */
     public static final PrivateKey parsePrivateKey(String privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        byte[] decodeBase64 = Base64.getMimeDecoder().decode(privateKey.getBytes());
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodeBase64);
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodeBase64(privateKey.getBytes()));
         return keyFactory.generatePrivate(keySpec);
     }
 
@@ -61,8 +65,7 @@ public final class RSAUtils {
      */
     public static final PublicKey parsePublicKey(String publicKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        byte[] decodedKey = Base64.getMimeDecoder().decode(publicKey.getBytes());
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decodedKey);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decodeBase64(publicKey.getBytes()));
         return keyFactory.generatePublic(keySpec);
     }
 
@@ -71,32 +74,44 @@ public final class RSAUtils {
      *
      * @param key
      * @return
-     * @throws UnsupportedEncodingException
      */
-    public static final String parseKeyAsBase64String(Key key) throws UnsupportedEncodingException {
-        return new String(Base64.getEncoder().encode(key.getEncoded()), "UTF-8");
+    public static final String parseKeyAsBase64String(Key key) {
+        return new String(encodeBase64(key.getEncoded()), StandardCharsets.UTF_8);
     }
 
     /**
-     * 公钥转PEM格式
+     * 公钥 转 PEM格式
      *
      * @param publicKey
      * @return
-     * @throws UnsupportedEncodingException
      */
-    public static final String parseAsPEM(PublicKey publicKey) throws UnsupportedEncodingException {
-        return "-----BEGIN PUBLIC KEY-----\n" + parseKeyAsBase64String(publicKey) + "\n-----END PUBLIC KEY-----";
+    public static final String parseAsPEM(PublicKey publicKey) {
+        return paseAsPublicKeyPEM(publicKey.getEncoded());
     }
 
     /**
-     * 私钥转PEM格式
+     * 生成公钥 PEM 格式
+     *
+     * @param keyBytes
+     * @return
+     */
+    public static final String paseAsPublicKeyPEM(byte[] keyBytes) {
+        return "-----BEGIN PUBLIC KEY-----\n" + encodeBase64AsString(keyBytes) + "\n-----END PUBLIC KEY-----";
+    }
+
+    public static final String parseAsPrivateKeyPEM(byte[] keyBytes) {
+        return "-----BEGIN PRIVATE KEY-----\n" + encodeBase64AsString(keyBytes) + "\n-----END PRIVATE KEY-----";
+    }
+
+    /**
+     * 私钥 转 PEM格式
      *
      * @param privateKey
      * @return
      * @throws UnsupportedEncodingException
      */
-    public static final String parseAsPEM(PrivateKey privateKey) throws UnsupportedEncodingException {
-        return "-----BEGIN PRIVATE KEY-----\n" + parseKeyAsBase64String(privateKey) + "\n-----END PRIVATE KEY-----";
+    public static final String parseAsPEM(PrivateKey privateKey) {
+        return parseAsPrivateKeyPEM(privateKey.getEncoded());
     }
 
     /**
@@ -172,5 +187,31 @@ public final class RSAUtils {
         signature.update(data);
         return signature.verify(signedData);
     }
+
+    /**
+     * 将 PKCS#8 格式私钥 转换为 PKCS#1 格式
+     *
+     * @param pkcs8PrivateKeyBytes
+     * @return
+     * @throws IOException
+     */
+    public static byte[] convertPkcs8ToPkcs1(byte[] pkcs8PrivateKeyBytes) throws IOException {
+        PrivateKeyInfo pkInfo = PrivateKeyInfo.getInstance(pkcs8PrivateKeyBytes);
+        return pkInfo.parsePrivateKey().toASN1Primitive().getEncoded();
+    }
+
+
+    private final static byte[] decodeBase64(byte[] base64Bytes) {
+        return Base64.getMimeDecoder().decode(base64Bytes);
+    }
+
+    private final static byte[] encodeBase64(byte[] base64Bytes) {
+        return Base64.getEncoder().encode(base64Bytes);
+    }
+
+    private final static String encodeBase64AsString(byte[] base64Bytes) {
+        return new String(encodeBase64(base64Bytes), StandardCharsets.UTF_8);
+    }
+
 
 }

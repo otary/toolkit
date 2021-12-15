@@ -3,6 +3,9 @@ package cn.chenzw.toolkit.codec;
 import cn.chenzw.toolkit.codec.support.rsa.RSAKeySize;
 import cn.chenzw.toolkit.codec.support.rsa.RSASignatureAlgorithm;
 import org.apache.commons.lang3.StringUtils;
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,15 +14,17 @@ import org.junit.runners.JUnit4;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 
 @RunWith(JUnit4.class)
 public class RSAUtilsTests {
 
     @Test
-    public void testGetPrivateKey() throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, SignatureException {
+    public void testGetPrivateKey() throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, IOException, SignatureException {
 
         String content = "Hello World";
         String privateKeyStr = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4fEAtBCIdy1Mq\n" +

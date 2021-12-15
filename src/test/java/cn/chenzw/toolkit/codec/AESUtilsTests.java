@@ -1,5 +1,7 @@
 package cn.chenzw.toolkit.codec;
 
+import cn.chenzw.toolkit.codec.support.aes.AESKeyMeta;
+import cn.chenzw.toolkit.codec.support.aes.AESMode;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,13 +34,14 @@ public class AESUtilsTests {
             BadPaddingException, InvalidAlgorithmParameterException, DecoderException {
 
         String plainText = "hello";
-        String key = "123";
+        String key = "123456789abcdefg";
 
         String base64String = AESUtils.encryptAsBase64String(plainText, key);
-        Assert.assertEquals("W20Afwqie8Oo6CX08vL4aQ==", base64String);
+        Assert.assertEquals("t3W/GjqldI8hPHvB7SP4AA==", base64String);
 
         byte[] bytes = AESUtils.decryptBase64String(base64String, key);
         Assert.assertEquals(new String(bytes), plainText);
+
     }
 
     /**
@@ -57,13 +60,18 @@ public class AESUtilsTests {
             IllegalBlockSizeException, BadPaddingException, InvalidKeyException, DecoderException {
 
         String plainText = "hello";
-        String key = "123";
+        String key = "123456789abcdefg";
         String hexString = AESUtils.encryptAsHexString(plainText, key);
-        Assert.assertEquals("5b6d007f0aa27bc3a8e825f4f2f2f869", hexString);
+        Assert.assertEquals("b775bf1a3aa5748f213c7bc1ed23f800", hexString);
 
         byte[] bytes = AESUtils.decryptHexString(hexString, key);
         Assert.assertEquals(new String(bytes), plainText);
 
+       /* String aaa = AESUtils.encryptAsHexString("aaa", "11111111111111111111111111111111", AESMode.AES_ECB_PKCS5Padding, AESKeyMeta.BIT_128, null);
+
+        System.out.println(aaa);*/
+
     }
+
 
 }

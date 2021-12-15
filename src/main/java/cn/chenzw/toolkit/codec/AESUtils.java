@@ -79,7 +79,7 @@ public abstract class AESUtils {
     /**
      * AES加密并转换成十六进制字符串
      * @param data 待加密数据
-     * @param key 密钥
+     * @param key 密钥 - 密钥长度必须大于16位，且为8的倍数
      * @param aesMode 模式/填充 {@link cn.chenzw.toolkit.codec.support.aes.AESMode}
      * @param aesKeyMeta 密钥长度 {@link cn.chenzw.toolkit.codec.support.aes.AESKeyMeta}
      * @param iv
@@ -99,9 +99,9 @@ public abstract class AESUtils {
     }
 
     /**
-     * AES加解密
+     * AES加解密（默认: AES/ECB/PKCS5Padding, AES-256）
      * @param data 待加密数据
-     * @param key 密钥
+     * @param key 密钥 - 密钥长度必须大于16位，且为8的倍数
      * @return
      * @throws NoSuchPaddingException
      * @throws InvalidKeyException
