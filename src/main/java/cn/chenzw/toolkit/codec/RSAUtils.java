@@ -265,7 +265,7 @@ public final class RSAUtils {
         return Base64.getEncoder().encode(base64Bytes);
     }
 
-    private final static String encodeBase64AsString(byte[] base64Bytes) {
+    public final static String encodeBase64AsString(byte[] base64Bytes) {
         return new String(encodeBase64(base64Bytes), StandardCharsets.UTF_8);
     }
 
