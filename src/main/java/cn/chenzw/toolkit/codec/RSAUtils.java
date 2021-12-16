@@ -12,11 +12,10 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
+import java.security.spec.*;
 import java.util.Base64;
 
 /**
@@ -228,6 +227,33 @@ public final class RSAUtils {
     public static byte[] convertPkcs8ToPkcs1(byte[] pkcs8PrivateKeyBytes) throws IOException {
         PrivateKeyInfo pkInfo = PrivateKeyInfo.getInstance(pkcs8PrivateKeyBytes);
         return pkInfo.parsePrivateKey().toASN1Primitive().getEncoded();
+    }
+
+    /**
+     * 从私钥中提取公钥
+     *
+     * @param privateKey
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static PublicKey generatePublicKeyFromPrivateKey(PrivateKey privateKey, BigInteger publicExponent) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        RSAPrivateKeySpec privateKeySpec = keyFactory.getKeySpec(privateKey, RSAPrivateKeySpec.class);
+        RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(privateKeySpec.getModulus(), publicExponent);
+        return keyFactory.generatePublic(publicKeySpec);
+    }
+
+    /**
+     * 从私钥中提取公钥
+     *
+     * @param privateKey
+     * @return
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
+    public static PublicKey generatePublicKeyFromPrivateKey(PrivateKey privateKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        return generatePublicKeyFromPrivateKey(privateKey, BigInteger.valueOf(65537));
     }
 
 
