@@ -8,7 +8,7 @@ public enum RSASignatureAlgorithm {
     MD5withRSA("MD5withRSA"),
     SHA1withRSA("SHA1withRSA"),
     SHA256withRSA("SHA256withRSA"),
-    SHA384withRSA("SHA256withRSA"),
+    SHA384withRSA("SHA384withRSA"),
     SHA512withRSA("SHA512withRSA");
 
     private String algorithm;

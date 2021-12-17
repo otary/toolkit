@@ -2,8 +2,6 @@ package cn.chenzw.toolkit.codec;
 
 import cn.chenzw.toolkit.codec.support.rsa.RSAKeySize;
 import cn.chenzw.toolkit.codec.support.rsa.RSASignatureAlgorithm;
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1Primitive;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 
 import javax.crypto.BadPaddingException;
