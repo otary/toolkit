@@ -199,7 +199,7 @@ public final class RSAUtils {
     }
 
     /**
-     * 验证（私钥验证）
+     * 验证（公钥验证）
      *
      * @param data               待验证的内容
      * @param signedData
