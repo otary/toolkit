@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 /**
- * Base64自动转码
+ * 请求对象Base64解码
  *
  * @author chenzw
  * @since 1.0.3
