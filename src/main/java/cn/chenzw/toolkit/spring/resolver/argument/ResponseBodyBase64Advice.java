@@ -19,7 +19,7 @@ import java.util.Base64;
  * @author chenzw
  * @since 1.0.3
  */
-public class ResponseBodyBase64ArgumentResolver implements ResponseBodyAdvice<Object> {
+public class ResponseBodyBase64Advice implements ResponseBodyAdvice<Object> {
 
     private ObjectMapper mapper = new ObjectMapper();
 
