@@ -10,6 +10,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 /**
@@ -36,7 +37,23 @@ public class ResponseBodyBase64Advice implements ResponseBodyAdvice<Object> {
             return body;
         }
 
-        return new String(Base64.getEncoder().encode(jsonStr.getBytes()));
+        ResponseBodyBase64 annotation = getAnnotation(returnType);
+        try {
+            return new String(Base64.getEncoder().encode(jsonStr.getBytes(annotation.charset())), annotation.charset());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
+
+    private ResponseBodyBase64 getAnnotation(MethodParameter returnType) {
+        if (returnType.hasMethodAnnotation(ResponseBodyBase64.class)) {
+            return returnType.getMethodAnnotation(ResponseBodyBase64.class);
+        }
+        if (returnType.hasParameterAnnotation(ResponseBodyBase64.class)) {
+            return returnType.getParameterAnnotation(ResponseBodyBase64.class);
+        }
+        return null;
+    }
 }
