@@ -42,6 +42,8 @@ public interface ConstraintViolationExceptionWrapper {
 
     String toHumanString();
 
+    String getMessages();
+
     class InvalidField {
         /**
          * 字段名称

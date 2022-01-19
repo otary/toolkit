@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 默认的违约异常处理器
@@ -96,6 +97,11 @@ public class DefaultConstraintViolationExceptionWrapper implements ConstraintVio
                             invalidField.getMessage()));
         }
         return msgBuilder.toString();
+    }
+
+    @Override
+    public String getMessages() {
+       return invalidFields.stream().map(invalidField -> invalidField.getMessage()).collect(Collectors.joining(","));
     }
 
     @Override
