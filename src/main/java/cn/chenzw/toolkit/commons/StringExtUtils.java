@@ -2,6 +2,9 @@ package cn.chenzw.toolkit.commons;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author chenzw
  * @see {@link org.apache.commons.lang3.StringUtils}
@@ -405,5 +408,19 @@ public abstract class StringExtUtils {
      */
     public static String[] splitTrim(final String str, final String separatorChars) {
         return ArrayExtUtils.trim(StringUtils.split(str, separatorChars));
+    }
+
+    /**
+     * 统计中文字符数量
+     * @param str
+     * @return
+     */
+    public static int countChineseCharacters(String str) {
+        Matcher matcher = RegexUtils.CHINESE_PATTERN.matcher(str);
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
     }
 }
