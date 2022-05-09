@@ -2,10 +2,15 @@ package cn.chenzw.toolkit.commons;
 
 import cn.chenzw.toolkit.commons.enums.FileType;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -135,5 +140,27 @@ public class FileExtUtils {
         return matchedFileTypes.toArray(new FileType[matchedFileTypes.size()]);
     }
 
+    /**
+     * 文件本地下载
+     *
+     * @param url      文件链接
+     * @param savePath 保存地址
+     * @return
+     * @throws IOException
+     */
+    public static File download(String url, File savePath) throws IOException {
+        OkHttpClient httpClient = new OkHttpClient.Builder().build();
+        try (Response response = httpClient.newCall(new Request.Builder().url(url).build()).execute()) {
+            InputStream is = response.body().byteStream();
+            String name = FilenameUtils.getName(url);
+
+            File file = new File(savePath.getPath(), name);
+            if (!savePath.exists()) {
+                savePath.mkdirs();
+            }
+            IOUtils.copy(is, new FileOutputStream(file));
+            return file;
+        }
+    }
 
 }
