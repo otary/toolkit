@@ -46,7 +46,7 @@
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
         <shiro.version>1.4.2</shiro.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <spring-security.version>5.1.5.RELEASE</spring-security.version>
+        <spring-security.version>5.5.7</spring-security.version>
         <guava.version>28.1-jre</guava.version>
     </properties>
 
