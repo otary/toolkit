@@ -29,6 +29,11 @@ public class HttpResult<T> implements R<T> {
     private String detail;
 
     /**
+     * 扩展字段
+     */
+    private Object ext;
+
+    /**
      * 数据
      */
     private T data;
@@ -75,19 +80,10 @@ public class HttpResult<T> implements R<T> {
         this.msg = builder.msg;
         this.detail = builder.detail;
         this.data = (T) builder.data;
+        this.ext = builder.ext;
         this.msgId = builder.msgId;
     }
 
-    /**
-     * 成功
-     *
-     * @return
-     * @deprecated use {@link #builder()} instead
-     */
-   /* @Deprecated
-    public static HttpResult ok() {
-        return new HttpResult<>(SUCCESS_CODE, null);
-    }*/
 
     /**
      * 成功
@@ -138,6 +134,10 @@ public class HttpResult<T> implements R<T> {
         this.data = data;
     }
 
+    public void setExt(Object ext) {
+        this.ext = ext;
+    }
+
     @Override
     public Integer getCode() {
         return code;
@@ -169,6 +169,7 @@ public class HttpResult<T> implements R<T> {
                 ", code=" + code +
                 ", msg='" + msg + '\'' +
                 ", detail='" + detail + '\'' +
+                ", ext='" + ext + '\'' +
                 ", data=" + data +
                 '}';
     }
@@ -194,6 +195,7 @@ public class HttpResult<T> implements R<T> {
         private Integer code;
         private String msg;
         private String detail;
+        private Object ext;
         private Object data;
 
         public HttpResultBuilder() {
@@ -220,6 +222,11 @@ public class HttpResult<T> implements R<T> {
 
         public HttpResultBuilder detail(String detail) {
             this.detail = detail;
+            return this;
+        }
+
+        public HttpResultBuilder ext(Object ext) {
+            this.ext = ext;
             return this;
         }
 
