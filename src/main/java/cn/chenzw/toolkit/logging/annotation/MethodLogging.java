@@ -14,6 +14,10 @@ public @interface MethodLogging {
 
     LogField[] logFields() default { LogField.ALL };
 
+    String[] support() default {
+        "DEFAULT"
+    };
+
     String appName() default "";
 
     String moduleName() default "";

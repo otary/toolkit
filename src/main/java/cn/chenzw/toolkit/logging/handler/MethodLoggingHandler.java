@@ -1,7 +1,9 @@
 package cn.chenzw.toolkit.logging.handler;
 
+import cn.chenzw.toolkit.logging.annotation.MethodLogging;
 import cn.chenzw.toolkit.logging.core.LogField;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -9,7 +11,9 @@ import java.util.Map;
  */
 public interface MethodLoggingHandler {
 
-    void process(Map<LogField, Object> methodLog);
+    boolean support(MethodLogging methodLogging);
 
-    void processWithException(Map<LogField, Object> methodLog, Throwable throwable);
+    void process(Map<LogField, Object> methodLog, HttpServletRequest request);
+
+    void processWithException(Map<LogField, Object> methodLog, HttpServletRequest request, Throwable throwable);
 }

@@ -31,10 +31,10 @@ public class MethodLoggingAspect {
     private static final String LOG_POINT_CUT = "logPointCut()";
 
     @Autowired
-    MethodLoggingConfigurer methodLoggingConfigurer;
+    private MethodLoggingConfigurer methodLoggingConfigurer;
 
     @Autowired
-    ApplicationContext appContext;
+    private ApplicationContext appContext;
 
     @Pointcut("@annotation(cn.chenzw.toolkit.logging.annotation.MethodLogging)")
     public void logPointCut() {
@@ -63,7 +63,8 @@ public class MethodLoggingAspect {
         methodLogMap.put(LogField.THREAD_ID, jpw.getThreadId());
         methodLogMap.put(LogField.THREAD_NAME, jpw.getThreadName());
         methodLogMap.put(LogField.START_TIME, startTime);
-
+        methodLogMap.put(LogField.USER_AGENT, jpw.getRequestWrapper().getUserAgent());
+        methodLogMap.put(LogField.REQUEST, jpw.getRequest());
 
         try {
             Object result = joinPoint.proceed();
@@ -71,20 +72,19 @@ public class MethodLoggingAspect {
             methodLogMap.put(LogField.FINISH_TIME, finishTime);
             methodLogMap.put(LogField.COST, finishTime.getTime() - startTime.getTime());
             methodLogMap.put(LogField.RETURN_VALUE, result);
-
-            appContext.publishEvent(new MethodLoggingEvent(methodLogMap, null));
-
+            appContext.publishEvent(
+                    new MethodLoggingEvent(methodLogMap, jpw.getRequest(), methodLogging, null)
+            );
             return result;
         } catch (Throwable ex) {
             Date finishTime = Calendar.getInstance().getTime();
             methodLogMap.put(LogField.FINISH_TIME, finishTime);
             methodLogMap.put(LogField.COST, finishTime.getTime() - startTime.getTime());
             methodLogMap.put(LogField.EXCEPTION, ex);
-
-            appContext.publishEvent(new MethodLoggingEvent(methodLogMap, ex));
-
+            appContext.publishEvent(
+                    new MethodLoggingEvent(methodLogMap, jpw.getRequest(), methodLogging, ex)
+            );
         }
-
         return null;
     }
 

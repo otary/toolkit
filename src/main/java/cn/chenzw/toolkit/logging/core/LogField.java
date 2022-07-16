@@ -24,5 +24,7 @@ public enum LogField {
     FINISH_TIME,
     COST,
     RETURN_VALUE,
+    USER_AGENT,
+    REQUEST,
     EXCEPTION;
 }
