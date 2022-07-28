@@ -163,6 +163,20 @@ public class HttpResult<T> implements R<T> {
     }
 
     @Override
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    @Override
+    public Object getExt() {
+        return ext;
+    }
+
+    @Override
     public String toString() {
         return "HttpResult{" +
                 "msgId='" + msgId + '\'' +

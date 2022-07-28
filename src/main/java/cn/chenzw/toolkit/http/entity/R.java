@@ -16,4 +16,8 @@ public interface R<T> extends Serializable {
 
     T getData();
 
+    String getDetail();
+
+    Object getExt();
+
 }
