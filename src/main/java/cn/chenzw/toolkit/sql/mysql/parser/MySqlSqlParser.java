@@ -32,7 +32,7 @@ public class MySqlSqlParser extends AbstractSqlParser {
 
     private static final Pattern COLUM_DEFINITION_PATTERN = Pattern.compile("\\(([\\s\\S]*)\\)");
 
-    private static final Pattern COLUMN_PATTERN = Pattern.compile("^`(?<name>.*?)`\\s*(?<dataType>tinyint|smallint|mediumint|integer|int|bigint|float|double|decimal|datetime|date|year|timestamp|time|char|varchar|tinytext|text|mediumtext|longtext|blob|mediumblob|longblob)+(?:\\((?<size>\\d+)(\\s*,?\\s*(?<digits>\\d+))?\\))?\\s*(?<unsigned>unsigned)?\\s*(?:character\\s*set\\s*(.*)\\s*collate\\s*(\\w*))?\\s*(?<nullable>not null|null)?\\s*(?<autoIncrement>auto_increment)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*(on update current_timestamp\\(0\\))?\\s*(?=comment\\s*`(?<comment>.*?)`)?");
+    private static final Pattern COLUMN_PATTERN = Pattern.compile("^`(?<name>.*?)`\\s*(?<dataType>tinyint|smallint|mediumint|integer|int|bigint|bit|float|real|double|decimal|numeric|smallmoney|money|smalldatetime|datetime|date|year|timestamp|time|varbinary|nvarchar|nchar|char|varchar|tinytext|text|mediumtext|longtext|blob|mediumblob|longblob|binary|image)+(?:\\((?<size>\\d+)(\\s*,?\\s*(?<digits>\\d+))?\\))?\\s*(?<unsigned>unsigned)?\\s*(?:character\\s*set\\s*(.*)\\s*collate\\s*(\\w*))?\\s*(?<nullable>not null|null)?\\s*(?<autoIncrement>auto_increment)?\\s*(?:default\\s*(?<defaultValue>\\S+))?\\s*(on update current_timestamp\\(0\\))?\\s*(?=comment\\s*`(?<comment>.*?)`)?");
 
     private static final Pattern PRIMARY_KEY_PATTERN = Pattern.compile("primary\\s*key\\s*\\(`(.*?)`\\)");
 
