@@ -72,7 +72,7 @@ public class TreeBuilderTests {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(treeNodes);
 
-        Assert.assertEquals("[{\"id\":1,\"parentId\":0,\"label\":\"o1\",\"childrens\":[{\"id\":2,\"parentId\":1,\"label\":\"o2\",\"childrens\":[{\"id\":4,\"parentId\":2,\"label\":\"o4\",\"childrens\":[],\"ext\":null,\"leaf\":true},{\"id\":5,\"parentId\":2,\"label\":\"o5\",\"childrens\":[],\"ext\":null,\"leaf\":true}],\"ext\":null,\"leaf\":false},{\"id\":3,\"parentId\":1,\"label\":\"o3\",\"childrens\":[],\"ext\":null,\"leaf\":true},{\"id\":6,\"parentId\":1,\"label\":\"o6\",\"childrens\":[],\"ext\":null,\"leaf\":true}],\"ext\":null,\"leaf\":false}]", json);
+        Assert.assertEquals("[{\"id\":1,\"parentId\":0,\"label\":\"o1\",\"children\":[{\"id\":2,\"parentId\":1,\"label\":\"o2\",\"children\":[{\"id\":4,\"parentId\":2,\"label\":\"o4\",\"children\":[],\"ext\":null,\"leaf\":true},{\"id\":5,\"parentId\":2,\"label\":\"o5\",\"children\":[],\"ext\":null,\"leaf\":true}],\"ext\":null,\"leaf\":false},{\"id\":3,\"parentId\":1,\"label\":\"o3\",\"children\":[],\"ext\":null,\"leaf\":true},{\"id\":6,\"parentId\":1,\"label\":\"o6\",\"children\":[],\"ext\":null,\"leaf\":true}],\"ext\":null,\"leaf\":false}]", json);
     }
 
     /**
@@ -97,7 +97,7 @@ public class TreeBuilderTests {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(treeNodes);
 
-        Assert.assertEquals("[{\"id\":1,\"parentId\":0,\"label\":\"o1\",\"childrens\":[{\"id\":2,\"parentId\":1,\"label\":\"o2\",\"childrens\":[{\"id\":4,\"parentId\":2,\"label\":\"o4\",\"childrens\":[],\"ext\":{\"e\":4,\"x\":\"o4\"},\"leaf\":true},{\"id\":5,\"parentId\":2,\"label\":\"o5\",\"childrens\":[],\"ext\":{\"e\":5,\"x\":\"o5\"},\"leaf\":true}],\"ext\":{\"e\":2,\"x\":\"o2\"},\"leaf\":false},{\"id\":3,\"parentId\":1,\"label\":\"o3\",\"childrens\":[],\"ext\":{\"e\":3,\"x\":\"o3\"},\"leaf\":true},{\"id\":6,\"parentId\":1,\"label\":\"o6\",\"childrens\":[],\"ext\":{\"e\":6,\"x\":\"o6\"},\"leaf\":true}],\"ext\":{\"e\":1,\"x\":\"o1\"},\"leaf\":false}]", json);
+        Assert.assertEquals("[{\"id\":1,\"parentId\":0,\"label\":\"o1\",\"children\":[{\"id\":2,\"parentId\":1,\"label\":\"o2\",\"children\":[{\"id\":4,\"parentId\":2,\"label\":\"o4\",\"children\":[],\"ext\":{\"e\":4,\"x\":\"o4\"},\"leaf\":true},{\"id\":5,\"parentId\":2,\"label\":\"o5\",\"children\":[],\"ext\":{\"e\":5,\"x\":\"o5\"},\"leaf\":true}],\"ext\":{\"e\":2,\"x\":\"o2\"},\"leaf\":false},{\"id\":3,\"parentId\":1,\"label\":\"o3\",\"children\":[],\"ext\":{\"e\":3,\"x\":\"o3\"},\"leaf\":true},{\"id\":6,\"parentId\":1,\"label\":\"o6\",\"children\":[],\"ext\":{\"e\":6,\"x\":\"o6\"},\"leaf\":true}],\"ext\":{\"e\":1,\"x\":\"o1\"},\"leaf\":false}]", json);
 
     }
 

@@ -17,12 +17,14 @@ public class TreeNode<I> implements Serializable {
     private I parentId;
     private String label;
     private boolean isLeaf;
-    private List<TreeNode> childrens;
+    private List<TreeNode> children;
 
     /**
      * 自定义扩展字段
      */
     private Object ext;
+    private Object ext2;
+    private Object ext3;
 
     public I getId() {
         return id;
@@ -48,12 +50,12 @@ public class TreeNode<I> implements Serializable {
         isLeaf = leaf;
     }
 
-    public List<TreeNode> getChildrens() {
-        return childrens;
+    public List<TreeNode> getChildren() {
+        return children;
     }
 
-    public void setChildrens(List<TreeNode> childrens) {
-        this.childrens = childrens;
+    public void setChildren(List<TreeNode> children) {
+        this.children = children;
     }
 
     public String getLabel() {
@@ -72,15 +74,34 @@ public class TreeNode<I> implements Serializable {
         this.ext = ext;
     }
 
+    public Object getExt2() {
+        return ext2;
+    }
+
+    public void setExt2(Object ext2) {
+        this.ext2 = ext2;
+    }
+
+    public Object getExt3() {
+        return ext3;
+    }
+
+    public void setExt3(Object ext3) {
+        this.ext3 = ext3;
+    }
+
     @Override
     public String toString() {
-        return "TreeNode{" +
-                "id=" + id +
-                ", parentId=" + parentId +
-                ", label='" + label + '\'' +
-                ", isLeaf=" + isLeaf +
-                ", childrens=" + childrens +
-                ", ext=" + ext +
-                '}';
+        final StringBuilder sb = new StringBuilder("TreeNode{");
+        sb.append("id=").append(id);
+        sb.append(", parentId=").append(parentId);
+        sb.append(", label='").append(label).append('\'');
+        sb.append(", isLeaf=").append(isLeaf);
+        sb.append(", children=").append(children);
+        sb.append(", ext=").append(ext);
+        sb.append(", ext2=").append(ext2);
+        sb.append(", ext3=").append(ext3);
+        sb.append('}');
+        return sb.toString();
     }
 }

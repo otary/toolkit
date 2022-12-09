@@ -839,6 +839,6 @@ List<TreeNode> treeNodes = TreeBuilder.create(orgs)
                 .startWith(0)
                 .build();
 
-// => [{"id":1,"parentId":0,"label":"o1","childrens":[{"id":2,"parentId":1,"label":"o2","childrens":[{"id":4,"parentId":2,"label":"o4","childrens":[],"ext":null,"leaf":true},{"id":5,"parentId":2,"label":"o5","childrens":[],"ext":null,"leaf":true}],"ext":null,"leaf":false},{"id":3,"parentId":1,"label":"o3","childrens":[],"ext":null,"leaf":true},{"id":6,"parentId":1,"label":"o6","childrens":[],"ext":null,"leaf":true}],"ext":null,"leaf":false}]
+// => [{"id":1,"parentId":0,"label":"o1","children":[{"id":2,"parentId":1,"label":"o2","children":[{"id":4,"parentId":2,"label":"o4","children":[],"ext":null,"leaf":true},{"id":5,"parentId":2,"label":"o5","children":[],"ext":null,"leaf":true}],"ext":null,"leaf":false},{"id":3,"parentId":1,"label":"o3","children":[],"ext":null,"leaf":true},{"id":6,"parentId":1,"label":"o6","children":[],"ext":null,"leaf":true}],"ext":null,"leaf":false}]
 
 ```

@@ -16,13 +16,17 @@ public class TreeBuilder<T, I> {
 
     private Collection<T> wholeTree;
 
-    private Function<T, I> idCallbackFn;
+    private Function<T, I> idCallback;
 
-    private Function<T, I> parentIdCallbackFn;
+    private Function<T, I> parentIdCallback;
 
-    private Function<T, String> labelCallbackFn;
+    private Function<T, String> labelCallback;
 
-    private Function<T, Object> extCallbackFn;
+    private Function<T, Object> extCallback;
+
+    private Function<T, Object> ext2Callback;
+
+    private Function<T, Object> ext3Callback;
 
     private I startIdValue;
 
@@ -37,44 +41,54 @@ public class TreeBuilder<T, I> {
     /**
      * 配置id字段
      *
-     * @param idCallbackFn
+     * @param idCallback
      * @return
      */
-    public TreeBuilder<T, I> configIdField(Function<T, I> idCallbackFn) {
-        this.idCallbackFn = idCallbackFn;
+    public TreeBuilder<T, I> configIdField(Function<T, I> idCallback) {
+        this.idCallback = idCallback;
         return this;
     }
 
     /**
      * 配置parentId字段
      *
-     * @param parentIdCallbackFn
+     * @param parentIdCallback
      * @return
      */
-    public TreeBuilder<T, I> configParentIdField(Function<T, I> parentIdCallbackFn) {
-        this.parentIdCallbackFn = parentIdCallbackFn;
+    public TreeBuilder<T, I> configParentIdField(Function<T, I> parentIdCallback) {
+        this.parentIdCallback = parentIdCallback;
         return this;
     }
 
     /**
      * 配置label字段
      *
-     * @param labelCallbackFn
+     * @param labelCallback
      * @return
      */
-    public TreeBuilder<T, I> configLabelField(Function<T, String> labelCallbackFn) {
-        this.labelCallbackFn = labelCallbackFn;
+    public TreeBuilder<T, I> configLabelField(Function<T, String> labelCallback) {
+        this.labelCallback = labelCallback;
         return this;
     }
 
     /**
      * 配置ext字段
      *
-     * @param extCallbackFn
+     * @param extCallback
      * @return
      */
-    public TreeBuilder<T, I> configExtField(Function<T, Object> extCallbackFn) {
-        this.extCallbackFn = extCallbackFn;
+    public TreeBuilder<T, I> configExtField(Function<T, Object> extCallback) {
+        this.extCallback = extCallback;
+        return this;
+    }
+
+    public TreeBuilder<T, I> configExt2Field(Function<T, Object> ext2Callback) {
+        this.ext2Callback = ext2Callback;
+        return this;
+    }
+
+    public TreeBuilder<T, I> configExt3Field(Function<T, Object> ext3Callback) {
+        this.ext3Callback = ext3Callback;
         return this;
     }
 
@@ -90,19 +104,19 @@ public class TreeBuilder<T, I> {
     }
 
     public List<TreeNode> build() {
-        if (idCallbackFn == null) {
+        if (idCallback == null) {
             throw new NullPointerException("Missing \"idField\" config!");
         }
-        if (parentIdCallbackFn == null) {
+        if (parentIdCallback == null) {
             throw new NullPointerException("Missing \"parentId\" config!");
         }
         if (startIdValue == null) {
             throw new NullPointerException("Missing \"startWith\" config!");
         }
-        if (labelCallbackFn == null) {
+        if (labelCallback == null) {
             throw new NullPointerException("Missing \"label\" field config!");
         }
-        return findChilds(startIdValue);
+        return findChild(startIdValue);
     }
 
     /**
@@ -123,23 +137,29 @@ public class TreeBuilder<T, I> {
     }
 
 
-    private List<TreeNode> findChilds(I id) {
+    private List<TreeNode> findChild(I id) {
         List<TreeNode> childNode = new ArrayList<>();
         for (T item : list) {
-            I _parentId = parentIdCallbackFn.apply(item);
+            I _parentId = parentIdCallback.apply(item);
             if (Objects.equals(id, _parentId)) {
                 TreeNode<Object> treeNode = new TreeNode<>();
                 treeNode.setParentId(_parentId);
-                treeNode.setLabel(labelCallbackFn.apply(item));
+                treeNode.setLabel(labelCallback.apply(item));
 
-                I _id = idCallbackFn.apply(item);
+                I _id = idCallback.apply(item);
                 treeNode.setId(_id);
-                treeNode.setChildrens(findChilds(_id));
+                treeNode.setChildren(findChild(_id));
 
-                if (extCallbackFn != null) {
-                    treeNode.setExt(extCallbackFn.apply(item));
+                if (extCallback != null) {
+                    treeNode.setExt(extCallback.apply(item));
                 }
-                treeNode.setLeaf(treeNode.getChildrens().isEmpty());
+                if (ext2Callback != null) {
+                    treeNode.setExt2(ext2Callback.apply(item));
+                }
+                if (ext3Callback != null) {
+                    treeNode.setExt3(ext3Callback.apply(item));
+                }
+                treeNode.setLeaf(treeNode.getChildren().isEmpty());
                 childNode.add(treeNode);
             }
         }
@@ -156,10 +176,10 @@ public class TreeBuilder<T, I> {
         Collection<T> parentNodes = new ArrayList<>();
         for (T node : nodes) {
             // 底层是否已存在父节点
-            Optional<T> nodeOpt = findNode(list, parentIdCallbackFn.apply(node));
-            Optional<T> nodeOpt2 = findNode(nodes, parentIdCallbackFn.apply(node));
+            Optional<T> nodeOpt = findNode(list, parentIdCallback.apply(node));
+            Optional<T> nodeOpt2 = findNode(nodes, parentIdCallback.apply(node));
             if (!nodeOpt.isPresent() && !nodeOpt2.isPresent()) {
-                Optional<T> newNodeOpt = findNode(wholeTree, parentIdCallbackFn.apply(node));
+                Optional<T> newNodeOpt = findNode(wholeTree, parentIdCallback.apply(node));
                 if (newNodeOpt.isPresent()) {
                     parentNodes.add(newNodeOpt.get());
                 }
@@ -171,7 +191,7 @@ public class TreeBuilder<T, I> {
 
     private Optional<T> findNode(Collection<T> nodes, I id) {
         return nodes.stream().filter(item -> {
-            I _id = idCallbackFn.apply(item);
+            I _id = idCallback.apply(item);
             return Objects.equals(_id, id);
         }).findFirst();
     }

@@ -2,6 +2,8 @@ package cn.chenzw.toolkit.http;
 
 
 import cn.chenzw.toolkit.spring.util.SpringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,15 +48,21 @@ public class HttpHolder {
 
     private static HttpServletRequest getRequestInternal() {
         if (SpringUtils.SPRING_WEB_FRAME_PRESENT) {
-            return ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder
-                    .getRequestAttributes()).getRequest();
+            RequestAttributes requestAttributes = RequestContextHolder
+                    .getRequestAttributes();
+            if (requestAttributes != null) {
+                return ((org.springframework.web.context.request.ServletRequestAttributes) requestAttributes).getRequest();
+            }
         }
         return null;
     }
 
     private static HttpServletResponse getResponseInternal() {
         if (SpringUtils.SPRING_WEB_FRAME_PRESENT) {
-            return ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()).getResponse();
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes != null) {
+                return ((org.springframework.web.context.request.ServletRequestAttributes) requestAttributes).getResponse();
+            }
         }
         return null;
     }
