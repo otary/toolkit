@@ -3,6 +3,10 @@ package cn.chenzw.toolkit.commons;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -181,6 +185,29 @@ public class UriExtUtils {
      */
     public static String removeAllParams(String url) {
         return url.substring(0, url.indexOf("?"));
+    }
+
+    /**
+     * eg. getSchemeHost("https://www.baidu.com/s?q=xx") => https://www.baidu.com
+     *
+     * @param url
+     * @return
+     * @throws URISyntaxException
+     */
+    public static String getSchemeHost(String url) throws URISyntaxException {
+        URI uri = URI.create(url);
+        return new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), null, null, null).toString();
+    }
+
+    /**
+     * eg. getSchemeHostPath("https://www.baidu.com/s?q=xx") => https://www.baidu.com/s
+     * @param url
+     * @return
+     * @throws URISyntaxException
+     */
+    public static String getSchemeHostPath(String url) throws URISyntaxException {
+        URI uri = URI.create(url);
+        return new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), uri.getPath(), null, null).toString();
     }
 
 }

@@ -117,16 +117,16 @@ public class ListExtUtils {
      * @throws IllegalAccessException
      */
     public static final <T> List<T> find(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException, IllegalAccessException {
-        List<T> finded = new ArrayList<T>();
+        List<T> found = new ArrayList<T>();
         if (list != null && !list.isEmpty()) {
             Map<Field, Object> fvMap = getFieldMap(list, kvMap);
             for (T item : list) {
                 if (contains(fvMap, item)) {
-                    finded.add(item);
+                    found.add(item);
                 }
             }
         }
-        return finded;
+        return found;
     }
 
     /**
@@ -155,13 +155,12 @@ public class ListExtUtils {
      *
      * @param listA
      * @param listB
-     * @param <T>
      * @return
      */
-    public static final <T, T1, T2> List<T> subtract(Collection<T1> listA, Collection<T2> listB, BiFunction<T1, T2, Boolean> matchFunction) {
+    public static final <T1, T2> List<T1> subtract(Collection<T1> listA, Collection<T2> listB, BiFunction<T1, T2, Boolean> matchFunction) {
         Objects.requireNonNull(listA, "listA must not be null!");
         Objects.requireNonNull(listB, "listB must not be null!");
-        return (List<T>) listA.stream().filter(item -> listB.stream().allMatch(item2 -> !matchFunction.apply(item, item2))).collect(Collectors.toList());
+        return listA.stream().filter(item -> listB.stream().allMatch(item2 -> !matchFunction.apply(item, item2))).collect(Collectors.toList());
     }
 
 
@@ -190,7 +189,6 @@ public class ListExtUtils {
      */
     public static final <T, U extends Comparable<? super U>> List<T> unique(Collection<T> list, Function<T, U> matchFunction) {
         Objects.requireNonNull(list);
-
         return list.stream().collect(
                 Collectors.collectingAndThen(Collectors.toCollection(
                         () -> new TreeSet<>(Comparator.comparing(matchFunction))), ArrayList::new)

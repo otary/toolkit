@@ -2,7 +2,7 @@ package cn.chenzw.toolkit.datasource.core.builder;
 
 import cn.chenzw.toolkit.commons.StringExtUtils;
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
-import cn.chenzw.toolkit.datasource.entity.TableDefinition;
+import cn.chenzw.toolkit.datasource.entity.TableDef;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,16 +31,21 @@ public abstract class AbstractTableDefinitionBuilder {
         return rs.getString(DbConstants.RS_TABLE_NAME);
     }
 
-    protected abstract AbstractColumnDefinitionBuilder getColumnDefinitionBuilder(Connection connection,
-            String tableName);
+    protected abstract AbstractColumnDefinitionBuilder getColumnDefinitionBuilder(Connection connection, String tableName);
 
-    public TableDefinition build() throws SQLException {
+    public TableDef build() throws SQLException {
         ResultSet tableRs = connection.getMetaData().getTables(null, null, tableName, new String[]{"TABLE"});
 
         if (tableRs.next()) {
-            String _tableName = getTableName(tableRs);
-            return new TableDefinition(_tableName, StringExtUtils.toPascal(_tableName), getRemarks(tableRs),
-                    getColumnDefinitionBuilder(connection, this.tableName).build());
+            String tableName = getTableName(tableRs);
+            return new TableDef(
+                    tableName,
+                    StringExtUtils.toPascal(tableName),
+                    getRemarks(tableRs),
+                    getColumnDefinitionBuilder(connection,
+                            this.tableName
+                    ).build()
+            );
         }
         return null;
     }

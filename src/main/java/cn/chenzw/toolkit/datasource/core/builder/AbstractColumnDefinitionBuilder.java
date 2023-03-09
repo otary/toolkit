@@ -3,7 +3,7 @@ package cn.chenzw.toolkit.datasource.core.builder;
 import cn.chenzw.toolkit.commons.StringExtUtils;
 import cn.chenzw.toolkit.datasource.constants.DbConstants;
 import cn.chenzw.toolkit.datasource.core.converter.JdbcTypeConverter;
-import cn.chenzw.toolkit.datasource.entity.ColumnDefinition;
+import cn.chenzw.toolkit.datasource.entity.ColumnDef;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -65,53 +65,64 @@ public abstract class AbstractColumnDefinitionBuilder {
 
     protected abstract JdbcTypeConverter getTypeConverter();
 
-    public List<ColumnDefinition> build() throws SQLException {
-        ResultSet columnRs = connection.getMetaData().getColumns(null, null, tableName, null);
+    public List<ColumnDef> build() throws SQLException {
+        ResultSet columnRs = connection.getMetaData()
+                .getColumns(null, null, tableName, null);
 
-        List<ColumnDefinition> columnDefinitions = new ArrayList<>();
+        List<ColumnDef> columnDefs = new ArrayList<>();
         while (columnRs.next()) {
             String typeName = getTypeName(columnRs);
             Integer columnSize = getColumnSize(columnRs);
             Integer columnDigits = getDecimalDigits(columnRs);
             String columnName = getColumnName(columnRs);
-            columnDefinitions
-                    .add(new ColumnDefinition(columnName, StringExtUtils.toCamel(columnName), typeName, columnSize,
-                            columnDigits, getRemarks(columnRs), null, null, isNullable(columnRs),
-                            getColumnDef(columnRs), getTypeConverter().toJavaType(typeName, columnSize, columnDigits)));
+            columnDefs
+                    .add(
+                            new ColumnDef(
+                                    columnName,
+                                    StringExtUtils.toCamel(columnName),
+                                    typeName,
+                                    columnSize,
+                                    columnDigits,
+                                    getRemarks(columnRs),
+                                    null,
+                                    null,
+                                    isNullable(columnRs),
+                                    getColumnDef(columnRs),
+                                    getTypeConverter().toJavaType(typeName, columnSize, columnDigits)
+                            )
+                    );
         }
 
         ResultSet primaryKeyRs = connection.getMetaData().getPrimaryKeys(null, null, tableName);
-        setPrimaryKey(primaryKeyRs, columnDefinitions);
+        setPrimaryKey(primaryKeyRs, columnDefs);
 
         ResultSet importedKeyRs = connection.getMetaData().getImportedKeys(null, null, tableName);
-        setForeignKey(importedKeyRs, columnDefinitions);
+        setForeignKey(importedKeyRs, columnDefs);
 
-        return columnDefinitions;
+        return columnDefs;
     }
 
-    private void setPrimaryKey(ResultSet rs, List<ColumnDefinition> columnDefinitions) throws SQLException {
+    private void setPrimaryKey(ResultSet rs, List<ColumnDef> columnDefs) throws SQLException {
         while (rs.next()) {
             String primaryKey = getPrimaryKey(rs);
-
-            for (ColumnDefinition columnDefinition : columnDefinitions) {
-                if (columnDefinition.getColumnName().equals(primaryKey)) {
-                    columnDefinition.setPrimaryKey(true);
+            for (ColumnDef columnDef : columnDefs) {
+                if (columnDef.getColumnName().equals(primaryKey)) {
+                    columnDef.setPrimaryKey(true);
                 } else {
-                    columnDefinition.setPrimaryKey(false);
+                    columnDef.setPrimaryKey(false);
                 }
             }
         }
     }
 
-    private void setForeignKey(ResultSet rs, List<ColumnDefinition> columnDefinitions) throws SQLException {
+    private void setForeignKey(ResultSet rs, List<ColumnDef> columnDefs) throws SQLException {
         while (rs.next()) {
             String foreignKey = getForeignKey(rs);
-
-            for (ColumnDefinition columnDefinition : columnDefinitions) {
-                if (columnDefinition.getColumnName().equals(foreignKey)) {
-                    columnDefinition.setPrimaryKey(true);
+            for (ColumnDef columnDef : columnDefs) {
+                if (columnDef.getColumnName().equals(foreignKey)) {
+                    columnDef.setPrimaryKey(true);
                 } else {
-                    columnDefinition.setPrimaryKey(false);
+                    columnDef.setPrimaryKey(false);
                 }
             }
         }
