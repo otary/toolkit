@@ -26,7 +26,7 @@ public class MutexExecutorTests {
 
         MutexExecutor mutexExecutor = new MutexExecutor();
         for (int i = 0; i < 5; i++) {
-            executorService.submit(new Mutext(i, mutexExecutor));
+            executorService.submit(new Mutex(i, mutexExecutor));
         }
 
         Thread.sleep(3000);
@@ -43,8 +43,8 @@ public class MutexExecutorTests {
         ConcurrentLinkedQueue<Future> queue = new ConcurrentLinkedQueue<>();
         List<String> results = new ArrayList();
         for (int i = 0; i < 5; i++) {
-            Future futrue = executorService.submit(new MutextWithCallable(i, mutexExecutor));
-            queue.add(futrue);
+            Future future = executorService.submit(new MutexWithCallable(i, mutexExecutor));
+            queue.add(future);
         }
 
         Future<String> item;
@@ -64,12 +64,12 @@ public class MutexExecutorTests {
     }
 
 
-    public class Mutext implements Runnable {
+    public class Mutex implements Runnable {
 
         private int threadSeq;
         private MutexExecutor mutexExecutor;
 
-        public Mutext(int threadSeq, MutexExecutor mutexExecutor) {
+        public Mutex(int threadSeq, MutexExecutor mutexExecutor) {
             this.threadSeq = threadSeq;
             this.mutexExecutor = mutexExecutor;
         }
@@ -84,12 +84,12 @@ public class MutexExecutorTests {
         }
     }
 
-    public class MutextWithCallable implements Callable {
+    public class MutexWithCallable implements Callable {
 
         private int threadSeq;
         private MutexExecutor mutexExecutor;
 
-        public MutextWithCallable(int threadSeq, MutexExecutor mutexExecutor) {
+        public MutexWithCallable(int threadSeq, MutexExecutor mutexExecutor) {
             this.threadSeq = threadSeq;
             this.mutexExecutor = mutexExecutor;
         }

@@ -16,7 +16,6 @@ public class MutexExecutor {
 
     public MutexExecutor() {
         this.lock = new ReentrantLock();
-
     }
 
     public MutexExecutor(Lock lock) {

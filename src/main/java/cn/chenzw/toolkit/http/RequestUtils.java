@@ -24,7 +24,7 @@ public class RequestUtils {
      * @param params
      * @return
      */
-    public static String getFirstParamter(Object params) {
+    public static String getFirstParameter(Object params) {
         if (params instanceof String[]) {
             if (params == null || ArrayUtils.isEmpty((String[]) params)) {
                 return "";

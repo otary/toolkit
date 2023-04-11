@@ -21,10 +21,10 @@ public class RequestUtilsTests {
 
 
     @Test
-    public void testGetFirstParamter() {
+    public void testGetFirstParameter() {
         request.addParameter("aaa", "bbb");
         request.addParameter("aaa", "cccc");
 
-        Assert.assertEquals("bbb", RequestUtils.getFirstParamter(request.getParameter("aaa")));
+        Assert.assertEquals("bbb", RequestUtils.getFirstParameter(request.getParameter("aaa")));
     }
 }

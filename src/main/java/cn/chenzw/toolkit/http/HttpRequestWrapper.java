@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 /**
@@ -128,7 +129,7 @@ public class HttpRequestWrapper {
         if (isMultipart(request)) {
             return "";
         }
-        return IOUtils.toString(this.request.getInputStream(), CharsetConstatns.DEFAULT_CHARSET);
+        return IOUtils.toString(this.request.getInputStream(), StandardCharsets.UTF_8);
     }
 
     /**
