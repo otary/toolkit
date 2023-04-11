@@ -1,6 +1,6 @@
 package cn.chenzw.toolkit.core.lang;
 
-import cn.chenzw.toolkit.core.constants.CharacterConstants;
+import cn.chenzw.toolkit.core.constants.CharacterConst;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -22,11 +22,11 @@ public abstract class RandomStringKit {
      * @return
      */
     public static String randomFrequentlyUsedChinese(final int count) {
-        int len = CharacterConstants.FREQUENTLY_USED_CHINESE.length();
+        int len = CharacterConst.FREQUENTLY_USED_CHINESE.length();
         StringBuilder buffer = new StringBuilder();
         for (int i = 0; i < count; i++) {
             buffer.append(
-                    CharacterConstants.FREQUENTLY_USED_CHINESE.charAt(RandomUtils.nextInt(0, len))
+                    CharacterConst.FREQUENTLY_USED_CHINESE.charAt(RandomUtils.nextInt(0, len))
             );
         }
         return buffer.toString();
@@ -71,7 +71,7 @@ public abstract class RandomStringKit {
      */
     public static String randomName() {
         // 随机姓氏
-        String surName = CharacterConstants.SURNAME[RandomUtils.nextInt(0, CharacterConstants.SURNAME.length)];
+        String surName = CharacterConst.SURNAME[RandomUtils.nextInt(0, CharacterConst.SURNAME.length)];
         // 随机名
         String name = randomFrequentlyUsedChinese(RandomUtils.nextInt(1, 3));
         return surName + name;

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 /**
  * @author chenzw
  */
-public class CharacterConstants {
+public class CharacterConst {
 
     /**
      * 常用汉字集合
@@ -87,6 +87,6 @@ public class CharacterConstants {
     public static final String[] SURNAME = ArrayUtils.addAll(SINGLE_SURNAME, COMPOUND_SURNAME);
 
 
-    private CharacterConstants() {
+    private CharacterConst() {
     }
 }

@@ -1,0 +1,7 @@
+spring:
+  toolkit:
+    http-holder:
+      enable: false
+      urlPatterns:
+        - /***
+        - /111
