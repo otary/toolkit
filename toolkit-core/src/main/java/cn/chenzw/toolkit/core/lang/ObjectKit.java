@@ -1,5 +1,7 @@
 package cn.chenzw.toolkit.core.lang;
 
+import cn.chenzw.toolkit.core.collection.ArrayKit;
+
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 

@@ -1,5 +1,6 @@
-package cn.chenzw.toolkit.core.lang;
+package cn.chenzw.toolkit.core.collection;
 
+import cn.chenzw.toolkit.core.collection.ArrayKit;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

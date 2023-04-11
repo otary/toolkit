@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.core.lang;
+package cn.chenzw.toolkit.core.collection;
 
 import org.apache.commons.lang.StringUtils;
 

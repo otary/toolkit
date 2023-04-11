@@ -67,7 +67,6 @@
         </dependencies>
     </dependencyManagement>
 
-
     <dependencies>
         <!-- test -->
         <dependency>
@@ -87,7 +86,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- apache commons -->
@@ -126,6 +125,39 @@
             <scope>provided</scope>
         </dependency>
         <!-- /apache commons -->
+
+        <!-- json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-properties</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--/ json -->
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -311,34 +343,6 @@
             <scope>provided</scope>
         </dependency>
         <!-- /mybatis -->
-
-        <!-- json -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--/ json -->
 
         <!-- ehcache -->
         <dependency>

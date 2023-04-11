@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.core.lang;
+package cn.chenzw.toolkit.core.util;
 
 
 import org.apache.commons.lang3.ArrayUtils;

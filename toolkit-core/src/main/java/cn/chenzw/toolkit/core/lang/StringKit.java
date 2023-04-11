@@ -1,11 +1,9 @@
 package cn.chenzw.toolkit.core.lang;
 
+import cn.chenzw.toolkit.core.collection.ArrayKit;
 import cn.chenzw.toolkit.core.util.RegexKit;
 import cn.chenzw.toolkit.core.util.Validator;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author chenzw
