@@ -25,8 +25,8 @@ public final class DESKit {
 
     private static final String DES_ALGORITHM = "DES";
 
-    public static byte[] deigest(int mode, String desMode, String desPadding, byte[] data, String key, byte[] iv) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
-        // 解决Liux、Mac系统异常
+    public static byte[] digest(int mode, String desMode, String desPadding, byte[] data, String key, byte[] iv) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
+        // 解决Linux、Mac系统异常
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         random.setSeed(key.getBytes());
 
@@ -64,7 +64,7 @@ public final class DESKit {
      * @throws InvalidKeySpecException
      */
     public static String encryptAsBase64String(DESMode desMode, DESPadding desPadding, byte[] data, String key, byte[] iv) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
-        return new String(Base64.getEncoder().encode(deigest(Cipher.ENCRYPT_MODE, desMode.name(), desPadding.name(), data, key, iv)));
+        return new String(Base64.getEncoder().encode(digest(Cipher.ENCRYPT_MODE, desMode.name(), desPadding.name(), data, key, iv)));
     }
 
     /**
@@ -85,7 +85,7 @@ public final class DESKit {
      * @throws InvalidKeySpecException
      */
     public static String encryptAsHexString(DESMode desMode, DESPadding desPadding, byte[] data, String key, byte[] iv) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
-        return Hex.encodeHexString(deigest(Cipher.ENCRYPT_MODE, desMode.name(), desPadding.name(), data, key, iv));
+        return Hex.encodeHexString(digest(Cipher.ENCRYPT_MODE, desMode.name(), desPadding.name(), data, key, iv));
     }
 
     /**
@@ -108,7 +108,7 @@ public final class DESKit {
      */
     public static byte[] decryptHexString(String hexString, String key, DESMode desMode, DESPadding desPadding,
                                           byte[] iv) throws DecoderException, NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
-        return deigest(Cipher.DECRYPT_MODE, desMode.name(), desPadding.name(), Hex.decodeHex(hexString), key, iv);
+        return digest(Cipher.DECRYPT_MODE, desMode.name(), desPadding.name(), Hex.decodeHex(hexString), key, iv);
     }
 
 
@@ -131,7 +131,7 @@ public final class DESKit {
      */
     public static byte[] decryptBase64String(String base64String, String key, DESMode desMode, DESPadding desPadding,
                                              byte[] iv) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
-        return deigest(Cipher.DECRYPT_MODE, desMode.name(), desPadding.name(), Base64.getDecoder().decode(base64String), key, iv);
+        return digest(Cipher.DECRYPT_MODE, desMode.name(), desPadding.name(), Base64.getDecoder().decode(base64String), key, iv);
     }
 
     private static String createModePadding(String mode, String padding) {

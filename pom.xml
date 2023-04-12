@@ -9,6 +9,7 @@
         <module>toolkit-core</module>
         <module>toolkit-spring</module>
         <module>toolkit-spring-boot-starter</module>
+        <module>logging-spring-boot-starter</module>
     </modules>
     <name>toolkit</name>
     <url>https://github.com/otary/toolkit</url>

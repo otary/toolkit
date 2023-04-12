@@ -1,0 +1,19 @@
+{
+  "groups": [
+    {
+      "name": "logging",
+      "type": "cn.chenzw.toolkit.logging.properties.MethodLoggingProperties",
+      "sourceType": "cn.chenzw.toolkit.logging.properties.MethodLoggingProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "toolkit.logging.globalLogFields",
+      "type": "java.lang.Boolean",
+      "description": "全局日志打印字段",
+      "sourceType": "cn.chenzw.toolkit.logging.properties.MethodLoggingProperties",
+      "defaultValue": true
+    }
+  ],
+  "hints": []
+}

@@ -8,6 +8,7 @@ import cn.chenzw.toolkit.spring.listener.AppContextStartListener;
 import cn.chenzw.toolkit.spring.listener.AppContextStopListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +17,13 @@ import org.springframework.context.annotation.Configuration;
  * @author chenzw
  */
 @Configuration
+@EnableConfigurationProperties(ToolkitProperties.class)
 public class ToolkitAutoConfiguration {
 
     @Autowired
     private ToolkitProperties toolkitProperties;
 
-    public static final String PROPERTY_PREFIX = "spring.toolkit";
+    public static final String PROPERTY_PREFIX = "toolkit";
 
 
     @Bean

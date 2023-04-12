@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "toolkit",
+      "type": "cn.chenzw.toolkit.spring.boot.starter.properties.ToolkitProperties",
+      "sourceType": "cn.chenzw.toolkit.spring.boot.starter.properties.ToolkitProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "toolkit.appContextHolder.enable",
+      "type": "java.lang.Boolean",
+      "description": "启用appContextHolder",
+      "sourceType": "cn.chenzw.toolkit.spring.boot.starter.properties.ToolkitProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "toolkit.httpHolder.enable",
+      "type": "java.lang.Boolean",
+      "description": "启用httpHolder",
+      "sourceType": "cn.chenzw.toolkit.spring.boot.starter.properties.ToolkitProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "toolkit.requestContentCache.enable",
+      "type": "java.lang.Boolean",
+      "description": "启用request body缓存",
+      "sourceType": "cn.chenzw.toolkit.spring.boot.starter.properties.ToolkitProperties"
+    }
+  ],
+  "hints": []
+}
