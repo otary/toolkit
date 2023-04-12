@@ -11,6 +11,8 @@
         <module>toolkit-spring-boot-starter</module>
         <module>logging-spring-boot-starter</module>
         <module>toolkit-third-party</module>
+        <module>toolkit-mybatis</module>
+        <module>dynamic-datasource-spring-boot-starter</module>
     </modules>
     <name>toolkit</name>
     <url>https://github.com/otary/toolkit</url>
@@ -107,6 +109,16 @@
             <optional>true</optional>
         </dependency>
 
+
+        <!-- xml解析 -->
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- /xml解析 -->
+
         <!-- json -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -139,6 +151,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
     </dependencies>
 
     <profiles>
