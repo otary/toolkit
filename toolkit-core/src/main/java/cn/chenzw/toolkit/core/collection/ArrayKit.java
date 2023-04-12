@@ -1,6 +1,6 @@
 package cn.chenzw.toolkit.core.collection;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

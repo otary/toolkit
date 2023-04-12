@@ -2,7 +2,6 @@ package cn.chenzw.toolkit.core.codec;
 
 import cn.chenzw.toolkit.core.codec.support.rsa.RSAKeySize;
 import cn.chenzw.toolkit.core.codec.support.rsa.RSASignatureAlgorithm;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -223,7 +222,7 @@ public final class RSAKit {
      * @throws IOException
      */
     public static byte[] convertPkcs8ToPkcs1(byte[] pkcs8PrivateKeyBytes) throws IOException {
-        PrivateKeyInfo pkInfo = PrivateKeyInfo.getInstance(pkcs8PrivateKeyBytes);
+        org.bouncycastle.asn1.pkcs.PrivateKeyInfo pkInfo = org.bouncycastle.asn1.pkcs.PrivateKeyInfo.getInstance(pkcs8PrivateKeyBytes);
         return pkInfo.parsePrivateKey().toASN1Primitive().getEncoded();
     }
 

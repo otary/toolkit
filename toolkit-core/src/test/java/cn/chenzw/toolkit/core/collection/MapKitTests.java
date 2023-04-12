@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.core.collection;
 
-import cn.chenzw.toolkit.core.collection.MapKit;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

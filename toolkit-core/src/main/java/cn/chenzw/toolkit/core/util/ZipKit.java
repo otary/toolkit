@@ -1,7 +1,6 @@
 package cn.chenzw.toolkit.core.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.hadoop.util.StopWatch;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,16 +32,16 @@ public final class ZipKit {
         long t1 = System.currentTimeMillis();
         try (ZipOutputStream zos = new ZipOutputStream(outputStream)) {
             doCompress(srcDirectory, zos, srcDirectory.getName());
-
-            long t2 = System.currentTimeMillis();
-            log.debug("Finish zip [{}], cost {} ms", srcDirectory.getPath(), (t2 - t1));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        long t2 = System.currentTimeMillis();
+        log.debug("Finish zip [{}], cost {} ms", srcDirectory.getPath(), (t2 - t1));
     }
 
     /**
      * 压缩文件（多个文件）
+     *
      * @param srcFiles
      * @param outputStream
      */

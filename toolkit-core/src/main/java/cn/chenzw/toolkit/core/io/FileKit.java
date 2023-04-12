@@ -3,9 +3,6 @@ package cn.chenzw.toolkit.core.io;
 import cn.chenzw.toolkit.core.enums.FileType;
 import cn.chenzw.toolkit.core.lang.RadixKit;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -149,9 +146,9 @@ public class FileKit {
      * @return
      * @throws IOException
      */
-    public static File download(String url, File savePath) throws IOException {
-        OkHttpClient httpClient = new OkHttpClient.Builder().build();
-        try (Response response = httpClient.newCall(new Request.Builder().url(url).build()).execute()) {
+    /*public static File download(String url, File savePath) throws IOException {
+        okhttp3.OkHttpClient httpClient = new okhttp3.OkHttpClient.Builder().build();
+        try (okhttp3.Response response = httpClient.newCall(new okhttp3.Request.Builder().url(url).build()).execute()) {
             InputStream is = response.body().byteStream();
             String name = FilenameUtils.getName(url);
 
@@ -162,6 +159,6 @@ public class FileKit {
             IOUtils.copy(is, new FileOutputStream(file));
             return file;
         }
-    }
+    }*/
 
 }

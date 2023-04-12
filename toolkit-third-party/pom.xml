@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>toolkit-spring</artifactId>
+    <artifactId>toolkit-third-party</artifactId>
     <packaging>jar</packaging>
 
-    <name>toolkit-spring</name>
+    <name>toolkit-third-party</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -24,23 +24,19 @@
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!--springboot-->
+        <!-- ehcache -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!--/springboot-->
 
-        <!-- spring -->
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <optional>true</optional>
         </dependency>
-        <!-- /spring -->
+        <!--/ ehcache -->
+
     </dependencies>
 </project>

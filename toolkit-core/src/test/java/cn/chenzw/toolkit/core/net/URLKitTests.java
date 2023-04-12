@@ -1,7 +1,7 @@
 package cn.chenzw.toolkit.core.net;
 
 import cn.chenzw.toolkit.core.domain.entity.Book;
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
