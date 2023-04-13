@@ -1,8 +1,8 @@
 package cn.chenzw.toolkit.core.util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,6 +86,7 @@ public abstract class RegexKit {
      * <pre>
      * RegexKit.getGroups(Pattern.compile("(\\d+)"), "abc123cde345", 1) = ["123", "345"]
      * </pre>
+     *
      * @param pattern
      * @param content
      * @param groupIndex
@@ -118,7 +119,7 @@ public abstract class RegexKit {
     }
 
     /**
-     * 匹配内容并回调结果
+     * 获取所有匹配内容并回调结果
      *
      * @param pattern
      * @param content
@@ -130,6 +131,23 @@ public abstract class RegexKit {
         }
         final Matcher matcher = pattern.matcher(content);
         while (matcher.find()) {
+            callback.accept(matcher);
+        }
+    }
+
+    /**
+     * 一旦匹配到内容立即回调结果
+     *
+     * @param pattern
+     * @param content
+     * @param callback
+     */
+    public static final void findOne(Pattern pattern, CharSequence content, Consumer<Matcher> callback) {
+        if (pattern == null || content == null) {
+            return;
+        }
+        final Matcher matcher = pattern.matcher(content);
+        if (matcher.find()) {
             callback.accept(matcher);
         }
     }
@@ -152,8 +170,46 @@ public abstract class RegexKit {
      * @param content
      * @return
      */
-    public static final List<String> getGroup1(Pattern pattern, CharSequence content) {
+    public static final List<String> getGroups1(Pattern pattern, CharSequence content) {
         return getGroups(pattern, content, 1);
     }
 
+    /**
+     * 获取指定分组匹配的第一个结果
+     *
+     * @param pattern
+     * @param content
+     * @param groupIndex
+     * @return
+     */
+    public static final String getGroup(Pattern pattern, CharSequence content, int groupIndex) {
+        if (pattern == null || content == null) {
+            return null;
+        }
+        AtomicReference<String> result = new AtomicReference<>();
+        findOne(pattern, content, (matcher) -> result.set(matcher.group(groupIndex)));
+        return result.get();
+    }
+
+    /**
+     * 获取分组0的第一个匹配结果
+     *
+     * @param pattern
+     * @param content
+     * @return
+     */
+    public static final String getGroup0(Pattern pattern, CharSequence content) {
+        return getGroup(pattern, content, 0);
+    }
+
+    /**
+     * 获取分组1的第一个匹配结果
+     *
+     * @param pattern
+     * @param content
+     * @return
+     */
+    public static final String getGroup1(Pattern pattern, CharSequence content) {
+        return getGroup(pattern, content, 1);
+    }
 }

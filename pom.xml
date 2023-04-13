@@ -13,6 +13,7 @@
         <module>toolkit-third-party</module>
         <module>toolkit-mybatis</module>
         <module>dynamic-datasource-spring-boot-starter</module>
+        <module>toolkit-db</module>
     </modules>
     <name>toolkit</name>
     <url>https://github.com/otary/toolkit</url>
@@ -98,6 +99,16 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
             <optional>true</optional>
         </dependency>
         <!-- /logging -->

@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>toolkit-third-party</artifactId>
+    <artifactId>toolkit-db</artifactId>
     <packaging>jar</packaging>
 
-    <name>toolkit-third-party</name>
+    <name>toolkit-db</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -23,27 +23,5 @@
             <artifactId>toolkit-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-
-        <!-- ehcache -->
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!--/ ehcache -->
-
-        <!-- 模版 -->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!--/ 模版 -->
     </dependencies>
 </project>
