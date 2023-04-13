@@ -38,6 +38,11 @@
             <artifactId>logging-spring-boot-starter</artifactId>
             <version>1.0.4</version>
         </dependency>
+        <dependency>
+            <groupId>cn.chenzw.toolkit</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>1.0.4</version>
+        </dependency>
 
         <!--springboot-->
         <dependency>
