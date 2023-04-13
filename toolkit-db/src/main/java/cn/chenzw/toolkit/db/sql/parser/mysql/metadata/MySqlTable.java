@@ -34,4 +34,9 @@ public class MySqlTable implements Table {
     public Map<String, Object> getExt() {
         return ext;
     }
+
+    @Override
+    public void setExt(Map<String, Object> extMap) {
+        this.ext = extMap;
+    }
 }

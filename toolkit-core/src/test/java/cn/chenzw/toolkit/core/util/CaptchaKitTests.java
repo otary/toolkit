@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.core.util;
 
-import cn.chenzw.toolkit.core.captcha.CaptchaBuilder;
 import cn.chenzw.toolkit.core.captcha.CaptchaBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;

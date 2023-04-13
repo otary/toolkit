@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @RunWith(JUnit4.class)

@@ -13,6 +13,8 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.DispatcherType;
+
 /**
  * @author chenzw
  */
@@ -58,11 +60,13 @@ public class ToolkitAutoConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = PROPERTY_PREFIX, name = {"requestContentCache.enable", "request-content-cache.enable"}, havingValue = "true", matchIfMissing = true)
     public FilterRegistrationBean cachingRequestWrapperFilterRegistration(){
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new ContentCachingRequestWrapperFilter());
-        filterRegistrationBean.addUrlPatterns(
+        FilterRegistrationBean frb = new FilterRegistrationBean(new ContentCachingRequestWrapperFilter());
+        frb.setDispatcherTypes(DispatcherType.REQUEST);
+        frb.addUrlPatterns(
                 toolkitProperties.getRequestContentCache().getUrlPatterns()
         );
-        return filterRegistrationBean;
+        frb.setOrder(Integer.MIN_VALUE);
+        return frb;
     }
 
 }

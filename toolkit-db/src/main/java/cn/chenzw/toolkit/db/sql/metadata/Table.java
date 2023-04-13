@@ -31,5 +31,7 @@ public interface Table {
      */
     Map<String, Object> getExt();
 
+    void setExt(Map<String, Object> extMap);
+
 }
 

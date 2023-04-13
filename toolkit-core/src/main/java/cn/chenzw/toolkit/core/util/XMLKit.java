@@ -2,7 +2,6 @@ package cn.chenzw.toolkit.core.util;
 
 import cn.chenzw.toolkit.core.entity.attr.XmlToMapAttr;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 
@@ -22,8 +21,6 @@ public final class XMLKit {
 
     private XMLKit() {
     }
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * XML => Map
@@ -81,7 +78,7 @@ public final class XMLKit {
     public static String xml2Json(String xml, XmlToMapAttr xmlToMapAttr) throws DocumentException {
         Map<Object, Object> map = xmlToMap(xml, xmlToMapAttr);
         try {
-            return objectMapper.writeValueAsString(map);
+            return JSONKit.writeValueAsString(map);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

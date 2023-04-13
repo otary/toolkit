@@ -74,4 +74,6 @@ public interface Column {
      * @return
      */
     Map<String, Object> getExt();
+
+    void setExt(Map<String, Object> extMap);
 }

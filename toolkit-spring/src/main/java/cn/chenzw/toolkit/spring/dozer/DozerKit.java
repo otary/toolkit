@@ -3,16 +3,17 @@ package cn.chenzw.toolkit.spring.dozer;
 import cn.chenzw.toolkit.core.lang.GenericKit;
 import cn.chenzw.toolkit.spring.dozer.core.DozerFieldMapping;
 import com.github.dozermapper.core.CustomConverter;
-import com.github.dozermapper.core.DozerBeanMapper;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
-import com.github.dozermapper.core.builder.BeanMappingsBuilder;
 import com.github.dozermapper.core.loader.api.BeanMappingBuilder;
 import com.github.dozermapper.core.loader.api.FieldsMappingOptions;
 import com.github.dozermapper.core.loader.api.TypeMappingBuilder;
 import org.springframework.util.ObjectUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Dozer工具类

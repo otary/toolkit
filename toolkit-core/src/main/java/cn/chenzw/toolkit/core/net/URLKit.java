@@ -4,10 +4,8 @@ import cn.chenzw.toolkit.core.lang.ReflectKit;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 import java.util.function.Predicate;
 

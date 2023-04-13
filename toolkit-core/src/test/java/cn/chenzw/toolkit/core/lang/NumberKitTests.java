@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.core.lang;
 
-import cn.chenzw.toolkit.core.util.Validator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -4,11 +4,9 @@ import cn.chenzw.toolkit.core.enums.FileType;
 import cn.chenzw.toolkit.core.lang.RadixKit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;

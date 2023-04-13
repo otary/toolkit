@@ -419,7 +419,7 @@ public final class ReflectKit {
      * @return
      * @since 1.0.3
      */
-    public static boolean containsField(Class<?> aClas, String fieldName) {
+    public static boolean hasField(Class<?> aClas, String fieldName) {
         Field[] fields = getFields(aClas);
         for (Field field : fields) {
             if (fieldName.equals(field.getName())) {

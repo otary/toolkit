@@ -3,7 +3,6 @@ package cn.chenzw.toolkit.core.jwt;
 import cn.chenzw.toolkit.core.jwt.entity.JWTEntity;
 import cn.chenzw.toolkit.core.util.JSONKit;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Base64;
@@ -18,8 +17,6 @@ import java.util.Map;
 public final class JWTTokenKit {
 
     private static String BEARER_TOKEN_PREFIX = "Bearer ";
-
-    private static ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * 是否Jwt Token
