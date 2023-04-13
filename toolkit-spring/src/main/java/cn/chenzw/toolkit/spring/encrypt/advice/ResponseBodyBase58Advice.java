@@ -1,6 +1,6 @@
 package cn.chenzw.toolkit.spring.encrypt.advice;
 
-import cn.chenzw.toolkit.core.util.JsonKit;
+import cn.chenzw.toolkit.core.util.JSONKit;
 import cn.chenzw.toolkit.spring.encrypt.annotation.ResponseBodyBase58;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.core.MethodParameter;
@@ -30,7 +30,7 @@ public class ResponseBodyBase58Advice implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         String jsonStr;
         try {
-            jsonStr = JsonKit.writeValueAsString(body);
+            jsonStr = JSONKit.writeValueAsString(body);
         } catch (JsonProcessingException e) {
             return body;
         }

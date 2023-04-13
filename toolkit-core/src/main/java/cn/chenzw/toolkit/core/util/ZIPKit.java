@@ -16,9 +16,10 @@ import java.util.zip.ZipOutputStream;
  * @author chenzw
  */
 @Slf4j
-public final class ZipKit {
+public final class ZIPKit {
 
-    private ZipKit() {
+    private ZIPKit() {
+
     }
 
 

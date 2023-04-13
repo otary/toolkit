@@ -10,14 +10,14 @@ import org.junit.runners.JUnit4;
 import java.util.Map;
 
 @RunWith(JUnit4.class)
-public class XmlKitTests {
+public class XMLKitTests {
 
     @Test
     public void testXmlToMap() throws DocumentException {
         XmlToMapAttr xmlToMapAttr = new XmlToMapAttr();
         xmlToMapAttr.setUseTextAttr(true);
 
-        Map<String, String> result = XmlKit.xmlToMap("<note a=\"ttt\" b=\"kk\">\n" +
+        Map<String, String> result = XMLKit.xmlToMap("<note a=\"ttt\" b=\"kk\">\n" +
                 "<to cc=\"xxx\" dd=\"yyy\">George</to>\n" +
                 "<from><c><d>xxx</d></c></from>\n" +
                 "<heading>Reminder</heading>\n" +
@@ -29,7 +29,7 @@ public class XmlKitTests {
 
     @Test
     public void testXml2Json() throws DocumentException {
-        String json = XmlKit.xml2Json("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+        String json = XMLKit.xml2Json("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
                 "<root> \n" +
                 "    <a>aaa</a>\n" +
                 "    <b>bbb</b>\n" +

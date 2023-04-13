@@ -1,7 +1,7 @@
 package cn.chenzw.toolkit.spring.encrypt.resolver;
 
 import cn.chenzw.toolkit.core.codec.Base58Kit;
-import cn.chenzw.toolkit.core.util.JsonKit;
+import cn.chenzw.toolkit.core.util.JSONKit;
 import cn.chenzw.toolkit.spring.encrypt.annotation.ResponseBodyBase58;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.MethodParameter;
@@ -58,7 +58,7 @@ public class RequestBodyBase58ArgumentResolver implements HandlerMethodArgumentR
                 content = body.getBytes(charset);
             }
         }
-        return (content == null) ? null : JsonKit.readValue(content, parameter.getParameterType());
+        return (content == null) ? null : JSONKit.readValue(content, parameter.getParameterType());
     }
 
     // 获取charset

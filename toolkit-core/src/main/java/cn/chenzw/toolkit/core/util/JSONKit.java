@@ -18,7 +18,7 @@ import java.util.Map;
  * @author chenzw
  * @since 1.0.3
  */
-public final class JsonKit {
+public final class JSONKit {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -35,7 +35,7 @@ public final class JsonKit {
      * @return
      */
     public static String json2Xml(String json) throws IOException {
-        return XmlKit.map2Xml(
+        return XMLKit.map2Xml(
                 objectMapper.readValue(json, Map.class)
         );
     }

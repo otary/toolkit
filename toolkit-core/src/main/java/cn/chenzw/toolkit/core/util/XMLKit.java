@@ -18,10 +18,9 @@ import java.util.Map;
  * @since 1.0.3
  */
 
-public final class XmlKit {
+public final class XMLKit {
 
-    private XmlKit() {
-
+    private XMLKit() {
     }
 
     private static final ObjectMapper objectMapper = new ObjectMapper();

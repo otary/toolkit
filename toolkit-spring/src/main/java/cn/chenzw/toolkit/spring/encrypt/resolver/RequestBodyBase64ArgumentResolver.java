@@ -1,6 +1,6 @@
 package cn.chenzw.toolkit.spring.encrypt.resolver;
 
-import cn.chenzw.toolkit.core.util.JsonKit;
+import cn.chenzw.toolkit.core.util.JSONKit;
 import cn.chenzw.toolkit.spring.encrypt.annotation.ResponseBodyBase64;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
@@ -59,7 +59,7 @@ public class RequestBodyBase64ArgumentResolver implements HandlerMethodArgumentR
                 content = body.getBytes(charset);
             }
         }
-        return (content == null) ? null : JsonKit.readValue(content, parameter.getParameterType());
+        return (content == null) ? null : JSONKit.readValue(content, parameter.getParameterType());
     }
 
     // 获取charset

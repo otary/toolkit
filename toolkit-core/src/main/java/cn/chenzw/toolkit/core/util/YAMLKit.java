@@ -11,7 +11,7 @@ import java.util.Properties;
  * @author chenzw
  * @since 1.0.3
  */
-public class YamlKit {
+public class YAMLKit {
 
     /**
      * Yaml转Properties
