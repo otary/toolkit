@@ -43,5 +43,5 @@ public interface PR<T> extends Serializable {
      *
      * @return
      */
-    List<T> getData();
+    List<T> getPayload();
 }
