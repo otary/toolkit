@@ -24,8 +24,7 @@ public final class JSONKit {
 
     static {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
     /**

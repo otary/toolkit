@@ -1,9 +1,18 @@
 package cn.chenzw.toolkit.mybatis.util;
 
 import cn.chenzw.toolkit.core.lang.ReflectKit;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.ibatis.binding.MapperProxy;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.StringUtils;
 
+import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -30,11 +39,10 @@ public final class SqlMapperKit {
      * @return
      * @throws Exception
      */
-    /*public static <T> T getMapper(DataSource dataSource, Class<T> mapper) throws Exception {
+    public static <T> T getMapper(DataSource dataSource, MybatisProperties mybatisProperties, Class<T> mapper) throws Exception {
         if (dataSource == null) {
             throw new IllegalArgumentException("Parameter dataSource is null");
         }
-        MybatisProperties mybatisProperties = MybatisPropertiesHolder.getMybatisProperties();
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
         factory.setDataSource(dataSource);
         factory.setVfs(SpringBootVFS.class);
@@ -63,8 +71,9 @@ public final class SqlMapperKit {
         }
         SqlSessionFactory sqlSessionFactory = factory.getObject();
         SqlSession session = sqlSessionFactory.openSession();
+
         return session.getMapper(mapper);
-    }*/
+    }
 
 
     /**
