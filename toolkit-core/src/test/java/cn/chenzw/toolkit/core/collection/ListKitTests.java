@@ -6,10 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 @RunWith(JUnit4.class)
 public class ListKitTests {
@@ -187,7 +186,6 @@ public class ListKitTests {
             User user = new User();
             user.setId(i);
             user.setName("zhangsan" + i);
-
             users.add(user);
         }
 
@@ -195,12 +193,37 @@ public class ListKitTests {
             User user = new User();
             user.setId(i);
             user.setName("zhangsan" + i * 2);
-
             users.add(user);
         }
         List<User> uniqueList = ListKit.unique(users, user -> user.getId());
 
         Assert.assertEquals("[User{id=0, name='zhangsan0', sex='null', age=null, birthDate=null}, User{id=1, name='zhangsan1', sex='null', age=null, birthDate=null}, User{id=2, name='zhangsan2', sex='null', age=null, birthDate=null}]",
                 uniqueList.toString());
+    }
+
+    @Test
+    public void testEquals() {
+        List<User> users1 = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            User user = new User();
+            user.setId(i);
+            user.setName("zhangsan" + i);
+            users1.add(user);
+        }
+
+        List<User> users2 = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            User user = new User();
+            user.setId(i);
+            user.setName("zhangsan" + i);
+            users2.add(user);
+        }
+
+        boolean equals = ListKit.equals(users1, users2, (user, user2) ->
+                Objects.equals(user.getId(), user2.getId()) &&
+                        Objects.equals(user.getName(), user2.getName())
+        );
+
+        Assert.assertEquals(true, equals);
     }
 }

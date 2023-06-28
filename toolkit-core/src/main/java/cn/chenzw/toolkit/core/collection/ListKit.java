@@ -5,7 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -161,10 +163,10 @@ public abstract class ListKit {
      * @param listB
      * @return
      */
-    public static final <T1, T2> List<T1> subtract(Collection<T1> listA, Collection<T2> listB, BiFunction<T1, T2, Boolean> matchFunction) {
+    public static final <T1, T2> List<T1> subtract(Collection<T1> listA, Collection<T2> listB, BiFunction<T1, T2, Boolean> matchesFunc) {
         Objects.requireNonNull(listA, "listA must not be null!");
         Objects.requireNonNull(listB, "listB must not be null!");
-        return listA.stream().filter(item -> listB.stream().allMatch(item2 -> !matchFunction.apply(item, item2))).collect(Collectors.toList());
+        return listA.stream().filter(item -> listB.stream().allMatch(item2 -> !matchesFunc.apply(item, item2))).collect(Collectors.toList());
     }
 
 
@@ -176,10 +178,10 @@ public abstract class ListKit {
      * @param <T>
      * @return
      */
-    public static final <T> List<T> intersection(Collection<T> listA, Collection<T> listB, BiFunction<T, T, Boolean> matchFunction) {
+    public static final <T> List<T> intersection(Collection<T> listA, Collection<T> listB, BiFunction<T, T, Boolean> matchesFunc) {
         Objects.requireNonNull(listA, "listA must not be null!");
         Objects.requireNonNull(listB, "listB must not be null!");
-        return listA.stream().filter(item -> listB.stream().anyMatch(item2 -> matchFunction.apply(item, item2))).collect(Collectors.toList());
+        return listA.stream().filter(item -> listB.stream().anyMatch(item2 -> matchesFunc.apply(item, item2))).collect(Collectors.toList());
     }
 
 
@@ -187,18 +189,53 @@ public abstract class ListKit {
      * 集合去重
      *
      * @param list
-     * @param matchFunction
+     * @param matchesFunc
      * @param <T>
      * @return
      */
-    public static final <T, U extends Comparable<? super U>> List<T> unique(Collection<T> list, Function<T, U> matchFunction) {
+    public static final <T, U extends Comparable<? super U>> List<T> unique(Collection<T> list, Function<T, U> matchesFunc) {
         Objects.requireNonNull(list);
         return list.stream().collect(
                 Collectors.collectingAndThen(Collectors.toCollection(
-                        () -> new TreeSet<>(Comparator.comparing(matchFunction))), ArrayList::new)
+                        () -> new TreeSet<>(Comparator.comparing(matchesFunc))), ArrayList::new)
         );
     }
 
+    /**
+     * 判断数组是否相等
+     *
+     * @param listA
+     * @param listB
+     * @param matches
+     * @param <T1>
+     * @param <T2>
+     * @return
+     */
+    public static final <T1, T2> boolean equals(Collection<T1> listA, Collection<T2> listB, BiPredicate<T1, T2> matches) {
+        if (listA.size() != listB.size()) {
+            return false;
+        }
+
+        for (T2 itemB : listB) {
+            boolean anyMatch = listA.stream().anyMatch((itemA) -> matches.test(itemA, itemB));
+            if (!anyMatch) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 是否包含子项
+     * @param list
+     * @param item
+     * @param matches
+     * @return
+     * @param <T>
+     */
+    public static final <T> boolean contains(Collection<T> list, T item, BiPredicate<T, T> matches) {
+        return list.stream().anyMatch((_item) -> matches.test(item, _item));
+    }
 
     private static final <T> Map<Field, Object> getFieldMap(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException {
         Map<Field, Object> fvMap = new HashMap<>();
