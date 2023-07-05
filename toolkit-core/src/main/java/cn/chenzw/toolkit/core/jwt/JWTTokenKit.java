@@ -43,7 +43,7 @@ public final class JWTTokenKit {
 
         JWTEntity jwtEntity = new JWTEntity();
         String tokenHeaderPlaintext = new String(
-                Base64.getMimeDecoder().decode(tokenHeader)
+                Base64.getUrlDecoder().decode(tokenHeader)
         );
         try {
             jwtEntity.setHeader(
@@ -54,7 +54,7 @@ public final class JWTTokenKit {
         }
 
         String tokenPayloadPlaintext = new String(
-                Base64.getMimeDecoder().decode(tokenPayload)
+                Base64.getUrlDecoder().decode(tokenPayload)
         );
         try {
             jwtEntity.setPayload(
