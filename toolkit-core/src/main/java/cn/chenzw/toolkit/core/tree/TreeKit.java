@@ -15,8 +15,8 @@ public class TreeKit {
      */
     public static void iterate(List<TreeNode> treeNodes, TreeNodeCallback nodeCallback) {
         for (int i = 0; i < treeNodes.size(); i++) {
-            recursion(treeNodes, i, 0, (treeNode, treeNodes2, index, level) -> {
-                nodeCallback.callback(treeNode, treeNodes2, index, level);
+            recursion(treeNodes, null, i, 0, (treeNode, parentNode, index, level) -> {
+                nodeCallback.callback(treeNode, parentNode, index, level);
                 return false;
             });
         }
@@ -31,7 +31,7 @@ public class TreeKit {
      */
     public static TreeNodeContext findNode(List<TreeNode> treeNodes, TreeNodePredicate nodePredicate) {
         for (int i = 0; i < treeNodes.size(); i++) {
-            TreeNodeContext treeNodeContext = recursion(treeNodes, i, 0, nodePredicate);
+            TreeNodeContext treeNodeContext = recursion(treeNodes, null, i, 0, nodePredicate);
             if (treeNodeContext != null) {
                 return treeNodeContext;
             }
@@ -39,10 +39,10 @@ public class TreeKit {
         return null;
     }
 
-    private static TreeNodeContext recursion(List<TreeNode> treeNodes, Integer index, Integer level, TreeNodePredicate nodePredicate) {
+    private static TreeNodeContext recursion(List<TreeNode> treeNodes, TreeNode parentNode, Integer index, Integer level, TreeNodePredicate nodePredicate) {
         TreeNode treeNode = treeNodes.get(index);
 
-        if (nodePredicate.matches(treeNode, treeNodes, index, level)) {
+        if (nodePredicate.matches(treeNode, parentNode, index, level)) {
             TreeNodeContext treeNodeContext = new TreeNodeContext();
             treeNodeContext.setTreeNode(treeNode);
             treeNodeContext.setIndex(index);
@@ -54,16 +54,12 @@ public class TreeKit {
         List children = treeNode.getChildren();
         if (children != null) {
             for (int i = 0; i < children.size(); i++) {
-                TreeNodeContext treeNodeContext = recursion(children, i, level, nodePredicate);
+                TreeNodeContext treeNodeContext = recursion(children, treeNode, i, level, nodePredicate);
                 if (treeNodeContext != null) {
                     return treeNodeContext;
                 }
             }
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-
     }
 }

@@ -8,6 +8,6 @@ import java.util.List;
 @FunctionalInterface
 public interface TreeNodeCallback {
 
-    void callback(TreeNode treeNode, List<TreeNode> treeNodes, Integer index, Integer level);
+    void callback(TreeNode treeNode, TreeNode parentNode, Integer index, Integer level);
 
 }

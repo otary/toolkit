@@ -8,5 +8,5 @@ import java.util.List;
 @FunctionalInterface
 public interface TreeNodePredicate {
 
-    Boolean matches(TreeNode treeNode, List<TreeNode> treeNodes, Integer index, Integer level);
+    Boolean matches(TreeNode treeNode, TreeNode parentNode, Integer index, Integer level);
 }
