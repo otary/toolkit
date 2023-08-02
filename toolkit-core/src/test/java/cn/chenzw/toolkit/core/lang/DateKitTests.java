@@ -109,4 +109,19 @@ public class DateKitTests {
         Assert.assertEquals("01:46", gapTime);
     }
 
+    @Test
+    public void testGetLastMonth() {
+        Calendar instance = Calendar.getInstance();
+        instance.set(2001, 9, 6);
+        Date date = instance.getTime();
+
+        Date lastMonth = DateKit.getLastMonth(date);
+
+        Assert.assertEquals("2001-09-06", DateFormatUtils.format(lastMonth, "yyyy-MM-dd"));
+    }
+
+    @Test
+    public void testGetNextMonth() {
+
+    }
 }

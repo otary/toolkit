@@ -164,7 +164,7 @@ public class DateKit {
     public static Date getLastMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.MONTH, -1);
+        calendar.add(Calendar.MONTH, -1);
         eraseTime(calendar);
         return calendar.getTime();
     }
@@ -178,7 +178,7 @@ public class DateKit {
     public static Date getNextMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.MONTH, 1);
+        calendar.add(Calendar.MONTH, 1);
         eraseTime(calendar);
         return calendar.getTime();
     }
