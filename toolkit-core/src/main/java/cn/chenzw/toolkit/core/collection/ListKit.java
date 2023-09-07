@@ -227,14 +227,29 @@ public abstract class ListKit {
 
     /**
      * 是否包含子项
+     *
      * @param list
      * @param item
      * @param matches
-     * @return
      * @param <T>
+     * @return
      */
     public static final <T> boolean contains(Collection<T> list, T item, BiPredicate<T, T> matches) {
         return list.stream().anyMatch((_item) -> matches.test(item, _item));
+    }
+
+    /**
+     * 去重
+     *
+     * @param list
+     * @param keyExtractor
+     * @param <T>
+     * @param <U>
+     * @return
+     */
+    public static final <T, U extends Comparable<? super U>> List<T> distinct(Collection<T> list, Function<? super T, ? extends U> keyExtractor) {
+        return list.stream().collect(Collectors.collectingAndThen(
+                Collectors.toCollection(() -> new TreeSet<T>(Comparator.comparing(keyExtractor))), ArrayList::new));
     }
 
     private static final <T> Map<Field, Object> getFieldMap(List<T> list, Map<String, Object> kvMap) throws NoSuchFieldException {
