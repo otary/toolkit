@@ -131,6 +131,14 @@
         </dependency>
         <!-- /xml解析 -->
 
+        <!--HTML解析-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--/HTML解析-->
+
         <!-- json -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
