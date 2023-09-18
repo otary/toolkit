@@ -1,13 +1,17 @@
 package cn.chenzw.toolkit.wp;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import cn.chenzw.toolkit.wp.entity.WpShareInfo;
 import cn.chenzw.toolkit.wp.provider.*;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,6 +34,14 @@ public class WpProviderTests {
     UcWpProvider ucWpProvider = new UcWpProvider();
 
     XunLeiWpProvider xunLeiWpProvider = new XunLeiWpProvider();
+
+    LanZouWpProvider lanZouWpProvider = new LanZouWpProvider();
+
+    @Before
+    public void setUp() {
+        Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        logger.setLevel(Level.INFO);
+    }
 
     /**
      * 阿里云盘
@@ -90,9 +102,13 @@ public class WpProviderTests {
     public void testBaiduShareUrlMatches() {
         boolean matches = baiduWpProvider.shareUrlMatches("https://pan.baidu.com/s/16OfAq2t5ngToq8T72ZH2vw");
         log.info("matches => {}", matches);
-
     }
 
+    /**
+     * 百度网盘
+     *
+     * @throws Exception
+     */
     @Test
     public void testFetchBaiduShareInfo() throws Exception {
         WpShareInfo wpShareInfo = baiduWpProvider.fetchShareInfo("https://pan.baidu.com/s/16OfAq2t5ngToq8T72ZH2vw", "");
@@ -106,6 +122,12 @@ public class WpProviderTests {
         WpShareInfo wpShareInfo3 = baiduWpProvider.fetchShareInfo("https://pan.baidu.com/s/1xp6qzzF1Q06NMP_3cd4-Dg?pwd=28i9", "28i9");
         log.info("wpShareInfo3 => {}", wpShareInfo3);
 
+    }
+
+    @Test
+    public void testBaiduExtractPassCodeFromShareUrl() {
+        String passCode = baiduWpProvider.extractPassCodeFromShareUrl("https://pan.baidu.com/s/1sjxTjjQFiG8U-2ty6V576g?pwd=mad7");
+        Assert.assertEquals("mad7", passCode);
     }
 
 
@@ -149,17 +171,18 @@ public class WpProviderTests {
         log.info("wpShareInfo3 => {}", wpShareInfo3);
     }
 
+
     /**
      * 115网盘
      */
     @Test
     public void testFetch115ShareInfo() throws Exception {
-        /*WpShareInfo wpShareInfo = a115WpProvider.fetchShareInfo("https://115.com/s/sw6cauy3nuq?password=f7b8&#", "f7b8");
-        log.info("wpShareInfo => {}", wpShareInfo);*/
+        WpShareInfo wpShareInfo = a115WpProvider.fetchShareInfo("https://115.com/s/sw6cauy3nuq?password=f7b8&#", "f7b8");
+        log.info("wpShareInfo => {}", wpShareInfo);
 
         // 密码 + 过期时限
-       /* WpShareInfo wpShareInfo2 = a115WpProvider.fetchShareInfo("https://115.com/s/sw6camv3nuq?password=tec0", "tec0");
-        log.info("wpShareInfo2 => {}", wpShareInfo2);*/
+        WpShareInfo wpShareInfo2 = a115WpProvider.fetchShareInfo("https://115.com/s/sw6camv3nuq?password=tec0", "tec0");
+        log.info("wpShareInfo2 => {}", wpShareInfo2);
 
         // 分享取消
         WpShareInfo wpShareInfo3 = a115WpProvider.fetchShareInfo("https://115.com/s/sw3ajbw3wag", "");
@@ -167,33 +190,61 @@ public class WpProviderTests {
 
     }
 
+    @Test
+    public void test115ExtractPassCodeFromShareUrl() {
+        String passCode = a115WpProvider.extractPassCodeFromShareUrl("https://115.com/s/sw6cauy3nuq?password=f7b8&#");
+        Assert.assertEquals("f7b8", passCode);
+
+        String passCode2 = a115WpProvider.extractPassCodeFromShareUrl("https://115.com/s/sw6camv3nuq?password=tec0");
+        Assert.assertEquals("tec0", passCode2);
+    }
+
+    @Test
+    public void testFetchLanZouShareInfo() throws Exception {
+        WpShareInfo wpShareInfo = lanZouWpProvider.fetchShareInfo("https://wwgl.lanzout.com/iucAp03j516f", "");
+        log.info("wpShareInfo => {}", wpShareInfo);
+
+        // 带分享码
+        WpShareInfo wpShareInfo2 = lanZouWpProvider.fetchShareInfo("https://wwgl.lanzout.com/iKytB03j3ljg", "33zw");
+        log.info("wpShareInfo2 => {}", wpShareInfo2);
+
+        // 分享过期
+        WpShareInfo wpShareInfo3 = lanZouWpProvider.fetchShareInfo("https://wwgl.lanzout.com/iVtzX18yu9kd", "");
+        log.info("wpShareInfo3 => {}", wpShareInfo3);
+    }
+
     /**
      * UC网盘
      */
     @Test
-    public void testFetchUcShareInfo() throws Exception{
+    public void testFetchUcShareInfo() throws Exception {
         WpShareInfo wpShareInfo = ucWpProvider.fetchShareInfo("", "");
         log.info("wpShareInfo => {}", wpShareInfo);
     }
 
     /**
      * 迅雷网盘
+     *
      * @throws Exception
      */
     @Test
-    public void testFetchXunLeiShareInfo() throws Exception{
-      /*  WpShareInfo wpShareInfo = xunLeiWpProvider.fetchShareInfo("https://pan.xunlei.com/s/VNdjaEwAaT3L8HiYMnR3cIPzA1?pwd=ttfb", "ttfb");
-        log.info("wpShareInfo => {}", wpShareInfo);*/
+    public void testFetchXunLeiShareInfo() throws Exception {
+        WpShareInfo wpShareInfo = xunLeiWpProvider.fetchShareInfo("https://pan.xunlei.com/s/VNdjaEwAaT3L8HiYMnR3cIPzA1?pwd=ttfb", "ttfb");
+        log.info("wpShareInfo => {}", wpShareInfo);
 
         // 过期期限
         WpShareInfo wpShareInfo2 = xunLeiWpProvider.fetchShareInfo("https://pan.xunlei.com/s/VNeXXIsjNTIKM8sY9CIkcj2GA1?pwd=zpbx#", "zpbx");
         log.info("wpShareInfo2 => {}", wpShareInfo2);
-
-      /*  「链接：https://pan.xunlei.com/s/VNeXX3og550Xg-Edbj1nwAHyA1?pwd=9xr5# 提取码：9xr5”复制这段内容后打开手机迅雷App，查看更方便」
-
-    「链接：https://pan.xunlei.com/s/VNeXXBpwZL9Ly44XQBOKMQzgA1# 提取码：jest”复制这段内容后打开手机迅雷App，查看更方便」
-*/
-
     }
+
+    @Test
+    public void testXunLeiExtractPassCodeFromShareUrl() {
+        String code = xunLeiWpProvider.extractPassCodeFromShareUrl("https://pan.xunlei.com/s/VNdjaEwAaT3L8HiYMnR3cIPzA1?pwd=ttfb");
+        Assert.assertEquals(code, "ttfb");
+
+        String code2 = xunLeiWpProvider.extractPassCodeFromShareUrl("https://pan.xunlei.com/s/VNeXXIsjNTIKM8sY9CIkcj2GA1?pwd=zpbx#");
+        Assert.assertEquals(code2, "zpbx");
+    }
+
 
 }

@@ -4,6 +4,7 @@ import cn.chenzw.toolkit.core.util.JSONKit;
 import cn.chenzw.toolkit.wp.AbstractWpProvider;
 import cn.chenzw.toolkit.wp.WpProvider;
 import cn.chenzw.toolkit.wp.entity.WpShareInfo;
+import cn.chenzw.toolkit.wp.enums.Wp;
 import cn.chenzw.toolkit.wp.raw.response.QuarkShareInfoResponse;
 import cn.chenzw.toolkit.wp.raw.response.UcShareInfoResponse;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -27,21 +28,7 @@ public class UcWpProvider extends AbstractWpProvider {
 
     private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://drive\\.uc\\.cn/s/[A-Za-z0-9]+$", Pattern.MULTILINE);
 
-    @Override
-    public boolean shareUrlMatches(String shareUrl) {
-        return SHARE_URL_PATTERN.matcher(shareUrl.trim())
-                .matches();
-    }
 
-    @Override
-    public List<String> extractShareUrls(String content) {
-        List<String> shareUrls = new ArrayList<>();
-        Matcher matcher = SHARE_URL_PATTERN.matcher(content);
-        while (matcher.find()) {
-            shareUrls.add(matcher.group());
-        }
-        return shareUrls;
-    }
 
     @Override
     public WpShareInfo fetchShareInfo(String shareUrl, String code) throws Exception {
@@ -81,12 +68,17 @@ public class UcWpProvider extends AbstractWpProvider {
     }
 
     @Override
-    public String extractShareId(String shareUrl) {
+    public Pattern getShareUrlPattern() {
+        return SHARE_URL_PATTERN;
+    }
+
+    @Override
+    public String extractPassCodeFromShareUrl(String shareUrl) {
         return null;
     }
 
     @Override
-    public Pattern getShareUrlPattern() {
-        return SHARE_URL_PATTERN;
+    public boolean support(Wp wp) {
+        return false;
     }
 }

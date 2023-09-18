@@ -2,25 +2,25 @@ package cn.chenzw.toolkit.wp.provider;
 
 import cn.chenzw.toolkit.core.util.JSONKit;
 import cn.chenzw.toolkit.wp.AbstractWpProvider;
-import cn.chenzw.toolkit.wp.WpProvider;
 import cn.chenzw.toolkit.wp.entity.WpShareInfo;
+import cn.chenzw.toolkit.wp.enums.Wp;
 import cn.chenzw.toolkit.wp.raw.content.BaiduLocalsInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class BaiduWpProvider extends AbstractWpProvider {
 
-    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://pan\\.baidu\\.com/s/([A-Za-z0-9]+)$", Pattern.MULTILINE);
+    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://pan\\.baidu\\.com/s/([A-Za-z0-9-]+)(?:\\?pwd=([A-Za-z0-9]*))?", Pattern.MULTILINE);
 
     private static Pattern LOCALS_PATTERN = Pattern.compile("locals\\.mset\\((.*?)\\);");
 
@@ -51,33 +51,26 @@ public class BaiduWpProvider extends AbstractWpProvider {
         }
     };
 
-    @Override
-    public boolean shareUrlMatches(String shareUrl) {
-        return SHARE_URL_PATTERN.matcher(shareUrl.trim())
-                .matches();
-    }
-
-    @Override
-    public List<String> extractShareUrls(String content) {
-        List<String> shareUrls = new ArrayList<>();
-        Matcher matcher = SHARE_URL_PATTERN.matcher(content);
-        while (matcher.find()) {
-            shareUrls.add(matcher.group());
-        }
-        return shareUrls;
-    }
 
     @Override
     public WpShareInfo fetchShareInfo(String shareUrl, String code) throws Exception {
         String shareId = this.extractShareId(shareUrl);
+        if (StringUtils.isEmpty(shareId)) {
+            return WpShareInfo.builder()
+                    .valid(false)
+                    .errMsg("shareId is null!")
+                    .build();
+        }
+        if (StringUtils.isEmpty(code)) {
+            code = this.extractPassCodeFromShareUrl(shareUrl);
+        }
         HttpGet httpGet = new HttpGet(shareUrl);
         httpGet.setHeader("Cookie", "BDCLND=irwBzZjz%2BtASxKJY2O8OJUCKBGbz4wwRRIhz0Lo33%2Fs%3D");
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
-                HttpEntity entity = response.getEntity();
-                String content = EntityUtils.toString(entity);
-
-                // 提取内容
+                String content = EntityUtils.toString(
+                        response.getEntity()
+                );
                 BaiduLocalsInfo localsInfo = this.extractLocals(content);
 
                 log.debug("BaiduWp[{}] => {} - {}", shareUrl, response.getCode(), localsInfo);
@@ -98,32 +91,34 @@ public class BaiduWpProvider extends AbstractWpProvider {
                                 .passCode(code)
                                 .lastUpdateTime(new Date(localsInfo.getCtime()))
                                 .build();
-                    } else {
-                        return WpShareInfo.builder()
-                                .shareId(shareId)
-                                .passCode(code)
-                                .valid(false)
-                                .errMsg(ERROR_TYPE.getOrDefault(errorType, "分享的文件不存在"))
-                                .build();
                     }
+                    return WpShareInfo.builder()
+                            .shareId(shareId)
+                            .passCode(code)
+                            .valid(false)
+                            .errMsg(ERROR_TYPE.getOrDefault(errorType, "分享的文件不存在"))
+                            .build();
                 }
+
+                return WpShareInfo.builder()
+                        .shareId(shareId)
+                        .passCode(code)
+                        .valid(false)
+                        .errMsg(MessageFormat.format("request with error code=%s!", response.getCode()))
+                        .build();
             }
         }
-        return null;
-    }
-
-    @Override
-    public String extractShareId(String shareUrl) {
-        Matcher matcher = SHARE_URL_PATTERN.matcher(shareUrl);
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return "";
     }
 
     @Override
     public Pattern getShareUrlPattern() {
         return SHARE_URL_PATTERN;
+    }
+
+
+    @Override
+    public boolean support(Wp wp) {
+        return wp == Wp.BAIDU;
     }
 
     private BaiduLocalsInfo extractLocals(String html) throws JsonProcessingException {
