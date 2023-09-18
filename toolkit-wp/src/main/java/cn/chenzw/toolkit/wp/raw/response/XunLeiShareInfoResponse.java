@@ -41,7 +41,6 @@ public class XunLeiShareInfoResponse {
     private String contain_sensitive_resource_text;
 
 
-
     @Data
     public static class Link {
 

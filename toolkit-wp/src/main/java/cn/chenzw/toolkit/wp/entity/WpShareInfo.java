@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.wp.entity;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

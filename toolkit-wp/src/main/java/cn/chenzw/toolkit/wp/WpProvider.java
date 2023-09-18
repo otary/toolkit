@@ -3,8 +3,6 @@ package cn.chenzw.toolkit.wp;
 import cn.chenzw.toolkit.wp.entity.WpShareInfo;
 import cn.chenzw.toolkit.wp.enums.Wp;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.regex.Pattern;
 

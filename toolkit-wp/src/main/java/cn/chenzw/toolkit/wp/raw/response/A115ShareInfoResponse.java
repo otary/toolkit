@@ -2,8 +2,6 @@ package cn.chenzw.toolkit.wp.raw.response;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @author chenzw
  */
