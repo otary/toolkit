@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class AliYunWpProvider extends AbstractWpProvider {
 
-    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://www\\.aliyundrive\\.com/s/([A-Za-z0-9]+)$", Pattern.MULTILINE);
+    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://www\\.aliyundrive\\.com/s/([A-Za-z0-9]+)", Pattern.MULTILINE);
 
 
     @Override

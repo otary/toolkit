@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class QuarkWpProvider extends AbstractWpProvider {
 
-    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://pan\\.quark\\.cn/s/([A-Za-z0-9]+)$", Pattern.MULTILINE);
+    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://pan\\.quark\\.cn/s/([A-Za-z0-9]+)", Pattern.MULTILINE);
 
     @Override
     public WpShareInfo fetchShareInfo(String shareUrl, String code) throws Exception {

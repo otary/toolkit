@@ -73,6 +73,12 @@ public class WpProviderTests {
     }
 
     @Test
+    public void test() throws Exception {
+        WpShareInfo wpShareInfo = aliYunWpProvider.fetchShareInfo("https://www.aliyundrive.com/s/ha1gxtjMpf3", "");
+        log.info("wpShareInfo => {}", wpShareInfo);
+    }
+
+    @Test
     public void testFetchAliYunShareInfo() throws Exception {
         // 无分享码
         WpShareInfo wpShareInfo = aliYunWpProvider.fetchShareInfo("https://www.aliyundrive.com/s/XuUW1WGwQRy", "");
@@ -153,6 +159,11 @@ public class WpProviderTests {
 
     }
 
+    @Test
+    public void testExtractShareUrls() {
+        List<String> shareUrls = cloud189WpProvider.extractShareUrls("pan>支持多份刻录、多进程写入，支持 IDE/SCSI/USB/1394/SATA等等； 版本特点 采用Hook劫持补丁破解专业版 去后续检测升级提示，禁止自动检测升级 删除多国语言和帮助，关于界面显示永久许可 解压文件夹使用，可通过批处理添加右键菜单 下载地址 https://cloud.189.cn/web/share?code=NZzQzqryqyIz（访问码：3vgd） https://www.leijing.xyz/ 收藏 0\n");
+        log.info("shareUrls => {}", shareUrls);
+    }
 
     /**
      * 天翼网盘
@@ -162,13 +173,23 @@ public class WpProviderTests {
         WpShareInfo wpShareInfo = cloud189WpProvider.fetchShareInfo("https://cloud.189.cn/web/share?code=uyiqmyJJZ7vi", "");
         log.info("wpShareInfo => {}", wpShareInfo);
 
-        // 带分享码 + 过期时限
+        // 需要分享码 + 过期时限
         WpShareInfo wpShareInfo2 = cloud189WpProvider.fetchShareInfo("https://cloud.189.cn/web/share?code=v22QRvYr6JNb", "6osm");
         log.info("wpShareInfo2 => {}", wpShareInfo2);
 
         // 过期
         WpShareInfo wpShareInfo3 = cloud189WpProvider.fetchShareInfo("https://cloud.189.cn/web/share?code=Q7jYfy3Q3Ybi", "t1hc");
         log.info("wpShareInfo3 => {}", wpShareInfo3);
+
+        // 自带分享码
+        WpShareInfo wpShareInfo4 = cloud189WpProvider.fetchShareInfo("https://cloud.189.cn/web/share?code=ZVVfeijAbai2（访问码：sgg3）", "");
+        log.info("wpShareInfo3 => {}", wpShareInfo4);
+    }
+
+    @Test
+    public void testCloud189ExtractPassCodeFromShareUrl() {
+        String passCode = cloud189WpProvider.extractPassCodeFromShareUrl("https://cloud.189.cn/web/share?code=ZVVfeijAbai2（访问码：sgg3）");
+        Assert.assertEquals("sgg3", passCode);
     }
 
 

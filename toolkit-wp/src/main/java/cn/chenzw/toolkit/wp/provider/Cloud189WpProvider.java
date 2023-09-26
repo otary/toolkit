@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class Cloud189WpProvider extends AbstractWpProvider {
 
-    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://cloud\\.189\\.cn/web/share\\?code=([A-Za-z0-9]+)", Pattern.MULTILINE);
+    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://cloud\\.189\\.cn/web/share\\?code=([A-Za-z0-9]+)(?:（访问码：([A-Za-z0-9]*)）)?", Pattern.MULTILINE);
 
     @Override
     public WpShareInfo fetchShareInfo(String shareUrl, String code) throws Exception {
@@ -34,6 +34,9 @@ public class Cloud189WpProvider extends AbstractWpProvider {
                     .valid(false)
                     .errMsg("shareId is null!")
                     .build();
+        }
+        if (StringUtils.isEmpty(code)) {
+            code = this.extractPassCodeFromShareUrl(shareUrl);
         }
         HttpGet httpGet = new HttpGet("https://cloud.189.cn/api/open/share/getShareInfoByCodeV2.action?shareCode=" + shareId);
         httpGet.setHeader("Accept", "application/json;charset=UTF-8");
@@ -79,12 +82,6 @@ public class Cloud189WpProvider extends AbstractWpProvider {
     @Override
     public Wp getType() {
         return Wp.CLOUD_189;
-    }
-
-    @Override
-    public String extractPassCodeFromShareUrl(String shareUrl) {
-        // 不支持
-        throw new UnsupportedOperationException();
     }
 
     private LocalDateTime buildExpiration(Integer expireType, Integer expireTime) {
