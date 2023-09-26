@@ -19,10 +19,10 @@ import java.util.regex.Pattern;
 /**
  * @author chenzw
  */
+@Deprecated
 public class UcWpProvider extends AbstractWpProvider {
 
     private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://drive\\.uc\\.cn/s/[A-Za-z0-9]+$", Pattern.MULTILINE);
-
 
     @Override
     public WpShareInfo fetchShareInfo(String shareUrl, String code) throws Exception {
@@ -74,5 +74,10 @@ public class UcWpProvider extends AbstractWpProvider {
     @Override
     public boolean support(Wp wp) {
         return false;
+    }
+
+    @Override
+    public Wp getType() {
+        return null;
     }
 }

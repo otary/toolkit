@@ -69,13 +69,25 @@ public final class HTMLKit {
             );
         }
 
+        Elements rssXmlElements = doc.select("link[type=application/rss+xml]");
+        for (Element rssXmlElement : rssXmlElements) {
+            HTMLMetadata.RSS rss = new HTMLMetadata.RSS();
+            rss.setTitle(rssXmlElement.attr("title"));
+            rss.setUrl(rssXmlElement.attr("href"));
+            metadata.getRssXMLs().add(rss);
+        }
+
+        Elements atomXmlElements = doc.select("link[type=application/atom+xml]");
+        for (Element atomXmlElement : atomXmlElements) {
+            HTMLMetadata.RSS rss = new HTMLMetadata.RSS();
+            rss.setTitle(atomXmlElement.attr("title"));
+            rss.setUrl(atomXmlElement.attr("href"));
+            metadata.getAtomXMLs().add(rss);
+        }
+
         Elements appleIconElements = doc.select("link[rel=apple-touch-icon-precomposed]");
         if (appleIconElements.size() > 0) {
             List<HTMLMetadata.Icon> appleIcons = metadata.getAppleIcons();
-            if (appleIcons == null) {
-                appleIcons = new ArrayList<>();
-                metadata.setAppleIcons(appleIcons);
-            }
             for (Element appleIconEl : appleIconElements) {
                 HTMLMetadata.Icon icon = new HTMLMetadata.Icon();
                 icon.setUrl(appleIconEl.attr("href"));
@@ -86,10 +98,6 @@ public final class HTMLKit {
         appleIconElements = doc.select("link[rel=apple-touch-icon]");
         if (appleIconElements.size() > 0) {
             List<HTMLMetadata.Icon> appleIcons = metadata.getAppleIcons();
-            if (appleIcons == null) {
-                appleIcons = new ArrayList<>();
-                metadata.setAppleIcons(appleIcons);
-            }
             for (Element appleIconEl : appleIconElements) {
                 HTMLMetadata.Icon icon = new HTMLMetadata.Icon();
                 icon.setSizes(appleIconEl.attr("sizes"));
@@ -101,10 +109,6 @@ public final class HTMLKit {
         Elements iconElements = doc.select("link[rel=shortcut icon]");
         if (iconElements.size() > 0) {
             List<HTMLMetadata.Icon> icons = metadata.getIcons();
-            if (icons == null) {
-                icons = new ArrayList<>();
-                metadata.setIcons(icons);
-            }
             for (Element iconEl : iconElements) {
                 HTMLMetadata.Icon icon = new HTMLMetadata.Icon();
                 icon.setSizes(iconEl.attr("sizes"));
@@ -115,10 +119,6 @@ public final class HTMLKit {
         iconElements = doc.select("link[rel=icon]");
         if (iconElements.size() > 0) {
             List<HTMLMetadata.Icon> icons = metadata.getIcons();
-            if (icons == null) {
-                icons = new ArrayList<>();
-                metadata.setIcons(icons);
-            }
             for (Element iconEl : iconElements) {
                 HTMLMetadata.Icon icon = new HTMLMetadata.Icon();
                 icon.setSizes(iconEl.attr("sizes"));

@@ -82,8 +82,8 @@ public class A115WpProvider extends AbstractWpProvider {
 
 
     @Override
-    public boolean support(Wp wp) {
-        return wp == Wp.A115;
+    public Wp getType() {
+        return Wp.A115;
     }
 
     private LocalDateTime buildExpiration(Long expireTime) {

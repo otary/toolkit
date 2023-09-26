@@ -115,10 +115,9 @@ public class BaiduWpProvider extends AbstractWpProvider {
         return SHARE_URL_PATTERN;
     }
 
-
     @Override
-    public boolean support(Wp wp) {
-        return wp == Wp.BAIDU;
+    public Wp getType() {
+        return Wp.BAIDU;
     }
 
     private BaiduLocalsInfo extractLocals(String html) throws JsonProcessingException {

@@ -1,4 +1,4 @@
-package cn.chenzw.toolkit.third.party.domain.entity;
+package cn.chenzw.toolkit.wp.entity;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,6 +1,6 @@
 package cn.chenzw.toolkit.third.party.freemarker;
 
-import cn.chenzw.toolkit.third.party.domain.entity.User;
+import cn.chenzw.toolkit.wp.entity.User;
 import freemarker.template.TemplateException;
 import org.junit.Assert;
 import org.junit.Test;

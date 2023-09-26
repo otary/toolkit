@@ -61,4 +61,6 @@ public interface WpProvider {
     String extractPassCodeFromShareUrl(String shareUrl);
 
     boolean support(Wp wp);
+
+    Wp getType();
 }

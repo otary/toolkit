@@ -70,8 +70,8 @@ public class LanZouWpProvider extends AbstractWpProvider {
     }
 
     @Override
-    public boolean support(Wp wp) {
-        return wp == Wp.LAN_ZOU;
+    public Wp getType() {
+        return Wp.LAN_ZOU;
     }
 
     @Override

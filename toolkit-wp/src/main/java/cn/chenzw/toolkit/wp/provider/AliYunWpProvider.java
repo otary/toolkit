@@ -83,7 +83,7 @@ public class AliYunWpProvider extends AbstractWpProvider {
     }
 
     @Override
-    public boolean support(Wp wp) {
-        return wp == Wp.ALI_YUN;
+    public Wp getType() {
+        return Wp.ALI_YUN;
     }
 }

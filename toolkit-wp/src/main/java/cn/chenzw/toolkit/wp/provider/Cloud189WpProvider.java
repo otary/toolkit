@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class Cloud189WpProvider extends AbstractWpProvider {
 
-    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://cloud\\.189\\.cn/web/share\\?code=([A-Za-z0-9]+)$", Pattern.MULTILINE);
+    private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://cloud\\.189\\.cn/web/share\\?code=([A-Za-z0-9]+)", Pattern.MULTILINE);
 
     @Override
     public WpShareInfo fetchShareInfo(String shareUrl, String code) throws Exception {
@@ -77,8 +77,8 @@ public class Cloud189WpProvider extends AbstractWpProvider {
     }
 
     @Override
-    public boolean support(Wp wp) {
-        return wp == Wp.CLOUD_189;
+    public Wp getType() {
+        return Wp.CLOUD_189;
     }
 
     @Override

@@ -29,7 +29,7 @@ public class HTMLKitTests {
 
     @Test
     public void testParseAsMetadata() throws IOException {
-        URLConnection urlConnection = URI.create("https://www.baidu.com").toURL().openConnection();
+        URLConnection urlConnection = URI.create("https://app.haikei.app/").toURL().openConnection();
         urlConnection.connect();
         InputStream in = new BufferedInputStream(
                 urlConnection.getInputStream()

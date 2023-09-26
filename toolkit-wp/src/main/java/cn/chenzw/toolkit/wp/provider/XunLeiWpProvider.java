@@ -85,8 +85,8 @@ public class XunLeiWpProvider extends AbstractWpProvider {
     }
 
     @Override
-    public boolean support(Wp wp) {
-        return wp == Wp.XUN_LEI;
+    public Wp getType() {
+        return Wp.XUN_LEI;
     }
 
     private void setTokenHeader(HttpGet httpGet) throws IOException, ParseException {

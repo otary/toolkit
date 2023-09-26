@@ -88,8 +88,8 @@ public class QuarkWpProvider extends AbstractWpProvider {
     }
 
     @Override
-    public boolean support(Wp wp) {
-        return wp == Wp.QUARK;
+    public Wp getType() {
+        return Wp.QUARK;
     }
 
     private LocalDateTime buildExpiration(Integer expiredType, Long expiredDays) {
