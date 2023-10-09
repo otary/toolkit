@@ -2,6 +2,7 @@ package cn.chenzw.toolkit.wp.raw.response;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class AliYunShareInfoResponse {
 
     private String share_name;
 
-    private List<FileInfos> file_infos;
+    private List<FileInfos> file_infos = new ArrayList<>();
 
     private String creator_phone;
 

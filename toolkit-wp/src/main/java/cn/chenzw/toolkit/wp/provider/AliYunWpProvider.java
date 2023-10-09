@@ -44,6 +44,14 @@ public class AliYunWpProvider extends AbstractWpProvider {
 
                 if (response.getCode() == 200) {
                     AliYunShareInfoResponse shareInfoResponse = JSONKit.readValue(content, AliYunShareInfoResponse.class);
+                    if (shareInfoResponse.getFile_infos().isEmpty()) {
+                        return WpShareInfo.builder()
+                                .shareId(shareId)
+                                .shareTitle(shareInfoResponse.getShare_title())
+                                .valid(false)
+                                .errMsg("文件列表为空!")
+                                .build();
+                    }
                     return WpShareInfo.builder()
                             .shareId(shareId)
                             .shareTitle(shareInfoResponse.getShare_title())
@@ -57,7 +65,6 @@ public class AliYunWpProvider extends AbstractWpProvider {
                             .passCode(code)
                             .lastUpdateTime(shareInfoResponse.getUpdated_at())
                             .build();
-
                 }
 
                 // 异常处理

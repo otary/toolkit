@@ -62,7 +62,12 @@ public class StringKitTests {
         // 空值返回null
         Assert.assertEquals(null, StringKit.toInteger(null));
         Assert.assertEquals(null, StringKit.toInteger(""));
+    }
 
+
+    @Test(expected = NumberFormatException.class)
+    public void testToInteger2() {
+        StringKit.toInteger("02-238");
     }
 
     @Test

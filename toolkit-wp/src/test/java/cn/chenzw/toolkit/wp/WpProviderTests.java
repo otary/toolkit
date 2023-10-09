@@ -40,7 +40,7 @@ public class WpProviderTests {
     @Before
     public void setUp() {
         Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        logger.setLevel(Level.INFO);
+        logger.setLevel(Level.DEBUG);
     }
 
     /**
@@ -72,11 +72,6 @@ public class WpProviderTests {
         log.info("shareId => {}", shareId);
     }
 
-    @Test
-    public void test() throws Exception {
-        WpShareInfo wpShareInfo = aliYunWpProvider.fetchShareInfo("https://www.aliyundrive.com/s/ha1gxtjMpf3", "");
-        log.info("wpShareInfo => {}", wpShareInfo);
-    }
 
     @Test
     public void testFetchAliYunShareInfo() throws Exception {
@@ -99,6 +94,10 @@ public class WpProviderTests {
         // 禁止访问
         WpShareInfo wpShareInfo5 = aliYunWpProvider.fetchShareInfo("https://www.aliyundrive.com/s/ypJdAY1trka", "");
         log.info("wpShareInfo5 => {}", wpShareInfo5);
+
+        // 空文件
+        WpShareInfo wpShareInfo6 = aliYunWpProvider.fetchShareInfo("https://www.aliyundrive.com/s/efRYPrQPuoB", "");
+        log.info("wpShareInfo6 => {}", wpShareInfo6);
     }
 
     /**
@@ -142,14 +141,18 @@ public class WpProviderTests {
      */
     @Test
     public void testFetchQuarkShareInfo() throws Exception {
+        WpShareInfo wpShareInfo7 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/24220bc80d1a", "");
+        log.info("wpShareInfo6 => {}", wpShareInfo7);
+
+        // 被封禁
         WpShareInfo wpShareInfo = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/d4443ee46957", "");
         log.info("wpShareInfo => {}", wpShareInfo);
 
-        // 带验证码 + 有效期
+        // 带分享码 + 有效期
         WpShareInfo wpShareInfo2 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/82307c38d85d", "9GeS");
         log.info("wpShareInfo2 => {}", wpShareInfo2);
 
-        // 带验证码，未输入
+        // 带分享码，未输入
         WpShareInfo wpShareInfo3 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/82307c38d85d", "");
         log.info("wpShareInfo3 => {}", wpShareInfo3);
 
@@ -157,6 +160,19 @@ public class WpProviderTests {
         WpShareInfo wpShareInfo4 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/00bc70142fe", "");
         log.info("wpShareInfo4 => {}", wpShareInfo4);
 
+        // 没有作者信息
+        WpShareInfo wpShareInfo5 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/50846937b7eb", "");
+        log.info("wpShareInfo5 => {}", wpShareInfo5);
+
+        // 分享被删除
+        WpShareInfo wpShareInfo6 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/bf0d14560e7d", "");
+        log.info("wpShareInfo5 => {}", wpShareInfo6);
+    }
+
+    @Test
+    public void test2() throws Exception {
+        /*WpShareInfo wpShareInfo2 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/82307c38d85d", "9GeS");
+        log.info("wpShareInfo2 => {}", wpShareInfo2);*/
     }
 
     @Test

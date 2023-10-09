@@ -255,8 +255,9 @@ public final class ReflectKit {
         if (includeSuperClass) {
             Class<?> superClass = aClass.getSuperclass();
             while (superClass != null) {
-                Field[] superClassFileds = superClass.getDeclaredFields();
-                declaredFields = ArrayUtils.addAll(declaredFields, superClassFileds);
+                declaredFields = ArrayUtils.addAll(
+                        declaredFields, superClass.getDeclaredFields()
+                );
                 superClass = superClass.getSuperclass();
             }
         }

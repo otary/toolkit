@@ -104,7 +104,7 @@ public class BaiduWpProvider extends AbstractWpProvider {
                         .shareId(shareId)
                         .passCode(code)
                         .valid(false)
-                        .errMsg(MessageFormat.format("request with error code=%s!", response.getCode()))
+                        .errMsg(MessageFormat.format("request with error code={0}!", response.getCode()))
                         .build();
             }
         }

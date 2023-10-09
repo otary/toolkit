@@ -62,8 +62,8 @@ public class QuarkWpProvider extends AbstractWpProvider {
                         .shareTitle(shareInfoResponse.getData().getTitle())
                         .needPassCode(!StringUtils.isEmpty(code))
                         .passCode(code)
-                        .creatorName(shareInfoResponse.getAuthor().getNick_name())
-                        .creatorAvatar(shareInfoResponse.getAuthor().getAvatar_url())
+                        .creatorName(shareInfoResponse.getAuthor() != null ? shareInfoResponse.getAuthor().getNick_name() : null)
+                        .creatorAvatar(shareInfoResponse.getAuthor() != null ? shareInfoResponse.getAuthor().getAvatar_url() : null)
                         .expiration(
                                 this.buildExpiration(
                                         shareInfoResponse.getData().getExpired_type(),
