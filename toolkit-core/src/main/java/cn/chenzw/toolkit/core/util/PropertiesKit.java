@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Properties;
 public class PropertiesKit {
 
     /**
-     * Properties转Yaml
+     * Properties => Yaml
      *
      * @param properties
      * @return
@@ -29,8 +30,22 @@ public class PropertiesKit {
         return yamlMapper.writeValueAsString(jsonNode);
     }
 
+    /**
+     * Properties => JSON
+     *
+     * @param properties
+     * @return
+     * @throws JsonProcessingException
+     */
+    public static String properties2Json(String properties) throws JsonProcessingException {
+        JavaPropsMapper javaPropsMapper = JavaPropsMapper.builder().build();
+        return JSONKit.writeValueAsString(
+                javaPropsMapper.readValue(properties, Map.class)
+        );
+    }
+
     public static String toString(Properties properties) {
-        try (StringWriter sw = new StringWriter()){
+        try (StringWriter sw = new StringWriter()) {
             properties.store(sw, null);
             return sw.toString();
         } catch (IOException e) {

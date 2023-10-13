@@ -141,7 +141,12 @@ public class StringKitTests {
         Assert.assertArrayEquals(new String[]{"a", "b", "c", "d", "e", "f"}, StringKit.splitTrim("a, b, c,  d  , e, f", ","));
     }
 
-
+    @Test
+    public void testCountLeftWhiteSpaces() {
+        Assert.assertEquals(2, StringKit.countLeftWhiteSpaces("  - abc"));
+        // 一个Tab等于4个空格
+        Assert.assertEquals(4, StringKit.countLeftWhiteSpaces("    abc"));
+    }
 
 
 }

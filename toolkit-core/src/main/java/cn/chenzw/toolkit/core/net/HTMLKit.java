@@ -85,17 +85,7 @@ public final class HTMLKit {
             metadata.getAtomXMLs().add(rss);
         }
 
-        Elements appleIconElements = doc.select("link[rel=apple-touch-icon-precomposed]");
-        if (appleIconElements.size() > 0) {
-            List<HTMLMetadata.Icon> appleIcons = metadata.getAppleIcons();
-            for (Element appleIconEl : appleIconElements) {
-                HTMLMetadata.Icon icon = new HTMLMetadata.Icon();
-                icon.setUrl(appleIconEl.attr("href"));
-                appleIcons.add(icon);
-            }
-        }
-
-        appleIconElements = doc.select("link[rel=apple-touch-icon]");
+        Elements appleIconElements = doc.select("link[rel=apple-touch-icon-precomposed], link[rel=apple-touch-icon]");
         if (appleIconElements.size() > 0) {
             List<HTMLMetadata.Icon> appleIcons = metadata.getAppleIcons();
             for (Element appleIconEl : appleIconElements) {
@@ -106,17 +96,7 @@ public final class HTMLKit {
             }
         }
 
-        Elements iconElements = doc.select("link[rel=shortcut icon]");
-        if (iconElements.size() > 0) {
-            List<HTMLMetadata.Icon> icons = metadata.getIcons();
-            for (Element iconEl : iconElements) {
-                HTMLMetadata.Icon icon = new HTMLMetadata.Icon();
-                icon.setSizes(iconEl.attr("sizes"));
-                icon.setUrl(iconEl.attr("href"));
-                icons.add(icon);
-            }
-        }
-        iconElements = doc.select("link[rel=icon]");
+        Elements iconElements = doc.select("link[rel=shortcut icon], link[rel=icon]");
         if (iconElements.size() > 0) {
             List<HTMLMetadata.Icon> icons = metadata.getIcons();
             for (Element iconEl : iconElements) {

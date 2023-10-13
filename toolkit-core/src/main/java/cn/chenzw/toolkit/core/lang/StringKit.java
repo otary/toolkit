@@ -516,4 +516,21 @@ public abstract class StringKit {
     }
 
 
+    /**
+     * 统计左侧空格数量
+     *
+     * @param str
+     * @return
+     */
+    public static int countLeftWhiteSpaces(String str) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isWhitespace(str.charAt(i))) {
+                break;
+            }
+            count++;
+        }
+        return count;
+    }
+
 }

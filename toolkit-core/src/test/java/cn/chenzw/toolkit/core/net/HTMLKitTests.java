@@ -29,7 +29,8 @@ public class HTMLKitTests {
 
     @Test
     public void testParseAsMetadata() throws IOException {
-        URLConnection urlConnection = URI.create("https://app.haikei.app/").toURL().openConnection();
+        // URLConnection urlConnection = URI.create("https://app.haikei.app/").toURL().openConnection();
+        URLConnection urlConnection = URI.create("https://www.sogou.com/").toURL().openConnection();
         urlConnection.connect();
         InputStream in = new BufferedInputStream(
                 urlConnection.getInputStream()
@@ -39,6 +40,5 @@ public class HTMLKitTests {
 
         HTMLMetadata htmlMetadata = HTMLKit.parseAsMetadata(html);
         log.info("HTMLMetadata => {}", htmlMetadata);
-
     }
 }
