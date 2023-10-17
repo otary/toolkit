@@ -1,8 +1,12 @@
 package cn.chenzw.toolkit.core.collection;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Properties;
+import cn.chenzw.toolkit.core.collection.support.MapDiff;
+import com.google.common.collect.MapDifference;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.units.qual.K;
+
+import java.util.*;
 
 /**
  * Map对象扩展
@@ -96,5 +100,54 @@ public final class MapKit {
         return null;
     }
 
+    /**
+     * 添加深层值
+     *
+     * @param map
+     * @param deepKeys
+     * @param value
+     * @param <K>
+     * @param <V>
+     */
+    public static <K, V> void addDeepValue(Map map, K[] deepKeys, V value) {
+        Map tmp = map;
+        for (int i = 0; i < deepKeys.length; i++) {
+            K key = deepKeys[i];
+            Object item = tmp.get(key);
 
+            if (item == null) {
+                item = new HashMap<>();
+                tmp.put(key, item);
+            }
+
+            // 最后一个元素
+            if (i == deepKeys.length - 1) {
+                tmp.put(key, value);
+            }
+
+            tmp = (Map) item;
+        }
+    }
+
+    /**
+     * 扁平化差异
+     *
+     * @param left
+     * @param right
+     * @return
+     */
+    public static Map flatDiff(Map left, Map right) {
+        return new MapDiff().flatDiff(left, right);
+    }
+
+    /**
+     * 提取差异值
+     *
+     * @param left
+     * @param right
+     * @return
+     */
+    public static Map diff(Map left, Map right) {
+        return new MapDiff().diff(left, right);
+    }
 }

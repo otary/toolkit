@@ -22,7 +22,7 @@ public class PropertiesKit {
      * @return
      * @throws JsonProcessingException
      */
-    public static String properties2Yaml(String properties) throws JsonProcessingException {
+    public static String toYaml(String properties) throws JsonProcessingException {
         JavaPropsMapper javaPropsMapper = JavaPropsMapper.builder().build();
         JsonNode jsonNode = javaPropsMapper.readTree(properties);
 
@@ -37,7 +37,7 @@ public class PropertiesKit {
      * @return
      * @throws JsonProcessingException
      */
-    public static String properties2Json(String properties) throws JsonProcessingException {
+    public static String toJson(String properties) throws JsonProcessingException {
         JavaPropsMapper javaPropsMapper = JavaPropsMapper.builder().build();
         return JSONKit.writeValueAsString(
                 javaPropsMapper.readValue(properties, Map.class)

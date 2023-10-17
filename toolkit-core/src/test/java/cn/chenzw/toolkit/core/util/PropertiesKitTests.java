@@ -15,7 +15,7 @@ public class PropertiesKitTests {
 
     @Test
     public void testProperties2Json() throws JsonProcessingException {
-        String json = PropertiesKit.properties2Json("spring.datasource.driver-class-name=org.h2.Driver\n" +
+        String json = PropertiesKit.toJson("spring.datasource.driver-class-name=org.h2.Driver\n" +
                 "spring.datasource.url=jdbc:h2:mem:test\n" +
                 "spring.datasource.username=sa\n" +
                 "spring.datasource.password=");
