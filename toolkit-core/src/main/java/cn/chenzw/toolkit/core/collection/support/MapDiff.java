@@ -3,12 +3,10 @@ package cn.chenzw.toolkit.core.collection.support;
 import cn.chenzw.toolkit.core.collection.MapKit;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +21,9 @@ public class MapDiff {
         // 只保留右边差异
         Map<String, Object[]> diffs = diffHolder.entrySet().stream()
                 .filter(entry -> entry.getValue()[1] != null)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey, Map.Entry::getValue
+                ));
 
         Map map = new HashMap();
         for (Map.Entry<String, Object[]> entry : diffs.entrySet()) {
@@ -45,7 +45,7 @@ public class MapDiff {
             if (entry.getValue() instanceof Map) {
                 diff((Map) entry.getValue(), new HashMap(), diffHolder, key);
             } else {
-                diffHolder.put(key, new Object[]{entry.getValue(), null});
+                diffHolder.put(key, new Object[]{ObjectUtils.defaultIfNull(entry.getValue(), ""), null});
             }
         }
         for (Map.Entry entry : (Set<Map.Entry>) difference.entriesOnlyOnRight().entrySet()) {
@@ -53,7 +53,7 @@ public class MapDiff {
             if (entry.getValue() instanceof Map) {
                 diff(new HashMap(), (Map) entry.getValue(), diffHolder, key);
             } else {
-                diffHolder.put(key, new Object[]{null, entry.getValue()});
+                diffHolder.put(key, new Object[]{null, ObjectUtils.defaultIfNull(entry.getValue(), "")});
             }
         }
 

@@ -1,8 +1,8 @@
 package cn.chenzw.toolkit.core.io;
 
 import cn.chenzw.toolkit.core.enums.FileType;
-import cn.chenzw.toolkit.core.lang.RadixKit;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -57,7 +57,7 @@ public class FileKit {
 
     public static String uuidFileName(String originalFileName) {
         String fileExtension = FilenameUtils.getExtension(originalFileName);
-        return UUID.randomUUID().toString() + "." + fileExtension;
+        return UUID.randomUUID() + "." + fileExtension;
     }
 
 
@@ -83,14 +83,14 @@ public class FileKit {
         byte[] cacheBytes = new byte[20];
         is.read(cacheBytes, 0, cacheBytes.length);
 
-        String cacheHeadBytesHex = RadixKit.bytesToHexString(cacheBytes).toUpperCase();
+        String cacheHeadBytesHex = Hex.encodeHexString(cacheBytes).toUpperCase();
         log.debug("File HeadBytes hex is [{}]", cacheHeadBytesHex);
 
         FileType[] fileTypes = FileType.values();
         for (FileType fileType : fileTypes) {
             byte[] headBytes = new byte[fileType.headBytes()];
             System.arraycopy(cacheBytes, 0, headBytes, 0, fileType.headBytes());
-            String hex = RadixKit.bytesToHexString(headBytes).toUpperCase();
+            String hex = Hex.encodeHexString(headBytes).toUpperCase();
 
             if (Objects.equals(hex, fileType.signatureCode())) {
                 return fileType;
@@ -114,7 +114,7 @@ public class FileKit {
         byte[] cacheBytes = new byte[20];
         is.read(cacheBytes, 0, cacheBytes.length);
 
-        String cacheHeadBytesHex = RadixKit.bytesToHexString(cacheBytes).toUpperCase();
+        String cacheHeadBytesHex = Hex.encodeHexString(cacheBytes).toUpperCase();
         log.debug("File HeadBytes hex is [{}]", cacheHeadBytesHex);
 
         List<FileType> matchedFileTypes = new ArrayList<>();
@@ -122,7 +122,7 @@ public class FileKit {
         for (FileType fileType : fileTypes) {
             byte[] headBytes = new byte[fileType.headBytes()];
             System.arraycopy(cacheBytes, 0, headBytes, 0, fileType.headBytes());
-            String hex = RadixKit.bytesToHexString(headBytes).toUpperCase();
+            String hex = Hex.encodeHexString(headBytes).toUpperCase();
 
             if (Objects.equals(hex, fileType.signatureCode())) {
                 matchedFileTypes.add(fileType);

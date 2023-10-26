@@ -62,7 +62,6 @@ public enum FileType {
     PDF(4, "25504446", ".pdf", "", "PDF", ""),
     PPT(8, "D0CF11E0A1B11AE1", ".ppt", "", "PPT", ""),
     PPTX(4, "504B0304", ".pptx", "", "PPT 2010", "PPT 2010"),
-
     QUICKEN(4, "AC9EBD8F", ".qdf", "", "QUICKEN", ""),
 
     RAR(7, "526172211A0700", ".rar", "", "RAR", ""),
