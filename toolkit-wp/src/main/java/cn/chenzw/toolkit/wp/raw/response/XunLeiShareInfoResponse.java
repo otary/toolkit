@@ -3,6 +3,7 @@ package cn.chenzw.toolkit.wp.raw.response;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author chenzw
@@ -153,5 +154,9 @@ public class XunLeiShareInfoResponse {
 
         private String avatar;
 
+    }
+
+    public boolean isSuccess() {
+        return Objects.equals(share_status, "OK");
     }
 }

@@ -272,6 +272,9 @@ public class WpProviderTests {
         // 过期期限
         WpShareInfo wpShareInfo2 = xunLeiWpProvider.fetchShareInfo("https://pan.xunlei.com/s/VNeXXIsjNTIKM8sY9CIkcj2GA1?pwd=zpbx#", "zpbx");
         log.info("wpShareInfo2 => {}", wpShareInfo2);
+
+        WpShareInfo wpShareInfo3 = xunLeiWpProvider.fetchShareInfo("https://pan.xunlei.com/s/VNkLd_x8dClFEqFNCEq1E-lRA1?pwd=d5me&_t=1701326669492", "");
+        log.info("wpShareInfo3 => {}", wpShareInfo3);
     }
 
     @Test

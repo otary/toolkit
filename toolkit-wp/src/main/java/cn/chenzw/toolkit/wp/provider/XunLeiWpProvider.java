@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class XunLeiWpProvider extends AbstractWpProvider {
 
-    private static final Pattern SHARE_URL_PATTERN = Pattern.compile("https://pan\\.xunlei\\.com/s/([A-Za-z0-9-]+)(?:\\?pwd=([A-Za-z0-9]*)#?)?", Pattern.MULTILINE);
+    private static final Pattern SHARE_URL_PATTERN = Pattern.compile("https://pan\\.xunlei\\.com/s/([A-Za-z0-9-_]+)(?:\\?pwd=([A-Za-z0-9]*)#?)?", Pattern.MULTILINE);
 
     private static final String X_CLIENT_ID = "Xqp0kJBXWhwaTpB6";
 
@@ -57,18 +57,20 @@ public class XunLeiWpProvider extends AbstractWpProvider {
 
                 if (response.getCode() == 200) {
                     XunLeiShareInfoResponse shareInfoResponse = JSONKit.readValue(content, XunLeiShareInfoResponse.class);
-                    return WpShareInfo.builder()
-                            .shareId(shareId)
-                            .shareTitle(shareInfoResponse.getTitle())
-                            .creatorId(shareInfoResponse.getUser_info().getUser_id())
-                            .creatorAvatar(shareInfoResponse.getUser_info().getAvatar())
-                            .creatorName(shareInfoResponse.getUser_info().getNickname())
-                            .expiration(
-                                    Objects.equals(shareInfoResponse.getExpiration_at(), "-1") ? null : LocalDateTime.parse(shareInfoResponse.getExpiration_at(), DateTimeFormatter.ISO_ZONED_DATE_TIME)
-                            )
-                            .needPassCode(true)
-                            .passCode(code)
-                            .build();
+                    if (shareInfoResponse.isSuccess()) {
+                        return WpShareInfo.builder()
+                                .shareId(shareId)
+                                .shareTitle(shareInfoResponse.getTitle())
+                                .creatorId(shareInfoResponse.getUser_info().getUser_id())
+                                .creatorAvatar(shareInfoResponse.getUser_info().getAvatar())
+                                .creatorName(shareInfoResponse.getUser_info().getNickname())
+                                .expiration(
+                                        Objects.equals(shareInfoResponse.getExpiration_at(), "-1") ? null : LocalDateTime.parse(shareInfoResponse.getExpiration_at(), DateTimeFormatter.ISO_ZONED_DATE_TIME)
+                                )
+                                .needPassCode(true)
+                                .passCode(code)
+                                .build();
+                    }
                 }
                 XunLeiShareExpResponse shareExpResponse = JSONKit.readValue(content, XunLeiShareExpResponse.class);
                 return WpShareInfo.builder()
