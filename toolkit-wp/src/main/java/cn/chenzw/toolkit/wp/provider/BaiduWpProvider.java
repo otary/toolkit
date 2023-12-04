@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,11 +86,11 @@ public class BaiduWpProvider extends AbstractWpProvider {
                                 .creatorName(localsInfo.getLinkusername())
                                 .creatorAvatar(localsInfo.getShare_photo())
                                 .creatorId(localsInfo.getShare_uk())
-                                .needPassCode(localsInfo.getPublic2() == 0)
+                                .needPassCode(Objects.equals(localsInfo.getPublic2(), "0"))
                                 .passCode(code)
                                 .expiration(this.buildExpirationDate(localsInfo.getExpiredType()))
                                 .passCode(code)
-                                .lastUpdateTime(new Date(localsInfo.getCtime()))
+                                .lastUpdateTime(localsInfo.getCtime() == null ? null : new Date(localsInfo.getCtime()))
                                 .build();
                     }
                     return WpShareInfo.builder()
@@ -123,16 +124,14 @@ public class BaiduWpProvider extends AbstractWpProvider {
     private BaiduLocalsInfo extractLocals(String html) throws JsonProcessingException {
         Matcher matcher = LOCALS_PATTERN.matcher(html);
         if (matcher.find()) {
-            return JSONKit.readValue(
-                    matcher.group(1), BaiduLocalsInfo.class
-            );
+            return JSONKit.readValue(matcher.group(1), BaiduLocalsInfo.class);
         }
         return null;
     }
 
 
     private LocalDateTime buildExpirationDate(Integer expiredSeconds) {
-        if (expiredSeconds == 0) {
+        if (expiredSeconds == null || expiredSeconds == 0) {
             return null;
         }
         LocalDateTime dateTime = LocalDateTime.now();

@@ -82,5 +82,7 @@ public class BaiduLocalsInfo {
     private Integer elink_self;
 
     @JsonProperty(value = "public")
-    private Integer public2;
+    private String public2;
+
+
 }

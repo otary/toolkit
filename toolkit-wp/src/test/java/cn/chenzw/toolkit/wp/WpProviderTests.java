@@ -127,6 +127,10 @@ public class WpProviderTests {
         WpShareInfo wpShareInfo3 = baiduWpProvider.fetchShareInfo("https://pan.baidu.com/s/1xp6qzzF1Q06NMP_3cd4-Dg?pwd=28i9", "28i9");
         log.info("wpShareInfo3 => {}", wpShareInfo3);
 
+        // VIP
+        WpShareInfo wpShareInfo4 = baiduWpProvider.fetchShareInfo("https://pan.baidu.com/s/12UZ4xS6mTZJQQ9r9V8y-oQ?pwd=8888", "");
+        log.info("wpShareInfo4 => {}", wpShareInfo4);
+
     }
 
     @Test
@@ -166,19 +170,17 @@ public class WpProviderTests {
 
         // 分享被删除
         WpShareInfo wpShareInfo6 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/bf0d14560e7d", "");
-        log.info("wpShareInfo5 => {}", wpShareInfo6);
+        log.info("wpShareInfo6 => {}", wpShareInfo6);
+
     }
 
     @Test
-    public void test2() throws Exception {
-        /*WpShareInfo wpShareInfo2 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/82307c38d85d", "9GeS");
-        log.info("wpShareInfo2 => {}", wpShareInfo2);*/
-    }
-
-    @Test
-    public void testExtractShareUrls() {
+    public void testExtractCloud189ShareUrls() {
         List<String> shareUrls = cloud189WpProvider.extractShareUrls("pan>支持多份刻录、多进程写入，支持 IDE/SCSI/USB/1394/SATA等等； 版本特点 采用Hook劫持补丁破解专业版 去后续检测升级提示，禁止自动检测升级 删除多国语言和帮助，关于界面显示永久许可 解压文件夹使用，可通过批处理添加右键菜单 下载地址 https://cloud.189.cn/web/share?code=NZzQzqryqyIz（访问码：3vgd） https://www.leijing.xyz/ 收藏 0\n");
         log.info("shareUrls => {}", shareUrls);
+
+        List<String> shareUrls2 = cloud189WpProvider.extractShareUrls("https://cloud.189.cn/t/AZjmmmnyimya（访问码：ll40）");
+        log.info("shareUrls2 => {}", shareUrls2);
     }
 
     /**
