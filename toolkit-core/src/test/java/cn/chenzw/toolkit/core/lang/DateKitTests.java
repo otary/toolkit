@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 @RunWith(JUnit4.class)
 public class DateKitTests {
 
-
     @Test
     public void testRandom() {
         Date randomDate = DateKit.random();

@@ -23,10 +23,10 @@ public class FileExtKitTests {
 
     @Test
     public void testGetFileType() throws IOException {
-        InputStream is2 = Thread.currentThread().getContextClassLoader().getResourceAsStream("commons/index.js");
-        FileType fileType2 = FileKit.getFileType(is2);
-
-        log.info("文件类型 => {}", fileType2);
+        try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("commons/index.js")) {
+            FileType fileType2 = FileKit.getFileType(is);
+            log.info("文件类型 => {}", fileType2);
+        }
     }
 
 }

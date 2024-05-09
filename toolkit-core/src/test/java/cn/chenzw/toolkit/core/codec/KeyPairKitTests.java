@@ -26,8 +26,9 @@ public class KeyPairKitTests {
         log.info("PEM => {}", PEMString);
 
         // 读取PEM
-        StringReader sr = new StringReader(PEMString);
-        KeyPair keyPair2 = KeyPairKit.readKeyPair(sr);
-        log.info("keyPair => {}", keyPair2);
+        try(StringReader sr = new StringReader(PEMString)) {
+            KeyPair keyPair2 = KeyPairKit.readKeyPair(sr);
+            log.info("keyPair => {}", keyPair2);
+        }
     }
 }

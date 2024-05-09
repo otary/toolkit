@@ -57,7 +57,8 @@ public class DateKit {
      */
     private final static String[] FREQUENTLY_USED_CST_DATE_FORMATS = new String[]{
             "EEE, dd MMM yyyy HH:mm:ss z",
-            "EEE MMM dd HH:mm:ss zzz yyyy"
+            "EEE MMM dd HH:mm:ss zzz yyyy",
+            "EEE, dd MMM yyyy HH:mm:ss 'GMT'"
     };
 
     /**
@@ -300,14 +301,14 @@ public class DateKit {
         if (NumberUtils.isCreatable(dateTimeStr)) {
             // 纯数字
             dateFormats = FREQUENTLY_USED_NUMBER_DATE_FORMATS;
-        } else if (StringUtils.contains(dateTimeStr, 'T')) {
+        } else if (StringUtils.contains(dateTimeStr, "'T'")) {
             // UTC
-            if (StringUtils.contains(dateTimeStr, 'Z')) {
+            if (StringUtils.contains(dateTimeStr, "Z")) {
                 dateFormats = FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMATS;
             } else {
                 dateFormats = FREQUENTLEY_USED_UTC_DATE_FORMATS;
             }
-        } else if (StringUtils.containsAny(dateTimeStr, wtb)) {
+        } else if (StringUtils.containsAny(dateTimeStr.toLowerCase(), wtb)) {
             // CST格式
             dateFormats = FREQUENTLY_USED_CST_DATE_FORMATS;
         } else {
@@ -425,7 +426,6 @@ public class DateKit {
         if (seconds > 0) {
             gapTime.append(StringUtils.leftPad(String.valueOf(seconds % 60), 2, "0"));
         }
-
         return gapTime.toString();
     }
 
