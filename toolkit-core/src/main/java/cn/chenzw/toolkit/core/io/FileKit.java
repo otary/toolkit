@@ -6,14 +6,17 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -138,6 +141,54 @@ public class FileKit {
         }
 
         return matchedFileTypes.toArray(new FileType[matchedFileTypes.size()]);
+    }
+
+    /**
+     * 获取文件MD5特征码
+     *
+     * @param file
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     */
+    public static String getFileMD5Hex(File file) throws NoSuchAlgorithmException, IOException {
+        return digestFile(file, MessageDigest.getInstance("MD5"));
+    }
+
+    /**
+     * 获取文件SHA256特征码
+     *
+     * @param file
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     */
+    public static String getFileSHA256Hex(File file) throws NoSuchAlgorithmException, IOException {
+        return digestFile(file, MessageDigest.getInstance("SHA-256"));
+    }
+
+
+    /**
+     * 获取文件摘要
+     *
+     * @param file
+     * @param digest
+     * @return
+     * @throws IOException
+     */
+    public static String digestFile(File file, MessageDigest digest) throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(8192);
+        try (
+                FileInputStream fis = new FileInputStream(file);
+                FileChannel channel = fis.getChannel();
+        ) {
+            while (channel.read(buffer) != -1) {
+                buffer.flip();
+                digest.update(buffer);
+                buffer.clear();
+            }
+            return new String(Hex.encodeHex(digest.digest()));
+        }
     }
 
     /**

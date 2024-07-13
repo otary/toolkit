@@ -445,9 +445,9 @@ public class WebdavClient {
     private String buildRequestURL(String path) throws MalformedURLException {
         URI serverURI = URI.create(this.serverURI);
         String requestURL = new URL(serverURI.getScheme(), serverURI.getHost(), path).toString();
-        if (!StringUtils.endsWith(requestURL, "/")) {
+        /*if (!StringUtils.endsWith(requestURL, "/")) {
             requestURL += "/";
-        }
+        }*/
         return requestURL;
     }
 }

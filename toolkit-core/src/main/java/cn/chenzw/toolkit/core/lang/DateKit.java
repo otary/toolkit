@@ -256,6 +256,7 @@ public class DateKit {
 
     /**
      * 获取指定年份的最后一天
+     *
      * @param year
      * @return
      */
@@ -301,7 +302,7 @@ public class DateKit {
         if (NumberUtils.isCreatable(dateTimeStr)) {
             // 纯数字
             dateFormats = FREQUENTLY_USED_NUMBER_DATE_FORMATS;
-        } else if (StringUtils.contains(dateTimeStr, "'T'")) {
+        } else if (StringUtils.contains(dateTimeStr, "'T'") || StringUtils.contains(dateTimeStr, "T")) {
             // UTC
             if (StringUtils.contains(dateTimeStr, "Z")) {
                 dateFormats = FREQUENTLEY_USED_UTC_WITH_Z_DATE_FORMATS;

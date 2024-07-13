@@ -30,9 +30,12 @@ public class WebdavClientTests {
     @BeforeClass
     public static void before() {
         client = WebdavClients.custom()
-                 .serverURI("https://dav.jianguoyun.com/dav/")
-                 .username("656469722@qq.com")
-                 .password("aip69vqtzrx5r2ha22")
+                // .serverURI("https://dav.jianguoyun.com/dav/")
+                .serverURI("https://bora.teracloud.jp/dav/")
+                .username("chenzw")
+                .password("Xis3mab3UCyhtVzp")
+                 /*.username("656469722@qq.com")
+                 .password("aip69vqtzrx5r2ha22")*/
                 .build();
     }
 
@@ -56,8 +59,9 @@ public class WebdavClientTests {
 
     @Test
     public void testGetFileContent() throws IOException {
-        try (InputStream is = client.getFileContent("/dav/%e6%88%91%e7%9a%84%e5%9d%9a%e6%9e%9c%e4%ba%91/%e3%80%9001%e3%80%91%e5%9d%9a%e6%9e%9c%e4%ba%91%e5%85%a5%e9%97%a8%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86.pdf")) {
-            IOUtils.copy(is, new FileOutputStream("a.pdf"));
+        //try (InputStream is = client.getFileContent("/dav/%e6%88%91%e7%9a%84%e5%9d%9a%e6%9e%9c%e4%ba%91/%e3%80%9001%e3%80%91%e5%9d%9a%e6%9e%9c%e4%ba%91%e5%85%a5%e9%97%a8%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86.pdf")) {
+        try (InputStream is = client.getFileContent("/dav/豆瓣评分最高的250部书/围城.epub")) {
+            IOUtils.copy(is, new FileOutputStream("a.epub"));
         }
     }
 

@@ -92,6 +92,8 @@ public class DateKitTests {
         Date date3 = DateKit.parseDate("22:11:33");
         Assert.assertEquals("Thu Jan 01 22:11:33 CST 1970", date3.toString());
 
+        Date date4 = DateKit.parseDate("2023-11-30T06:00:19Z");
+        log.info("date => {}", date4);
     }
 
     @Test
