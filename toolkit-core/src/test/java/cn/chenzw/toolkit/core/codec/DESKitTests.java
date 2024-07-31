@@ -32,6 +32,9 @@ public class DESKitTests {
 
         String rst = DESKit.encryptAsHexString("abc".getBytes(), "12345678");
         Assert.assertEquals("c24b98fad5c0580e", rst);
+
+        String r = DESKit.encryptAsBase64String("abc".getBytes(), "12345678");
+        Assert.assertEquals("wkuY+tXAWA4=", r);
     }
 
     @Test
@@ -44,5 +47,16 @@ public class DESKitTests {
     public void testDecryptHexString() throws NoSuchPaddingException, InvalidKeyException, DecoderException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeySpecException {
         byte[] bytes = DESKit.decryptHexString("f5847a64f759b9f3", "12345678", DESMode.CBC, DESPadding.PKCS5Padding, "12345678".getBytes());
         Assert.assertEquals("abc", new String(bytes));
+
+        byte[] bytes2 = DESKit.decryptBase64String("wkuY+tXAWA4=", "12345678");
+        Assert.assertEquals("abc", new String(bytes2));
+    }
+
+    @Test
+    public void testDecrypt() throws DecoderException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        //System.out.println(DESMode.ECB.name().equals("ECB"));
+
+        byte[] bytes = DESKit.decryptBase64String("RThTXZ+At2Fkm9gcQ4kX1Sow5jRqLCLWfeQVqyobErQ=", "LmMGStGtOpF4xNyvYt54EQ==", DESMode.CBC, DESPadding.PKCS5Padding, null);
+        System.out.println(new String(bytes));
     }
 }

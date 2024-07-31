@@ -43,7 +43,7 @@ public final class DESKit {
         }
 
         IvParameterSpec ivParamSpec = null;
-        if (!"ECB".equals(mode)) {
+        if (!DESMode.ECB.name().equals(mode)) {
             // ECB不需要偏移量
             ivParamSpec = (iv == null ? null : new IvParameterSpec(iv));
         }
@@ -75,6 +75,10 @@ public final class DESKit {
      */
     public static String encryptAsBase64String(DESMode desMode, DESPadding desPadding, byte[] data, String key, byte[] iv) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
         return new String(Base64.getEncoder().encode(digest(Cipher.ENCRYPT_MODE, desMode.name(), desPadding.name(), data, key, iv)));
+    }
+
+    public static String encryptAsBase64String(byte[] data, String key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        return new String(Base64.getEncoder().encode(digest(Cipher.ENCRYPT_MODE, null, null, data, key, null)));
     }
 
     /**
@@ -147,6 +151,10 @@ public final class DESKit {
     public static byte[] decryptBase64String(String base64String, String key, DESMode desMode, DESPadding desPadding,
                                              byte[] iv) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
         return digest(Cipher.DECRYPT_MODE, desMode.name(), desPadding.name(), Base64.getDecoder().decode(base64String), key, iv);
+    }
+
+    public static byte[] decryptBase64String(String base64String, String key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        return digest(Cipher.DECRYPT_MODE, null, null, Base64.getDecoder().decode(base64String), key, null);
     }
 
     private static String createModePadding(String mode, String padding) {
