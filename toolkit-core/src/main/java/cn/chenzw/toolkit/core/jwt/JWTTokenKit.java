@@ -36,6 +36,9 @@ public final class JWTTokenKit {
      * @return
      */
     public static JWTEntity parseWithoutKey(String token) {
+        if (StringUtils.startsWithIgnoreCase(token, BEARER_TOKEN_PREFIX)) {
+            token = StringUtils.replace(token, BEARER_TOKEN_PREFIX, "").trim();
+        }
         String[] tokenSegments = token.split("\\.");
 
         String tokenHeader = tokenSegments[0];

@@ -52,11 +52,4 @@ public class DESKitTests {
         Assert.assertEquals("abc", new String(bytes2));
     }
 
-    @Test
-    public void testDecrypt() throws DecoderException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
-        //System.out.println(DESMode.ECB.name().equals("ECB"));
-
-        byte[] bytes = DESKit.decryptBase64String("RThTXZ+At2Fkm9gcQ4kX1Sow5jRqLCLWfeQVqyobErQ=", "LmMGStGtOpF4xNyvYt54EQ==", DESMode.CBC, DESPadding.PKCS5Padding, null);
-        System.out.println(new String(bytes));
-    }
 }
