@@ -9,13 +9,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -34,6 +40,11 @@ public class BaiduWpProvider extends AbstractWpProvider {
     private static Pattern SHARE_URL_PATTERN = Pattern.compile("https://pan\\.baidu\\.com/s/([A-Za-z0-9-]+)(?:\\?pwd=([A-Za-z0-9]*))?", Pattern.MULTILINE);
 
     private static Pattern LOCALS_PATTERN = Pattern.compile("locals\\.mset\\((.*?)\\);");
+
+    private static Pattern BDCLND_PATTERN = Pattern.compile("BDCLND=(.*?);");
+
+    private static volatile String BDCLND = "";
+
 
     private static Map<Integer, String> ERROR_TYPE = new HashMap<Integer, String>() {
         {
@@ -65,50 +76,48 @@ public class BaiduWpProvider extends AbstractWpProvider {
         if (StringUtils.isEmpty(code)) {
             code = this.extractPassCodeFromShareUrl(shareUrl);
         }
-        HttpGet httpGet = new HttpGet(shareUrl);
-        httpGet.setHeader("Cookie", "BDCLND=irwBzZjz%2BtASxKJY2O8OJUCKBGbz4wwRRIhz0Lo33%2Fs%3D");
-        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-            try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
-                String content = EntityUtils.toString(
-                        response.getEntity()
-                );
-                BaiduLocalsInfo localsInfo = this.extractLocals(content);
-
-                log.debug("BaiduWp[{}] => {} - {}", shareUrl, response.getCode(), localsInfo);
-
-                if (response.getCode() == 200) {
-                    Document doc = Jsoup.parse(content);
-                    Integer errorType = localsInfo.getErrortype();
-                    if (errorType == -1) { // 正常
-                        return WpShareInfo.builder()
-                                .shareId(shareId)
-                                .shareTitle(StringUtils.substringBefore(doc.title(), "_免费高速下载"))
-                                .creatorName(localsInfo.getLinkusername())
-                                .creatorAvatar(localsInfo.getShare_photo())
-                                .creatorId(localsInfo.getShare_uk())
-                                .needPassCode(Objects.equals(localsInfo.getPublic2(), "0"))
-                                .passCode(code)
-                                .expiration(this.buildExpirationDate(localsInfo.getExpiredType()))
-                                .passCode(code)
-                                .lastUpdateTime(localsInfo.getCtime() == null ? null : new Date(localsInfo.getCtime()))
-                                .build();
-                    }
-                    return WpShareInfo.builder()
-                            .shareId(shareId)
-                            .passCode(code)
-                            .valid(false)
-                            .errMsg(ERROR_TYPE.getOrDefault(errorType, "分享的文件不存在"))
-                            .build();
-                }
-
-                return WpShareInfo.builder()
-                        .shareId(shareId)
-                        .passCode(code)
-                        .valid(false)
-                        .errMsg(MessageFormat.format("request with error code={0}!", response.getCode()))
-                        .build();
-            }
+        if (StringUtils.isEmpty(BDCLND)) {
+            BDCLND = fetchBDCLND(shareId, code);
         }
+        String content = "";
+        try {
+            content = fetchContent(shareUrl, BDCLND);
+            Document doc = Jsoup.parse(content);
+            if (doc.title().contains("请输入提取码")) {
+                BDCLND = fetchBDCLND(shareId, code);
+                content = fetchContent(shareUrl, BDCLND);
+            }
+        } catch (Exception e) {
+            return WpShareInfo.builder()
+                    .shareId(shareId)
+                    .passCode(code)
+                    .valid(false)
+                    .errMsg(e.getMessage())
+                    .build();
+        }
+        BaiduLocalsInfo localsInfo = this.extractLocals(content);
+        Document doc = Jsoup.parse(content);
+        Integer errorType = localsInfo.getErrortype();
+        if (errorType == -1) { // 正常
+            return WpShareInfo.builder()
+                    .shareId(shareId)
+                    .shareTitle(StringUtils.substringBefore(doc.title(), "_免费高速下载"))
+                    .creatorName(localsInfo.getLinkusername())
+                    .creatorAvatar(localsInfo.getShare_photo())
+                    .creatorId(localsInfo.getShare_uk())
+                    .needPassCode(Objects.equals(localsInfo.getPublic2(), "0"))
+                    .passCode(code)
+                    .expiration(this.buildExpirationDate(localsInfo.getExpiredType()))
+                    .passCode(code)
+                    .lastUpdateTime(localsInfo.getCtime() == null ? null : new Date(localsInfo.getCtime()))
+                    .build();
+        }
+        return WpShareInfo.builder()
+                .shareId(shareId)
+                .passCode(code)
+                .valid(false)
+                .errMsg(ERROR_TYPE.getOrDefault(errorType, "分享的文件不存在"))
+                .build();
     }
 
     @Override
@@ -129,7 +138,6 @@ public class BaiduWpProvider extends AbstractWpProvider {
         return null;
     }
 
-
     private LocalDateTime buildExpirationDate(Integer expiredSeconds) {
         if (expiredSeconds == null || expiredSeconds == 0) {
             return null;
@@ -137,5 +145,55 @@ public class BaiduWpProvider extends AbstractWpProvider {
         LocalDateTime dateTime = LocalDateTime.now();
         dateTime.plusSeconds(expiredSeconds);
         return dateTime;
+    }
+
+    private String extractBDCLND(String cookieValue) {
+        Matcher matcher = BDCLND_PATTERN.matcher(cookieValue);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return "";
+    }
+
+    private String fetchBDCLND(String shareId, String code) {
+        shareId = shareId.substring(1);
+        String url = "https://pan.baidu.com/share/verify?&surl=" + shareId;
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("Referer", "https://pan.baidu.com/share/init?surl=" + shareId + "&pwd=" + code);
+        httpPost.setEntity(new StringEntity("pwd=" + code + "&vcode=&vcode_str=", ContentType.APPLICATION_FORM_URLENCODED));
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
+                String content = EntityUtils.toString(
+                        response.getEntity()
+                );
+                if (response.getCode() == 200 && content.contains("\"errno\":0")) {
+                    Header[] headers = response.getHeaders("Set-Cookie");
+                    for (Header header : headers) {
+                        if (header.getValue().contains("BDCLND")) {
+                            return extractBDCLND(header.getValue());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("获取BDCLND异常！", e);
+        }
+        return "";
+    }
+
+    private String fetchContent(String shareUrl, String BDCLND) throws IOException, ParseException {
+        HttpGet httpGet = new HttpGet(shareUrl);
+        httpGet.setHeader("Cookie", "BDCLND=" + BDCLND);
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+                if (response.getCode() == 200) {
+                    return EntityUtils.toString(
+                            response.getEntity()
+                    );
+                } else {
+                    throw new RuntimeException(MessageFormat.format("request with error code={0}!", response.getCode()));
+                }
+            }
+        }
     }
 }

@@ -134,6 +134,12 @@ public class WpProviderTests {
     }
 
     @Test
+    public void testFetchBaiduWidthPwd() throws Exception {
+        WpShareInfo wpShareInfo3 = baiduWpProvider.fetchShareInfo("https://pan.baidu.com/s/1RuN9HuTe6Jd-6VFzh2Tk0A?pwd=6666", "6666");
+        log.info("wpShareInfo3 => {}", wpShareInfo3);
+    }
+
+    @Test
     public void testBaiduExtractPassCodeFromShareUrl() {
         String passCode = baiduWpProvider.extractPassCodeFromShareUrl("https://pan.baidu.com/s/1sjxTjjQFiG8U-2ty6V576g?pwd=mad7");
         Assert.assertEquals("mad7", passCode);
