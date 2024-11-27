@@ -31,6 +31,8 @@ public class QuarkShareInfoResponse {
 
         private String expired_at;
 
+        private Integer share_type;
+
         private String title;
 
         private Long expired_days;

@@ -45,9 +45,7 @@ public class QuarkWpProvider extends AbstractWpProvider {
 
                 log.debug("QuarkWp[{}] => {} - {}", shareUrl, response.getCode(), content);
 
-                QuarkShareInfoResponse shareInfoResponse = JSONKit.readValue(
-                        content, QuarkShareInfoResponse.class
-                );
+                QuarkShareInfoResponse shareInfoResponse = JSONKit.readValue(content, QuarkShareInfoResponse.class);
                 if (shareInfoResponse.getCode() != 0) {
                     // 41006 - 分享不存在
                     // 41007 - 需要分享码

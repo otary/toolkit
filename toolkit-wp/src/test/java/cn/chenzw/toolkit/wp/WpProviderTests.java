@@ -181,6 +181,12 @@ public class WpProviderTests {
     }
 
     @Test
+    public void testQuarkValid() throws Exception {
+        WpShareInfo wpShareInfo4 = quarkWpProvider.fetchShareInfo("https://pan.quark.cn/s/d9d7c76386d3", "");
+        log.info("wpShareInfo4 => {}", wpShareInfo4);
+    }
+
+    @Test
     public void testExtractCloud189ShareUrls() {
         List<String> shareUrls = cloud189WpProvider.extractShareUrls("pan>支持多份刻录、多进程写入，支持 IDE/SCSI/USB/1394/SATA等等； 版本特点 采用Hook劫持补丁破解专业版 去后续检测升级提示，禁止自动检测升级 删除多国语言和帮助，关于界面显示永久许可 解压文件夹使用，可通过批处理添加右键菜单 下载地址 https://cloud.189.cn/web/share?code=NZzQzqryqyIz（访问码：3vgd） https://www.leijing.xyz/ 收藏 0\n");
         log.info("shareUrls => {}", shareUrls);
