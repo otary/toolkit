@@ -5,6 +5,7 @@ import cn.chenzw.toolkit.core.codec.support.des.DESMode;
 import cn.chenzw.toolkit.core.codec.support.des.DESPadding;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
@@ -34,14 +35,23 @@ public final class DESKit {
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES_ALGORITHM);
         SecretKey secureKey = keyFactory.generateSecret(desKey);
 
-        Cipher cipher = Cipher.getInstance(createModePadding(desMode, desPadding));
+        Cipher cipher = null;
+        if (StringUtils.isEmpty(desMode) && StringUtils.isEmpty(desPadding)) {
+            cipher = Cipher.getInstance(DES_ALGORITHM);
+        } else {
+            cipher = Cipher.getInstance(createModePadding(desMode, desPadding));
+        }
 
         IvParameterSpec ivParamSpec = null;
-        if (!"ECB".equals(mode)) {
+        if (!DESMode.ECB.name().equals(mode)) {
             // ECB不需要偏移量
-            ivParamSpec = new IvParameterSpec(iv);
+            ivParamSpec = (iv == null ? null : new IvParameterSpec(iv));
         }
-        cipher.init(mode, secureKey, ivParamSpec);
+        if (ivParamSpec == null) {
+            cipher.init(mode, secureKey);
+        } else {
+            cipher.init(mode, secureKey, ivParamSpec);
+        }
         return cipher.doFinal(data);
     }
 
@@ -67,6 +77,10 @@ public final class DESKit {
         return new String(Base64.getEncoder().encode(digest(Cipher.ENCRYPT_MODE, desMode.name(), desPadding.name(), data, key, iv)));
     }
 
+    public static String encryptAsBase64String(byte[] data, String key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        return new String(Base64.getEncoder().encode(digest(Cipher.ENCRYPT_MODE, null, null, data, key, null)));
+    }
+
     /**
      * DES加密并转换成十六进制字符串
      *
@@ -87,6 +101,11 @@ public final class DESKit {
     public static String encryptAsHexString(DESMode desMode, DESPadding desPadding, byte[] data, String key, byte[] iv) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
         return Hex.encodeHexString(digest(Cipher.ENCRYPT_MODE, desMode.name(), desPadding.name(), data, key, iv));
     }
+
+    public static String encryptAsHexString(byte[] data, String key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        return Hex.encodeHexString(digest(Cipher.ENCRYPT_MODE, null, null, data, key, null));
+    }
+
 
     /**
      * AES解密十六进制字符串
@@ -132,6 +151,10 @@ public final class DESKit {
     public static byte[] decryptBase64String(String base64String, String key, DESMode desMode, DESPadding desPadding,
                                              byte[] iv) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidKeySpecException {
         return digest(Cipher.DECRYPT_MODE, desMode.name(), desPadding.name(), Base64.getDecoder().decode(base64String), key, iv);
+    }
+
+    public static byte[] decryptBase64String(String base64String, String key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, InvalidKeySpecException, BadPaddingException, InvalidKeyException {
+        return digest(Cipher.DECRYPT_MODE, null, null, Base64.getDecoder().decode(base64String), key, null);
     }
 
     private static String createModePadding(String mode, String padding) {

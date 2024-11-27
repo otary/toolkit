@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.dynamic.datasource.core.factory;
 
-import cn.chenzw.toolkit.core.collection.MapKit;
 import cn.chenzw.toolkit.core.lang.ConvertKit;
 import cn.chenzw.toolkit.core.lang.StringKit;
 import com.zaxxer.hikari.HikariConfig;
@@ -31,12 +30,10 @@ public class HikariDataSourceFactory extends AbstractDynamicDataSourceFactory {
                         (entry) -> StringKit.toCamelCase(entry.getKey(), "-", false),
                         (entry) -> ConvertKit.convert(String.class, entry.getValue())
                 ));
-
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(String.valueOf(tryGetProperty(dsMap, "jdbcUrl", "url", "jdbc-url")));
-        hikariConfig.setUsername(String.valueOf(tryGetProperty(dsMap, "username", "userName")));
-        hikariConfig.setPassword(String.valueOf(tryGetProperty(dsMap, "password")));
-        hikariConfig.setDataSourceProperties(MapKit.toProperties(dsMap));
+        hikariConfig.setJdbcUrl(tryGetPropertyValueAsString(dsMap, "jdbcUrl", "url", "jdbc-url"));
+        hikariConfig.setUsername(tryGetPropertyValueAsString(dsMap, "username", "userName"));
+        hikariConfig.setPassword(tryGetPropertyValueAsString(dsMap, "password"));
         return  new HikariDataSource(hikariConfig);
     }
 

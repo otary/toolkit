@@ -15,6 +15,7 @@
         <module>dynamic-datasource-spring-boot-starter</module>
         <module>toolkit-db</module>
         <module>toolkit-all</module>
+        <module>toolkit-wp</module>
     </modules>
     <name>toolkit</name>
     <url>https://github.com/otary/toolkit</url>
@@ -75,7 +76,24 @@
             <artifactId>commons-collections4</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- /apache commons -->
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -131,6 +149,14 @@
         </dependency>
         <!-- /xml解析 -->
 
+        <!--HTML解析-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--/HTML解析-->
+
         <!-- json -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -164,6 +190,11 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk18on</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <profiles>

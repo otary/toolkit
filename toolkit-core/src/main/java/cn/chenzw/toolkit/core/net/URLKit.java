@@ -4,8 +4,10 @@ import cn.chenzw.toolkit.core.lang.ReflectKit;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -34,6 +36,7 @@ public final class URLKit {
      *  URLKit.buildParams("http://www.baidu.com?k=1", params) = "http://www.baidu.com?k=1&a=111&b=222"
      *  URLKit.buildParams("http://www.baidu.com?", params) = "http://www.baidu.com?a=111&b=222"
      * </pre>
+     *
      * @param url
      * @param params
      * @return
@@ -78,6 +81,7 @@ public final class URLKit {
      *
      * URLKit.buildParams("http://www.baidu.com", book) = "http://www.baidu.com?id=1&isbn=ISN12345&name=hello"
      * </pre>
+     *
      * @param url
      * @param paramObject 参数对象
      * @return
@@ -130,6 +134,7 @@ public final class URLKit {
      *
      * URLKit.buildParams(book) = "id=1&isbn=ISN12345&name=hello"
      * </pre>
+     *
      * @param paramObject
      * @return
      * @throws IllegalAccessException
@@ -213,6 +218,7 @@ public final class URLKit {
      * <pre>
      * URLKit.getSchemeHost("https://www.baidu.com/s?q=xx") = "https://www.baidu.com"
      * </pre>
+     *
      * @param url
      * @return
      * @throws URISyntaxException
@@ -223,10 +229,10 @@ public final class URLKit {
     }
 
     /**
-     *
      * <pre>
      * URLKit.getSchemeHostPath("https://www.baidu.com/s?q=xx") = "https://www.baidu.com/s"
      * </pre>
+     *
      * @param url
      * @return
      * @throws URISyntaxException
@@ -234,6 +240,27 @@ public final class URLKit {
     public static String getSchemeHostPath(String url) throws URISyntaxException {
         URI uri = URI.create(url);
         return new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), uri.getPath(), null, null).toString();
+    }
+
+    /**
+     * 获取URL的顶级域名
+     * <pre>
+     *     URLKit.getTopDomain("https://www.baidu.com?q=xx") = "baidu.com"
+     * </pre>
+     *
+     * @param url
+     * @return
+     */
+    public static String getTopDomain(String url) {
+        URI uri = URI.create(url);
+        String host = uri.getHost();
+        if (host == null) {
+            host = url;
+            if (host.indexOf("?") > -1) {
+                host = host.substring(0, host.indexOf("?"));
+            }
+        }
+        return host.substring(host.lastIndexOf('.', host.lastIndexOf('.') - 1) + 1);
     }
 
 }

@@ -61,6 +61,16 @@ public final class JSONKit {
         );
     }
 
+    /**
+     * JSON字符串 转 Map
+     *
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    public static Map jsonToMap(String json) throws IOException {
+        return objectMapper.readValue(json, Map.class);
+    }
 
     public static <T> T readValue(String content, Class<T> tClass) throws JsonProcessingException {
         return objectMapper.readValue(content, tClass);

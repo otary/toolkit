@@ -146,9 +146,11 @@ public class TreeBuilder<T, I> {
                 treeNode.setParentId(parentId);
                 treeNode.setLabel(labelCallback.apply(item));
 
-                I _id = idCallback.apply(item);
-                treeNode.setId(_id);
-                treeNode.setChildren(findChild(_id));
+                I itemId = idCallback.apply(item);
+                treeNode.setId(itemId);
+                treeNode.setChildren(
+                        findChild(itemId)
+                );
 
                 if (extCallback != null) {
                     treeNode.setExt(extCallback.apply(item));
@@ -191,8 +193,8 @@ public class TreeBuilder<T, I> {
 
     private Optional<T> findNode(Collection<T> nodes, I id) {
         return nodes.stream().filter(item -> {
-            I _id = idCallback.apply(item);
-            return Objects.equals(_id, id);
+            I itemId = idCallback.apply(item);
+            return Objects.equals(itemId, id);
         }).findFirst();
     }
 }

@@ -36,6 +36,10 @@ public class DynamicDataSourceContext {
         dataSourceMap.put(dsName, new DataSourceWrapper(dsName, dataSource));
     }
 
+    public void add(String dsName, DataSource dataSource, boolean primary) {
+        dataSourceMap.put(dsName, new DataSourceWrapper(dsName, dataSource, primary));
+    }
+
     public void addAll(List<DataSourceWrapper> dataSourceWrappers) {
         for (DataSourceWrapper dataSourceWrapper : dataSourceWrappers) {
             dataSourceMap.put(dataSourceWrapper.getName(), dataSourceWrapper);
@@ -105,10 +109,6 @@ public class DynamicDataSourceContext {
 
     public Map<String, DataSourceWrapper> listExt() {
         return dataSourceMap;
-    }
-
-    public void add(String dsName, DataSource dataSource, boolean primary) {
-        dataSourceMap.put(dsName, new DataSourceWrapper(dsName, dataSource, primary));
     }
 
 }

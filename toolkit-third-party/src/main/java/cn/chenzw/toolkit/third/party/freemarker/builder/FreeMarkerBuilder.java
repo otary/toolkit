@@ -69,7 +69,7 @@ public class FreeMarkerBuilder {
         return this;
     }
 
-    public FreeMarkerBuilder templateExceptionHanler(TemplateExceptionHandler templateExceptionHanler) {
+    public FreeMarkerBuilder templateExceptionHandler(TemplateExceptionHandler templateExceptionHanler) {
         this.templateExceptionHanler = templateExceptionHanler;
         return this;
     }

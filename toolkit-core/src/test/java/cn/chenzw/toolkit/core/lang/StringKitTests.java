@@ -62,7 +62,12 @@ public class StringKitTests {
         // 空值返回null
         Assert.assertEquals(null, StringKit.toInteger(null));
         Assert.assertEquals(null, StringKit.toInteger(""));
+    }
 
+
+    @Test(expected = NumberFormatException.class)
+    public void testToInteger2() {
+        StringKit.toInteger("02-238");
     }
 
     @Test
@@ -136,7 +141,12 @@ public class StringKitTests {
         Assert.assertArrayEquals(new String[]{"a", "b", "c", "d", "e", "f"}, StringKit.splitTrim("a, b, c,  d  , e, f", ","));
     }
 
-
+    @Test
+    public void testCountLeftWhiteSpaces() {
+        Assert.assertEquals(2, StringKit.countLeftWhiteSpaces("  - abc"));
+        // 一个Tab等于4个空格
+        Assert.assertEquals(4, StringKit.countLeftWhiteSpaces("    abc"));
+    }
 
 
 }

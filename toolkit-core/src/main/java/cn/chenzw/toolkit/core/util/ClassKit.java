@@ -1,6 +1,5 @@
 package cn.chenzw.toolkit.core.util;
 
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import sun.misc.Launcher;

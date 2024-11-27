@@ -3,6 +3,7 @@ package cn.chenzw.toolkit.dynamic.datasource.core.factory;
 import cn.chenzw.toolkit.dynamic.datasource.core.DataSourceWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,6 +16,12 @@ import java.util.Map;
  */
 @Slf4j
 public class DefaultDynamicDataSourceFactory implements DynamicDataSourceFactory {
+
+    private ApplicationContext applicationContext;
+
+    public DefaultDynamicDataSourceFactory(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     private List<AbstractDynamicDataSourceFactory> dynamicDataSourceFactories = Arrays.asList(
             new DruidDynamicDataSourceFactory(),

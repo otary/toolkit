@@ -1,5 +1,6 @@
 package cn.chenzw.toolkit.spring.encrypt.advice;
 
+import cn.chenzw.toolkit.core.codec.Base58Kit;
 import cn.chenzw.toolkit.core.util.JSONKit;
 import cn.chenzw.toolkit.spring.encrypt.annotation.ResponseBodyBase58;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,7 +37,7 @@ public class ResponseBodyBase58Advice implements ResponseBodyAdvice<Object> {
         }
         ResponseBodyBase58 annotation = getAnnotation(returnType);
         try {
-            return new String(Base64.getEncoder().encode(jsonStr.getBytes(annotation.charset())), annotation.charset());
+            return Base58Kit.encode(jsonStr.getBytes(annotation.charset()));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

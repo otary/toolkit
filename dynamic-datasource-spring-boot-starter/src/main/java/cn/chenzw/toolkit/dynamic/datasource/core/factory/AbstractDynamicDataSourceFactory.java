@@ -42,9 +42,9 @@ public abstract class AbstractDynamicDataSourceFactory implements DynamicDataSou
             dataSourceWrappers.add(new DataSourceWrapper(DEFAULT_DATASOURCE_NAME, doCreateDS(dsMap), true));
         }
 
-        DataSource specialDs = createSpecialDS(dsMap);
-        if (specialDs != null) {
-            dataSourceWrappers.add(new DataSourceWrapper(DEFAULT_DATASOURCE_NAME, specialDs, true));
+        DataSource specialDS = createSpecialDS(dsMap);
+        if (specialDS != null) {
+            dataSourceWrappers.add(new DataSourceWrapper(DEFAULT_DATASOURCE_NAME, specialDS, true));
         }
 
         if (!dsMap.containsKey("dynamic")) {
@@ -52,10 +52,10 @@ public abstract class AbstractDynamicDataSourceFactory implements DynamicDataSou
             return dataSourceWrappers;
         }
 
-        Map<String, Object> dynamicDsMap = (Map<String, Object>) dsMap.get("dynamic");
-        log.debug("Find {} datasource!", dynamicDsMap == null ? 0 : dynamicDsMap.size());
+        Map<String, Object> dynamicDSMap = (Map<String, Object>) dsMap.get("dynamic");
+        log.debug("Find {} datasource!", dynamicDSMap == null ? 0 : dynamicDSMap.size());
 
-        dynamicDsMap.forEach((dsName, dsProperties) -> {
+        dynamicDSMap.forEach((dsName, dsProperties) -> {
             Map<String, Object> dsPropertiesMap = (Map<String, Object>) dsProperties;
             boolean isPrimary = ConvertKit.convert(
                     Boolean.class,
@@ -76,5 +76,14 @@ public abstract class AbstractDynamicDataSourceFactory implements DynamicDataSou
             }
         }
         return null;
+    }
+
+    protected String tryGetPropertyValueAsString(Map<String, Object> dsMap, String... properties) {
+        for (String property : properties) {
+            if (dsMap.containsKey(property)) {
+                return String.valueOf(dsMap.get(property));
+            }
+        }
+        return "";
     }
 }

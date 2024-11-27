@@ -36,6 +36,9 @@ public final class JWTTokenKit {
      * @return
      */
     public static JWTEntity parseWithoutKey(String token) {
+        if (StringUtils.startsWithIgnoreCase(token, BEARER_TOKEN_PREFIX)) {
+            token = StringUtils.replace(token, BEARER_TOKEN_PREFIX, "").trim();
+        }
         String[] tokenSegments = token.split("\\.");
 
         String tokenHeader = tokenSegments[0];
@@ -43,7 +46,7 @@ public final class JWTTokenKit {
 
         JWTEntity jwtEntity = new JWTEntity();
         String tokenHeaderPlaintext = new String(
-                Base64.getMimeDecoder().decode(tokenHeader)
+                Base64.getUrlDecoder().decode(tokenHeader)
         );
         try {
             jwtEntity.setHeader(
@@ -54,7 +57,7 @@ public final class JWTTokenKit {
         }
 
         String tokenPayloadPlaintext = new String(
-                Base64.getMimeDecoder().decode(tokenPayload)
+                Base64.getUrlDecoder().decode(tokenPayload)
         );
         try {
             jwtEntity.setPayload(
